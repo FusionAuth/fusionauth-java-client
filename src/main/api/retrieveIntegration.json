@@ -1,0 +1,10 @@
+{
+  "uri": "/api/integration",
+  "comments": [
+    "Retrieves the available integrations."
+  ],
+  "method": "get",
+  "methodName": "retrieveIntegration",
+  "successResponse": "IntegrationResponse",
+  "errorResponse": "Void"
+}

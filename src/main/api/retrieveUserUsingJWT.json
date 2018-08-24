@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Retrieves the user for the given Id. This method does not use an API key, instead it uses a JSON Web Token (JWT) for authentication."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserUsingJWT",
+  "successResponse": "UserResponse",
+  "errorResponse": "Errors",
+  "authorization": "\"JWT \" + encodedJWT",
+  "params": [
+    {
+      "name": "encodedJWT",
+      "comments": [
+        "The encoded JWT (access token)."
+      ],
+      "type": "notUsed",
+      "javaType": "String"
+    }
+  ]
+}

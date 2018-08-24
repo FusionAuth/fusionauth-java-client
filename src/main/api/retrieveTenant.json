@@ -1,0 +1,20 @@
+{
+  "uri": "/api/tenant",
+  "comments": [
+    "Retrieves the tenant for the given Id."
+  ],
+  "method": "get",
+  "methodName": "retrieveTenant",
+  "successResponse": "TenantResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "tenantId",
+      "comments": [
+        "The Id of the tenant."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

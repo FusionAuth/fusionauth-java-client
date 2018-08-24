@@ -1,0 +1,20 @@
+{
+  "uri": "/api/email/template",
+  "comments": [
+    "Deletes the email template for the given Id."
+  ],
+  "method": "delete",
+  "methodName": "deleteEmailTemplate",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "emailTemplateId",
+      "comments": [
+        "The Id of the email template to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

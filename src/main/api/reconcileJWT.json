@@ -1,0 +1,20 @@
+{
+  "uri": "/api/jwt/reconcile",
+  "comments": [
+    "Reconcile a User to FusionAuth using JWT issued from another Identity Provider."
+  ],
+  "method": "post",
+  "methodName": "reconcileJWT",
+  "successResponse": "LoginResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The reconcile request that contains the data to reconcile the User."
+      ],
+      "type": "body",
+      "javaType": "ReconcileRequest"
+    }
+  ]
+}

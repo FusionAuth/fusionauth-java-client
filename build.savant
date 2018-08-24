@@ -1,0 +1,124 @@
+/*
+ * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ */
+savantVersion = "1.0.0"
+
+jackson5Version = "2.4.1"
+javaErrorVersion = "2.2.0"
+primeJWTVersion = "1.3.1"
+restifyVersion = "3.1.5"
+
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.0", licenses: ["ApacheV2_0"]) {
+  workflow {
+    standard()
+  }
+
+  publishWorkflow {
+    subversion(repository: "http://svn.inversoft.org/savant")
+  }
+
+  dependencies {
+    group(name: "provided") {
+      dependency(id: "javax.servlet:servlet-api:3.1.0", skipCompatibilityCheck: true)
+      dependency(id: "com.google.inject:guice:4.2.0")
+    }
+    group(name: "compile") {
+      dependency(id: "com.inversoft:restify:${restifyVersion}")
+      dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
+      dependency(id: "com.inversoft:prime-jwt:${primeJWTVersion}")
+      dependency(id: "com.inversoft:jackson5:${jackson5Version}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.6")
+      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.6")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.6")
+    }
+    group(name: "test-compile") {
+      dependency(id: "org.testng:testng:6.8.7")
+    }
+  }
+
+  publications {
+    standard()
+  }
+}
+
+// Plugins
+dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:1.0.2")
+java = loadPlugin(id: "org.savantbuild.plugin:java:1.0.2")
+javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:1.0.2")
+file = loadPlugin(id: "org.savantbuild.plugin:file:1.0.2")
+idea = loadPlugin(id: "org.savantbuild.plugin:idea:1.0.1")
+release = loadPlugin(id: "org.savantbuild.plugin:release-git:${savantVersion}")
+clientLibrary = loadPlugin(id: "com.inversoft.savant.plugin:client-library:0.2.2")
+
+// Plugin settings
+java.settings.javaVersion = "1.8"
+javaTestNG.settings.javaVersion = "1.8"
+clientLibrary.settings.debug = false
+
+target(name: "clean", description: "Cleans the project") {
+  java.clean()
+}
+
+target(name: "compile", description: "Compiles the project") {
+  java.compile()
+}
+
+target(name: "jar", description: "JARs the project", dependsOn: ["compile"]) {
+  java.jar()
+}
+
+target(name: "test", description: "Runs the project's tests", dependsOn: ["jar"]) {
+  javaTestNG.test(groups: ["unit"])
+}
+
+target(name: "doc", description: "Generate the project's JavaDoc", dependsOn: ["jar"]) {
+  java.document()
+}
+
+target(name: "int", description: "Releases a local integration build of the project", dependsOn: ["test"]) {
+  dependency.integrate()
+}
+
+target(name: "list-unused-dependencies", description: "Lists the unused dependencies of the project", dependsOn: ["compile"]) {
+  dependency.listUnusedDependencies()
+}
+
+target(name: "print-dependency-tree", description: "Prints the dependency tree") {
+  dependency.printFull()
+}
+
+target(name: "release", description: "Releases a full version of the project", dependsOn: ["clean", "test"]) {
+  release.release()
+}
+
+target(name: "mvn-deploy", description: "Publish to MVN repo", dependsOn: ["clean", "compile"]) {
+  if (new ProcessBuilder('mvn', 'deploy', '-Prelease').inheritIO().start().waitFor() != 0) {
+    fail("deploy failed")
+  }
+}
+
+target(name: "idea", description: "Updates the IntelliJ IDEA module file") {
+  idea.iml()
+}
+
+target(name: "bundle", description: "Builds the project release bundle", dependsOn: ["jar"]) {
+  dependency.copy(to: "build/jars") {
+    dependencies(group: "compile", transitive: false, fetchSource: true, transitiveGroups: ["compile"])
+  }
+  file.delete {
+    fileSet(dir: "build/jars", includePatterns: [~/.+src\.jar/, ~/-test-/])
+  }
+  file.zip(file: "build/bundles/fusionauth-java-client-${project.version}.zip") {
+    fileSet(dir: "build/jars")
+  }
+}
+
+target(name: "update-client", description: "Updates the client libraries using the JSON files") {
+  clientLibrary.buildClient(template: "src/main/client/java.client.ftl", outputFile: "src/main/java/io/fusionauth/client/FusionAuthClient.java")
+  clientLibrary.buildClient(template: "src/main/client/php.client.ftl", outputFile: "../fusionauth-php-client/src/FusionAuthClient.php")
+  clientLibrary.buildClient(template: "src/main/client/csharp.client.ftl", outputFile: "../fusionauth-csharp-client/src/main/csharp/FusionAuthClient.cs")
+  clientLibrary.buildClient(template: "src/main/client/node.client.ftl", outputFile: "../fusionauth-node-client/lib/FusionAuthClient.js")
+  clientLibrary.buildClient(template: "src/main/client/javascript.client.ftl", outputFile: "../fusionauth-javascript-client/lib/FusionAuthClient.js")
+//  clientLibrary.buildClient(template: "src/main/client/python.client.ftl", outputFile: "../fusionauth-python-client/src/main/python/io/fusionauth/fusionauth_client.py")
+  clientLibrary.buildClient(template: "src/main/client/ruby.client.ftl", outputFile: "../fusionauth-ruby-client/lib/fusionauth/fusionauth_client.rb")
+}

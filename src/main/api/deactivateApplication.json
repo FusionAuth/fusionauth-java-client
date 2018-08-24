@@ -1,0 +1,20 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Deactivates the application with the given Id."
+  ],
+  "method": "delete",
+  "methodName": "deactivateApplication",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to deactivate."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

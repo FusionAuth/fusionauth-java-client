@@ -1,0 +1,10 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Retrieves all of the applications."
+  ],
+  "method": "get",
+  "methodName": "retrieveApplications",
+  "successResponse": "ApplicationResponse",
+  "errorResponse": "Void"
+}

@@ -1,0 +1,19 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Retrieves all of the applications that are currently inactive."
+  ],
+  "method": "get",
+  "methodName": "retrieveInactiveApplications",
+  "successResponse": "ApplicationResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "inactive",
+      "constant": true,
+      "type": "urlParameter",
+      "parameterName": "inactive",
+      "value": "true"
+    }
+  ]
+}

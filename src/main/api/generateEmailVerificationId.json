@@ -1,0 +1,29 @@
+{
+  "uri": "/api/user/verify-email",
+  "comments": [
+    "Generate a new Email Verification Id to be used with the Verify Email API. This API will not attempt to send an",
+    "email to the User. This API may be used to collect the verificationId for use with a third party system."
+  ],
+  "method": "put",
+  "methodName": "generateEmailVerificationId",
+  "successResponse": "VerifyEmailResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "email",
+      "comments": [
+        "The email address of the user that needs a new verification email."
+      ],
+      "type": "urlParameter",
+      "parameterName": "email",
+      "javaType": "String"
+    },
+    {
+      "constant": true,
+      "name": "sendVerifyPasswordEmail",
+      "type": "urlParameter",
+      "parameterName": "sendVerifyPasswordEmail",
+      "value": "false"
+    }
+  ]
+}

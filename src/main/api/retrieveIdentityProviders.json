@@ -1,0 +1,10 @@
+{
+  "uri": "/api/identity-provider",
+  "comments": [
+    "Retrieves all of the identity providers."
+  ],
+  "method": "get",
+  "methodName": "retrieveIdentityProviders",
+  "successResponse": "IdentityProviderResponse",
+  "errorResponse": "Void"
+}

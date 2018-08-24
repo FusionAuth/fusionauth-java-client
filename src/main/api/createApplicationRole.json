@@ -1,0 +1,43 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Creates a new role for an application. You must specify the id of the application you are creating the role for.",
+    "You can optionally specify an Id for the role inside the ApplicationRole object itself, if not provided one will be generated."
+  ],
+  "method": "post",
+  "methodName": "createApplicationRole",
+  "successResponse": "ApplicationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to create the role on."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "constant": true,
+      "name": "role",
+      "type": "urlSegment",
+      "value": "\"role\""
+    },
+    {
+      "name": "roleId",
+      "comments": [
+        "(Optional) The Id of the role. If not provided a secure random UUID will be generated."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request object that contains all of the information used to create the application role."
+      ],
+      "type": "body",
+      "javaType": "ApplicationRequest"
+    }
+  ]
+}

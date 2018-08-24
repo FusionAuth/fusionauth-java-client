@@ -1,0 +1,20 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Deactivates the user with the given Id."
+  ],
+  "method": "delete",
+  "methodName": "deactivateUser",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user to deactivate."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

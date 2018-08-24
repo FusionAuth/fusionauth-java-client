@@ -1,0 +1,30 @@
+{
+  "uri": "/api/user/verify-registration",
+  "comments": [
+    "Re-sends the application registration verification email to the user."
+  ],
+  "method": "put",
+  "methodName": "resendRegistrationVerification",
+  "successResponse": "VerifyRegistrationResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "email",
+      "comments": [
+        "The email address of the user that needs a new verification email."
+      ],
+      "type": "urlParameter",
+      "parameterName": "email",
+      "javaType": "String"
+    },
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to be verified."
+      ],
+      "type": "urlParameter",
+      "parameterName": "applicationId",
+      "javaType": "UUID"
+    }
+  ]
+}

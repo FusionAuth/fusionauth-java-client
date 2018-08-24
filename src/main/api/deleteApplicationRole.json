@@ -1,0 +1,35 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Hard deletes an application role. This is a dangerous operation and should not be used in most circumstances. This",
+    "permanently removes the given role from all users that had it."
+  ],
+  "method": "delete",
+  "methodName": "deleteApplicationRole",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to deactivate."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "constant": true,
+      "name": "role",
+      "type": "urlSegment",
+      "value": "\"role\""
+    },
+    {
+      "name": "roleId",
+      "comments": [
+        "The Id of the role to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

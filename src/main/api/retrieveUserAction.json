@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user-action",
+  "comments": [
+    "Retrieves the user action for the given Id. If you pass in null for the id, this will return all of the user",
+    "actions."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserAction",
+  "successResponse": "UserActionResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "userActionId",
+      "comments": [
+        "(Optional) The Id of the user action."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

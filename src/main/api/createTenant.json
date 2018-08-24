@@ -1,0 +1,28 @@
+{
+  "uri": "/api/tenant",
+  "comments": [
+    "Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated."
+  ],
+  "method": "post",
+  "methodName": "createTenant",
+  "successResponse": "TenantResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "tenantId",
+      "comments": [
+        "(Optional) The Id for the tenant. If not provided a secure random UUID will be generated."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request object that contains all of the information used to create the tenant."
+      ],
+      "type": "body",
+      "javaType": "TenantRequest"
+    }
+  ]
+}

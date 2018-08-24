@@ -1,0 +1,11 @@
+{
+  "uri": "/api/report/totals",
+  "comments": [
+    "Retrieves the totals report. This contains all of the total counts for each application and the global registration",
+    "count."
+  ],
+  "method": "get",
+  "methodName": "retrieveTotalReport",
+  "successResponse": "TotalsReportResponse",
+  "errorResponse": "Void"
+}

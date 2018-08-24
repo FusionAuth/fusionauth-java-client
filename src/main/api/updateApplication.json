@@ -1,0 +1,28 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Updates the application with the given Id."
+  ],
+  "method": "put",
+  "methodName": "updateApplication",
+  "successResponse": "ApplicationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to update."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new application information."
+      ],
+      "type": "body",
+      "javaType": "ApplicationRequest"
+    }
+  ]
+}

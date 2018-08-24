@@ -1,0 +1,20 @@
+{
+  "uri": "/api/user/bulk",
+  "comments": [
+    "Deletes the users with the given ids."
+  ],
+  "method": "delete",
+  "methodName": "deleteUsers",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The ids of the users to delete."
+      ],
+      "type": "body",
+      "javaType": "UserDeleteRequest"
+    }
+  ]
+}

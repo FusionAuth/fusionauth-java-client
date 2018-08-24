@@ -1,0 +1,20 @@
+{
+  "uri": "/api/two-factor/send",
+  "comments": [
+    "Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling."
+  ],
+  "method": "post",
+  "methodName": "sendTwoFactorCode",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The request object that contains all of the information used to send the code."
+      ],
+      "type": "body",
+      "javaType": "TwoFactorSendRequest"
+    }
+  ]
+}

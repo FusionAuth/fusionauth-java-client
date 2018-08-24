@@ -1,0 +1,20 @@
+{
+  "uri": "/api/user/action",
+  "comments": [
+    "Retrieves a single action log (the log of a user action that was taken on a user previously) for the given Id."
+  ],
+  "method": "get",
+  "methodName": "retrieveAction",
+  "successResponse": "ActionResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "actionId",
+      "comments": [
+        "The Id of the action to retrieve."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

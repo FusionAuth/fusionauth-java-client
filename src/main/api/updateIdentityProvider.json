@@ -1,0 +1,28 @@
+{
+  "uri": "/api/identity-provider",
+  "comments": [
+    "Updates the identity provider with the given Id."
+  ],
+  "method": "put",
+  "methodName": "updateIdentityProvider",
+  "successResponse": "IdentityProviderResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "identityProviderId",
+      "comments": [
+        "The Id of the identity provider to update."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request object that contains the updated identity provider."
+      ],
+      "type": "body",
+      "javaType": "IdentityProviderRequest"
+    }
+  ]
+}

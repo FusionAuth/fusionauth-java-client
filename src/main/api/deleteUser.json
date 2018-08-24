@@ -1,0 +1,28 @@
+  {
+  "uri": "/api/user",
+  "comments": [
+    "Deletes the user for the given Id. This permanently deletes all information, metrics, reports and data associated",
+    "with the user."
+  ],
+  "method": "delete",
+  "methodName": "deleteUser",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "constant": true,
+      "name": "hardDelete",
+      "type": "urlParameter",
+      "parameterName": "hardDelete",
+      "value": "true"
+    }
+  ]
+}

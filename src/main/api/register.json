@@ -1,0 +1,32 @@
+{
+  "uri": "/api/user/registration",
+  "comments": [
+    "Registers a user for an application. If you provide the User and the UserRegistration object on this request, it",
+    "will create the user as well as register them for the application. This is called a Full Registration. However, if",
+    "you only provide the UserRegistration object, then the user must already exist and they will be registered for the",
+    "application. The user id can also be provided and it will either be used to look up an existing user or it will be",
+    "used for the newly created User."
+  ],
+  "method": "post",
+  "methodName": "register",
+  "successResponse": "RegistrationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "(Optional) The Id of the user being registered for the application and optionally created."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that optionally contains the User and must contain the UserRegistration."
+      ],
+      "type": "body",
+      "javaType": "RegistrationRequest"
+    }
+  ]
+}

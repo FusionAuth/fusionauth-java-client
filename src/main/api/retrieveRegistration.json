@@ -1,0 +1,28 @@
+{
+  "uri": "/api/user/registration",
+  "comments": [
+    "Retrieves the user registration for the user with the given id and the given application id."
+  ],
+  "method": "get",
+  "methodName": "retrieveRegistration",
+  "successResponse": "RegistrationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

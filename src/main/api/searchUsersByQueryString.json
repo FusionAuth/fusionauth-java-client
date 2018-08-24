@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user/search",
+  "comments": [
+    "Retrieves the users for the given search criteria and pagination."
+  ],
+  "method": "post",
+  "methodName": "searchUsersByQueryString",
+  "successResponse": "SearchResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The search criteria and pagination constraints. Fields used: queryString, numberOfResults, startRow,",
+        "and sort fields."
+      ],
+      "type": "body",
+      "javaType": "SearchRequest"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "uri": "/api/user/import",
+  "comments": [
+    "Bulk imports multiple users. This does some validation, but then tries to run batch inserts of users. This reduces",
+    "latency when inserting lots of users. Therefore, the error response might contain some information about failures,",
+    "but it will likely be pretty generic."
+  ],
+  "method": "post",
+  "methodName": "importUsers",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the information about all of the users to import."
+      ],
+      "type": "body",
+      "javaType": "ImportRequest"
+    }
+  ]
+}

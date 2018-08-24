@@ -1,0 +1,22 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Retrieves the user by a verificationId. The intended use of this API is to retrieve a user after the forgot",
+    "password workflow has been initiated and you may not know the user's email or username."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserByVerificationId",
+  "successResponse": "UserResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "verificationId",
+      "comments": [
+        "The unique verification Id that has been set on the user object."
+      ],
+      "type": "urlParameter",
+      "parameterName": "verificationId",
+      "javaType": "String"
+    }
+  ]
+}

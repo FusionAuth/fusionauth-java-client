@@ -1,0 +1,28 @@
+{
+  "uri": "/api/user/registration",
+  "comments": [
+    "Updates the registration for the user with the given id and the application defined in the request."
+  ],
+  "method": "put",
+  "methodName": "updateRegistration",
+  "successResponse": "RegistrationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user whose registration is going to be updated."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new registration information."
+      ],
+      "type": "body",
+      "javaType": "RegistrationRequest"
+    }
+  ]
+}

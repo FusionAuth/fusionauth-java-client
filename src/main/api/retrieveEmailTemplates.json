@@ -1,0 +1,10 @@
+{
+  "uri": "/api/email/template",
+  "comments": [
+    "Retrieves all of the email templates."
+  ],
+  "method": "get",
+  "methodName": "retrieveEmailTemplates",
+  "successResponse": "EmailTemplateResponse",
+  "errorResponse": "Void"
+}

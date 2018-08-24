@@ -1,0 +1,28 @@
+{
+  "uri": "/api/user-action",
+  "comments": [
+    "Deletes the user action for the given Id. This permanently deletes the user action and also any history and logs of",
+    "the action being applied to any users."
+  ],
+  "method": "delete",
+  "methodName": "deleteUserAction",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userActionId",
+      "comments": [
+        "The Id of the user action to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "constant": true,
+      "name": "hardDelete",
+      "type": "urlParameter",
+      "parameterName": "hardDelete",
+      "value": "true"
+    }
+  ]
+}

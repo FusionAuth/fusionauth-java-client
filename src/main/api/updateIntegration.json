@@ -1,0 +1,20 @@
+{
+  "uri": "/api/integration",
+  "comments": [
+    "Updates the available integrations."
+  ],
+  "method": "put",
+  "methodName": "updateIntegrations",
+  "successResponse": "IntegrationResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new integration information."
+      ],
+      "type": "body",
+      "javaType": "IntegrationRequest"
+    }
+  ]
+}

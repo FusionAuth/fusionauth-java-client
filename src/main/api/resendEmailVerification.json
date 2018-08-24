@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user/verify-email",
+  "comments": [
+    "Re-sends the verification email to the user."
+  ],
+  "method": "put",
+  "methodName": "resendEmailVerification",
+  "successResponse": "VerifyEmailResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "email",
+      "comments": [
+        "The email address of the user that needs a new verification email."
+      ],
+      "type": "urlParameter",
+      "parameterName": "email",
+      "javaType": "String"
+    }
+  ]
+}

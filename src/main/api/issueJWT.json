@@ -1,0 +1,34 @@
+{
+  "uri": "/api/jwt/issue",
+  "comments": [
+    "Issue a new access token (JWT) for the requested Application after ensuring the provided JWT is valid. A valid",
+    "access token is properly signed and not expired.",
+    "<p>",
+    "This API may be used in an SSO configuration to issue new tokens for another application after the user has",
+    "obtained a valid token from authentication."
+  ],
+  "method": "get",
+  "methodName": "issueJWT",
+  "successResponse": "IssueResponse",
+  "errorResponse": "Errors",
+  "authorization": "\"JWT \" + encodedJWT",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Application Id for which you are requesting a new access token be issued."
+      ],
+      "type": "urlParameter",
+      "parameterName": "applicationId",
+      "javaType": "UUID"
+    },
+    {
+      "name": "encodedJWT",
+      "comments": [
+        "The encoded JWT (access token)."
+      ],
+      "type": "notUsed",
+      "javaType": "String"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user-action-reason",
+  "comments": [
+    "Retrieves the user action reason for the given Id. If you pass in null for the id, this will return all of the user",
+    "action reasons."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserActionReason",
+  "successResponse": "UserActionReasonResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "userActionReasonId",
+      "comments": [
+        "(Optional) The Id of the user action reason."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

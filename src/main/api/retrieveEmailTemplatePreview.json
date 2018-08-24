@@ -1,0 +1,22 @@
+{
+  "uri": "/api/email/template/preview",
+  "comments": [
+    "Creates a preview of the email template provided in the request. This allows you to preview an email template that",
+    "hasn't been saved to the database yet. The entire email template does not need to be provided on the request. This",
+    "will create the preview based on whatever is given."
+  ],
+  "method": "post",
+  "methodName": "retrieveEmailTemplatePreview",
+  "successResponse": "PreviewResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains the email template and optionally a locale to render it in."
+      ],
+      "type": "body",
+      "javaType": "PreviewRequest"
+    }
+  ]
+}

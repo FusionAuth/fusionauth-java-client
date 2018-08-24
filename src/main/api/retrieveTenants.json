@@ -1,0 +1,10 @@
+{
+  "uri": "/api/tenant",
+  "comments": [
+    "Retrieves all of the tenants."
+  ],
+  "method": "get",
+  "methodName": "retrieveTenants",
+  "successResponse": "TenantResponse",
+  "errorResponse": "Void"
+}

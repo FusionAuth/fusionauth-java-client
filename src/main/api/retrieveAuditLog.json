@@ -1,0 +1,20 @@
+{
+  "uri": "/api/system/audit-log",
+  "comments": [
+    "Retrieves a single audit log for the given Id."
+  ],
+  "method": "get",
+  "methodName": "retrieveAuditLog",
+  "successResponse": "AuditLogResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "auditLogId",
+      "comments": [
+        "The Id of the audit log to retrieve."
+      ],
+      "type": "urlSegment",
+      "javaType": "Integer"
+    }
+  ]
+}

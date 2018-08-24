@@ -1,0 +1,29 @@
+{
+  "uri": "/api/email/send",
+  "comments": [
+    "Send an email using an email template id. You can optionally provide <code>requestData</code> to access key value",
+    "pairs in the email template."
+  ],
+  "method": "post",
+  "methodName": "sendEmail",
+  "successResponse": "SendResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "emailTemplateId",
+      "comments": [
+        "The id for the template."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The send email request that contains all of the information used to send the email."
+      ],
+      "type": "body",
+      "javaType": "SendRequest"
+    }
+  ]
+}

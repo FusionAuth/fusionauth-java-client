@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user/action",
+  "comments": [
+    "Retrieves all of the actions for the user with the given Id."
+  ],
+  "method": "get",
+  "methodName": "retrieveActions",
+  "successResponse": "ActionResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user to fetch the actions for."
+      ],
+      "type": "urlParameter",
+      "parameterName": "userId",
+      "javaType": "UUID"
+    }
+  ]
+}

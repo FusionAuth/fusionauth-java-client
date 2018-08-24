@@ -1,0 +1,20 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Retrieves the application for the given id or all of the applications if the id is null."
+  ],
+  "method": "get",
+  "methodName": "retrieveApplication",
+  "successResponse": "ApplicationResponse",
+  "errorResponse": "Void",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "(Optional) The application id."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

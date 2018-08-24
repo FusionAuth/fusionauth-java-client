@@ -1,0 +1,28 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Updates the user with the given Id."
+  ],
+  "method": "put",
+  "methodName": "updateUser",
+  "successResponse": "UserResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userId",
+      "comments": [
+        "The Id of the user to update."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new user information."
+      ],
+      "type": "body",
+      "javaType": "UserRequest"
+    }
+  ]
+}

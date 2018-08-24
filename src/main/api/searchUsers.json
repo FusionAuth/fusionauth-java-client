@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user/search",
+  "comments": [
+    "Retrieves the users for the given ids. If any id is invalid, it is ignored."
+  ],
+  "method": "get",
+  "methodName": "searchUsers",
+  "successResponse": "SearchResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "ids",
+      "comments": [
+        "The user ids to search for."
+      ],
+      "type": "urlParameter",
+      "parameterName": "ids",
+      "javaType": "Collection<UUID>"
+    }
+  ]
+}

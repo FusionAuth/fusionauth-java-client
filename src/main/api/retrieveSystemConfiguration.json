@@ -1,0 +1,10 @@
+{
+  "uri": "/api/system-configuration",
+  "comments": [
+    "Retrieves the system configuration."
+  ],
+  "method": "get",
+  "methodName": "retrieveSystemConfiguration",
+  "successResponse": "SystemConfigurationResponse",
+  "errorResponse": "Void"
+}

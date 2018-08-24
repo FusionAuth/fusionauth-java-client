@@ -1,0 +1,10 @@
+{
+  "uri": "/api/webhook",
+  "comments": [
+    "Retrieves all the webhooks."
+  ],
+  "method": "get",
+  "methodName": "retrieveWebhooks",
+  "successResponse": "WebhookResponse",
+  "errorResponse": "Void"
+}

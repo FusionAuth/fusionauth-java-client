@@ -1,0 +1,28 @@
+{
+  "uri": "/api/group",
+  "comments": [
+    "Updates the group with the given Id."
+  ],
+  "method": "put",
+  "methodName": "updateGroup",
+  "successResponse": "GroupResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "groupId",
+      "comments": [
+        "The Id of the group to update."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new group information."
+      ],
+      "type": "body",
+      "javaType": "GroupRequest"
+    }
+  ]
+}

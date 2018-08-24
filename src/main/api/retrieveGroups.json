@@ -1,0 +1,10 @@
+{
+  "uri": "/api/group",
+  "comments": [
+    "Retrieves all of the groups."
+  ],
+  "method": "get",
+  "methodName": "retrieveGroups",
+  "successResponse": "GroupResponse",
+  "errorResponse": "Void"
+}

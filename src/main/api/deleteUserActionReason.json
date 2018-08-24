@@ -1,0 +1,20 @@
+{
+  "uri": "/api/user-action-reason",
+  "comments": [
+    "Deletes the user action reason for the given Id."
+  ],
+  "method": "delete",
+  "methodName": "deleteUserActionReason",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "userActionReasonId",
+      "comments": [
+        "The Id of the user action reason to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    }
+  ]
+}

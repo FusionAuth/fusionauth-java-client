@@ -1,0 +1,20 @@
+{
+  "uri": "/api/group/member",
+  "comments": [
+    "Creates a member in a group."
+  ],
+  "method": "post",
+  "methodName": "createGroupMembers",
+  "successResponse": "MemberResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The request object that contains all of the information used to create the group member(s)."
+      ],
+      "type": "body",
+      "javaType": "MemberRequest"
+    }
+  ]
+}

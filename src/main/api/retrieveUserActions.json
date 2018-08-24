@@ -1,0 +1,10 @@
+{
+  "uri": "/api/user-action",
+  "comments": [
+    "Retrieves all of the user actions."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserActions",
+  "successResponse": "UserActionResponse",
+  "errorResponse": "Void"
+}

@@ -1,0 +1,30 @@
+{
+  "uri": "/api/application",
+  "comments": [
+    "Hard deletes an application. This is a dangerous operation and should not be used in most circumstances. This will",
+    "delete the application, any registrations for that application, metrics and reports for the application, all the",
+    "roles for the application, and any other data associated with the application. This operation could take a very",
+    "long time, depending on the amount of data in your database."
+  ],
+  "method": "delete",
+  "methodName": "deleteApplication",
+  "successResponse": "Void",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "The Id of the application to delete."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "constant": true,
+      "name": "hardDelete",
+      "type": "urlParameter",
+      "parameterName": "hardDelete",
+      "value": "true"
+    }
+  ]
+}

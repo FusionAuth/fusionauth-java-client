@@ -1,0 +1,28 @@
+{
+  "uri": "/api/tenant",
+  "comments": [
+    "Updates the tenant with the given Id."
+  ],
+  "method": "put",
+  "methodName": "updateTenant",
+  "successResponse": "TenantResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "tenantId",
+      "comments": [
+        "The Id of the tenant to update."
+      ],
+      "type": "urlSegment",
+      "javaType": "UUID"
+    },
+    {
+      "name": "request",
+      "comments": [
+        "The request that contains all of the new tenant information."
+      ],
+      "type": "body",
+      "javaType": "TenantRequest"
+    }
+  ]
+}

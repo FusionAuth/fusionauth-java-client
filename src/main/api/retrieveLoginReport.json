@@ -1,0 +1,40 @@
+{
+  "uri": "/api/report/login",
+  "comments": [
+    "Retrieves the login report between the two instants. If you specify an application id, it will only return the",
+    "login counts for that application."
+  ],
+  "method": "get",
+  "methodName": "retrieveLoginReport",
+  "successResponse": "LoginReportResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "applicationId",
+      "comments": [
+        "(Optional) The application id."
+      ],
+      "type": "urlParameter",
+      "parameterName": "applicationId",
+      "javaType": "UUID"
+    },
+    {
+      "name": "start",
+      "comments": [
+        "The start instant as UTC milliseconds since Epoch."
+      ],
+      "type": "urlParameter",
+      "parameterName": "start",
+      "javaType": "long"
+    },
+    {
+      "name": "end",
+      "comments": [
+        "The end instant as UTC milliseconds since Epoch."
+      ],
+      "type": "urlParameter",
+      "parameterName": "end",
+      "javaType": "long"
+    }
+  ]
+}

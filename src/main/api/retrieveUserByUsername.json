@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Retrieves the user for the given username."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserByUsername",
+  "successResponse": "UserResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "username",
+      "comments": [
+        "The username of the user."
+      ],
+      "type": "urlParameter",
+      "parameterName": "username",
+      "javaType": "String"
+    }
+  ]
+}

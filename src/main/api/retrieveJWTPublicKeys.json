@@ -1,0 +1,10 @@
+{
+  "uri": "/api/jwt/public-key",
+  "comments": [
+    "Retrieves all Public Keys configured for verifying JSON Web Tokens (JWT)."
+  ],
+  "method": "get",
+  "methodName": "retrieveJWTPublicKeys",
+  "successResponse": "PublicKeyResponse",
+  "errorResponse": "Void"
+}

@@ -1,0 +1,21 @@
+{
+  "uri": "/api/user",
+  "comments": [
+    "Retrieves the user for the given email."
+  ],
+  "method": "get",
+  "methodName": "retrieveUserByEmail",
+  "successResponse": "UserResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "email",
+      "comments": [
+        "The email of the user."
+      ],
+      "type": "urlParameter",
+      "parameterName": "email",
+      "javaType": "String"
+    }
+  ]
+}
