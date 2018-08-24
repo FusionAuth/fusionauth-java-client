@@ -34,8 +34,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brian Pontarelli
  */
 public class SystemConfiguration implements Buildable<SystemConfiguration>, _InternalJSONColumn {
-  public List<URI> backendServers = new ArrayList<>(1);
-
   /**
    * Base64 encoded Initialization Vector for prime-mvc. This is currently only used to encrypt and de-crypt saved request cookies.
    */
@@ -111,7 +109,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
     SystemConfiguration that = (SystemConfiguration) o;
     return httpSessionMaxInactiveInterval == that.httpSessionMaxInactiveInterval &&
-        Objects.equals(backendServers, that.backendServers) &&
         Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
         Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
         Objects.equals(data, that.data) &&
@@ -131,7 +128,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   @Override
   public int hashCode() {
-    return Objects.hash(backendServers, cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
+    return Objects.hash(cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
                         failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, logoutURL, maximumPasswordAge,
                         minimumPasswordAge, passwordEncryptionConfiguration, passwordValidationRules, reportTimezone, uiConfiguration);
   }

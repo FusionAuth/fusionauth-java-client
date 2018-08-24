@@ -282,7 +282,7 @@ public class FusionAuthClient {
 
   /**
    * Creates an audit log with the message and user name (usually an email). Audit logs should be written anytime you
-   * make changes to the FusionAuth database. When using the FusionAuth Backend web interface, any changes are automatically
+   * make changes to the FusionAuth database. When using the FusionAuth App web interface, any changes are automatically
    * written to the audit log. However, if you are accessing the API, you must write the audit logs yourself.
    *
    * @param request The request object that contains all of the information used to create the audit log entry.
