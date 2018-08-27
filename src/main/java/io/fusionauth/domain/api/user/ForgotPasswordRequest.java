@@ -57,12 +57,4 @@ public class ForgotPasswordRequest {
   public void setUsername(String username) {
     this.loginId = username;
   }
-
-  public String getVerificationId() {
-    return changePasswordId;
-  }
-
-  public void setVerificationId(String verificationId) {
-    this.changePasswordId = verificationId;
-  }
 }
