@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018,FusionAuth, All Rights Reserved
+ * Copyright (c) 2018, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,21 +49,5 @@ public class LoginRequest extends BaseLoginRequest implements Buildable<LoginReq
     this.applicationId = applicationId;
     this.loginId = loginId;
     this.password = password;
-  }
-
-  public String getEmail() {
-    return loginId;
-  }
-
-  public void setEmail(String email) {
-    this.loginId = email;
-  }
-
-  public String getUsername() {
-    return loginId;
-  }
-
-  public void setUsername(String username) {
-    this.loginId = username;
   }
 }
