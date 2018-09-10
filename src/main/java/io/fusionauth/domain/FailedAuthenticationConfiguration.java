@@ -37,11 +37,6 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
   public ExpiryUnit actionDurationUnit = ExpiryUnit.MINUTES;
 
   /**
-   * Id of the User Action used when a user reaches the threshold defined by <code>tooManyAttempts</code>.
-   */
-  public UUID userActionId;
-
-  /**
    * The length of time in seconds the failed login attempt is kept in the cache. This essentially causes the failed
    * login count to fail after this period of time.
    */
@@ -51,6 +46,11 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
    * Number of failed login attempts considered to be too many.
    */
   public int tooManyAttempts = 5;
+
+  /**
+   * Id of the User Action used when a user reaches the threshold defined by <code>tooManyAttempts</code>.
+   */
+  public UUID userActionId;
 
   @Override
   public boolean equals(Object o) {
