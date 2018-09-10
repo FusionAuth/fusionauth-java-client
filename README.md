@@ -14,7 +14,7 @@ Released versions can be downloaded from the Savant Repository.
 <dependency>
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.11</version>
 </dependency>
 ```
 
