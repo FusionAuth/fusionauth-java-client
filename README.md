@@ -4,30 +4,13 @@ If you're integrating FusionAuth with a Java application, this library will spee
 For additional information and documentation on FusionAuth refer to [https://fusionauth.io](https://fusionauth.io).
 
 
-## Downloading
-Released versions can be downloaded from the Savant Repository.
- 
- * http://savant.inversoft.org/io/fusionauth/fusionauth-java-client/
-
-# Maven 
+## Maven 
 ```xml
 <dependency>
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
   <version>1.0.11</version>
 </dependency>
-```
-
-## Building with Savant
-**Note:** This project uses the Savant build tool. To compile using using Savant, follow these instructions:
-
-```bash
-$ mkdir ~/savant
-$ cd ~/savant
-$ wget http://savant.inversoft.org/org/savantbuild/savant-core/1.0.0/savant-1.0.0.tar.gz
-$ tar xvfz savant-1.0.0.tar.gz
-$ ln -s ./savant-1.0.0 current
-$ export PATH=$PATH:~/savant/current/bin/
 ```
 
 Then, perform an integration build of the project by running:
@@ -37,16 +20,16 @@ $ sb int
 
 For more information, checkout [savantbuild.org](http://savantbuild.org/).
 
-### Examples Usages:
+## Examples Usages:
 
-#### Build the Client
+### Build the Client
 
 ```java
 String apiKey = "5a826da2-1e3a-49df-85ba-cd88575e4e9d";
 FusionAuthClient client = new FusionAuthClient(apiKey, "http://localhost:9011");
 ```
 
-#### Login a user
+### Login a user
 
 ```java
 String applicationId = "68364852-7a38-4e15-8c48-394eceafa601";
@@ -58,4 +41,25 @@ if (!result.wasSuccessful()) {
 }
 
 // Hooray! Success
+```
+
+## Building 
+
+### Building with Maven
+
+```bash
+$ mvn install
+```
+
+### Building with Savant
+
+**Note:** This project uses the Savant build tool. To compile using using Savant, follow these instructions:
+
+```bash
+$ mkdir ~/savant
+$ cd ~/savant
+$ wget http://savant.inversoft.org/org/savantbuild/savant-core/1.0.0/savant-1.0.0.tar.gz
+$ tar xvfz savant-1.0.0.tar.gz
+$ ln -s ./savant-1.0.0 current
+$ export PATH=$PATH:~/savant/current/bin/
 ```
