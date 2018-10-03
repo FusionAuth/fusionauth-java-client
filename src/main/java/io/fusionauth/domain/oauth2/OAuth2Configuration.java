@@ -21,13 +21,14 @@ import java.util.List;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 import static io.fusionauth.domain.util.Normalizer.removeEmpty;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
  * @author Daniel DeGroff
  */
-public class OAuth2Configuration {
+public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public List<URI> authorizedOriginURLs = new ArrayList<>();
 
   public List<URI> authorizedRedirectURLs = new ArrayList<>();
