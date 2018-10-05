@@ -40,8 +40,11 @@ FusionAuthClient.prototype = {
    * @param {Function} callBack The response handler call back. This function will be passed the ClientResponse object.
    */
   [#assign parameters = global.methodParameters(api, "js")/]
-  ${api.methodName}: function(${parameters}${parameters?has_content?then(', callBack', 'callBack')}) {
+  ${api.methodName}: function(${parameters}${para meters?has_content?then(', callBack', 'callBack')}) {
       return this._start()
+      [#if api.method == "post" && !global.hasBodyParam(api.params![])]
+          .header('Content-Type', 'text/plain')
+      [/#if]
           .uri('${api.uri}')
       [#if api.authorization??]
           .authorization(${api.authorization?replace('\"', '\'')})

@@ -85,3 +85,12 @@
   [/#list]
   [#return result?join(", ")/]
 [/#function]
+
+[#function hasBodyParam params]
+  [#list params as param]
+    [#if param.type == "body"]
+      [#return true]
+    [/#if]
+  [/#list]
+  [#return false]
+[/#function]
