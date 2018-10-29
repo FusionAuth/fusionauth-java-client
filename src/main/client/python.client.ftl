@@ -15,7 +15,8 @@
 # language governing permissions and limitations under the License.
 #
 
-from io.fusionauth.rest_client import RESTClient
+from fusionauth.rest_client import RESTClient, JSONBodyHandler
+
 
 class FusionAuthClient:
     """The FusionAuthClient provides easy access to the FusionAuth API."""
@@ -38,25 +39,25 @@ class FusionAuthClient:
         Attributes:
         [#list api.params![] as param]
           [#if !param.constant??]
-            ${camel_to_underscores(param.name)}: ${param.comments?join("\n                    ")}
+            ${global.convertValue(param, "python")}: ${param.comments?join("\n                    ")}
           [/#if]
         [/#list]
         """
         return self.start().uri('${api.uri}') \
-            [#if api.authorization??]
-                .authorization(${api.authorization})
+          [#if api.authorization??]
+            .authorization(${camel_to_underscores(api.authorization)}) \
+          [/#if]
+          [#list api.params![] as param]
+            [#if param.type == "urlSegment"]
+            .url_segment(${global.convertValue(param, "python")}) \
+            [#elseif param.type == "urlParameter"]
+            .url_parameter('${param.parameterName}', ${global.convertValue(param, "python")}) \
+            [#elseif param.type == "body"]
+            .body_handler(JSONBodyHandler(${camel_to_underscores(param.name)})) \
             [/#if]
-            [#list api.params![] as param]
-              [#if param.type == "urlSegment"]
-                .url_segment(${(param.constant?? && param.constant)?then(param.value, camel_to_underscores(param.name))}) \
-              [#elseif param.type == "urlParameter"]
-                .url_parameter('${param.parameterName}', ${(param.constant?? && param.constant)?then(param.value, camel_to_underscores(param.name))}) \
-              [#elseif param.type == "body"]
-                .body_handler(JSONBodyHandler(${camel_to_underscores(param.name)})) \
-              [/#if]
-            [/#list]
-                .${api.method}() \
-                .go()
+          [/#list]
+            .${api.method}() \
+            .go()
 
 [/#list]
     def start(self):
