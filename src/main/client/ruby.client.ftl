@@ -1,6 +1,6 @@
 [#import "_macros.ftl" as global/]
 require 'ostruct'
-require 'rest_client'
+require 'fusionauth/rest_client'
 
 #
 # Copyright (c) 2018, FusionAuth, All Rights Reserved
