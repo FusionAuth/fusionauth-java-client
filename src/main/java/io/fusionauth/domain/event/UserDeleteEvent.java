@@ -63,7 +63,7 @@ public class UserDeleteEvent extends BaseEvent implements Buildable<UserDeleteEv
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.UserDelete;
   }
 }

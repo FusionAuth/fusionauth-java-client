@@ -17,11 +17,13 @@ package io.fusionauth.domain;
 
 import java.net.URI;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -29,19 +31,22 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.event.EventType;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import static java.util.Arrays.asList;
 
 /**
  * @author Brian Pontarelli
  */
 public class SystemConfiguration implements Buildable<SystemConfiguration>, _InternalJSONColumn {
   /**
-   * Base64 encoded Initialization Vector for prime-mvc. This is currently only used to encrypt and de-crypt saved request cookies.
+   * Base64 encoded Initialization Vector for prime-mvc. This is currently only used to encrypt and de-crypt saved
+   * request cookies.
    */
   @InternalJSONColumn
   public String cookieEncryptionIV;
 
   /**
-   * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request cookies.
+   * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
+   * cookies.
    */
   @InternalJSONColumn
   public String cookieEncryptionKey;
@@ -64,7 +69,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public FailedAuthenticationConfiguration failedAuthenticationConfiguration = new FailedAuthenticationConfiguration();
 
   /**
-   * Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
+   * Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth
+   * OAuth frontend.
    * <p>
    * Default is 60 minutes.
    */
@@ -77,8 +83,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
   /**
-   * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the <code>Application.oauthConfiguration.logoutURL</code>
-   * is defined it will be used instead.
+   * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
+   * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
    */
   public URI logoutURL;
 
@@ -137,6 +143,10 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     // Normalize Line returns in the public / private keys
     if (jwtConfiguration != null) {
       jwtConfiguration.normalize();
+    }
+
+    if (uiConfiguration != null) {
+      uiConfiguration.normalize();
     }
   }
 
@@ -359,7 +369,48 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       return Objects.hash(logoURL, headerColor, loginTheme, menuFontColor);
     }
 
-    public static class LoginTheme extends Enableable {
+    public void normalize() {
+      if (loginTheme != null) {
+        loginTheme.normalize();
+      }
+    }
+
+    public static class LoginTheme extends Enableable implements Buildable<LoginTheme> {
+      public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
+          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2Error", "oauth2TwoFactor", "passwordChange",
+          "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete", "registrationSend", "registrationVerify"
+      )));
+
+      public String emailComplete;
+
+      public String emailSend;
+
+      public String emailVerify;
+
+      public String helpers;
+
+      public ZonedDateTime lastModified;
+
+      public String oauth2Authorize;
+
+      public String oauth2Error;
+
+      public String oauth2TwoFactor;
+
+      public String passwordChange;
+
+      public String passwordComplete;
+
+      public String passwordForgot;
+
+      public String passwordSent;
+
+      public String registrationComplete;
+
+      public String registrationSend;
+
+      public String registrationVerify;
+
       public String stylesheet;
 
       @Override
@@ -374,13 +425,73 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
           return false;
         }
         LoginTheme that = (LoginTheme) o;
-        return Objects.equals(stylesheet, that.stylesheet);
+        return Objects.equals(emailComplete, that.emailComplete) &&
+            Objects.equals(emailSend, that.emailSend) &&
+            Objects.equals(emailVerify, that.emailVerify) &&
+            Objects.equals(helpers, that.helpers) &&
+            Objects.equals(lastModified, that.lastModified) &&
+            Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+            Objects.equals(oauth2Error, that.oauth2Error) &&
+            Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
+            Objects.equals(passwordChange, that.passwordChange) &&
+            Objects.equals(passwordComplete, that.passwordComplete) &&
+            Objects.equals(passwordForgot, that.passwordForgot) &&
+            Objects.equals(passwordSent, that.passwordSent) &&
+            Objects.equals(registrationComplete, that.registrationComplete) &&
+            Objects.equals(registrationSend, that.registrationSend) &&
+            Objects.equals(registrationVerify, that.registrationVerify) &&
+            Objects.equals(stylesheet, that.stylesheet);
       }
 
       @Override
       public int hashCode() {
+        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize,
+                            oauth2Error, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
+                            registrationSend, registrationVerify, stylesheet);
+      }
 
-        return Objects.hash(super.hashCode(), stylesheet);
+      public void normalize() {
+        emailComplete = normalize(emailComplete);
+        emailSend = normalize(emailSend);
+        emailVerify = normalize(emailVerify);
+        helpers = normalize(helpers);
+        oauth2Authorize = normalize(oauth2Authorize);
+        oauth2Error = normalize(oauth2Error);
+        oauth2TwoFactor = normalize(oauth2TwoFactor);
+        passwordChange = normalize(passwordChange);
+        passwordComplete = normalize(passwordComplete);
+        passwordForgot = normalize(passwordForgot);
+        passwordSent = normalize(passwordSent);
+        registrationComplete = normalize(registrationComplete);
+        registrationSend = normalize(registrationSend);
+        registrationVerify = normalize(registrationVerify);
+        stylesheet = normalize(stylesheet);
+      }
+
+      public boolean wasUpdated(LoginTheme other) {
+        if (other == null) {
+          return true;
+        }
+
+        return !Objects.equals(emailComplete, other.emailComplete) ||
+            !Objects.equals(emailSend, other.emailSend) ||
+            !Objects.equals(emailVerify, other.emailVerify) ||
+            !Objects.equals(helpers, other.helpers) ||
+            !Objects.equals(oauth2Authorize, other.oauth2Authorize) ||
+            !Objects.equals(oauth2Error, other.oauth2Error) ||
+            !Objects.equals(oauth2TwoFactor, other.oauth2TwoFactor) ||
+            !Objects.equals(passwordChange, other.passwordChange) ||
+            !Objects.equals(passwordComplete, other.passwordComplete) ||
+            !Objects.equals(passwordForgot, other.passwordForgot) ||
+            !Objects.equals(passwordSent, other.passwordSent) ||
+            !Objects.equals(registrationComplete, other.registrationComplete) ||
+            !Objects.equals(registrationSend, other.registrationSend) ||
+            !Objects.equals(registrationVerify, other.registrationVerify) ||
+            !Objects.equals(stylesheet, other.stylesheet);
+      }
+
+      private String normalize(String value) {
+        return value == null || value.trim().length() == 0 ? null : value;
       }
     }
   }

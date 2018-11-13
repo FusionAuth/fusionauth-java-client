@@ -1,0 +1,1 @@
+[#import "_macros.ftl" as global/]

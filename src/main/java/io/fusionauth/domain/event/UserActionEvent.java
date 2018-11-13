@@ -179,7 +179,7 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.UserAction;
   }
 }

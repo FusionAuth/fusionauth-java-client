@@ -27,8 +27,6 @@ import io.fusionauth.domain.api.BaseLoginRequest;
 public class TwoFactorLoginRequest extends BaseLoginRequest implements Buildable<TwoFactorLoginRequest> {
   public String code;
 
-  public boolean noJWT;
-
   public boolean trustComputer;
 
   public String twoFactorId;

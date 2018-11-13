@@ -14,7 +14,7 @@
         "The reconcile request that contains the data to reconcile the User."
       ],
       "type": "body",
-      "javaType": "ReconcileRequest"
+      "javaType": "IdentityProviderLoginRequest"
     }
   ]
 }

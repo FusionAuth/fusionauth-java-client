@@ -72,9 +72,9 @@ import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
 import io.fusionauth.domain.api.jwt.IssueResponse;
-import io.fusionauth.domain.api.jwt.ReconcileRequest;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
 import io.fusionauth.domain.api.jwt.RefreshResponse;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
@@ -155,7 +155,8 @@ public class FusionAuthClient {
   }
 
   /**
-  * Creates a new copy of this client with the provided tenant Id. When more than one tenant is configured in FusionAuth use this method to set the tenant Id prior to making API calls.
+  * Creates a new copy of this client with the provided tenant Id. When more than one tenant is configured in FusionAuth
+  * use this method to set the tenant Id prior to making API calls.
   * <p>
   * When only one tenant is configured, or you have you have not configured tenants, setting the tenant is not necessary.
   *

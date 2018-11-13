@@ -13,56 +13,55 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.event;
+package io.fusionauth.domain.provider;
 
 import java.util.Objects;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
- * Models the User Reactivate Event (and can be converted to JSON).
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class UserReactivateEvent extends BaseEvent implements Buildable<UserReactivateEvent> {
-  public User user;
+public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<GoogleApplicationConfiguration> {
+  @InternalJSONColumn
+  public String buttonText;
 
-  @JacksonConstructor
-  public UserReactivateEvent() {
-  }
+  @InternalJSONColumn
+  public String client_id;
 
-  public UserReactivateEvent(User user) {
-    this.user = user;
-  }
+  @InternalJSONColumn
+  public String client_secret;
+
+  @InternalJSONColumn
+  public String scope;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof GoogleApplicationConfiguration)) {
       return false;
     }
-    UserReactivateEvent that = (UserReactivateEvent) o;
-    return super.equals(o) &&
-        Objects.equals(user, that.user);
+    if (!super.equals(o)) {
+      return false;
+    }
+    GoogleApplicationConfiguration that = (GoogleApplicationConfiguration) o;
+    return Objects.equals(buttonText, that.buttonText) &&
+        Objects.equals(client_id, that.client_id) &&
+        Objects.equals(client_secret, that.client_secret) &&
+        Objects.equals(scope, that.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
   }
 
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserReactivate;
   }
 }

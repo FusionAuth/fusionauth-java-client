@@ -46,6 +46,9 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   @InternalJSONColumn
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
+  @InternalJSONColumn
+  public final Map<String, String> tokens;
+
   @JsonIgnore
   public Application application;
 
@@ -75,6 +78,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   public boolean verified;
 
   public UserRegistration() {
+    tokens = new LinkedHashMap<>();
     this.data = new LinkedHashMap<>();
   }
 
@@ -86,6 +90,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
     this.userId = userId;
     this.cleanSpeakId = cleanSpeakId;
     this.lastLoginInstant = lastLoginInstant;
+    this.tokens = new LinkedHashMap<>();
     this.username = username;
     this.usernameStatus = usernameStatus;
     this.verified = true;
@@ -119,6 +124,11 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
     if (userRegistration.data != null) {
       this.data.putAll(userRegistration.data);
     }
+
+    this.tokens = new LinkedHashMap<>();
+    if (userRegistration.tokens != null) {
+      this.tokens.putAll(userRegistration.tokens);
+    }
   }
 
   @Override
@@ -137,6 +147,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
         Objects.equals(insertInstant, that.insertInstant) &&
         Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
         Objects.equals(roles, that.roles) &&
+        Objects.equals(tokens, that.tokens) &&
         Objects.equals(userId, that.userId) &&
         Objects.equals(username, that.username) &&
         Objects.equals(usernameStatus, that.usernameStatus) &&
@@ -145,7 +156,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, authenticationToken, cleanSpeakId, data, insertInstant, lastLoginInstant, roles, userId, username, usernameStatus);
+    return Objects.hash(applicationId, authenticationToken, cleanSpeakId, data, insertInstant, lastLoginInstant, roles, tokens, userId, username, usernameStatus);
   }
 
   public void normalize() {

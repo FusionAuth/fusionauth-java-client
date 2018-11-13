@@ -13,47 +13,48 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.provider;
 
 import java.net.URI;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
  * @author Daniel DeGroff
  */
-public class IdentityProviderOauth2Configuration implements Buildable<IdentityProviderOauth2Configuration> {
-  /**
-   * <code>authorization_endpoint</code> is the OpenId well-known name for the Authorization endpoint.
-   */
-  @JsonProperty("authorization_endpoint")
-  public URI authorizationEndpoint;
+public class OpenIdConnectApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<OpenIdConnectApplicationConfiguration> {
+  @InternalJSONColumn
+  public URI buttonImageURL;
 
-  /**
-   * <code>token_endpoint</code> is the OpenId well-known name for the Token endpoint.
-   */
-  @JsonProperty("token_endpoint")
-  public URI tokenEndpoint;
+  @InternalJSONColumn
+  public String buttonText;
+
+  @InternalJSONColumn
+  public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof IdentityProviderOauth2Configuration)) {
+    if (!(o instanceof OpenIdConnectApplicationConfiguration)) {
       return false;
     }
-    IdentityProviderOauth2Configuration that = (IdentityProviderOauth2Configuration) o;
-    return Objects.equals(authorizationEndpoint, that.authorizationEndpoint) &&
-        Objects.equals(tokenEndpoint, that.tokenEndpoint);
+    if (!super.equals(o)) {
+      return false;
+    }
+    OpenIdConnectApplicationConfiguration that = (OpenIdConnectApplicationConfiguration) o;
+    return Objects.equals(buttonImageURL, that.buttonImageURL) &&
+        Objects.equals(buttonText, that.buttonText) &&
+        Objects.equals(oauth2, that.oauth2);
   }
-
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizationEndpoint, tokenEndpoint);
+    return Objects.hash(super.hashCode(), buttonImageURL, buttonText, oauth2);
   }
 
   @Override

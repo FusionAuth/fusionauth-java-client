@@ -18,7 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-import org.primeframework.jwt.domain.Algorithm;
+import io.fusionauth.jwt.domain.Algorithm;
 
 /**
  * JWT Configuration. A JWT Configuration for an Application may not be active if it is using the global configuration, the configuration

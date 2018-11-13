@@ -17,26 +17,52 @@ package io.fusionauth.domain.api;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.IdentityProvider;
+import io.fusionauth.domain.provider.BaseIdentityProvider;
+import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
+import io.fusionauth.domain.provider.FacebookIdentityProvider;
+import io.fusionauth.domain.provider.GoogleIdentityProvider;
+import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
+import io.fusionauth.domain.provider.TwitterIdentityProvider;
 
 /**
  * @author Daniel DeGroff
  */
 public class IdentityProviderResponse {
-  public IdentityProvider identityProvider;
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
+  @JsonSubTypes({
+      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
+      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
+      @Type(value = GoogleIdentityProvider.class, name = "Google"),
+      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
+      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
 
-  public List<IdentityProvider> identityProviders;
+  })
+  public BaseIdentityProvider<?> identityProvider;
+
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
+  @JsonSubTypes({
+      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
+      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
+      @Type(value = GoogleIdentityProvider.class, name = "Google"),
+      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
+      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
+  })
+  public List<BaseIdentityProvider<?>> identityProviders;
 
   @JacksonConstructor
   public IdentityProviderResponse() {
   }
 
-  public IdentityProviderResponse(List<IdentityProvider> identityProviders) {
+  public IdentityProviderResponse(List<BaseIdentityProvider<?>> identityProviders) {
     this.identityProviders = identityProviders;
   }
 
-  public IdentityProviderResponse(IdentityProvider identityProvider) {
+  public IdentityProviderResponse(BaseIdentityProvider<?> identityProvider) {
     this.identityProvider = identityProvider;
   }
 }

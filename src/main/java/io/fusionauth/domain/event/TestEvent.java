@@ -60,7 +60,7 @@ public class TestEvent extends BaseEvent implements Buildable<TestEvent> {
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.Test;
   }
 }

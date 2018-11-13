@@ -1,5 +1,17 @@
 /*
  * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.internal;
 
@@ -56,9 +68,16 @@ public interface _InternalJSONColumn {
     for (Field field : fields) {
       // This is an assumption that final fields are collections of some type
       if ((field.getModifiers() & Modifier.FINAL) == Modifier.FINAL) {
-        Collection sourceCollection = (Collection) result.getClass().getField(field.getName()).get(result);
-        Collection targetCollection = (Collection) field.get(this);
-        targetCollection.addAll(sourceCollection);
+        // Check for Map and Collection
+        if (Map.class.isAssignableFrom(field.getType())) {
+          Map<Object, Object> sourceMap = (Map<Object, Object>) result.getClass().getField(field.getName()).get(result);
+          Map<Object, Object> targetMap = (Map<Object, Object>) field.get(this);
+          targetMap.putAll(sourceMap);
+        } else if (Collection.class.isAssignableFrom(field.getType())) {
+          Collection<Object> sourceCollection = (Collection<Object>) result.getClass().getField(field.getName()).get(result);
+          Collection<Object> targetCollection = (Collection<Object>) field.get(this);
+          targetCollection.addAll(sourceCollection);
+        }
       } else {
         field.set(this, result.getClass().getField(field.getName()).get(result));
       }

@@ -13,11 +13,35 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.provider;
 
-/**
- * @author Daniel DeGroff
- */
-public enum UniqueIdentityClaimType {
-  Email, Username
+import java.util.UUID;
+
+public enum IdentityProviderType {
+  ExternalJWT(null),
+
+  OpenIDConnect(null),
+
+  Facebook(UUID.fromString("56abdcc7-8bd9-4321-9621-4e9bbebae494")),
+
+  Google(UUID.fromString("82339786-3dff-42a6-aac6-1f1ceecb6c46")),
+
+  Twitter(UUID.fromString("45bb233c-0901-4236-b5ca-ac46e2e0a5a5"));
+
+  public final UUID id;
+
+  IdentityProviderType(UUID id) {
+    this.id = id;
+  }
+
+  /**
+   * @return the fixed Id for the type, or generate a new UUID.
+   */
+  public UUID getId() {
+    if (id == null) {
+      return UUID.randomUUID();
+    }
+
+    return id;
+  }
 }

@@ -13,8 +13,10 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.jwt;
+package io.fusionauth.domain.api.identityProvider;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -22,27 +24,33 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
- * @author Daniel DeGroff
+ * Login API request object used for login to third-party systems (i.e. Login with Facebook).
+ *
+ * @author Brian Pontarelli
  */
-public class ReconcileRequest extends BaseLoginRequest implements Buildable<ReconcileRequest> {
-  public String encodedJWT;
+public class IdentityProviderLoginRequest extends BaseLoginRequest implements Buildable<IdentityProviderLoginRequest> {
+  public Map<String, String> data = new HashMap<>(1);
 
   public UUID identityProviderId;
 
   @JacksonConstructor
-  public ReconcileRequest() {
+  public IdentityProviderLoginRequest() {
   }
 
-  public ReconcileRequest(UUID identityProviderId, UUID applicationId, String encodedJWT) {
-    this.identityProviderId = identityProviderId;
-    this.applicationId = applicationId;
-    this.encodedJWT = encodedJWT;
+  public IdentityProviderLoginRequest addData(String key, String value) {
+    if (value == null) {
+      return this;
+    }
+
+    data.put(key, value);
+    return this;
   }
 
-  public ReconcileRequest(UUID identityProviderId, UUID applicationId, String encodedJWT, String ipAddress) {
-    this.identityProviderId = identityProviderId;
-    this.applicationId = applicationId;
-    this.encodedJWT = encodedJWT;
-    this.ipAddress = ipAddress;
+  public String getEncodedJWT() {
+    return data.get("token");
+  }
+
+  public void setEncodedJWT(String encodedJWT) {
+    this.data.put("token", encodedJWT);
   }
 }

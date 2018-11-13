@@ -15,20 +15,37 @@
  */
 package io.fusionauth.domain.api;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.IdentityProvider;
+import io.fusionauth.domain.provider.BaseIdentityProvider;
+import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
+import io.fusionauth.domain.provider.FacebookIdentityProvider;
+import io.fusionauth.domain.provider.GoogleIdentityProvider;
+import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
+import io.fusionauth.domain.provider.TwitterIdentityProvider;
 
 /**
  * @author Daniel DeGroff
  */
 public class IdentityProviderRequest {
-  public IdentityProvider identityProvider;
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
+  @JsonSubTypes({
+      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
+      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
+      @Type(value = GoogleIdentityProvider.class, name = "Google"),
+      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
+      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
+  })
+  public BaseIdentityProvider<?> identityProvider;
 
   @JacksonConstructor
   public IdentityProviderRequest() {
   }
 
-  public IdentityProviderRequest(IdentityProvider identityProvider) {
+  public IdentityProviderRequest(BaseIdentityProvider<?> identityProvider) {
     this.identityProvider = identityProvider;
   }
 }

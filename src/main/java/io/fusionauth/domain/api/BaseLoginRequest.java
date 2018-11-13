@@ -30,4 +30,6 @@ public class BaseLoginRequest {
   public String ipAddress;
 
   public MetaData metaData;
+
+  public boolean noJWT;
 }

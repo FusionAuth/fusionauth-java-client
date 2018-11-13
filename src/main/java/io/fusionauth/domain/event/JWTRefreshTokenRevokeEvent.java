@@ -83,7 +83,7 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.JWTRefreshTokenRevoke;
   }
 }

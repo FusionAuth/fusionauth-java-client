@@ -143,7 +143,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
       jwtConfiguration.normalize();
       // issuer and refresh token TTL only applies to the global JWT configuration.
       jwtConfiguration.issuer = null;
-      jwtConfiguration.refreshTokenTimeToLiveInMinutes = 0;
+      jwtConfiguration.refreshTokenTimeToLiveInMinutes = null;
     }
 
     roles.forEach(ApplicationRole::normalize);

@@ -16,7 +16,7 @@
 package io.fusionauth.domain.api.jwt;
 
 import com.inversoft.json.JacksonConstructor;
-import org.primeframework.jwt.domain.JWT;
+import io.fusionauth.jwt.domain.JWT;
 
 /**
  * @author Daniel DeGroff

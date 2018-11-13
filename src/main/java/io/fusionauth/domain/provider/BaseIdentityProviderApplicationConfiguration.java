@@ -13,56 +13,49 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.event;
+package io.fusionauth.domain.provider;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.Enableable;
+import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
- * Models the User Reactivate Event (and can be converted to JSON).
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class UserReactivateEvent extends BaseEvent implements Buildable<UserReactivateEvent> {
-  public User user;
+public abstract class BaseIdentityProviderApplicationConfiguration extends Enableable implements _InternalJSONColumn {
+  public final Map<String, Object> data = new HashMap<>();
 
-  @JacksonConstructor
-  public UserReactivateEvent() {
-  }
-
-  public UserReactivateEvent(User user) {
-    this.user = user;
-  }
+  @InternalJSONColumn
+  public boolean createRegistration = true;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof BaseIdentityProviderApplicationConfiguration)) {
       return false;
     }
-    UserReactivateEvent that = (UserReactivateEvent) o;
-    return super.equals(o) &&
-        Objects.equals(user, that.user);
+    if (!super.equals(o)) {
+      return false;
+    }
+    BaseIdentityProviderApplicationConfiguration that = (BaseIdentityProviderApplicationConfiguration) o;
+    return createRegistration == that.createRegistration &&
+        Objects.equals(data, that.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
+    return Objects.hash(super.hashCode(), data, createRegistration);
   }
 
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserReactivate;
   }
 }

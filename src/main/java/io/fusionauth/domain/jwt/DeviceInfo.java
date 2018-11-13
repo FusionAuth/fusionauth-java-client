@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.jwt;
 
-import java.net.InetAddress;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -26,10 +25,9 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class DeviceInfo implements Buildable<DeviceInfo> {
-
   public String description;
 
-  public InetAddress lastAccessedAddress;
+  public String lastAccessedAddress;
 
   public ZonedDateTime lastAccessedInstant;
 

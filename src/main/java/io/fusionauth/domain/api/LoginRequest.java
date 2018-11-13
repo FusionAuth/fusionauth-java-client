@@ -28,8 +28,6 @@ import io.fusionauth.domain.Buildable;
 public class LoginRequest extends BaseLoginRequest implements Buildable<LoginRequest> {
   public String loginId;
 
-  public boolean noJWT;
-
   public String password;
 
   public String twoFactorTrustId;

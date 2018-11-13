@@ -52,6 +52,11 @@ public class UserDeactivateEvent extends BaseEvent implements Buildable<UserDeac
   }
 
   @Override
+  public EventType getType() {
+    return EventType.UserDeactivate;
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), user);
   }
@@ -59,10 +64,5 @@ public class UserDeactivateEvent extends BaseEvent implements Buildable<UserDeac
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType type() {
-    return EventType.UserDeactivate;
   }
 }

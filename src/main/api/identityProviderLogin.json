@@ -1,0 +1,22 @@
+{
+  "uri": "/api/identity-provider/login",
+  "comments": [
+    "Handles login via third-parties including Social login, external OAuth and OpenID Connect, and other",
+    "login systems."
+  ],
+  "method": "post",
+  "methodName": "identityProviderLogin",
+  "successResponse": "LoginResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "request",
+      "comments": [
+        "The third-party login request that contains information from the third-party login",
+        "providers that FusionAuth uses to reconcile the user's account."
+      ],
+      "type": "body",
+      "javaType": "IdentityProviderLoginRequest"
+    }
+  ]
+}

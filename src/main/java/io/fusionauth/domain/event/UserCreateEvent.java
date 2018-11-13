@@ -62,7 +62,7 @@ public class UserCreateEvent extends BaseEvent implements Buildable<UserCreateEv
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.UserCreate;
   }
 }

@@ -65,7 +65,7 @@ public class UserUpdateEvent extends BaseEvent implements Buildable<UserUpdateEv
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.UserUpdate;
   }
 }

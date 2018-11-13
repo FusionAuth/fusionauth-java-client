@@ -13,22 +13,27 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.provider;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.PasswordValidationRules;
+import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
-public class PasswordValidationRulesResponse {
-  public PasswordValidationRules passwordValidationRules;
-
-  public PasswordValidationRulesResponse(PasswordValidationRules passwordValidationRules) {
-    this.passwordValidationRules = passwordValidationRules;
+public class ExternalJWTApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<ExternalJWTApplicationConfiguration> {
+  @Override
+  public boolean equals(Object o) {
+    return super.equals(o);
   }
 
-  @JacksonConstructor
-  public PasswordValidationRulesResponse() {
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

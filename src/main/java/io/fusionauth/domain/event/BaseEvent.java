@@ -19,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -56,16 +57,18 @@ public abstract class BaseEvent {
     }
     BaseEvent baseEvent = (BaseEvent) o;
     return Objects.equals(createInstant, baseEvent.createInstant) &&
-        Objects.equals(id, baseEvent.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(createInstant, id);
+        Objects.equals(id, baseEvent.id) &&
+        Objects.equals(getType(), baseEvent.getType());
   }
 
   /**
    * @return The type of this event.
    */
-  public abstract EventType type();
+  @JsonIgnore
+  public abstract EventType getType();
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(createInstant, id, getType());
+  }
 }

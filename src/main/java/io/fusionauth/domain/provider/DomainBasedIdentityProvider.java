@@ -13,22 +13,16 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.provider;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.PasswordValidationRules;
+import java.util.Set;
 
 /**
- * @author Daniel DeGroff
+ * Interface for all identity providers that can be domain based.
  */
-public class PasswordValidationRulesResponse {
-  public PasswordValidationRules passwordValidationRules;
-
-  public PasswordValidationRulesResponse(PasswordValidationRules passwordValidationRules) {
-    this.passwordValidationRules = passwordValidationRules;
-  }
-
-  @JacksonConstructor
-  public PasswordValidationRulesResponse() {
-  }
+public interface DomainBasedIdentityProvider {
+  /**
+   * @return Any domains for the identity provider.
+   */
+  Set<String> getDomains();
 }

@@ -63,7 +63,7 @@ public class UserBulkCreateEvent extends BaseEvent implements Buildable<UserBulk
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.UserBulkCreate;
   }
 }

@@ -76,7 +76,7 @@ public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTP
   }
 
   @Override
-  public EventType type() {
+  public EventType getType() {
     return EventType.JWTPublicKeyUpdate;
   }
 }

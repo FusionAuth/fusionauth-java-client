@@ -71,9 +71,9 @@ import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
 import io.fusionauth.domain.api.jwt.IssueResponse;
-import io.fusionauth.domain.api.jwt.ReconcileRequest;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
 import io.fusionauth.domain.api.jwt.RefreshResponse;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
@@ -154,7 +154,8 @@ public class FusionAuthClient {
   }
 
   /**
-  * Creates a new copy of this client with the provided tenant Id. When more than one tenant is configured in FusionAuth use this method to set the tenant Id prior to making API calls.
+  * Creates a new copy of this client with the provided tenant Id. When more than one tenant is configured in FusionAuth
+  * use this method to set the tenant Id prior to making API calls.
   * <p>
   * When only one tenant is configured, or you have you have not configured tenants, setting the tenant is not necessary.
   *
@@ -782,6 +783,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Handles login via third-parties including Social login, external OAuth and OpenID Connect, and other
+   * login systems.
+   *
+   * @param request The third-party login request that contains information from the third-party login
+   *     providers that FusionAuth uses to reconcile the user's account.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginResponse, Errors> identityProviderLogin(IdentityProviderLoginRequest request) {
+    return start(LoginResponse.class, Errors.class).uri("/api/identity-provider/login")
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
    * Bulk imports multiple users. This does some validation, but then tries to run batch inserts of users. This reduces
    * latency when inserting lots of users. Therefore, the error response might contain some information about failures,
    * but it will likely be pretty generic.
@@ -946,7 +962,7 @@ public class FusionAuthClient {
    * @param request The reconcile request that contains the data to reconcile the User.
    * @return The ClientResponse object.
    */
-  public ClientResponse<LoginResponse, Errors> reconcileJWT(ReconcileRequest request) {
+  public ClientResponse<LoginResponse, Errors> reconcileJWT(IdentityProviderLoginRequest request) {
     return start(LoginResponse.class, Errors.class).uri("/api/jwt/reconcile")
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .post()

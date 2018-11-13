@@ -29,17 +29,25 @@ public class OAuthError implements OAuthResponse {
   @JsonProperty("error_description")
   public String description;
 
-  @JsonProperty("error")
   public OAuthErrorType error;
 
   @JsonProperty("error_uri")
   public String errorURI;
+
+  @JsonProperty("error_reason")
+  public OAuthErrorReason reason;
 
   @JsonProperty("two_factor_id")
   public String twoFactorId;
 
   @JacksonConstructor
   public OAuthError() {
+  }
+
+  public OAuthError(OAuthErrorType error, OAuthErrorReason reason, String description) {
+    this.error = error;
+    this.reason = reason;
+    this.description = description;
   }
 
   public OAuthError(OAuthErrorType error, String description) {
@@ -51,16 +59,52 @@ public class OAuthError implements OAuthResponse {
     return ToString.toString(this);
   }
 
+  public enum OAuthErrorReason {
+    auth_code_not_found,
+
+    access_token_malformed,
+    access_token_expired,
+    access_token_unavailable_for_processing,
+    access_token_failed_processing,
+
+    refresh_token_not_found,
+
+    // Invalid request parameters
+    invalid_client_id,
+    invalid_user_credentials,
+    invalid_grant_type,
+    invalid_origin,
+    invalid_redirect_uri,
+    invalid_response_type,
+
+    // Missing request parameters
+    missing_client_id,
+    missing_code,
+    missing_grant_type,
+    missing_redirect_uri,
+    missing_refresh_token,
+    missing_response_type,
+    missing_token,
+
+    login_prevented,
+    user_expired,
+    user_not_found,
+    unknown
+  }
+
   public enum OAuthErrorType {
     invalid_request,
     invalid_client,
     invalid_grant,
+    // Described in section 5.3.3 of the OpenID Connect Core https://openid.net/specs/openid-connect-core-1_0.html#UserInfoError
     invalid_token,
     unauthorized_client,
     invalid_scope,
     server_error,
+    unsupported_grant_type,
+
+    // RFC 6749 does not account for these states, so we invented them.
     change_password_required,
     two_factor_required,
-    unsupported_grant_type
   }
 }
