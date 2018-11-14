@@ -29,12 +29,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider> {
   @InternalJSONColumn
-  public String accessToken;
-
-  @InternalJSONColumn
-  public String accessTokenSecret;
-
-  @InternalJSONColumn
   public String buttonText;
 
   @InternalJSONColumn
@@ -55,9 +49,7 @@ public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplica
       return false;
     }
     TwitterIdentityProvider that = (TwitterIdentityProvider) o;
-    return Objects.equals(accessToken, that.accessToken) &&
-        Objects.equals(accessTokenSecret, that.accessTokenSecret) &&
-        Objects.equals(buttonText, that.buttonText) &&
+    return Objects.equals(buttonText, that.buttonText) &&
         Objects.equals(consumerKey, that.consumerKey) &&
         Objects.equals(consumerSecret, that.consumerSecret);
   }
@@ -69,23 +61,7 @@ public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), accessToken, accessTokenSecret, buttonText, consumerKey, consumerSecret);
-  }
-
-  public String lookupAccessToken(UUID applicationId) {
-    return lookup(() -> accessToken, () -> app(applicationId, app -> app.accessToken));
-  }
-
-  public String lookupAccessToken(String clientId) {
-    return lookup(() -> accessToken, () -> app(clientId, app -> app.accessToken));
-  }
-
-  public String lookupAccessTokenSecret(UUID applicationId) {
-    return lookup(() -> accessTokenSecret, () -> app(applicationId, app -> app.accessTokenSecret));
-  }
-
-  public String lookupAccessTokenSecret(String clientId) {
-    return lookup(() -> accessTokenSecret, () -> app(clientId, app -> app.accessTokenSecret));
+    return Objects.hash(super.hashCode(), buttonText, consumerKey, consumerSecret);
   }
 
   public String lookupButtonText(UUID applicationId) {

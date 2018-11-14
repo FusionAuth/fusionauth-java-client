@@ -26,12 +26,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class TwitterApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<TwitterApplicationConfiguration> {
   @InternalJSONColumn
-  public String accessToken;
-
-  @InternalJSONColumn
-  public String accessTokenSecret;
-
-  @InternalJSONColumn
   public String buttonText;
 
   @InternalJSONColumn
@@ -52,16 +46,14 @@ public class TwitterApplicationConfiguration extends BaseIdentityProviderApplica
       return false;
     }
     TwitterApplicationConfiguration that = (TwitterApplicationConfiguration) o;
-    return Objects.equals(accessToken, that.accessToken) &&
-        Objects.equals(accessTokenSecret, that.accessTokenSecret) &&
-        Objects.equals(buttonText, that.buttonText) &&
+    return Objects.equals(buttonText, that.buttonText) &&
         Objects.equals(consumerKey, that.consumerKey) &&
         Objects.equals(consumerSecret, that.consumerSecret);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), accessToken, accessTokenSecret, buttonText, consumerKey, consumerSecret);
+    return Objects.hash(super.hashCode(), buttonText, consumerKey, consumerSecret);
   }
 
   @Override
