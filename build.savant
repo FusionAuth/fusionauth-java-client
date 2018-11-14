@@ -20,7 +20,7 @@ javaErrorVersion = "2.2.0"
 fusionauthJWTVersion= "2.1.1"
 restifyVersion = "3.2.1"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.1.1", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.1.2", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
