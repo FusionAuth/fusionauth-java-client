@@ -17,7 +17,6 @@ package io.fusionauth.domain.util;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,12 +33,11 @@ public final class Normalizer {
    * @param map The map.
    */
   public static <T, U> void removeEmpty(Map<T, U> map) {
-    for (Iterator<T> i = map.keySet().iterator(); i.hasNext(); ) {
-      T key = i.next();
-      if (map.get(key) == null) {
-        i.remove();
-      }
+    if (map == null) {
+      return;
     }
+
+    map.keySet().removeIf(key -> map.get(key) == null);
   }
 
   /**
