@@ -21,6 +21,8 @@ using Inversoft.Restify;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace FusionAuth
 {
@@ -29,6 +31,17 @@ namespace FusionAuth
    */
   public class FusionAuthClient
   {
+    // Add our serializer here that includes our IdentityProviderConvert
+    private static readonly JsonSerializer serializer = new JsonSerializer();
+
+    static FusionAuthClient()
+    {
+      serializer.Converters.Add(new StringEnumConverter());
+      serializer.Converters.Add(new DateTimeOffsetConverter());
+      serializer.Converters.Add(new IdentityProviderConverter());
+      serializer.NullValueHandling = NullValueHandling.Ignore;
+    }
+
     public const string TENANT_ID_HEADER = "X-FusionAuth-TenantId";
 
     private readonly string apiKey;
@@ -99,7 +112,7 @@ namespace FusionAuth
                                         [#elseif param.type == "urlParameter"]
                                           .UrlParameter("${param.parameterName}", ${(param.constant?? && param.constant)?then(param.value, param.name)})
                                         [#elseif param.type == "body"]
-                                          .BodyHandler(new JSONBodyHandler(${param.name}))
+                                          .BodyHandler(new JSONBodyHandler(${param.name}, serializer))
                                         [/#if]
                                       [/#list]
                                           .${api.method?cap_first}()
@@ -110,9 +123,9 @@ namespace FusionAuth
     // Start initializes and returns RESTClient
     private RESTClient<T, U> Start<T, U>()
     {
-        RESTClient<T, U> client = new RESTClient<T, U>().Authorization(apiKey)
-                                   .SuccessResponseHandler(typeof(T) == typeof(RESTVoid) ? null : new JSONResponseHandler<T>())
-                                   .ErrorResponseHandler(typeof(U) == typeof(RESTVoid) ? null : new JSONResponseHandler<U>())
+        var client = new RESTClient<T, U>().Authorization(apiKey)
+                                   .SuccessResponseHandler(typeof(T) == typeof(RESTVoid) ? null : new JSONResponseHandler<T>(serializer))
+                                   .ErrorResponseHandler(typeof(U) == typeof(RESTVoid) ? null : new JSONResponseHandler<U>(serializer))
                                    .Url(baseUrl)
                                    .Timeout(timeout)
                                    .ReadWriteTimeout(readWriteTimeout)
