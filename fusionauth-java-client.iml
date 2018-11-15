@@ -2,7 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Python" name="Python">
-      <configuration sdkName="Python 3.7" />
+      <configuration sdkName="" />
     </facet>
   </component>
   <component name="NewModuleRootManager">
@@ -17,7 +17,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Python 3.7 interpreter library" level="application" />
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
