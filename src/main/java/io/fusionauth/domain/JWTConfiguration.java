@@ -50,7 +50,7 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   /**
    * The length of time in minutes a Refresh Token is valid from the time it was issued. This should be a non-zero value.
    */
-  public Integer refreshTokenTimeToLiveInMinutes;
+  public int refreshTokenTimeToLiveInMinutes;
 
   /**
    * HMAC Secret used for HMAC algorithms.
