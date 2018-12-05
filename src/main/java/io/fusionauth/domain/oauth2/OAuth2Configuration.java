@@ -37,11 +37,15 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public String clientSecret;
 
+  public boolean generateRefreshTokens = true;
+
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this is left null,
    * <code>Application.oauthConfiguration.logoutURL</code> will be used instead.
    */
   public URI logoutURL;
+
+  public boolean requireClientAuthentication;
 
   public OAuth2Configuration() {
   }
@@ -60,7 +64,9 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
       return false;
     }
     OAuth2Configuration that = (OAuth2Configuration) o;
-    return Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
+    return requireClientAuthentication == that.requireClientAuthentication &&
+        generateRefreshTokens == that.generateRefreshTokens &&
+        Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
         Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
         Objects.equals(clientId, that.clientId) &&
         Objects.equals(clientSecret, that.clientSecret) &&
@@ -69,7 +75,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, logoutURL);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, logoutURL, requireClientAuthentication,
+                        generateRefreshTokens);
   }
 
   public void normalize() {
