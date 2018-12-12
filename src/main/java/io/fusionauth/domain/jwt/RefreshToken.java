@@ -89,5 +89,28 @@ public class RefreshToken implements Buildable<RefreshToken> {
     public DeviceInfo device = new DeviceInfo();
 
     public Set<String> scopes;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof MetaData)) {
+        return false;
+      }
+      MetaData metaData = (MetaData) o;
+      return Objects.equals(device, metaData.device) &&
+          Objects.equals(scopes, metaData.scopes);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(device, scopes);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 }
