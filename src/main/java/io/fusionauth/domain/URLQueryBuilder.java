@@ -28,11 +28,31 @@ import com.inversoft.json.ToString;
 public class URLQueryBuilder {
   private final StringBuilder build = new StringBuilder();
 
+  private URLQueryBuilder() {
+  }
+
+  private URLQueryBuilder(String uri) {
+    build.append(uri);
+
+    int index = build.indexOf("?");
+    if (index == -1) {
+      build.append("?");
+    }
+  }
+
   public static URLQueryBuilder builder() {
     return new URLQueryBuilder();
   }
 
+  public static URLQueryBuilder builder(String uri) {
+    return new URLQueryBuilder(uri);
+  }
+
   public String query() {
+    if (build.indexOf("?") == build.length() - 1) {
+      return build.substring(0, build.length() - 1);
+    }
+
     return build.toString();
   }
 
@@ -46,7 +66,7 @@ public class URLQueryBuilder {
       return this;
     }
 
-    if (build.length() > 0) {
+    if ((build.indexOf("?") != build.length() - 1) || build.length() == 0) {
       build.append("&");
     }
 

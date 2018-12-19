@@ -94,6 +94,7 @@ public class OAuthError implements OAuthResponse {
     client_authentication_missing,
     invalid_client_authentication_scheme,
     invalid_client_authentication,
+    client_id_mismatch,
 
     unknown
   }
