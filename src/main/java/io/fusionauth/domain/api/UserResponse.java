@@ -15,11 +15,8 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.List;
-
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
-import io.fusionauth.domain.search.SearchResults;
 
 /**
  * User API response object.
@@ -27,11 +24,7 @@ import io.fusionauth.domain.search.SearchResults;
  * @author Brian Pontarelli
  */
 public class UserResponse {
-  public Long total;
-
   public User user;
-
-  public List<User> users;
 
   @JacksonConstructor
   public UserResponse() {
@@ -39,10 +32,5 @@ public class UserResponse {
 
   public UserResponse(User user) {
     this.user = user;
-  }
-
-  public UserResponse(SearchResults<User> searchResults) {
-    this.users = searchResults.results;
-    this.total = searchResults.total;
   }
 }
