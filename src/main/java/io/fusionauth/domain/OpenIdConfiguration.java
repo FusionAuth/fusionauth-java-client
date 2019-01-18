@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,11 +32,11 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "refresh_token"));
 
-  public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
+  public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"));
 
   public String issuer;
 
-  public String jwks_uri;
+  public String jwks_uri = "%s/.well-known/jwks.json";
 
   public List<String> response_types_supported = new ArrayList<>(Arrays.asList("code"));
 
@@ -46,7 +46,9 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String token_endpoint = "%s/oauth2/token";
 
+  public List<String> token_endpoint_auth_methods_supported = new ArrayList<>(Arrays.asList("client_secret_basic", "none"));
+
   public String userinfo_endpoint = "%s/oauth2/userinfo";
 
-  public List<String> userinfo_signing_alg_values_supported = new ArrayList<>(Arrays.asList("RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
+  public List<String> userinfo_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
 }

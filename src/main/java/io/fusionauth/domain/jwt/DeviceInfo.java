@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
 
   public String name;
 
-  public Type type = Type.UNKNOWN;
+  public DeviceType type = DeviceType.UNKNOWN;
 
   @Override
   public boolean equals(Object o) {
@@ -61,7 +61,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
     return ToString.toString(this);
   }
 
-  public enum Type {
+  public enum DeviceType {
     BROWSER,
     DESKTOP,
     LAPTOP,

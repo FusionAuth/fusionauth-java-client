@@ -161,22 +161,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/2.1.1/fusionauth-jwt-2.1.1.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.1/fusionauth-jwt-3.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/2.1.1/fusionauth-jwt-2.1.1-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.1/fusionauth-jwt-3.0.1-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.6/jackson-databind-2.9.6.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.8/jackson-databind-2.9.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.6/jackson-databind-2.9.6-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.8/jackson-databind-2.9.8-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -194,11 +194,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.9.6/jackson-core-2.9.6.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.9.6/jackson-core-2.9.6-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
