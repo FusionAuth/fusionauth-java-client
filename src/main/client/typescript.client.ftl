@@ -43,7 +43,7 @@ export class FusionAuthClient {
     return this.start()
   [#if api.method == "post" && !global.hasBodyParam(api.params![])]
         .withHeader('Content-Type', 'text/plain')
-    [/#if]
+  [/#if]
         .withUri('${api.uri}')
   [#if api.authorization??]
         .withAuthorization(${api.authorization?replace('\"', '\'')})
