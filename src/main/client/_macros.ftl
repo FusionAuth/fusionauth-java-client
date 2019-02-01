@@ -119,7 +119,7 @@
         [#local result = result + [param.name]/]
       [#elseif language == "ts"]
         [#local convertedType = convertType(param.javaType, language)/]
-        [#local result = result + [param.name + (convertedType == "Object")?then(': ' + convertedType, '')]]
+        [#local result = result + [param.name + (convertedType != "Object")?then(': ' + convertedType, '')]]
       [#elseif language == "python"]
         [#local result = result + [convertValue(param, language)]/]
       [#elseif language == "ruby"]

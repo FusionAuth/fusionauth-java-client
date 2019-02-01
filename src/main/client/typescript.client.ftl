@@ -42,23 +42,23 @@ export class FusionAuthClient {
   ${api.methodName}(${parameters}): Promise<ClientResponse> {
     return this.start()
   [#if api.method == "post" && !global.hasBodyParam(api.params![])]
-    .withHeader('Content-Type', 'text/plain')
+        .withHeader('Content-Type', 'text/plain')
     [/#if]
-    .withUri('${api.uri}')
+        .withUri('${api.uri}')
   [#if api.authorization??]
-    .withAuthorization(${api.authorization?replace('\"', '\'')})
+        .withAuthorization(${api.authorization?replace('\"', '\'')})
   [/#if]
   [#list api.params![] as param]
     [#if param.type == "urlSegment"]
-    .withUriSegment(${(param.constant?? && param.constant)?then(param.value, param.name)})
+        .withUriSegment(${(param.constant?? && param.constant)?then(param.value, param.name)})
     [#elseif param.type == "urlParameter"]
-    .withParameter('${param.parameterName}', ${(param.constant?? && param.constant)?then(param.value, param.name)})
+        .withParameter('${param.parameterName}', ${(param.constant?? && param.constant)?then(param.value, param.name)})
     [#elseif param.type == "body"]
-    .withJSONBody(${param.name})
+        .withJSONBody(${param.name})
     [/#if]
   [/#list]
-    .withMethod("${api.method?capitalize}")
-    .go();
+        .withMethod("${api.method?capitalize}")
+        .go();
   }
 
 [/#list]
