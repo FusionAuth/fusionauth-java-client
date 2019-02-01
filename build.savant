@@ -127,7 +127,7 @@ target(name: "bundle", description: "Builds the project release bundle", depends
 
 target(name: "update-client", description: "Updates the client libraries using the JSON files") {
   clientLibrary.buildClient(template: "src/main/client/java.client.ftl", outputFile: "src/main/java/io/fusionauth/client/FusionAuthClient.java")
-  clientLibrary.buildClient(template: "src/main/client/php.client.ftl", outputFile: "../fusionauth-php-client/src/FusionAuthClient.php")
+  clientLibrary.buildClient(template: "src/main/client/php.client.ftl", outputFile: "../fusionauth-php-client/src/FusionAuth/FusionAuthClient.php")
   clientLibrary.buildClient(template: "src/main/client/csharp.client.ftl", outputFile: "../fusionauth-csharp-client/src/main/csharp/FusionAuthClient.cs")
   clientLibrary.buildClient(template: "src/main/client/node.client.ftl", outputFile: "../fusionauth-node-client/lib/FusionAuthClient.js")
   clientLibrary.buildClient(template: "src/main/client/typescript.client.ftl", outputFile: "../fusionauth-typescript-client/lib/FusionAuthClient.ts")

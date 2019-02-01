@@ -21,7 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 
 /**
- * Counts for an period.
+ * Counts for a period.
  *
  * @author Brian Pontarelli
  */

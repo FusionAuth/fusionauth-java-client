@@ -18,11 +18,11 @@ package io.fusionauth.domain;
 import java.util.Objects;
 
 /**
- * Something that can be enabled, and thus also disabled.
+ * Something that can be enabled and thus also disabled.
  *
  * @author Daniel DeGroff
  */
-public abstract class Enableable {
+public class Enableable {
   public boolean enabled;
 
   @Override

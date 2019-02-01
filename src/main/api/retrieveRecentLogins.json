@@ -1,0 +1,30 @@
+{
+  "uri": "/api/user/recent-login",
+  "comments": [
+    "Retrieves the last number of login records."
+  ],
+  "method": "get",
+  "methodName": "retrieveRecentLogins",
+  "successResponse": "RecentLoginResponse",
+  "errorResponse": "Errors",
+  "params": [
+    {
+      "name": "offset",
+      "comments": [
+        "The initial record. e.g. 0 is the last login, 100 will be the 100th most recent login."
+      ],
+      "type": "urlParameter",
+      "parameterName": "offset",
+      "javaType": "int"
+    },
+    {
+      "name": "limit",
+      "comments": [
+        "(Optional, defaults to 10) The number of records to retrieve."
+      ],
+      "type": "urlParameter",
+      "parameterName": "limit",
+      "javaType": "Integer"
+    }
+  ]
+}

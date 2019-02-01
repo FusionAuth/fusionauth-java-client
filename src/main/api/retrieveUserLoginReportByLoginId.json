@@ -1,11 +1,11 @@
 {
   "uri": "/api/report/login",
   "comments": [
-    "Retrieves the login report between the two instants for a particular user by Id. If you specify an application id, it will only return the",
+    "Retrieves the login report between the two instants for a particular user by login Id. If you specify an application id, it will only return the",
     "login counts for that application."
   ],
   "method": "get",
-  "methodName": "retrieveUserLoginReport",
+  "methodName": "retrieveUserLoginReportByLoginId",
   "successResponse": "LoginReportResponse",
   "errorResponse": "Errors",
   "params": [
@@ -19,13 +19,13 @@
       "javaType": "UUID"
     },
     {
-      "name": "userId",
+      "name": "loginId",
       "comments": [
         "The userId id."
       ],
       "type": "urlParameter",
-      "parameterName": "userId",
-      "javaType": "UUID"
+      "parameterName": "loginId",
+      "javaType": "String"
     },
     {
       "name": "start",

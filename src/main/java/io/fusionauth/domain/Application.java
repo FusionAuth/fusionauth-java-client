@@ -55,6 +55,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
   @InternalJSONColumn
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
 
+  @InternalJSONColumn
+  public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
+
   public List<ApplicationRole> roles = new ArrayList<>();
 
   public UUID tenantId;
@@ -122,6 +125,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     return null;
   }
 
+  public boolean hasDefaultRole() {
+    return roles.size() > 0 && roles.stream().anyMatch(r -> r.isDefault);
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, name, oauthConfiguration,
@@ -184,6 +191,60 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     }
 
     @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class RegistrationConfiguration extends Enableable {
+    public Requirable birthDate = new Requirable();
+
+    public boolean confirmPassword;
+
+    public Requirable firstName = new Requirable();
+
+    public Requirable fullName = new Requirable();
+
+    public Requirable lastName = new Requirable();
+
+    public LoginIdType loginIdType = LoginIdType.email;
+
+    public Requirable middleName = new Requirable();
+
+    public Requirable mobilePhone = new Requirable();
+
+    public enum LoginIdType {
+      email,
+      username
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof RegistrationConfiguration)) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      RegistrationConfiguration that = (RegistrationConfiguration) o;
+      return confirmPassword == that.confirmPassword &&
+          Objects.equals(birthDate, that.birthDate) &&
+          Objects.equals(firstName, that.firstName) &&
+          Objects.equals(fullName, that.fullName) &&
+          Objects.equals(lastName, that.lastName) &&
+          loginIdType == that.loginIdType &&
+          Objects.equals(middleName, that.middleName) &&
+          Objects.equals(mobilePhone, that.mobilePhone);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, fullName, lastName, loginIdType, middleName, mobilePhone);
+    }
+
     public String toString() {
       return ToString.toString(this);
     }

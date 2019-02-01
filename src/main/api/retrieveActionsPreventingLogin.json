@@ -1,11 +1,10 @@
 {
   "uri": "/api/user/action",
   "comments": [
-    "Retrieves all of the actions for the user with the given Id. This will return all time based actions that are active,",
-    "and inactive as well as non-time based actions."
+    "Retrieves all of the actions for the user with the given Id that are currently preventing the User from logging in."
   ],
   "method": "get",
-  "methodName": "retrieveActions",
+  "methodName": "retrieveActionsPreventingLogin",
   "successResponse": "ActionResponse",
   "errorResponse": "Errors",
   "params": [
@@ -17,6 +16,13 @@
       "type": "urlParameter",
       "parameterName": "userId",
       "javaType": "UUID"
+    },
+    {
+      "name": "preventingLogin",
+      "constant": true,
+      "type": "urlParameter",
+      "parameterName": "preventingLogin",
+      "value": "true"
     }
   ]
 }

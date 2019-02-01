@@ -377,8 +377,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
     public static class LoginTheme extends Enableable implements Buildable<LoginTheme> {
       public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2Error", "oauth2TwoFactor", "passwordChange",
-          "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete", "registrationSend", "registrationVerify"
+          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2CompleteRegistration", "oauth2Error",
+          "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete",
+          "registrationSend", "registrationVerify"
       )));
 
       public String emailComplete;
@@ -393,7 +394,11 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
       public String oauth2Authorize;
 
+      public String oauth2CompleteRegistration;
+
       public String oauth2Error;
+
+      public String oauth2Register;
 
       public String oauth2TwoFactor;
 
@@ -431,7 +436,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
             Objects.equals(helpers, that.helpers) &&
             Objects.equals(lastModified, that.lastModified) &&
             Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+            Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
             Objects.equals(oauth2Error, that.oauth2Error) &&
+            Objects.equals(oauth2Register, that.oauth2Register) &&
             Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
             Objects.equals(passwordChange, that.passwordChange) &&
             Objects.equals(passwordComplete, that.passwordComplete) &&
@@ -445,9 +452,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
       @Override
       public int hashCode() {
-        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize,
-                            oauth2Error, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
-                            registrationSend, registrationVerify, stylesheet);
+        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize, oauth2CompleteRegistration,
+                            oauth2Error, oauth2Register, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent,
+                            registrationComplete, registrationSend, registrationVerify, stylesheet);
       }
 
       public void normalize() {
@@ -456,7 +463,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
         emailVerify = normalize(emailVerify);
         helpers = normalize(helpers);
         oauth2Authorize = normalize(oauth2Authorize);
+        oauth2CompleteRegistration = normalize(oauth2CompleteRegistration);
         oauth2Error = normalize(oauth2Error);
+        oauth2Register = normalize(oauth2Register);
         oauth2TwoFactor = normalize(oauth2TwoFactor);
         passwordChange = normalize(passwordChange);
         passwordComplete = normalize(passwordComplete);
@@ -478,7 +487,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
             !Objects.equals(emailVerify, other.emailVerify) ||
             !Objects.equals(helpers, other.helpers) ||
             !Objects.equals(oauth2Authorize, other.oauth2Authorize) ||
+            !Objects.equals(oauth2CompleteRegistration, other.oauth2CompleteRegistration) ||
             !Objects.equals(oauth2Error, other.oauth2Error) ||
+            !Objects.equals(oauth2Register, other.oauth2Register) ||
             !Objects.equals(oauth2TwoFactor, other.oauth2TwoFactor) ||
             !Objects.equals(passwordChange, other.passwordChange) ||
             !Objects.equals(passwordComplete, other.passwordComplete) ||

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,6 @@ import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.RegistrationReportResponse;
 import io.fusionauth.domain.api.report.TotalsReportResponse;
-import io.fusionauth.domain.api.report.UserLoginReportResponse;
 import io.fusionauth.domain.api.twoFactor.SecretResponse;
 import io.fusionauth.domain.api.twoFactor.TwoFactorLoginRequest;
 import io.fusionauth.domain.api.twoFactor.TwoFactorSendRequest;
@@ -92,6 +91,7 @@ import io.fusionauth.domain.api.user.ChangePasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordResponse;
 import io.fusionauth.domain.api.user.ImportRequest;
+import io.fusionauth.domain.api.user.RecentLoginResponse;
 import io.fusionauth.domain.api.user.RegistrationRequest;
 import io.fusionauth.domain.api.user.RegistrationResponse;
 import io.fusionauth.domain.api.user.SearchRequest;
@@ -1030,7 +1030,8 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the actions for the user with the given Id.
+   * Retrieves all of the actions for the user with the given Id. This will return all time based actions that are active,
+   * and inactive as well as non-time based actions.
    *
    * @param userId The Id of the user to fetch the actions for.
    * @return The ClientResponse object.
@@ -1038,6 +1039,35 @@ public class FusionAuthClient {
   public ClientResponse<ActionResponse, Errors> retrieveActions(UUID userId) {
     return start(ActionResponse.class, Errors.class).uri("/api/user/action")
                             .urlParameter("userId", userId)
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves all of the actions for the user with the given Id that are currently preventing the User from logging in.
+   *
+   * @param userId The Id of the user to fetch the actions for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ActionResponse, Errors> retrieveActionsPreventingLogin(UUID userId) {
+    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
+                            .urlParameter("userId", userId)
+                            .urlParameter("preventingLogin", true)
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves all of the actions for the user with the given Id that are currently active.
+   * An active action means one that is time based and has not been canceled, and has not ended.
+   *
+   * @param userId The Id of the user to fetch the actions for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ActionResponse, Errors> retrieveActiveActions(UUID userId) {
+    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
+                            .urlParameter("userId", userId)
+                            .urlParameter("active", true)
                             .get()
                             .go();
   }
@@ -1307,6 +1337,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the last number of login records.
+   *
+   * @param offset The initial record. e.g. 0 is the last login, 100 will be the 100th most recent login.
+   * @param limit (Optional, defaults to 10) The number of records to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<RecentLoginResponse, Errors> retrieveRecentLogins(int offset, Integer limit) {
+    return start(RecentLoginResponse.class, Errors.class).uri("/api/user/recent-login")
+                            .urlParameter("offset", offset)
+                            .urlParameter("limit", limit)
+                            .get()
+                            .go();
+  }
+
+  /**
    * Retrieves the refresh tokens that belong to the user with the given Id.
    *
    * @param userId The Id of the user.
@@ -1543,6 +1588,46 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the login report between the two instants for a particular user by Id. If you specify an application id, it will only return the
+   * login counts for that application.
+   *
+   * @param applicationId (Optional) The application id.
+   * @param userId The userId id.
+   * @param start The start instant as UTC milliseconds since Epoch.
+   * @param end The end instant as UTC milliseconds since Epoch.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReport(UUID applicationId, UUID userId, long start, long end) {
+    return start(LoginReportResponse.class, Errors.class).uri("/api/report/login")
+                            .urlParameter("applicationId", applicationId)
+                            .urlParameter("userId", userId)
+                            .urlParameter("start", start)
+                            .urlParameter("end", end)
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves the login report between the two instants for a particular user by login Id. If you specify an application id, it will only return the
+   * login counts for that application.
+   *
+   * @param applicationId (Optional) The application id.
+   * @param loginId The userId id.
+   * @param start The start instant as UTC milliseconds since Epoch.
+   * @param end The end instant as UTC milliseconds since Epoch.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginId(UUID applicationId, String loginId, long start, long end) {
+    return start(LoginReportResponse.class, Errors.class).uri("/api/report/login")
+                            .urlParameter("applicationId", applicationId)
+                            .urlParameter("loginId", loginId)
+                            .urlParameter("start", start)
+                            .urlParameter("end", end)
+                            .get()
+                            .go();
+  }
+
+  /**
    * Retrieves the last number of login records for a user.
    *
    * @param userId The Id of the user.
@@ -1550,8 +1635,8 @@ public class FusionAuthClient {
    * @param limit (Optional, defaults to 10) The number of records to retrieve.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserLoginReportResponse, Errors> retrieveUserLoginReport(UUID userId, int offset, Integer limit) {
-    return start(UserLoginReportResponse.class, Errors.class).uri("/api/report/user-login")
+  public ClientResponse<RecentLoginResponse, Errors> retrieveUserRecentLogins(UUID userId, int offset, Integer limit) {
+    return start(RecentLoginResponse.class, Errors.class).uri("/api/user/recent-login")
                             .urlParameter("userId", userId)
                             .urlParameter("offset", offset)
                             .urlParameter("limit", limit)
