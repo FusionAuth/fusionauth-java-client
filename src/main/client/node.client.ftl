@@ -23,11 +23,16 @@ require('promise');
 const FusionAuthClient = function(apiKey, host) {
   this.apiKey = apiKey;
   this.host = host;
+  this.tenantId = null;
 };
 
 FusionAuthClient.constructor = FusionAuthClient;
 //noinspection JSUnusedGlobalSymbols
 FusionAuthClient.prototype = {
+
+  setTenantId: function(tenantId) {
+    this.tenantId = tenantId;
+  },
 
 [#list apis as api]
   /**
@@ -105,7 +110,13 @@ FusionAuthClient.prototype = {
    * @private
    */
   _start: function() {
-    return new RESTClient().authorization(this.apiKey).setUrl(this.host);
+    const client = new RESTClient().authorization(this.apiKey).setUrl(this.host);
+
+    if (this.tenantId !== null && typeof(this.tenantId) !== 'undefined') {
+      client.header('X-FusionAuth-TenantId', this.tenantId);
+    }
+
+    return client;
   }
 };
 
