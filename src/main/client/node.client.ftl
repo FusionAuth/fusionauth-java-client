@@ -32,6 +32,7 @@ FusionAuthClient.prototype = {
 
   setTenantId: function(tenantId) {
     this.tenantId = tenantId;
+    return this;
   },
 
 [#list apis as api]
