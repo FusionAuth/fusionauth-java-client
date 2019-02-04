@@ -6,8 +6,8 @@ package io.fusionauth.domain;
 import java.util.Objects;
 
 /**
- * Something that can be required and thus also optional. This currently extends Enableable (misspelled) because anything that is
- * require/optional is almost always enablable as well.
+ * Something that can be required and thus also optional. This currently extends Enableable because anything that is
+ * require/optional is almost always enableable as well.
  *
  * @author Brian Pontarelli
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -196,7 +196,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     }
   }
 
-  public static class RegistrationConfiguration extends Enableable {
+  public static class RegistrationConfiguration extends Enableable implements Buildable<RegistrationConfiguration> {
     public Requirable birthDate = new Requirable();
 
     public boolean confirmPassword;
