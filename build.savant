@@ -130,7 +130,7 @@ target(name: "update-client", description: "Updates the client libraries using t
   clientLibrary.buildClient(template: "src/main/client/php.client.ftl", outputFile: "../fusionauth-php-client/src/FusionAuth/FusionAuthClient.php")
   clientLibrary.buildClient(template: "src/main/client/csharp.client.ftl", outputFile: "../fusionauth-csharp-client/src/main/csharp/FusionAuthClient.cs")
   clientLibrary.buildClient(template: "src/main/client/node.client.ftl", outputFile: "../fusionauth-node-client/lib/FusionAuthClient.js")
-  clientLibrary.buildClient(template: "src/main/client/typescript.client.ftl", outputFile: "../fusionauth-typescript-client/lib/FusionAuthClient.ts")
+  clientLibrary.buildClient(template: "src/main/client/typescript.client.ftl", outputFile: "../fusionauth-typescript-client/src/FusionAuthClient.ts")
   clientLibrary.buildClient(template: "src/main/client/javascript.client.ftl", outputFile: "../fusionauth-javascript-client/lib/FusionAuthClient.js")
   clientLibrary.buildClient(template: "src/main/client/python.client.ftl", outputFile: "../fusionauth-python-client/src/main/python/fusionauth/fusionauth_client.py")
   clientLibrary.buildClient(template: "src/main/client/ruby.client.ftl", outputFile: "../fusionauth-ruby-client/lib/fusionauth/fusionauth_client.rb")
