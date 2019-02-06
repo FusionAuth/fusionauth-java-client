@@ -15,12 +15,12 @@
 * language governing permissions and limitations under the License.
 */
 
-import {ClientResponse, IRestClient, IRestClientBuilder} from "./IRestClient"
-import {DefaultRestClientBuilder} from "./DefaultRestClientBuilder";
+import {ClientResponse, IRESTClient, IRESTClientBuilder} from "./IRESTClient"
+import {DefaultRESTClientBuilder} from "./DefaultRESTClientBuilder";
 
 export class FusionAuthClient {
 
-  public clientBuilder: IRestClientBuilder = new DefaultRestClientBuilder();
+  public clientBuilder: IRESTClientBuilder = new DefaultRESTClientBuilder();
 
   constructor(public apiKey: string, public host: string) {
   }
@@ -57,7 +57,7 @@ export class FusionAuthClient {
         .withJSONBody(${param.name})
     [/#if]
   [/#list]
-        .withMethod("${api.method?capitalize}")
+        .withMethod("${api.method?upper_case}")
         .go();
   }
 
