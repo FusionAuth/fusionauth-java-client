@@ -1215,6 +1215,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves all of the actions for the user with the given Id that are currently inactive.
+   * An inactive action means one that is time based and has been canceled or has expired, or is not time based.
+   *
+   * @param userId The Id of the user to fetch the actions for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ActionResponse, Errors> retrieveInactiveActions(UUID userId) {
+    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
+                            .urlParameter("userId", userId)
+                            .urlParameter("active", false)
+                            .get()
+                            .go();
+  }
+
+  /**
    * Retrieves all of the applications that are currently inactive.
    *
    * @return The ClientResponse object.
