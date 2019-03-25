@@ -38,7 +38,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String jwks_uri = "%s/.well-known/jwks.json";
 
-  public List<String> response_types_supported = new ArrayList<>(Arrays.asList("code"));
+  public List<String> response_types_supported = new ArrayList<>(Arrays.asList("code", "id_token", "token id_token"));
 
   public List<String> scopes_supported = new ArrayList<>(Arrays.asList("openid", "offline_access"));
 
