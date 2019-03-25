@@ -28,7 +28,7 @@ import java.util.List;
 public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   public String authorization_endpoint = "%s/oauth2/authorize";
 
-  public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "aud", "authenticationType", "email", "email_verified", "exp", "iat", "iss", "nbf", "roles", "sub"));
+  public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "aud", "authenticationType", "birthdate", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "middle_name", "name", "nbf", "phone_number", "picture", "preferred_username", "roles", "sub"));
 
   public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token"));
 
