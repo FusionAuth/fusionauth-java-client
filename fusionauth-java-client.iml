@@ -161,11 +161,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.1/fusionauth-jwt-3.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.3/fusionauth-jwt-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.1/fusionauth-jwt-3.0.1-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.3/fusionauth-jwt-3.0.3-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

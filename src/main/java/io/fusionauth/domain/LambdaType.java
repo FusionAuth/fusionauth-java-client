@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,13 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import java.util.UUID;
-
-import io.fusionauth.domain.jwt.RefreshToken.MetaData;
+package io.fusionauth.domain;
 
 /**
- * @author Daniel DeGroff
+ * The types of lambdas that indicate how they are invoked by FusionAuth.
+ *
+ * @author Brian Pontarelli
  */
-public class BaseLoginRequest {
-  public UUID applicationId;
-
-  public String ipAddress;
-
-  public MetaData metaData;
-
-  public boolean noJWT;
+public enum LambdaType {
+  SAML2Reconciler
 }

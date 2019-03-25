@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,30 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.jwt;
-
-import java.util.List;
+package io.fusionauth.domain.api.passwordless;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.jwt.RefreshToken;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
  * @author Daniel DeGroff
  */
-public class RefreshResponse {
-  public List<RefreshToken> refreshTokens;
+public class PasswordlessLoginRequest extends BaseLoginRequest implements Buildable<PasswordlessLoginRequest> {
+  public String code;
 
-  public String token;
+  public String twoFactorTrustId;
 
   @JacksonConstructor
-  public RefreshResponse() {
+  public PasswordlessLoginRequest() {
   }
 
-  public RefreshResponse(String token) {
-    this.token = token;
+  public PasswordlessLoginRequest(String code) {
+    this.code = code;
   }
 
-  public RefreshResponse(List<RefreshToken> refreshTokens) {
-    this.refreshTokens = refreshTokens;
+  public PasswordlessLoginRequest(String code, String ipAddress) {
+    this.code = code;
+    this.ipAddress = ipAddress;
   }
 }

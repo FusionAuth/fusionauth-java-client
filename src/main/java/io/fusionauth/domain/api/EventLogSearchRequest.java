@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,20 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.UUID;
-
-import io.fusionauth.domain.jwt.RefreshToken.MetaData;
+import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.search.EventLogSearchCriteria;
 
 /**
- * @author Daniel DeGroff
+ * @author Brian Pontarelli
  */
-public class BaseLoginRequest {
-  public UUID applicationId;
+public class EventLogSearchRequest {
+  public EventLogSearchCriteria search;
 
-  public String ipAddress;
+  @JacksonConstructor
+  public EventLogSearchRequest() {
+  }
 
-  public MetaData metaData;
-
-  public boolean noJWT;
+  public EventLogSearchRequest(EventLogSearchCriteria search) {
+    this.search = search;
+  }
 }

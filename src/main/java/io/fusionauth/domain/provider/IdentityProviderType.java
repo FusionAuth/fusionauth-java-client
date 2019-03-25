@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,9 @@ public enum IdentityProviderType {
 
   Google(UUID.fromString("82339786-3dff-42a6-aac6-1f1ceecb6c46")),
 
-  Twitter(UUID.fromString("45bb233c-0901-4236-b5ca-ac46e2e0a5a5"));
+  Twitter(UUID.fromString("45bb233c-0901-4236-b5ca-ac46e2e0a5a5")),
+
+  SAML2(null);
 
   public final UUID id;
 

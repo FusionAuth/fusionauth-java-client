@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,6 +77,9 @@ public class OAuthError implements OAuthResponse {
     invalid_redirect_uri,
     invalid_response_type,
 
+    // Grant disabled
+    grant_type_disabled,
+
     // Missing request parameters
     missing_client_id,
     missing_code,
@@ -100,15 +103,18 @@ public class OAuthError implements OAuthResponse {
   }
 
   public enum OAuthErrorType {
+    // RFC 6749 Error Response types
     invalid_request,
     invalid_client,
     invalid_grant,
     // Described in section 5.3.3 of the OpenID Connect Core https://openid.net/specs/openid-connect-core-1_0.html#UserInfoError
     invalid_token,
+
     unauthorized_client,
     invalid_scope,
     server_error,
     unsupported_grant_type,
+    unsupported_response_type,
 
     // RFC 6749 does not account for these states, so we invented them.
     change_password_required,

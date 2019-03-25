@@ -37,12 +37,16 @@ import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EventLogSearchRequest;
+import io.fusionauth.domain.api.EventLogSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
 import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.api.IdentityProviderResponse;
 import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
+import io.fusionauth.domain.api.LambdaRequest;
+import io.fusionauth.domain.api.LambdaResponse;
 import io.fusionauth.domain.api.LoginRequest;
 import io.fusionauth.domain.api.LoginResponse;
 import io.fusionauth.domain.api.MemberDeleteRequest;
@@ -77,6 +81,8 @@ import io.fusionauth.domain.api.jwt.IssueResponse;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
 import io.fusionauth.domain.api.jwt.RefreshResponse;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
+import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessSendRequest;
 import io.fusionauth.domain.api.report.DailyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
@@ -88,6 +94,7 @@ import io.fusionauth.domain.api.twoFactor.TwoFactorSendRequest;
 import io.fusionauth.domain.api.user.ActionRequest;
 import io.fusionauth.domain.api.user.ActionResponse;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
+import io.fusionauth.domain.api.user.ChangePasswordResponse;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordResponse;
 import io.fusionauth.domain.api.user.ImportRequest;
@@ -211,8 +218,8 @@ public class FusionAuthClient {
    * @param request The change password request that contains all of the information used to change the password.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/change-password")
+  public ClientResponse<ChangePasswordResponse, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
+    return start(ChangePasswordResponse.class, Errors.class).uri("/api/user/change-password")
                             .urlSegment(changePasswordId)
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .post()
@@ -349,6 +356,21 @@ public class FusionAuthClient {
   public ClientResponse<IdentityProviderResponse, Errors> createIdentityProvider(UUID identityProviderId, IdentityProviderRequest request) {
     return start(IdentityProviderResponse.class, Errors.class).uri("/api/identity-provider")
                             .urlSegment(identityProviderId)
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
+   * Creates a Lambda. You can optionally specify an Id for the lambda, if not provided one will be generated.
+   *
+   * @param lambdaId (Optional) The Id for the lambda. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the lambda.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Errors> createLambda(UUID lambdaId, LambdaRequest request) {
+    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
+                            .urlSegment(lambdaId)
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .post()
                             .go();
@@ -565,6 +587,19 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> deleteIdentityProvider(UUID identityProviderId) {
     return start(Void.TYPE, Errors.class).uri("/api/identity-provider")
                             .urlSegment(identityProviderId)
+                            .delete()
+                            .go();
+  }
+
+  /**
+   * Deletes the lambda for the given Id.
+   *
+   * @param lambdaId The Id of the lambda to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteLambda(UUID lambdaId) {
+    return start(Void.TYPE, Errors.class).uri("/api/lambda")
+                            .urlSegment(lambdaId)
                             .delete()
                             .go();
   }
@@ -911,6 +946,19 @@ public class FusionAuthClient {
                             .urlSegment(actionId)
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .put()
+                            .go();
+  }
+
+  /**
+   * Complete a login request using a passwordless code
+   *
+   * @param request The passwordless login request that contains all of the information used to complete login.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginResponse, Errors> passwordlessLogin(PasswordlessLoginRequest request) {
+    return start(LoginResponse.class, Errors.class).uri("/api/passwordless/login")
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
                             .go();
   }
 
@@ -1286,6 +1334,30 @@ public class FusionAuthClient {
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKeys() {
     return start(PublicKeyResponse.class, Void.TYPE).uri("/api/jwt/public-key")
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves the lambda for the given Id.
+   *
+   * @param lambdaId The Id of the lambda.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Errors> retrieveLambda(UUID lambdaId) {
+    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
+                            .urlSegment(lambdaId)
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves all of the lambdas.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Void> retrieveLambdas() {
+    return start(LambdaResponse.class, Void.TYPE).uri("/api/lambda")
                             .get()
                             .go();
   }
@@ -1728,6 +1800,19 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches the event logs with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EventLogSearchResponse, Void> searchEventLogs(EventLogSearchRequest request) {
+    return start(EventLogSearchResponse.class, Void.TYPE).uri("/api/system/event-log/search")
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
    * Retrieves the users for the given ids. If any id is invalid, it is ignored.
    *
    * @param ids The user ids to search for.
@@ -1765,6 +1850,19 @@ public class FusionAuthClient {
   public ClientResponse<SendResponse, Errors> sendEmail(UUID emailTemplateId, SendRequest request) {
     return start(SendResponse.class, Errors.class).uri("/api/email/send")
                             .urlSegment(emailTemplateId)
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
+   * Send a passwordless authentication code in an email to complete login.
+   *
+   * @param request The passwordless send request that contains all of the information used to send an email containing a code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendPasswordlessCode(PasswordlessSendRequest request) {
+    return start(Void.TYPE, Errors.class).uri("/api/passwordless/send")
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .post()
                             .go();
@@ -1895,6 +1993,21 @@ public class FusionAuthClient {
    */
   public ClientResponse<IntegrationResponse, Errors> updateIntegrations(IntegrationRequest request) {
     return start(IntegrationResponse.class, Errors.class).uri("/api/integration")
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .put()
+                            .go();
+  }
+
+  /**
+   * Updates the lambda with the given Id.
+   *
+   * @param lambdaId The Id of the lambda to update.
+   * @param request The request that contains all of the new lambda information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Errors> updateLambda(UUID lambdaId, LambdaRequest request) {
+    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
+                            .urlSegment(lambdaId)
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .put()
                             .go();

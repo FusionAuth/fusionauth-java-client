@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -315,6 +315,9 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     preferredLanguages.removeIf(Objects::isNull);
     timezone = trim(timezone);
     username = trim(username);
+    if (username != null && username.length() == 0) {
+      username = null;
+    }
     getRegistrations().forEach(UserRegistration::normalize);
   }
 

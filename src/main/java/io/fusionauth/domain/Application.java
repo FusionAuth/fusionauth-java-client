@@ -50,10 +50,16 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
   @InternalJSONColumn
   public JWTConfiguration jwtConfiguration;
 
+  @InternalJSONColumn
+  public LoginConfiguration loginConfiguration = new LoginConfiguration();
+
   public String name;
 
   @InternalJSONColumn
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
+
+  @InternalJSONColumn
+  public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 
   @InternalJSONColumn
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
@@ -108,8 +114,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
         Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
         Objects.equals(data, that.data) &&
         Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
+        Objects.equals(loginConfiguration, that.loginConfiguration) &&
         Objects.equals(name, that.name) &&
         Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
+        Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
         Objects.equals(roles, that.roles) &&
         Objects.equals(tenantId, that.tenantId) &&
         Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
@@ -131,8 +139,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, name, oauthConfiguration,
-                        roles, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, loginConfiguration, name, oauthConfiguration,
+                        passwordlessConfiguration, roles, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {
@@ -159,6 +167,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     if (oauthConfiguration != null) {
       oauthConfiguration.clientSecret = null;
     }
+
     return this;
   }
 
@@ -173,6 +182,63 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
   }
 
   public static class AuthenticationTokenConfiguration extends Enableable {
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode());
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class LoginConfiguration implements Buildable<LoginConfiguration> {
+    public boolean allowTokenRefresh;
+
+    public boolean generateRefreshTokens;
+
+    public boolean requireAuthentication = true;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof LoginConfiguration)) {
+        return false;
+      }
+      LoginConfiguration that = (LoginConfiguration) o;
+      return requireAuthentication == that.requireAuthentication &&
+          allowTokenRefresh == that.allowTokenRefresh &&
+          generateRefreshTokens == that.generateRefreshTokens;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(requireAuthentication, allowTokenRefresh, generateRefreshTokens);
+    }
+
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class PasswordlessConfiguration extends Enableable {
 
     @Override
     public boolean equals(Object o) {
@@ -213,11 +279,6 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
 
     public Requirable mobilePhone = new Requirable();
 
-    public enum LoginIdType {
-      email,
-      username
-    }
-
     @Override
     public boolean equals(Object o) {
       if (this == o) {
@@ -247,6 +308,11 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
 
     public String toString() {
       return ToString.toString(this);
+    }
+
+    public enum LoginIdType {
+      email,
+      username
     }
   }
 }

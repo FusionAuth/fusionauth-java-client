@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   @InternalJSONColumn
   public EventConfiguration eventConfiguration = new EventConfiguration();
+
+  @InternalJSONColumn
+  public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
   @InternalJSONColumn
   public ExternalIdentifierConfiguration externalIdentifierConfiguration = new ExternalIdentifierConfiguration();
@@ -173,6 +176,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
     public String password;
 
+    public UUID passwordlessEmailTemplateId;
+
     public Integer port;
 
     public EmailSecurityType security;
@@ -207,6 +212,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
           Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
           Objects.equals(host, that.host) &&
           Objects.equals(password, that.password) &&
+          Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
           Objects.equals(port, that.port) &&
           security == that.security &&
           Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
@@ -217,7 +223,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     @Override
     public int hashCode() {
 
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, host, password, port, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
     }
 
     @Override
@@ -294,12 +300,20 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
   }
 
+  public static class EventLogConfiguration {
+    public int numberToRetain = 10_000;
+  }
+
   public static class ExternalIdentifierConfiguration implements Buildable<ExternalIdentifierConfiguration> {
     public int authorizationGrantIdTimeToLiveInSeconds;
 
     public int changePasswordIdTimeToLiveInSeconds;
 
     public int emailVerificationIdTimeToLiveInSeconds;
+
+    public int oneTimePasswordTimeToLiveInSeconds;
+
+    public int passwordlessLoginTimeToLiveInSeconds;
 
     public int registrationVerificationIdTimeToLiveInSeconds;
 
@@ -321,6 +335,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       return authorizationGrantIdTimeToLiveInSeconds == that.authorizationGrantIdTimeToLiveInSeconds &&
           changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
           emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
+          oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
+          passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
           registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
           setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
           twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
@@ -330,8 +346,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     @Override
     public int hashCode() {
       return Objects.hash(authorizationGrantIdTimeToLiveInSeconds, changePasswordIdTimeToLiveInSeconds, emailVerificationIdTimeToLiveInSeconds,
-                          registrationVerificationIdTimeToLiveInSeconds, setupPasswordIdTimeToLiveInSeconds, twoFactorIdTimeToLiveInSeconds,
-                          twoFactorTrustIdTimeToLiveInSeconds);
+                          oneTimePasswordTimeToLiveInSeconds, registrationVerificationIdTimeToLiveInSeconds, passwordlessLoginTimeToLiveInSeconds,
+                          setupPasswordIdTimeToLiveInSeconds, twoFactorIdTimeToLiveInSeconds, twoFactorTrustIdTimeToLiveInSeconds);
     }
 
     @Override
@@ -340,7 +356,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
   }
 
-  public static class UIConfiguration {
+  public static class UIConfiguration implements Buildable<UIConfiguration> {
     public String headerColor;
 
     public LoginTheme loginTheme;

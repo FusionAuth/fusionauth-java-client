@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.fusionauth.domain.api;
 
 import java.util.List;
+import java.util.Map;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
@@ -30,6 +31,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
   public String changePasswordId;
 
   public String refreshToken;
+
+  public Map<String, Object> state;
 
   public String token;
 

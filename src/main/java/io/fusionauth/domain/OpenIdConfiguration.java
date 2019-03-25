@@ -30,7 +30,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "aud", "authenticationType", "email", "email_verified", "exp", "iat", "iss", "nbf", "roles", "sub"));
 
-  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "refresh_token"));
+  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token"));
 
   public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"));
 
@@ -46,7 +46,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String token_endpoint = "%s/oauth2/token";
 
-  public List<String> token_endpoint_auth_methods_supported = new ArrayList<>(Arrays.asList("client_secret_basic", "none"));
+  public List<String> token_endpoint_auth_methods_supported = new ArrayList<>(Arrays.asList("client_secret_basic", "client_secret_post", "none"));
 
   public String userinfo_endpoint = "%s/oauth2/userinfo";
 

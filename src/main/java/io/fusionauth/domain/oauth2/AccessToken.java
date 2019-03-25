@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
-public class AccessToken implements OAuthResponse {
-
+public class AccessToken implements OAuthResponse, Buildable<AccessToken> {
   @JsonIgnore
   public String clientId;
 
@@ -40,7 +40,7 @@ public class AccessToken implements OAuthResponse {
    * generated.
    */
   @JsonProperty("expires_in")
-  public int expiresIn;
+  public Integer expiresIn;
 
   @JsonProperty("id_token")
   public String idToken;
@@ -50,6 +50,8 @@ public class AccessToken implements OAuthResponse {
 
   @JsonProperty("refresh_token")
   public String refreshToken;
+
+  public String scope;
 
   /**
    * The access token issued by the authorization server.
@@ -72,7 +74,7 @@ public class AccessToken implements OAuthResponse {
   public AccessToken() {
   }
 
-  public AccessToken(String token, String clientId, int expiresIn, URI redirectURI, TokenType tokenType, UUID userId) {
+  public AccessToken(String token, String clientId, Integer expiresIn, URI redirectURI, TokenType tokenType, UUID userId) {
     this.clientId = clientId;
     this.createInstant = ZonedDateTime.now(ZoneOffset.UTC);
     this.expiresIn = expiresIn;

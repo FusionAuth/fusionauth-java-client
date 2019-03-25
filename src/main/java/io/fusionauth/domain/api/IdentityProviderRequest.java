@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
 import io.fusionauth.domain.provider.FacebookIdentityProvider;
 import io.fusionauth.domain.provider.GoogleIdentityProvider;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
+import io.fusionauth.domain.provider.SAML2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
 
 /**
@@ -37,7 +38,8 @@ public class IdentityProviderRequest {
       @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
       @Type(value = GoogleIdentityProvider.class, name = "Google"),
       @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
-      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
+      @Type(value = TwitterIdentityProvider.class, name = "Twitter"),
+      @Type(value = SAML2IdentityProvider.class, name = "SAML2")
   })
   public BaseIdentityProvider<?> identityProvider;
 

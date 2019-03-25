@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,6 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
   public UUID applicationId;
 
-  public String device;
-
   /**
    * The time this token was created. The start time of this token may be prior to the insert instant when generating
    * refresh tokens for another application in a SSO scenario.
@@ -67,7 +65,6 @@ public class RefreshToken implements Buildable<RefreshToken> {
     }
     RefreshToken that = (RefreshToken) o;
     return Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(device, that.device) &&
         Objects.equals(insertInstant, that.insertInstant) &&
         Objects.equals(metaData, that.metaData) &&
         Objects.equals(startInstant, that.startInstant) &&
@@ -77,7 +74,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, device, insertInstant, metaData, startInstant, token, userId);
+    return Objects.hash(applicationId, insertInstant, metaData, startInstant, token, userId);
   }
 
   @Override

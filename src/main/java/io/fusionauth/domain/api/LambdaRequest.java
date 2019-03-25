@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,20 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.UUID;
-
-import io.fusionauth.domain.jwt.RefreshToken.MetaData;
+import io.fusionauth.domain.Lambda;
 
 /**
- * @author Daniel DeGroff
+ * Lambda API request object.
+ *
+ * @author Brian Pontarelli
  */
-public class BaseLoginRequest {
-  public UUID applicationId;
+public class LambdaRequest {
+  public Lambda lambda;
 
-  public String ipAddress;
+  public LambdaRequest() {
+  }
 
-  public MetaData metaData;
-
-  public boolean noJWT;
+  public LambdaRequest(Lambda lambda) {
+    this.lambda = lambda;
+  }
 }

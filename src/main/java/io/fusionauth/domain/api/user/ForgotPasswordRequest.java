@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.Map;
+
 import com.inversoft.json.JacksonConstructor;
 
 /**
@@ -29,8 +31,15 @@ public class ForgotPasswordRequest {
 
   public boolean sendForgotPasswordEmail = true;
 
+  public Map<String, Object> state;
+
   @JacksonConstructor
   public ForgotPasswordRequest() {
+  }
+
+  public ForgotPasswordRequest(String loginId, Map<String, Object> state) {
+    this.loginId = loginId;
+    this.state = state;
   }
 
   public ForgotPasswordRequest(String loginId) {

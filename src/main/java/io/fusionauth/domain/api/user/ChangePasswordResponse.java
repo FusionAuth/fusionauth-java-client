@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,32 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.jwt;
+package io.fusionauth.domain.api.user;
 
-import java.util.List;
+import java.util.Map;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.jwt.RefreshToken;
 
 /**
+ * Change password response object.
+ *
  * @author Daniel DeGroff
  */
-public class RefreshResponse {
-  public List<RefreshToken> refreshTokens;
+public class ChangePasswordResponse {
+  public String oneTimePassword;
 
-  public String token;
+  public Map<String, Object> state;
 
   @JacksonConstructor
-  public RefreshResponse() {
+  public ChangePasswordResponse() {
   }
 
-  public RefreshResponse(String token) {
-    this.token = token;
+  public ChangePasswordResponse(String oneTimePassword) {
+    this.oneTimePassword = oneTimePassword;
   }
 
-  public RefreshResponse(List<RefreshToken> refreshTokens) {
-    this.refreshTokens = refreshTokens;
+  public ChangePasswordResponse(String oneTimePassword, Map<String, Object> state) {
+    this.oneTimePassword = oneTimePassword;
+    this.state = state;
   }
 }

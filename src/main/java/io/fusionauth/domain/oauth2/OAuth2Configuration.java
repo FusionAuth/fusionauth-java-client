@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,11 @@ package io.fusionauth.domain.oauth2;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -37,7 +40,9 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public String clientSecret;
 
-  public boolean generateRefreshTokens = true;
+  public Set<GrantType> enabledGrants = new TreeSet<>(Comparator.comparing(Enum::name, Comparator.reverseOrder()));
+
+  public boolean generateRefreshTokens;
 
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this is left null,
@@ -45,7 +50,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
    */
   public URI logoutURL;
 
-  public boolean requireClientAuthentication;
+  public boolean requireClientAuthentication = true;
 
   public OAuth2Configuration() {
   }
@@ -70,12 +75,13 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
         Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
         Objects.equals(clientId, that.clientId) &&
         Objects.equals(clientSecret, that.clientSecret) &&
+        Objects.equals(enabledGrants, that.enabledGrants) &&
         Objects.equals(logoutURL, that.logoutURL);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, logoutURL, requireClientAuthentication,
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, enabledGrants, logoutURL, requireClientAuthentication,
                         generateRefreshTokens);
   }
 

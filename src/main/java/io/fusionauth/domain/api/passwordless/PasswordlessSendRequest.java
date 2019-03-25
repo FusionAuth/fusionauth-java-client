@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.api.passwordless;
 
+import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
- * Login API request object.
- *
- * @author Seth Musselman
+ * @author Daniel DeGroff
  */
-public class LoginRequest extends BaseLoginRequest implements Buildable<LoginRequest> {
+public class PasswordlessSendRequest implements Buildable<PasswordlessSendRequest> {
+  public UUID applicationId;
+
   public String loginId;
 
-  public String oneTimePassword;
-
-  public String password;
-
-  public String twoFactorTrustId;
+  public Map<String, Object> state;
 
   @JacksonConstructor
-  public LoginRequest() {
+  public PasswordlessSendRequest() {
   }
 
-  public LoginRequest(UUID applicationId, String loginId, String password, String ipAddress) {
-    this.applicationId = applicationId;
-    this.ipAddress = ipAddress;
-    this.loginId = loginId;
-    this.password = password;
-  }
-
-  public LoginRequest(UUID applicationId, String loginId, String password) {
+  public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
-    this.password = password;
+    this.state = state;
   }
 }

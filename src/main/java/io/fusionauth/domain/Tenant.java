@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,6 +72,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public class TenantEmailConfiguration extends Enableable {
     public UUID forgotPasswordEmailTemplateId;
 
+    public UUID passwordlessEmailTemplateId;
+
     public UUID setPasswordEmailTemplateId;
 
     public UUID verificationEmailTemplateId;
@@ -96,13 +98,14 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
       return verifyEmail == that.verifyEmail &&
           verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
           Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
+          Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
           Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
           Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, setPasswordEmailTemplateId, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
     }
 
     @Override
