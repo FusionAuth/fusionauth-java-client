@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -45,6 +47,16 @@ public enum EventType {
 
   JWTPublicKeyUpdate("jwt.public-key.update"),
 
+  UserLoginSuccess("user.login.success"),
+
+  UserLoginFailed("user.login.failed"),
+
+  UserRegistrationCreate("user.registration.create"),
+
+  UserRegistrationUpdate("user.registration.update"),
+
+  UserRegistrationDelete("user.registration.delete"),
+
   Test("test");
 
   private static Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
@@ -53,6 +65,47 @@ public enum EventType {
 
   EventType(String eventName) {
     this.eventName = eventName;
+  }
+
+  /**
+   * @return Return all available types in displayable order.
+   */
+  public static List<EventType> allTypes() {
+    return Arrays.asList(EventType.JWTPublicKeyUpdate,
+                         EventType.JWTRefreshTokenRevoke,
+                         EventType.UserLoginSuccess,
+                         EventType.UserLoginFailed,
+                         EventType.UserAction,
+                         EventType.UserBulkCreate,
+                         EventType.UserCreate,
+                         EventType.UserRegistrationCreate,
+                         EventType.UserRegistrationUpdate,
+                         EventType.UserRegistrationDelete,
+                         EventType.UserDeactivate,
+                         EventType.UserDelete,
+                         EventType.UserReactivate,
+                         EventType.UserUpdate);
+  }
+
+  /**
+   * This returns all event types with the exception of the UserAction because the transaction for that event is configured per event.
+   *
+   * @return Return all available types in displayable order that can be globally configured for a transaction setting.
+   */
+  public static List<EventType> allTypesForTransactionConfiguration() {
+    return Arrays.asList(EventType.JWTPublicKeyUpdate,
+                         EventType.JWTRefreshTokenRevoke,
+                         EventType.UserLoginSuccess,
+                         EventType.UserLoginFailed,
+                         EventType.UserBulkCreate,
+                         EventType.UserCreate,
+                         EventType.UserRegistrationCreate,
+                         EventType.UserRegistrationUpdate,
+                         EventType.UserRegistrationDelete,
+                         EventType.UserDeactivate,
+                         EventType.UserDelete,
+                         EventType.UserReactivate,
+                         EventType.UserUpdate);
   }
 
   @JsonCreator

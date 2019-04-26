@@ -161,11 +161,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.3/fusionauth-jwt-3.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.1.0/fusionauth-jwt-3.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.0.3/fusionauth-jwt-3.0.3-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.1.0/fusionauth-jwt-3.1.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -199,6 +199,17 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8-src.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-samlv2/0.2.0/fusionauth-samlv2-0.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-samlv2/0.2.0/fusionauth-samlv2-0.2.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -37,6 +36,8 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
 
   @InternalJSONColumn
   public String buttonText;
+
+  public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
 
   @InternalJSONColumn
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
@@ -56,6 +57,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
     return Objects.equals(domains, that.domains) &&
         Objects.equals(buttonImageURL, that.buttonImageURL) &&
         Objects.equals(buttonText, that.buttonText) &&
+        Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
         Objects.equals(oauth2, that.oauth2);
   }
 
@@ -71,7 +73,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, oauth2);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, lambdaConfiguration, oauth2);
   }
 
   public URI lookupButtonImageURL(String clientId) {
@@ -98,20 +100,18 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
     return lookup(() -> oauth2.client_id, () -> app(applicationId, app -> app.oauth2.client_id));
   }
 
+  public String lookupClientSecret(UUID applicationId) {
+    return lookup(() -> oauth2.client_secret, () -> app(applicationId, app -> app.oauth2.client_secret));
+  }
+
   public String lookupScope(String clientId) {
     return lookup(() -> oauth2.scope, () -> app(clientId, app -> app.oauth2.scope));
   }
 
   @Override
-  public BaseIdentityProvider<OpenIdConnectApplicationConfiguration> normalize() {
-    // Lowercase the domains
-    if (domains.size() > 0) {
-      Set<String> newDomains = domains.stream().map(d -> d.toLowerCase().trim()).collect(Collectors.toSet());
-      domains.clear();
-      domains.addAll(newDomains);
-    }
-
-    return this;
+  public void normalize() {
+    super.normalize();
+    normalizeDoamins();
   }
 
   @Override

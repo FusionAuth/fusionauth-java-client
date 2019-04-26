@@ -16,6 +16,8 @@
 package io.fusionauth.client;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,9 +28,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.inversoft.error.Errors;
 import com.inversoft.json.JacksonModule;
 import com.inversoft.rest.ClientResponse;
+import com.inversoft.rest.FormDataBodyHandler;
 import com.inversoft.rest.JSONBodyHandler;
 import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
+import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
@@ -37,6 +41,7 @@ import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EventLogResponse;
 import io.fusionauth.domain.api.EventLogSearchRequest;
 import io.fusionauth.domain.api.EventLogSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
@@ -45,6 +50,8 @@ import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.api.IdentityProviderResponse;
 import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
+import io.fusionauth.domain.api.KeyRequest;
+import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
 import io.fusionauth.domain.api.LambdaResponse;
 import io.fusionauth.domain.api.LoginRequest;
@@ -105,6 +112,8 @@ import io.fusionauth.domain.api.user.SearchRequest;
 import io.fusionauth.domain.api.user.SearchResponse;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.oauth2.AccessToken;
+import io.fusionauth.domain.oauth2.OAuthError;
 
 /**
  * Client that connects to a FusionAuth server and provides access to the full set of FusionAuth APIs.
@@ -592,6 +601,19 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the key for the given Id.
+   *
+   * @param keyOd The Id of the key to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteKey(UUID keyOd) {
+    return start(Void.TYPE, Errors.class).uri("/api/key")
+                            .urlSegment(keyOd)
+                            .delete()
+                            .go();
+  }
+
+  /**
    * Deletes the lambda for the given Id.
    *
    * @param lambdaId The Id of the lambda to delete.
@@ -773,6 +795,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Generate a new RSA or EC key pair or an HMAC secret.
+   *
+   * @param keyId (Optional) The Id for the key. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the key.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeyResponse, Errors> generateKey(UUID keyId, KeyRequest request) {
+    return start(KeyResponse.class, Errors.class).uri("/api/key/generate")
+                            .urlSegment(keyId)
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
    * Generate a new Application Registration Verification Id to be used with the Verify Registration API. This API will not attempt to send an
    * email to the User. This API may be used to collect the verificationId for use with a third party system.
    *
@@ -827,6 +864,21 @@ public class FusionAuthClient {
    */
   public ClientResponse<LoginResponse, Errors> identityProviderLogin(IdentityProviderLoginRequest request) {
     return start(LoginResponse.class, Errors.class).uri("/api/identity-provider/login")
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .post()
+                            .go();
+  }
+
+  /**
+   * Import an existing RSA or EC key pair or an HMAC secret.
+   *
+   * @param keyId (Optional) The Id for the key. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the key.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeyResponse, Errors> importKey(UUID keyId, KeyRequest request) {
+    return start(KeyResponse.class, Errors.class).uri("/api/key/import")
+                            .urlSegment(keyId)
                             .bodyHandler(new JSONBodyHandler(request, objectMapper))
                             .post()
                             .go();
@@ -1215,6 +1267,19 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves a single event log for the given Id.
+   *
+   * @param eventLogId The Id of the event log to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EventLogResponse, Errors> retrieveEventLog(Integer eventLogId) {
+    return start(EventLogResponse.class, Errors.class).uri("/api/system/event-log")
+                            .urlSegment(eventLogId)
+                            .get()
+                            .go();
+  }
+
+  /**
    * Retrieves the group for the given Id.
    *
    * @param groupId The Id of the group.
@@ -1339,6 +1404,30 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the key for the given Id.
+   *
+   * @param keyId The Id of the key.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeyResponse, Errors> retrieveKey(UUID keyId) {
+    return start(KeyResponse.class, Errors.class).uri("/api/key")
+                            .urlSegment(keyId)
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves all of the keys.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeyResponse, Void> retrieveKeys() {
+    return start(KeyResponse.class, Void.TYPE).uri("/api/key")
+                            .get()
+                            .go();
+  }
+
+  /**
    * Retrieves the lambda for the given Id.
    *
    * @param lambdaId The Id of the lambda.
@@ -1358,6 +1447,19 @@ public class FusionAuthClient {
    */
   public ClientResponse<LambdaResponse, Void> retrieveLambdas() {
     return start(LambdaResponse.class, Void.TYPE).uri("/api/lambda")
+                            .get()
+                            .go();
+  }
+
+  /**
+   * Retrieves all of the lambdas for the provided type.
+   *
+   * @param type The type of the lambda to return.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Void> retrieveLambdasByType(LambdaType type) {
+    return start(LambdaResponse.class, Void.TYPE).uri("/api/lambda")
+                            .urlParameter("type", type)
                             .get()
                             .go();
   }
@@ -1999,6 +2101,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates the key with the given Id.
+   *
+   * @param keyId The Id of the key to update.
+   * @param request The request that contains all of the new key information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeyResponse, Errors> updateKey(UUID keyId, KeyRequest request) {
+    return start(KeyResponse.class, Errors.class).uri("/api/key")
+                            .urlSegment(keyId)
+                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
+                            .put()
+                            .go();
+  }
+
+  /**
    * Updates the lambda with the given Id.
    *
    * @param lambdaId The Id of the lambda to update.
@@ -2158,13 +2275,39 @@ public class FusionAuthClient {
                             .go();
   }
 
+
+  /**
+   * Exchanges an OAuth authorization code for an access token.
+   *
+   * @param code          The OAuth authorization code.
+   * @param client_id     The OAuth client_id.
+   * @param client_secret (Optional) The OAuth client _secret used for Basic Auth.
+   * @param redirect_uri   The OAuth redirect_uri.
+   * @return The ClientResponse that contains the access token if the request was successful.
+   */
+  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret,
+                                                                                 String redirect_uri) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("code", code);
+    parameters.put("grant_type", "authorization_code");
+    parameters.put("client_id", client_id);
+    parameters.put("redirect_uri", redirect_uri);
+    return start(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .basicAuthorization(client_id, client_secret)
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
   protected <T, U> RESTClient<T, U> start(Class<T> type, Class<U> errorType) {
-    RESTClient<T, U> client = new RESTClient<>(type, errorType).authorization(apiKey)
-                                               .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
-                                               .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
-                                               .url(baseURL)
-                                               .connectTimeout(connectTimeout)
-                                               .readTimeout(readTimeout);
+    RESTClient<T, U> client = new RESTClient<>(type, errorType)
+        .authorization(apiKey)
+        .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
+        .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
+        .url(baseURL)
+        .connectTimeout(connectTimeout)
+        .readTimeout(readTimeout);
 
     if (tenantId != null) {
       client.header(TENANT_ID_HEADER, tenantId);

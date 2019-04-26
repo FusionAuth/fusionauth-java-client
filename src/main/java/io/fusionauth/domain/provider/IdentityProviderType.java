@@ -28,7 +28,7 @@ public enum IdentityProviderType {
 
   Twitter(UUID.fromString("45bb233c-0901-4236-b5ca-ac46e2e0a5a5")),
 
-  SAML2(null);
+  SAMLv2(null);
 
   public final UUID id;
 

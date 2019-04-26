@@ -16,9 +16,9 @@
 package io.fusionauth.domain;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.ToString;
-import io.fusionauth.jwt.domain.Algorithm;
 
 /**
  * JWT Configuration. A JWT Configuration for an Application may not be active if it is using the global configuration, the configuration
@@ -27,35 +27,12 @@ import io.fusionauth.jwt.domain.Algorithm;
  * @author Daniel DeGroff
  */
 public class JWTConfiguration extends Enableable implements Buildable<JWTConfiguration> {
-  /**
-   * The configured algorithm used for signing and verification of JWTs.
-   */
-  public Algorithm algorithm;
-
-  /**
-   * The Issuer of the JWT.
-   */
-  public String issuer;
-
-  /**
-   * RSA Private Key used for RSA algorithms.
-   */
-  public String privateKey;
-
-  /**
-   * RSA Public Key used for RSA algorithms.
-   */
-  public String publicKey;
+  public UUID keyId;
 
   /**
    * The length of time in minutes a Refresh Token is valid from the time it was issued. This should be a non-zero value.
    */
   public int refreshTokenTimeToLiveInMinutes;
-
-  /**
-   * HMAC Secret used for HMAC algorithms.
-   */
-  public String secret;
 
   /**
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
@@ -72,34 +49,14 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     }
     JWTConfiguration that = (JWTConfiguration) o;
     return super.equals(o) &&
-        Objects.equals(algorithm, that.algorithm) &&
-        Objects.equals(issuer, that.issuer) &&
-        Objects.equals(privateKey, that.privateKey) &&
-        Objects.equals(publicKey, that.publicKey) &&
+        Objects.equals(keyId, that.keyId) &&
         Objects.equals(refreshTokenTimeToLiveInMinutes, that.refreshTokenTimeToLiveInMinutes) &&
-        Objects.equals(secret, that.secret) &&
         Objects.equals(timeToLiveInSeconds, that.timeToLiveInSeconds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), algorithm, issuer, privateKey, publicKey, refreshTokenTimeToLiveInMinutes, secret, timeToLiveInSeconds);
-  }
-
-  public void normalize() {
-    // Normalize Line returns in the public / private keys
-    if (publicKey != null) {
-      publicKey = publicKey.replace("\r\n", "\n").replace("\r", "\n");
-    }
-    if (privateKey != null) {
-      privateKey = privateKey.replace("\r\n", "\n").replace("\r", "\n");
-    }
-  }
-
-  public JWTConfiguration secure() {
-    privateKey = null;
-    secret = null;
-    return this;
+    return Objects.hash(super.hashCode(), keyId, refreshTokenTimeToLiveInMinutes, timeToLiveInSeconds);
   }
 
   @Override

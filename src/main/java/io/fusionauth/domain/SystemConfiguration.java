@@ -79,6 +79,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
    */
   public int httpSessionMaxInactiveInterval = 3600;
 
+  @InternalJSONColumn
+  public String issuer;
+
   /**
    * Global System JWT Configuration used to sign and drop a JWT cookie on a successful login.
    */
@@ -126,6 +129,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
         Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
         Objects.equals(failedAuthenticationConfiguration, that.failedAuthenticationConfiguration) &&
         Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
+        Objects.equals(issuer, that.issuer) &&
         Objects.equals(logoutURL, that.logoutURL) &&
         Objects.equals(maximumPasswordAge, that.maximumPasswordAge) &&
         Objects.equals(minimumPasswordAge, that.minimumPasswordAge) &&
@@ -138,29 +142,19 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   @Override
   public int hashCode() {
     return Objects.hash(cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
-                        failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, logoutURL, maximumPasswordAge,
+                        failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, issuer, logoutURL, maximumPasswordAge,
                         minimumPasswordAge, passwordEncryptionConfiguration, passwordValidationRules, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {
-    // Normalize Line returns in the public / private keys
-    if (jwtConfiguration != null) {
-      jwtConfiguration.normalize();
-    }
-
     if (uiConfiguration != null) {
       uiConfiguration.normalize();
     }
   }
 
   public SystemConfiguration secure() {
-    if (jwtConfiguration != null) {
-      jwtConfiguration.secure();
-    }
-
     cookieEncryptionIV = null;
     cookieEncryptionKey = null;
-
     return this;
   }
 
@@ -179,6 +173,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     public UUID passwordlessEmailTemplateId;
 
     public Integer port;
+
+    public String properties;
 
     public EmailSecurityType security;
 
@@ -214,6 +210,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
           Objects.equals(password, that.password) &&
           Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
           Objects.equals(port, that.port) &&
+          Objects.equals(properties, that.properties) &&
           security == that.security &&
           Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
           Objects.equals(username, that.username) &&
@@ -222,8 +219,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
     @Override
     public int hashCode() {
-
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
     }
 
     @Override

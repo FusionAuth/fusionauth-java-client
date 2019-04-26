@@ -66,6 +66,11 @@ public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTP
   }
 
   @Override
+  public EventType getType() {
+    return EventType.JWTPublicKeyUpdate;
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), applicationIds);
   }
@@ -73,10 +78,5 @@ public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTP
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.JWTPublicKeyUpdate;
   }
 }

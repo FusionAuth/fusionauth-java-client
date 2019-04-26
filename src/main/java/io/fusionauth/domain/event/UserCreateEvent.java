@@ -52,6 +52,11 @@ public class UserCreateEvent extends BaseEvent implements Buildable<UserCreateEv
   }
 
   @Override
+  public EventType getType() {
+    return EventType.UserCreate;
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), user);
   }
@@ -59,10 +64,5 @@ public class UserCreateEvent extends BaseEvent implements Buildable<UserCreateEv
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserCreate;
   }
 }

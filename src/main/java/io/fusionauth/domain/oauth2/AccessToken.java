@@ -108,6 +108,15 @@ public class AccessToken implements OAuthResponse, Buildable<AccessToken> {
     return Objects.hash(clientId, createInstant, expiresIn, idToken, redirectURI, token, tokenType, userId);
   }
 
+  /**
+   * Accept 'Bearer' and 'bearer' equally as the token type when we deserialize this from a JSON response.
+   *
+   * @param tokenType the incoming token type
+   */
+  public void setTokenType(String tokenType) {
+    this.tokenType = TokenType.fromName(tokenType);
+  }
+
   @Override
   public String toString() {
     return ToString.toString(this);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,33 @@
 package io.fusionauth.domain.event;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.UserRegistration;
 
 /**
- * Models the User Event (and can be converted to JSON) that is used for all user modifications (create, update,
- * delete).
+ * Models the User Delete Registration Event (and can be converted to JSON).
  *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class UserDeleteEvent extends BaseEvent implements Buildable<UserDeleteEvent> {
+public class UserRegistrationDeleteEvent extends BaseEvent implements Buildable<UserRegistrationDeleteEvent> {
+  public UUID applicationId;
+
+  public UserRegistration registration;
+
   public User user;
 
   @JacksonConstructor
-  public UserDeleteEvent() {
+  public UserRegistrationDeleteEvent() {
   }
 
-  public UserDeleteEvent(User user) {
+  public UserRegistrationDeleteEvent(UUID applicationId, UserRegistration registration, User user) {
+    this.applicationId = applicationId;
+    this.registration = registration;
     this.user = user;
   }
 
@@ -47,19 +54,21 @@ public class UserDeleteEvent extends BaseEvent implements Buildable<UserDeleteEv
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDeleteEvent that = (UserDeleteEvent) o;
+    UserRegistrationDeleteEvent that = (UserRegistrationDeleteEvent) o;
     return super.equals(o) &&
+        Objects.equals(applicationId, that.applicationId) &&
+        Objects.equals(registration, that.registration) &&
         Objects.equals(user, that.user);
   }
 
   @Override
   public EventType getType() {
-    return EventType.UserDelete;
+    return EventType.UserRegistrationDelete;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
+    return Objects.hash(super.hashCode(), applicationId, registration, user);
   }
 
   @Override

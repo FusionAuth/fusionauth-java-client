@@ -18,6 +18,7 @@ package io.fusionauth.domain.search;
 import java.time.ZonedDateTime;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.EventLogType;
 
 /**
  * Search criteria for the event log.
@@ -31,19 +32,28 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
 
   public ZonedDateTime start;
 
+  public EventLogType type;
+
   @JacksonConstructor
   public EventLogSearchCriteria() {
     orderBy = defaultOrderBy();
   }
 
-  public EventLogSearchCriteria(String message, ZonedDateTime start, ZonedDateTime end, int startRow,
+  public EventLogSearchCriteria(String message, EventLogType type, ZonedDateTime start, ZonedDateTime end, int startRow,
                                 int numberOfResults, String orderBy) {
     this.end = end;
     this.message = message;
-    this.start = start;
-    this.startRow = startRow;
     this.numberOfResults = numberOfResults;
     this.orderBy = orderBy;
+    this.start = start;
+    this.startRow = startRow;
+    this.type = type;
+  }
+
+  public EventLogSearchCriteria(int startRow, int numberOfResults) {
+    this.numberOfResults = numberOfResults;
+    orderBy = defaultOrderBy();
+    this.startRow = startRow;
   }
 
   @Override

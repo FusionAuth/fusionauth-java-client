@@ -27,6 +27,7 @@ import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
 import io.fusionauth.domain.provider.FacebookIdentityProvider;
 import io.fusionauth.domain.provider.GoogleIdentityProvider;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
+import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
 
 /**
@@ -39,6 +40,7 @@ public class IdentityProviderResponse {
       @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
       @Type(value = GoogleIdentityProvider.class, name = "Google"),
       @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
+      @Type(value = SAMLv2IdentityProvider.class, name = "SAMLv2"),
       @Type(value = TwitterIdentityProvider.class, name = "Twitter")
 
   })
@@ -50,6 +52,7 @@ public class IdentityProviderResponse {
       @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
       @Type(value = GoogleIdentityProvider.class, name = "Google"),
       @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
+      @Type(value = SAMLv2IdentityProvider.class, name = "SAMLv2"),
       @Type(value = TwitterIdentityProvider.class, name = "Twitter")
   })
   public List<BaseIdentityProvider<?>> identityProviders;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @Type(value = UserDeactivateEvent.class, name = "user.deactivate"),
     @Type(value = UserReactivateEvent.class, name = "user.reactivate"),
     @Type(value = UserBulkCreateEvent.class, name = "user.bulk.create"),
+    @Type(value = UserLoginFailedEvent.class, name = "user.login.failed"),
+    @Type(value = UserLoginSuccessEvent.class, name = "user.login.success"),
+    @Type(value = UserRegistrationCreateEvent.class, name = "user.registration.create"),
+    @Type(value = UserRegistrationUpdateEvent.class, name = "user.registration.update"),
+    @Type(value = UserRegistrationDeleteEvent.class, name = "user.registration.delete"),
     @Type(value = JWTRefreshTokenRevokeEvent.class, name = "jwt.refresh-token.revoke"),
     @Type(value = JWTPublicKeyUpdateEvent.class, name = "jwt.public-key.update"),
     @Type(value = TestEvent.class, name = "test")

@@ -17,10 +17,11 @@ savantVersion = "1.0.0"
 
 jackson5Version = "2.4.2"
 javaErrorVersion = "2.2.0"
-fusionauthJWTVersion = "3.0.3"
+fusionauthJWTVersion = "3.1.0"
+fusionauthSAMLv2Version = "0.2.0"
 restifyVersion = "3.2.1"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.5.1", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.6.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -38,6 +39,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.5.1"
       dependency(id: "com.inversoft:restify:${restifyVersion}")
       dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
       dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
+      dependency(id: "io.fusionauth:fusionauth-samlv2:${fusionauthSAMLv2Version}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
       dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.6")
       dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.8")

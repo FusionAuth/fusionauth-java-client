@@ -16,6 +16,7 @@
 package io.fusionauth.domain.provider;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Interface for all identity providers that can be domain based.
@@ -25,4 +26,16 @@ public interface DomainBasedIdentityProvider {
    * @return Any domains for the identity provider.
    */
   Set<String> getDomains();
+
+  /**
+   * Normalizes this IDP's domains by lowercasing them all.
+   */
+  default void normalizeDoamins() {
+    Set<String> domains = getDomains();
+    if (domains.size() > 0) {
+      Set<String> newDomains = domains.stream().map(d -> d.toLowerCase().trim()).collect(Collectors.toSet());
+      domains.clear();
+      domains.addAll(newDomains);
+    }
+  }
 }

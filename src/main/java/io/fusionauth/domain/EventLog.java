@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -32,6 +34,31 @@ public class EventLog implements Buildable<EventLog> {
 
   public String message;
 
+  public EventLogType type;
+
+  public EventLog(String message) {
+    this.message = message;
+  }
+
+  public EventLog(EventLogType type, String message) {
+    this.message = message;
+    this.type = type;
+  }
+
+  public EventLog(EventLogType type, String message, Throwable t) {
+    this.message = message;
+    this.type = type;
+
+    // Add the exception to the message
+    StringWriter writer = new StringWriter();
+    PrintWriter pw = new PrintWriter(writer);
+    t.printStackTrace(pw);
+    this.message += "\nException:\n" + writer.toString();
+  }
+
+  public EventLog() {
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -42,12 +69,13 @@ public class EventLog implements Buildable<EventLog> {
     }
     EventLog eventLog = (EventLog) o;
     return Objects.equals(insertInstant, eventLog.insertInstant) &&
-        Objects.equals(message, eventLog.message);
+        Objects.equals(message, eventLog.message) &&
+        Objects.equals(type, eventLog.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(insertInstant, message);
+    return Objects.hash(insertInstant, message, type);
   }
 
   public String toString() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,5 +28,18 @@ package io.fusionauth.domain.oauth2;
  */
 public enum TokenType {
   Bearer,
-  MAC
+  MAC;
+
+
+  public static TokenType fromName(String s) {
+    if (Bearer.name().equalsIgnoreCase(s)) {
+      return Bearer;
+    }
+
+    if (MAC.name().equalsIgnoreCase(s)) {
+      return MAC;
+    }
+
+    return null;
+  }
 }

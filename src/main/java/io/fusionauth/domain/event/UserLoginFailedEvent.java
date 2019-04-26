@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.fusionauth.domain.event;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -23,19 +24,24 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.User;
 
 /**
- * Models the User Event (and can be converted to JSON) that is used for all user modifications (create, update,
- * delete).
+ * Models the User Login Failed Event.
  *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class UserDeleteEvent extends BaseEvent implements Buildable<UserDeleteEvent> {
+public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLoginFailedEvent> {
+  public UUID applicationId;
+
+  public String authenticationType;
+
   public User user;
 
   @JacksonConstructor
-  public UserDeleteEvent() {
+  public UserLoginFailedEvent() {
   }
 
-  public UserDeleteEvent(User user) {
+  public UserLoginFailedEvent(UUID applicationId, String authenticationType, User user) {
+    this.applicationId = applicationId;
+    this.authenticationType = authenticationType;
     this.user = user;
   }
 
@@ -47,19 +53,21 @@ public class UserDeleteEvent extends BaseEvent implements Buildable<UserDeleteEv
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDeleteEvent that = (UserDeleteEvent) o;
+    UserLoginFailedEvent that = (UserLoginFailedEvent) o;
     return super.equals(o) &&
+        Objects.equals(applicationId, that.applicationId) &&
+        Objects.equals(authenticationType, that.authenticationType) &&
         Objects.equals(user, that.user);
   }
 
   @Override
   public EventType getType() {
-    return EventType.UserDelete;
+    return EventType.UserLoginFailed;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, user);
   }
 
   @Override

@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -48,7 +49,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
   public UUID id;
 
   @InternalJSONColumn
-  public JWTConfiguration jwtConfiguration;
+  public JWTConfiguration jwtConfiguration = new JWTConfiguration();
+
+  public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
 
   @InternalJSONColumn
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
@@ -65,6 +68,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
   public List<ApplicationRole> roles = new ArrayList<>();
+
+  @InternalJSONColumn
+  public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
   public UUID tenantId;
 
@@ -114,6 +120,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
         Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
         Objects.equals(data, that.data) &&
         Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
+        Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
         Objects.equals(loginConfiguration, that.loginConfiguration) &&
         Objects.equals(name, that.name) &&
         Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
@@ -139,7 +146,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, loginConfiguration, name, oauthConfiguration,
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration,
                         passwordlessConfiguration, roles, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
@@ -152,12 +159,6 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
 
     if (oauthConfiguration != null) {
       oauthConfiguration.normalize();
-    }
-
-    if (jwtConfiguration != null) {
-      jwtConfiguration.normalize();
-      // issuer only applies to the global JWT configuration.
-      jwtConfiguration.issuer = null;
     }
 
     roles.forEach(ApplicationRole::normalize);
@@ -197,6 +198,38 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     @Override
     public int hashCode() {
       return Objects.hash(super.hashCode());
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class LambdaConfiguration {
+    public UUID accessTokenPopulateId;
+
+    public UUID idTokenPopulateId;
+
+    public UUID samlv2PopulateId;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof LambdaConfiguration)) {
+        return false;
+      }
+      LambdaConfiguration that = (LambdaConfiguration) o;
+      return Objects.equals(accessTokenPopulateId, that.accessTokenPopulateId) &&
+          Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
+          Objects.equals(samlv2PopulateId, that.samlv2PopulateId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId);
     }
 
     @Override
@@ -313,6 +346,68 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     public enum LoginIdType {
       email,
       username
+    }
+  }
+
+  public static class SAMLv2Configuration extends Enableable implements Buildable<SAMLv2Configuration> {
+    public String audience;
+
+    public URI callbackURL;
+
+    public boolean debug;
+
+    public String issuer;
+
+    public UUID keyId;
+
+    public URI logoutURL;
+
+    public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof SAMLv2Configuration)) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      SAMLv2Configuration that = (SAMLv2Configuration) o;
+      return Objects.equals(audience, that.audience) &&
+          Objects.equals(callbackURL, that.callbackURL) &&
+          Objects.equals(debug, that.debug) &&
+          Objects.equals(issuer, that.issuer) &&
+          Objects.equals(keyId, that.keyId) &&
+          Objects.equals(logoutURL, that.logoutURL) &&
+          Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), audience, callbackURL, debug, issuer, keyId, logoutURL, xmlSignatureC14nMethod);
+    }
+
+    public enum CanonicalizationMethod {
+      exclusive(javax.xml.crypto.dsig.CanonicalizationMethod.EXCLUSIVE),
+
+      exclusive_with_comments(javax.xml.crypto.dsig.CanonicalizationMethod.EXCLUSIVE_WITH_COMMENTS),
+
+      inclusive(javax.xml.crypto.dsig.CanonicalizationMethod.INCLUSIVE),
+
+      inclusive_with_comments(javax.xml.crypto.dsig.CanonicalizationMethod.INCLUSIVE_WITH_COMMENTS);
+
+      private String uri;
+
+      CanonicalizationMethod(String uri) {
+        this.uri = uri;
+      }
+
+      public String getURI() {
+        return uri;
+      }
     }
   }
 }

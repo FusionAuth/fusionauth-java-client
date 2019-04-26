@@ -17,11 +17,9 @@ package io.fusionauth.domain.provider;
 
 import java.net.URI;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -32,10 +30,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  *
  * @author Brian Pontarelli
  */
-public class SAML2IdentityProvider extends BaseIdentityProvider<SAML2ApplicationConfiguration> implements Buildable<SAML2IdentityProvider>, DomainBasedIdentityProvider {
-  @InternalJSONColumn
-  public final Map<String, String> claimMap = new LinkedHashMap<>();
-
+public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration> implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider {
   public final Set<String> domains = new HashSet<>();
 
   @InternalJSONColumn
@@ -48,42 +43,39 @@ public class SAML2IdentityProvider extends BaseIdentityProvider<SAML2Application
   public String emailClaim;
 
   @InternalJSONColumn
-  public String idpEndpoint;
+  public URI idpEndpoint;
 
   @InternalJSONColumn
-  public String requestPrivateKey;
+  public String issuer;
+
+  public UUID keyId;
+
+  public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
 
   @InternalJSONColumn
-  public String requestPublicKey;
-
-  @InternalJSONColumn
-  public String responsePublicKey;
-
-  @InternalJSONColumn
-  public String rolesClaim;
+  public boolean useNameIdForEmail;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SAML2IdentityProvider)) {
+    if (!(o instanceof SAMLv2IdentityProvider)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
-    SAML2IdentityProvider that = (SAML2IdentityProvider) o;
-    return Objects.equals(claimMap, that.claimMap) &&
-        Objects.equals(domains, that.domains) &&
+    SAMLv2IdentityProvider that = (SAMLv2IdentityProvider) o;
+    return Objects.equals(domains, that.domains) &&
         Objects.equals(buttonImageURL, that.buttonImageURL) &&
         Objects.equals(buttonText, that.buttonText) &&
         Objects.equals(emailClaim, that.emailClaim) &&
         Objects.equals(idpEndpoint, that.idpEndpoint) &&
-        Objects.equals(requestPrivateKey, that.requestPrivateKey) &&
-        Objects.equals(requestPublicKey, that.requestPublicKey) &&
-        Objects.equals(responsePublicKey, that.responsePublicKey) &&
-        Objects.equals(rolesClaim, that.rolesClaim);
+        Objects.equals(issuer, that.issuer) &&
+        Objects.equals(keyId, that.keyId) &&
+        Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
+        useNameIdForEmail == that.useNameIdForEmail;
   }
 
   @Override
@@ -93,32 +85,39 @@ public class SAML2IdentityProvider extends BaseIdentityProvider<SAML2Application
 
   @Override
   public IdentityProviderType getType() {
-    return IdentityProviderType.SAML2;
+    return IdentityProviderType.SAMLv2;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), claimMap, domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, requestPrivateKey, requestPublicKey, responsePublicKey, rolesClaim);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, lambdaConfiguration, useNameIdForEmail);
+  }
+
+  public URI lookupButtonImageURL(String clientId) {
+    return lookup(() -> buttonImageURL, () -> app(clientId, app -> app.buttonImageURL));
+  }
+
+  public URI lookupButtonImageURL(UUID applicationId) {
+    return lookup(() -> buttonImageURL, () -> app(applicationId, app -> app.buttonImageURL));
+  }
+
+  public String lookupButtonText(String clientId) {
+    return lookup(() -> buttonText, () -> app(clientId, app -> app.buttonText));
+  }
+
+  public String lookupButtonText(UUID applicationId) {
+    return lookup(() -> buttonText, () -> app(applicationId, app -> app.buttonText));
   }
 
   @Override
-  public SAML2IdentityProvider normalize() {
-    // Lowercase the domains
-    if (domains.size() > 0) {
-      Set<String> newDomains = domains.stream().map(d -> d.toLowerCase().trim()).collect(Collectors.toSet());
-      domains.clear();
-      domains.addAll(newDomains);
-    }
-
-    return this;
+  public void normalize() {
+    super.normalize();
+    normalizeDoamins();
   }
 
-  public SAML2IdentityProvider secure() {
-    claimMap.clear();
+  public SAMLv2IdentityProvider secure() {
     domains.clear();
     emailClaim = null;
-    requestPrivateKey = null;
-    rolesClaim = null;
     return this;
   }
 

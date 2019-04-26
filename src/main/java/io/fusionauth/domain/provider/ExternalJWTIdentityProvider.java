@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -89,19 +88,13 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   }
 
   @Override
-  public ExternalJWTIdentityProvider normalize() {
+  public void normalize() {
+    super.normalize();
+    normalizeDoamins();
+
     // remove empty values, and then normalize PEM line returns
     keys.entrySet().removeIf(entry -> entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty());
     keys.entrySet().forEach(entry -> entry.setValue(entry.getValue().trim().replace("\r\n", "\n").replace("\r", "\n")));
-
-    // Lowercase the domains
-    if (domains.size() > 0) {
-      Set<String> newDomains = domains.stream().map(d -> d.toLowerCase().trim()).collect(Collectors.toSet());
-      domains.clear();
-      domains.addAll(newDomains);
-    }
-
-    return this;
   }
 
   public ExternalJWTIdentityProvider secure() {

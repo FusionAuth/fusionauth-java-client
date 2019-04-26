@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,32 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.oauth2;
+package io.fusionauth.domain.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+
+import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Key;
 
 /**
+ * Key API response object.
+ *
  * @author Daniel DeGroff
  */
-public interface Expiring {
+public class KeyResponse {
+  public Key key;
 
-  /**
-   * @return true if the token is expired.
-   */
-  @JsonIgnore
-  boolean isExpired();
+  public List<Key> keys;
+
+  @JacksonConstructor
+  public KeyResponse() {
+  }
+
+  public KeyResponse(Key key) {
+    this.key = key;
+  }
+
+  public KeyResponse(List<Key> keys) {
+    this.keys = keys;
+  }
 }

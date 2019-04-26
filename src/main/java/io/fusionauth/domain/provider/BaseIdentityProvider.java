@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeId;
+import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 
@@ -74,11 +75,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   /**
    * Normalizes the data in the IdentityProvider if necessary.
-   *
-   * @return this
    */
-  public BaseIdentityProvider<D> normalize() {
-    return this;
+  public void normalize() {
   }
 
   /**
@@ -109,6 +107,32 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
       return UUID.fromString(clientId);
     } catch (IllegalArgumentException | NullPointerException e) {
       return null;
+    }
+  }
+
+  public static class LambdaConfiguration {
+    public UUID reconcileId;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof LambdaConfiguration)) {
+        return false;
+      }
+      LambdaConfiguration that = (LambdaConfiguration) o;
+      return Objects.equals(reconcileId, that.reconcileId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(reconcileId);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
     }
   }
 }

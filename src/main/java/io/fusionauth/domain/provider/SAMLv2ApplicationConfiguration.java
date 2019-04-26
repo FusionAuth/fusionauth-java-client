@@ -25,7 +25,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 /**
  * @author Brian Pontarelli
  */
-public class SAML2ApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SAML2ApplicationConfiguration> {
+public class SAMLv2ApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SAMLv2ApplicationConfiguration> {
   @InternalJSONColumn
   public URI buttonImageURL;
 
@@ -37,13 +37,13 @@ public class SAML2ApplicationConfiguration extends BaseIdentityProviderApplicati
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SAML2ApplicationConfiguration)) {
+    if (!(o instanceof SAMLv2ApplicationConfiguration)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
-    SAML2ApplicationConfiguration that = (SAML2ApplicationConfiguration) o;
+    SAMLv2ApplicationConfiguration that = (SAMLv2ApplicationConfiguration) o;
     return Objects.equals(buttonImageURL, that.buttonImageURL) &&
         Objects.equals(buttonText, that.buttonText);
   }

@@ -29,11 +29,13 @@ import com.inversoft.json.ToString;
 public class Lambda extends Enableable implements Buildable<Lambda> {
   public String body;
 
-  public String description;
+  public boolean debug;
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
+
+  public String name;
 
   public LambdaType type;
 
@@ -43,7 +45,8 @@ public class Lambda extends Enableable implements Buildable<Lambda> {
 
   public Lambda(Lambda lambda) {
     this.body = lambda.body;
-    this.description = lambda.description;
+    this.name = lambda.name;
+    this.debug = lambda.debug;
     this.enabled = lambda.enabled;
     this.id = lambda.id;
     this.insertInstant = lambda.insertInstant;
@@ -63,14 +66,15 @@ public class Lambda extends Enableable implements Buildable<Lambda> {
     }
     Lambda lambda = (Lambda) o;
     return Objects.equals(body, lambda.body) &&
-        Objects.equals(description, lambda.description) &&
+        Objects.equals(debug, lambda.debug) &&
+        Objects.equals(name, lambda.name) &&
         Objects.equals(insertInstant, lambda.insertInstant) &&
         type == lambda.type;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), body, description, insertInstant, type);
+    return Objects.hash(super.hashCode(), body, debug, name, insertInstant, type);
   }
 
   public String toString() {
