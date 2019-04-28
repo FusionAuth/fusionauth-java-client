@@ -36,8 +36,6 @@ public class Key implements Buildable<Key> {
   // Response only
   public CertificateInformation certificateInformation;
 
-  public boolean clientSecretShadow;
-
   public ZonedDateTime expirationInstant;
 
   public UUID id;
