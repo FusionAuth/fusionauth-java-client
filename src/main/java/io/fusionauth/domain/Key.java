@@ -86,6 +86,15 @@ public class Key implements Buildable<Key> {
         Objects.equals(type, key.type);
   }
 
+  @JsonIgnore
+  public String getDisplayName() {
+    if (algorithm == null) {
+      return name + " (" + type.name() + ")";
+    }
+
+    return name + " (" + algorithm.name() + ")";
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(algorithm, certificateInformation, expirationInstant, id, insertInstant, issuer, kid, length, name, pair, privateKey, publicKey, secret, type);
@@ -131,6 +140,11 @@ public class Key implements Buildable<Key> {
 
   public String toString() {
     return ToString.toString(this);
+  }
+
+  @JsonIgnore
+  public boolean usesClientSecret() {
+    return type == KeyType.HMAC && secret == null;
   }
 
   public enum KeyAlgorithm {
