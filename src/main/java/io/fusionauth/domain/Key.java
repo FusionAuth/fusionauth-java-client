@@ -36,6 +36,8 @@ public class Key implements Buildable<Key> {
   // Response only
   public CertificateInformation certificateInformation;
 
+  public boolean clientSecretShadow;
+
   public ZonedDateTime expirationInstant;
 
   public UUID id;
@@ -140,11 +142,6 @@ public class Key implements Buildable<Key> {
 
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @JsonIgnore
-  public boolean usesClientSecret() {
-    return type == KeyType.HMAC && secret == null;
   }
 
   public enum KeyAlgorithm {
