@@ -61,6 +61,27 @@ public class Key implements Buildable<Key> {
 
   public KeyType type;
 
+  public Key() {
+  }
+
+  public Key(Key key) {
+    this.algorithm = key.algorithm;
+    this.certificate = key.certificate;
+    this.certificateInformation = key.certificateInformation;
+    this.expirationInstant = key.expirationInstant;
+    this.id = key.id;
+    this.insertInstant = key.insertInstant;
+    this.issuer = key.issuer;
+    this.kid = key.kid;
+    this.length = key.length;
+    this.name = key.name;
+    this.pair = key.pair;
+    this.privateKey = key.privateKey;
+    this.publicKey = key.publicKey;
+    this.secret = key.secret;
+    this.type = key.type;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
