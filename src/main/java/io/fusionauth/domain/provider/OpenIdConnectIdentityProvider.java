@@ -108,6 +108,10 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
     return lookup(() -> oauth2.scope, () -> app(clientId, app -> app.oauth2.scope));
   }
 
+  public String lookupScope(UUID applicationId) {
+    return lookup(() -> oauth2.scope, () -> app(applicationId, app -> app.oauth2.scope));
+  }
+
   @Override
   public void normalize() {
     super.normalize();
