@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
@@ -26,7 +27,7 @@ import com.inversoft.json.ToString;
 public class KafkaConfiguration extends Enableable implements Buildable<KafkaConfiguration>, Integration {
   public String defaultTopic;
 
-  public TreeMap<String, String> producer = new TreeMap<>();
+  public Map<String, String> producer = new TreeMap<>();
 
   @Override
   public boolean equals(Object o) {
