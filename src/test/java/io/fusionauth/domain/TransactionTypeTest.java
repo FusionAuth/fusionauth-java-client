@@ -22,7 +22,6 @@ import static org.testng.Assert.assertTrue;
 /**
  * @author Brian Pontarelli
  */
-@Test(groups = "unit")
 public class TransactionTypeTest {
   @Test
   public void all() {

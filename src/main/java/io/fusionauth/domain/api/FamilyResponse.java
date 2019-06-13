@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,30 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.TwoFactorDelivery;
+import io.fusionauth.domain.Family;
 
 /**
+ * API response for managing families and members.
+ *
  * @author Brian Pontarelli
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String code;
+public class FamilyResponse {
+  public List<Family> families;
 
-  public TwoFactorDelivery delivery;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+  public Family family;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public FamilyResponse() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
-    this.code = code;
-    this.secret = secret;
+  public FamilyResponse(List<Family> families) {
+    this.families = families;
   }
 
-  public TwoFactorRequest(String code, String secret, TwoFactorDelivery delivery) {
-    this.code = code;
-    this.delivery = delivery;
-    this.secret = secret;
+  public FamilyResponse(Family family) {
+    this.family = family;
   }
 }

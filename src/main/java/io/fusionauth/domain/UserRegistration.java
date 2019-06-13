@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +67,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public SortedSet<String> roles = new TreeSet<>();
 
-  public String timezone;
+  public ZoneId timezone;
 
   @JsonIgnore
   public UUID userId;

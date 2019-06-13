@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,30 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.TwoFactorDelivery;
+import io.fusionauth.domain.Consent;
 
 /**
- * @author Brian Pontarelli
+ * API response for consent.
+ *
+ * @author Daniel DeGroff
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String code;
+public class ConsentResponse {
+  public Consent consent;
 
-  public TwoFactorDelivery delivery;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+  public List<Consent> consents;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public ConsentResponse() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
-    this.code = code;
-    this.secret = secret;
+  public ConsentResponse(List<Consent> consents) {
+    this.consents = consents;
   }
 
-  public TwoFactorRequest(String code, String secret, TwoFactorDelivery delivery) {
-    this.code = code;
-    this.delivery = delivery;
-    this.secret = secret;
+  public ConsentResponse(Consent consent) {
+    this.consent = consent;
   }
 }

@@ -17,10 +17,10 @@ package io.fusionauth.domain;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,8 +46,6 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Seth Musselman
  */
 public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn {
-  public final Map<String, Object> data;
-
   @InternalJSONColumn
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
@@ -60,6 +58,8 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   public LocalDate birthDate;
 
   public UUID cleanSpeakId;
+
+  public Map<String, Object> data = new LinkedHashMap<>();
 
   public String email;
 
@@ -81,9 +81,11 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public String mobilePhone;
 
+  public String parentEmail;
+
   public UUID tenantId;
 
-  public String timezone;
+  public ZoneId timezone;
 
   public TwoFactorDelivery twoFactorDelivery;
 
@@ -96,43 +98,6 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   public ContentStatus usernameStatus;
 
   public User() {
-    data = new LinkedHashMap<>();
-  }
-
-  public User(UUID id, String email, String username, String password, String salt, LocalDate birthDate, String fullName, String firstName,
-              String middleName, String lastName, String encryptionScheme, ZonedDateTime expiry, boolean active, String timezone,
-              UUID cleanSpeakId, Map<String, Object> data, boolean verified, ContentStatus usernameStatus,
-              TwoFactorDelivery twoFactorDelivery, boolean twoFactorEnabled, String twoFactorSecret, URI imageUrl,
-              UserRegistration... registrations) {
-    this.id = id;
-    this.active = active;
-    this.email = email;
-    this.birthDate = birthDate;
-    this.cleanSpeakId = cleanSpeakId;
-    this.encryptionScheme = encryptionScheme;
-    this.expiry = expiry;
-    this.username = username;
-    this.timezone = timezone;
-    this.fullName = fullName;
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.password = password;
-    this.salt = salt;
-    this.verified = verified;
-    this.usernameStatus = usernameStatus;
-    this.twoFactorDelivery = twoFactorDelivery;
-    this.twoFactorEnabled = twoFactorEnabled;
-    this.twoFactorSecret = twoFactorSecret;
-    this.imageUrl = imageUrl;
-    Collections.addAll(this.registrations, registrations);
-
-    this.data = new LinkedHashMap<>();
-    if (data != null) {
-      this.data.putAll(data);
-    }
-
-    normalize();
   }
 
   public User(User user) {
@@ -153,6 +118,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.memberships.addAll(user.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
     this.middleName = user.middleName;
     this.mobilePhone = user.mobilePhone;
+    this.parentEmail = user.parentEmail;
     this.password = user.password;
     this.passwordChangeRequired = user.passwordChangeRequired;
     this.passwordLastUpdateInstant = user.passwordLastUpdateInstant;
@@ -168,7 +134,6 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.usernameStatus = user.usernameStatus;
     this.verified = user.verified;
 
-    this.data = new LinkedHashMap<>();
     if (user.data != null) {
       this.data.putAll(user.data);
     }
@@ -202,6 +167,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
         Objects.equals(middleName, user.middleName) &&
         Objects.equals(mobilePhone, user.mobilePhone) &&
         Objects.equals(registrations, user.registrations) &&
+        Objects.equals(parentEmail, user.parentEmail) &&
         Objects.equals(tenantId, user.tenantId) &&
         Objects.equals(timezone, user.timezone) &&
         Objects.equals(twoFactorDelivery, user.twoFactorDelivery) &&
@@ -282,8 +248,8 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant,
-                        lastLoginInstant, lastName, memberships, middleName, mobilePhone, registrations, tenantId, timezone, twoFactorDelivery,
-                        twoFactorEnabled, twoFactorSecret, username, usernameStatus);
+                        lastLoginInstant, lastName, memberships, middleName, mobilePhone, registrations, parentEmail, tenantId, timezone,
+                        twoFactorDelivery, twoFactorEnabled, twoFactorSecret, username, usernameStatus);
   }
 
   /**
@@ -312,8 +278,8 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     lastName = trim(lastName);
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
+    parentEmail = toLowerCase(trim(parentEmail));
     preferredLanguages.removeIf(Objects::isNull);
-    timezone = trim(timezone);
     username = trim(username);
     if (username != null && username.length() == 0) {
       username = null;

@@ -33,16 +33,27 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @InternalJSONColumn
   public TenantEmailConfiguration emailConfiguration = new TenantEmailConfiguration();
 
+  @InternalJSONColumn
+  public FamilyConfiguration familyConfiguration = new FamilyConfiguration();
+
   public UUID id;
 
   public String name;
+
+  public Tenant() {
+  }
 
   public Tenant(UUID id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  public Tenant() {
+  public Tenant(Tenant tenant) {
+    this.data.putAll(tenant.data);
+    this.emailConfiguration = new TenantEmailConfiguration(tenant.emailConfiguration);
+    this.familyConfiguration = new FamilyConfiguration(tenant.familyConfiguration);
+    this.id = tenant.id;
+    this.name = tenant.name;
   }
 
   @Override
@@ -69,6 +80,85 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     return ToString.toString(this);
   }
 
+  public static class FamilyConfiguration extends Enableable implements Buildable<FamilyConfiguration> {
+    public boolean allowChildRegistrations = true;
+
+    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
+    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
+    //        select a template here.
+    public UUID confirmChildEmailTemplateId;
+
+    public boolean deleteOrphanedAccounts;
+
+    public int deleteOrphanedAccountsDays = 30;
+
+    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
+    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
+    //        select a template here.
+    public UUID familyRequestEmailTemplateId;
+
+    public int maximumChildAge = 12;
+
+    public int minimumOwnerAge = 21;
+
+    public boolean parentEmailRequired;
+
+    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
+    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
+    //        select a template here.
+    public UUID parentRegistrationEmailTemplateId;
+
+    public FamilyConfiguration() {
+    }
+
+    public FamilyConfiguration(FamilyConfiguration other) {
+      this.allowChildRegistrations = other.allowChildRegistrations;
+      this.familyRequestEmailTemplateId = other.familyRequestEmailTemplateId;
+      this.confirmChildEmailTemplateId = other.confirmChildEmailTemplateId;
+      this.deleteOrphanedAccounts = other.deleteOrphanedAccounts;
+      this.deleteOrphanedAccountsDays = other.deleteOrphanedAccountsDays;
+      this.maximumChildAge = other.maximumChildAge;
+      this.minimumOwnerAge = other.minimumOwnerAge;
+      this.parentEmailRequired = other.parentEmailRequired;
+      this.parentRegistrationEmailTemplateId = other.parentRegistrationEmailTemplateId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof FamilyConfiguration)) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      FamilyConfiguration that = (FamilyConfiguration) o;
+      return allowChildRegistrations == that.allowChildRegistrations &&
+          deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
+          deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
+          maximumChildAge == that.maximumChildAge &&
+          minimumOwnerAge == that.minimumOwnerAge &&
+          parentEmailRequired == that.parentEmailRequired &&
+          Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
+          Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
+          Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), allowChildRegistrations, familyRequestEmailTemplateId, confirmChildEmailTemplateId,
+                          deleteOrphanedAccounts, deleteOrphanedAccountsDays, maximumChildAge, minimumOwnerAge, parentEmailRequired,
+                          parentRegistrationEmailTemplateId);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
   public class TenantEmailConfiguration extends Enableable {
     public UUID forgotPasswordEmailTemplateId;
 
@@ -81,6 +171,18 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     public boolean verifyEmail;
 
     public boolean verifyEmailWhenChanged;
+
+    public TenantEmailConfiguration() {
+    }
+
+    public TenantEmailConfiguration(TenantEmailConfiguration other) {
+      this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
+      this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
+      this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
+      this.verificationEmailTemplateId = other.verificationEmailTemplateId;
+      this.verifyEmail = other.verifyEmail;
+      this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -105,7 +207,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId,
+                          verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
     }
 
     @Override

@@ -37,6 +37,9 @@ import static java.util.Arrays.asList;
  * @author Brian Pontarelli
  */
 public class SystemConfiguration implements Buildable<SystemConfiguration>, _InternalJSONColumn {
+  @InternalJSONColumn
+  public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
+
   /**
    * Base64 encoded Initialization Vector for prime-mvc. This is currently only used to encrypt and de-crypt saved
    * request cookies.
@@ -88,6 +91,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   @InternalJSONColumn
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
+  @InternalJSONColumn
+  public LoginRecordConfiguration loginRecordConfiguration = new LoginRecordConfiguration();
+
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
    * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
@@ -120,16 +126,19 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       return false;
     }
     SystemConfiguration that = (SystemConfiguration) o;
-    return httpSessionMaxInactiveInterval == that.httpSessionMaxInactiveInterval &&
+    return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
         Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
         Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
         Objects.equals(data, that.data) &&
         Objects.equals(emailConfiguration, that.emailConfiguration) &&
         Objects.equals(eventConfiguration, that.eventConfiguration) &&
+        Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
         Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
         Objects.equals(failedAuthenticationConfiguration, that.failedAuthenticationConfiguration) &&
+        httpSessionMaxInactiveInterval == that.httpSessionMaxInactiveInterval &&
         Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
         Objects.equals(issuer, that.issuer) &&
+        Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
         Objects.equals(logoutURL, that.logoutURL) &&
         Objects.equals(maximumPasswordAge, that.maximumPasswordAge) &&
         Objects.equals(minimumPasswordAge, that.minimumPasswordAge) &&
@@ -141,8 +150,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   @Override
   public int hashCode() {
-    return Objects.hash(cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
-                        failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, issuer, logoutURL, maximumPasswordAge,
+    return Objects.hash(auditLogConfiguration, cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, eventLogConfiguration, externalIdentifierConfiguration,
+                        failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, issuer, loginRecordConfiguration, logoutURL, maximumPasswordAge,
                         minimumPasswordAge, passwordEncryptionConfiguration, passwordValidationRules, reportTimezone, uiConfiguration);
   }
 
@@ -161,6 +170,62 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  public static class AuditLogConfiguration {
+    public DeleteConfiguration delete = new DeleteConfiguration();
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof AuditLogConfiguration)) {
+        return false;
+      }
+      AuditLogConfiguration that = (AuditLogConfiguration) o;
+      return Objects.equals(delete, that.delete);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(delete);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class DeleteConfiguration extends Enableable {
+    public Integer numberOfDaysToRetain;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof DeleteConfiguration)) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      DeleteConfiguration that = (DeleteConfiguration) o;
+      return Objects.equals(numberOfDaysToRetain, that.numberOfDaysToRetain);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), numberOfDaysToRetain);
+    }
+
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 
   public static class EmailConfiguration extends Enableable implements Buildable<EmailConfiguration> {
@@ -189,6 +254,21 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     public boolean verifyEmailWhenChanged;
 
     public EmailConfiguration() {
+    }
+
+    public EmailConfiguration(EmailConfiguration other) {
+      this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
+      this.host = other.host;
+      this.password = other.password;
+      this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
+      this.port = other.port;
+      this.properties = other.properties;
+      this.security = other.security;
+      this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
+      this.username = other.username;
+      this.verificationEmailTemplateId = other.verificationEmailTemplateId;
+      this.verifyEmail = other.verifyEmail;
+      this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
     }
 
     @Override
@@ -298,6 +378,28 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   public static class EventLogConfiguration {
     public int numberToRetain = 10_000;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof EventLogConfiguration)) {
+        return false;
+      }
+      EventLogConfiguration that = (EventLogConfiguration) o;
+      return numberToRetain == that.numberToRetain;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(numberToRetain);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 
   public static class ExternalIdentifierConfiguration implements Buildable<ExternalIdentifierConfiguration> {
@@ -352,6 +454,32 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
   }
 
+  public static class LoginRecordConfiguration {
+    public DeleteConfiguration delete = new DeleteConfiguration();
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof LoginRecordConfiguration)) {
+        return false;
+      }
+      LoginRecordConfiguration that = (LoginRecordConfiguration) o;
+      return Objects.equals(delete, that.delete);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(delete);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
   public static class UIConfiguration implements Buildable<UIConfiguration> {
     public String headerColor;
 
@@ -389,8 +517,9 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
     public static class LoginTheme extends Enableable implements Buildable<LoginTheme> {
       public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2CompleteRegistration", "oauth2Error",
-          "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete",
+          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
+          "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Error", "oauth2Register",
+          "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete",
           "registrationSend", "registrationVerify"
       )));
 
@@ -405,6 +534,10 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       public ZonedDateTime lastModified;
 
       public String oauth2Authorize;
+
+      public String oauth2ChildRegistrationNotAllowed;
+
+      public String oauth2ChildRegistrationNotAllowedComplete;
 
       public String oauth2CompleteRegistration;
 
@@ -448,6 +581,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
             Objects.equals(helpers, that.helpers) &&
             Objects.equals(lastModified, that.lastModified) &&
             Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+            Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
+            Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
             Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
             Objects.equals(oauth2Error, that.oauth2Error) &&
             Objects.equals(oauth2Register, that.oauth2Register) &&
@@ -464,7 +599,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
       @Override
       public int hashCode() {
-        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize, oauth2CompleteRegistration,
+        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize,
+                            oauth2ChildRegistrationNotAllowed, oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration,
                             oauth2Error, oauth2Register, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent,
                             registrationComplete, registrationSend, registrationVerify, stylesheet);
       }
@@ -475,6 +611,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
         emailVerify = normalize(emailVerify);
         helpers = normalize(helpers);
         oauth2Authorize = normalize(oauth2Authorize);
+        oauth2ChildRegistrationNotAllowed = normalize(oauth2ChildRegistrationNotAllowed);
+        oauth2ChildRegistrationNotAllowedComplete = normalize(oauth2ChildRegistrationNotAllowedComplete);
         oauth2CompleteRegistration = normalize(oauth2CompleteRegistration);
         oauth2Error = normalize(oauth2Error);
         oauth2Register = normalize(oauth2Register);
@@ -499,6 +637,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
             !Objects.equals(emailVerify, other.emailVerify) ||
             !Objects.equals(helpers, other.helpers) ||
             !Objects.equals(oauth2Authorize, other.oauth2Authorize) ||
+            !Objects.equals(oauth2ChildRegistrationNotAllowed, other.oauth2ChildRegistrationNotAllowed) ||
+            !Objects.equals(oauth2ChildRegistrationNotAllowedComplete, other.oauth2ChildRegistrationNotAllowedComplete) ||
             !Objects.equals(oauth2CompleteRegistration, other.oauth2CompleteRegistration) ||
             !Objects.equals(oauth2Error, other.oauth2Error) ||
             !Objects.equals(oauth2Register, other.oauth2Register) ||

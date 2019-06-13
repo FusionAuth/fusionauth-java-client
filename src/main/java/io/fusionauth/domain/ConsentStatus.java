@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,14 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.twoFactor;
-
-import com.inversoft.json.JacksonConstructor;
+package io.fusionauth.domain;
 
 /**
+ * Models a consent.
+ *
  * @author Daniel DeGroff
  */
-public class SecretResponse {
-  public String secret;
-
-  public String secretBase32Encoded;
-
-  @JacksonConstructor
-  public SecretResponse() {
-  }
-
-  public SecretResponse(String secret, String secretBase32Encoded) {
-    this.secret = secret;
-    this.secretBase32Encoded = secretBase32Encoded;
-  }
+public enum ConsentStatus {
+  Active,
+  Revoked
 }

@@ -15,13 +15,13 @@
  */
 savantVersion = "1.0.0"
 
-jackson5Version = "2.4.2"
+jackson5Version = "2.4.4"
 javaErrorVersion = "2.2.0"
-fusionauthJWTVersion = "3.1.0"
+fusionauthJWTVersion = "3.1.1"
 fusionauthSAMLv2Version = "0.2.0"
-restifyVersion = "3.2.4"
+restifyVersion = "3.2.6"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.6.2", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.7.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -41,9 +41,9 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.6.2"
       dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
       dependency(id: "io.fusionauth:fusionauth-samlv2:${fusionauthSAMLv2Version}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
-      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.6")
-      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.8")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.8")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.9")
+      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.9")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.9")
     }
     group(name: "test-compile") {
       dependency(id: "org.testng:testng:6.8.7")

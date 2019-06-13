@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,22 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.twoFactor;
+package io.fusionauth.domain.api;
 
-import com.inversoft.json.JacksonConstructor;
+import java.util.List;
+
+import io.fusionauth.domain.User;
 
 /**
- * @author Daniel DeGroff
+ * @author Brian Pontarelli
  */
-public class SecretResponse {
-  public String secret;
+public class PendingResponse {
+  public List<User> users;
 
-  public String secretBase32Encoded;
-
-  @JacksonConstructor
-  public SecretResponse() {
+  public PendingResponse() {
   }
 
-  public SecretResponse(String secret, String secretBase32Encoded) {
-    this.secret = secret;
-    this.secretBase32Encoded = secretBase32Encoded;
+  public PendingResponse(List<User> users) {
+    this.users = users;
   }
 }

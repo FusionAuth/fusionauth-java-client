@@ -16,8 +16,8 @@
 package io.fusionauth.client;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -39,11 +39,16 @@ import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
+import io.fusionauth.domain.api.ConsentRequest;
+import io.fusionauth.domain.api.ConsentResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
 import io.fusionauth.domain.api.EventLogResponse;
 import io.fusionauth.domain.api.EventLogSearchRequest;
 import io.fusionauth.domain.api.EventLogSearchResponse;
+import io.fusionauth.domain.api.FamilyEmailRequest;
+import io.fusionauth.domain.api.FamilyRequest;
+import io.fusionauth.domain.api.FamilyResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
 import io.fusionauth.domain.api.IdentityProviderRequest;
@@ -54,6 +59,8 @@ import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
 import io.fusionauth.domain.api.LambdaResponse;
+import io.fusionauth.domain.api.LoginRecordSearchRequest;
+import io.fusionauth.domain.api.LoginRecordSearchResponse;
 import io.fusionauth.domain.api.LoginRequest;
 import io.fusionauth.domain.api.LoginResponse;
 import io.fusionauth.domain.api.MemberDeleteRequest;
@@ -61,6 +68,7 @@ import io.fusionauth.domain.api.MemberRequest;
 import io.fusionauth.domain.api.MemberResponse;
 import io.fusionauth.domain.api.OAuthConfigurationResponse;
 import io.fusionauth.domain.api.PasswordValidationRulesResponse;
+import io.fusionauth.domain.api.PendingResponse;
 import io.fusionauth.domain.api.PreviewRequest;
 import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
@@ -75,6 +83,8 @@ import io.fusionauth.domain.api.UserActionRequest;
 import io.fusionauth.domain.api.UserActionResponse;
 import io.fusionauth.domain.api.UserCommentRequest;
 import io.fusionauth.domain.api.UserCommentResponse;
+import io.fusionauth.domain.api.UserConsentRequest;
+import io.fusionauth.domain.api.UserConsentResponse;
 import io.fusionauth.domain.api.UserDeleteRequest;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
@@ -197,11 +207,28 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> actionUser(UUID actioneeUserId, ActionRequest request) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlSegment(actioneeUserId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlSegment(actioneeUserId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Adds a user to an existing family. The family id must be specified.
+   *
+   * @param familyId The id of the family.
+   * @param request The request object that contains all of the information used to determine which user to add to the family.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FamilyResponse, Errors> addUserToFamily(UUID familyId, FamilyRequest request) {
+    return start(FamilyResponse.class, Errors.class)
+        .uri("/api/user/family")
+        .urlSegment(familyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -212,11 +239,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> cancelAction(UUID actionId, ActionRequest request) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlSegment(actionId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .delete()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlSegment(actionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
   }
 
   /**
@@ -228,11 +256,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ChangePasswordResponse, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
-    return start(ChangePasswordResponse.class, Errors.class).uri("/api/user/change-password")
-                            .urlSegment(changePasswordId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(ChangePasswordResponse.class, Errors.class)
+        .uri("/api/user/change-password")
+        .urlSegment(changePasswordId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -244,10 +273,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> changePasswordByIdentity(ChangePasswordRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/change-password")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/change-password")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -257,10 +287,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/comment")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -271,11 +302,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> createApplication(UUID applicationId, ApplicationRequest request) {
-    return start(ApplicationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -288,13 +320,14 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> createApplicationRole(UUID applicationId, UUID roleId, ApplicationRequest request) {
-    return start(ApplicationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlSegment("role")
-                            .urlSegment(roleId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("role")
+        .urlSegment(roleId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -306,10 +339,27 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AuditLogResponse, Errors> createAuditLog(AuditLogRequest request) {
-    return start(AuditLogResponse.class, Errors.class).uri("/api/system/audit-log")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(AuditLogResponse.class, Errors.class)
+        .uri("/api/system/audit-log")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a user consent type. You can optionally specify an Id for the consent type, if not provided one will be generated.
+   *
+   * @param consentId (Optional) The Id for the consent. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the consent.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentResponse, Errors> createConsent(UUID consentId, ConsentRequest request) {
+    return start(ConsentResponse.class, Errors.class)
+        .uri("/api/consent")
+        .urlSegment(consentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -320,11 +370,29 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EmailTemplateResponse, Errors> createEmailTemplate(UUID emailTemplateId, EmailTemplateRequest request) {
-    return start(EmailTemplateResponse.class, Errors.class).uri("/api/email/template")
-                            .urlSegment(emailTemplateId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(EmailTemplateResponse.class, Errors.class)
+        .uri("/api/email/template")
+        .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a family with the user id in the request as the owner and sole member of the family. You can optionally specify an id for the
+   * family, if not provided one will be generated.
+   *
+   * @param familyId (Optional) The id for the family. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the family.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FamilyResponse, Errors> createFamily(UUID familyId, FamilyRequest request) {
+    return start(FamilyResponse.class, Errors.class)
+        .uri("/api/user/family")
+        .urlSegment(familyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -335,11 +403,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<GroupResponse, Errors> createGroup(UUID groupId, GroupRequest request) {
-    return start(GroupResponse.class, Errors.class).uri("/api/group")
-                            .urlSegment(groupId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(GroupResponse.class, Errors.class)
+        .uri("/api/group")
+        .urlSegment(groupId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -349,10 +418,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<MemberResponse, Errors> createGroupMembers(MemberRequest request) {
-    return start(MemberResponse.class, Errors.class).uri("/api/group/member")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(MemberResponse.class, Errors.class)
+        .uri("/api/group/member")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -363,11 +433,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderResponse, Errors> createIdentityProvider(UUID identityProviderId, IdentityProviderRequest request) {
-    return start(IdentityProviderResponse.class, Errors.class).uri("/api/identity-provider")
-                            .urlSegment(identityProviderId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(IdentityProviderResponse.class, Errors.class)
+        .uri("/api/identity-provider")
+        .urlSegment(identityProviderId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -378,11 +449,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Errors> createLambda(UUID lambdaId, LambdaRequest request) {
-    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
-                            .urlSegment(lambdaId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LambdaResponse.class, Errors.class)
+        .uri("/api/lambda")
+        .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -393,11 +465,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<TenantResponse, Errors> createTenant(UUID tenantId, TenantRequest request) {
-    return start(TenantResponse.class, Errors.class).uri("/api/tenant")
-                            .urlSegment(tenantId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(TenantResponse.class, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -408,11 +481,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> createUser(UUID userId, UserRequest request) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -424,11 +498,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Errors> createUserAction(UUID userActionId, UserActionRequest request) {
-    return start(UserActionResponse.class, Errors.class).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(UserActionResponse.class, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -440,11 +515,28 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionReasonResponse, Errors> createUserActionReason(UUID userActionReasonId, UserActionReasonRequest request) {
-    return start(UserActionReasonResponse.class, Errors.class).uri("/api/user-action-reason")
-                            .urlSegment(userActionReasonId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(UserActionReasonResponse.class, Errors.class)
+        .uri("/api/user-action-reason")
+        .urlSegment(userActionReasonId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a single User consent.
+   *
+   * @param userConsentId (Optional) The Id for the User consent. If not provided a secure random UUID will be generated.
+   * @param request The request that contains the user consent information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserConsentResponse, Errors> createUserConsent(UUID userConsentId, UserConsentRequest request) {
+    return start(UserConsentResponse.class, Errors.class)
+        .uri("/api/user/consent")
+        .urlSegment(userConsentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -455,11 +547,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<WebhookResponse, Errors> createWebhook(UUID webhookId, WebhookRequest request) {
-    return start(WebhookResponse.class, Errors.class).uri("/api/webhook")
-                            .urlSegment(webhookId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(WebhookResponse.class, Errors.class)
+        .uri("/api/webhook")
+        .urlSegment(webhookId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -469,10 +562,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deactivateApplication(UUID applicationId) {
-    return start(Void.TYPE, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .delete()
+        .go();
   }
 
   /**
@@ -482,10 +576,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deactivateUser(UUID userId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .delete()
+        .go();
   }
 
   /**
@@ -495,10 +590,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deactivateUserAction(UUID userActionId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .delete()
+        .go();
   }
 
   /**
@@ -508,10 +604,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deactivateUsers(Collection<UUID> userIds) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/bulk")
-                            .urlParameter("userId", userIds)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/bulk")
+        .urlParameter("userId", userIds)
+        .delete()
+        .go();
   }
 
   /**
@@ -524,11 +621,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteApplication(UUID applicationId) {
-    return start(Void.TYPE, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlParameter("hardDelete", true)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlParameter("hardDelete", true)
+        .delete()
+        .go();
   }
 
   /**
@@ -540,12 +638,27 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteApplicationRole(UUID applicationId, UUID roleId) {
-    return start(Void.TYPE, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlSegment("role")
-                            .urlSegment(roleId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("role")
+        .urlSegment(roleId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the consent for the given Id.
+   *
+   * @param consentId The Id of the consent to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteConsent(UUID consentId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/consent")
+        .urlSegment(consentId)
+        .delete()
+        .go();
   }
 
   /**
@@ -555,10 +668,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteEmailTemplate(UUID emailTemplateId) {
-    return start(Void.TYPE, Errors.class).uri("/api/email/template")
-                            .urlSegment(emailTemplateId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/email/template")
+        .urlSegment(emailTemplateId)
+        .delete()
+        .go();
   }
 
   /**
@@ -568,10 +682,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteGroup(UUID groupId) {
-    return start(Void.TYPE, Errors.class).uri("/api/group")
-                            .urlSegment(groupId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/group")
+        .urlSegment(groupId)
+        .delete()
+        .go();
   }
 
   /**
@@ -581,10 +696,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteGroupMembers(MemberDeleteRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/group/member")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/group/member")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
   }
 
   /**
@@ -594,10 +710,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteIdentityProvider(UUID identityProviderId) {
-    return start(Void.TYPE, Errors.class).uri("/api/identity-provider")
-                            .urlSegment(identityProviderId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity-provider")
+        .urlSegment(identityProviderId)
+        .delete()
+        .go();
   }
 
   /**
@@ -607,10 +724,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteKey(UUID keyOd) {
-    return start(Void.TYPE, Errors.class).uri("/api/key")
-                            .urlSegment(keyOd)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/key")
+        .urlSegment(keyOd)
+        .delete()
+        .go();
   }
 
   /**
@@ -620,10 +738,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteLambda(UUID lambdaId) {
-    return start(Void.TYPE, Errors.class).uri("/api/lambda")
-                            .urlSegment(lambdaId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/lambda")
+        .urlSegment(lambdaId)
+        .delete()
+        .go();
   }
 
   /**
@@ -634,11 +753,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteRegistration(UUID userId, UUID applicationId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/registration")
-                            .urlSegment(userId)
-                            .urlSegment(applicationId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .urlSegment(applicationId)
+        .delete()
+        .go();
   }
 
   /**
@@ -648,10 +768,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteTenant(UUID tenantId) {
-    return start(Void.TYPE, Errors.class).uri("/api/tenant")
-                            .urlSegment(tenantId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .delete()
+        .go();
   }
 
   /**
@@ -662,11 +783,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteUser(UUID userId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .urlParameter("hardDelete", true)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .urlParameter("hardDelete", true)
+        .delete()
+        .go();
   }
 
   /**
@@ -677,11 +799,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteUserAction(UUID userActionId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .urlParameter("hardDelete", true)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .urlParameter("hardDelete", true)
+        .delete()
+        .go();
   }
 
   /**
@@ -691,10 +814,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteUserActionReason(UUID userActionReasonId) {
-    return start(Void.TYPE, Errors.class).uri("/api/user-action-reason")
-                            .urlSegment(userActionReasonId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user-action-reason")
+        .urlSegment(userActionReasonId)
+        .delete()
+        .go();
   }
 
   /**
@@ -704,10 +828,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteUsers(UserDeleteRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/bulk")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/bulk")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
   }
 
   /**
@@ -717,10 +842,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteWebhook(UUID webhookId) {
-    return start(Void.TYPE, Errors.class).uri("/api/webhook")
-                            .urlSegment(webhookId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webhook")
+        .urlSegment(webhookId)
+        .delete()
+        .go();
   }
 
   /**
@@ -731,11 +857,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> disableTwoFactor(UUID userId, String code) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/two-factor")
-                            .urlParameter("userId", userId)
-                            .urlParameter("code", code)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/two-factor")
+        .urlParameter("userId", userId)
+        .urlParameter("code", code)
+        .delete()
+        .go();
   }
 
   /**
@@ -746,11 +873,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> enableTwoFactor(UUID userId, TwoFactorRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/two-factor")
-                            .urlSegment(userId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/two-factor")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -760,10 +888,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RefreshResponse, Errors> exchangeRefreshTokenForJWT(RefreshRequest request) {
-    return start(RefreshResponse.class, Errors.class).uri("/api/jwt/refresh")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(RefreshResponse.class, Errors.class)
+        .uri("/api/jwt/refresh")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -773,10 +902,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ForgotPasswordResponse, Errors> forgotPassword(ForgotPasswordRequest request) {
-    return start(ForgotPasswordResponse.class, Errors.class).uri("/api/user/forgot-password")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(ForgotPasswordResponse.class, Errors.class)
+        .uri("/api/user/forgot-password")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -787,11 +917,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyEmailResponse, Void> generateEmailVerificationId(String email) {
-    return start(VerifyEmailResponse.class, Void.TYPE).uri("/api/user/verify-email")
-                            .urlParameter("email", email)
-                            .urlParameter("sendVerifyPasswordEmail", false)
-                            .put()
-                            .go();
+    return start(VerifyEmailResponse.class, Void.TYPE)
+        .uri("/api/user/verify-email")
+        .urlParameter("email", email)
+        .urlParameter("sendVerifyPasswordEmail", false)
+        .put()
+        .go();
   }
 
   /**
@@ -802,11 +933,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> generateKey(UUID keyId, KeyRequest request) {
-    return start(KeyResponse.class, Errors.class).uri("/api/key/generate")
-                            .urlSegment(keyId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(KeyResponse.class, Errors.class)
+        .uri("/api/key/generate")
+        .urlSegment(keyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -818,12 +950,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyRegistrationResponse, Void> generateRegistrationVerificationId(String email, UUID applicationId) {
-    return start(VerifyRegistrationResponse.class, Void.TYPE).uri("/api/user/verify-registration")
-                            .urlParameter("email", email)
-                            .urlParameter("sendVerifyPasswordEmail", false)
-                            .urlParameter("applicationId", applicationId)
-                            .put()
-                            .go();
+    return start(VerifyRegistrationResponse.class, Void.TYPE)
+        .uri("/api/user/verify-registration")
+        .urlParameter("email", email)
+        .urlParameter("sendVerifyPasswordEmail", false)
+        .urlParameter("applicationId", applicationId)
+        .put()
+        .go();
   }
 
   /**
@@ -834,9 +967,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SecretResponse, Void> generateTwoFactorSecret() {
-    return start(SecretResponse.class, Void.TYPE).uri("/api/two-factor/secret")
-                            .get()
-                            .go();
+    return start(SecretResponse.class, Void.TYPE)
+        .uri("/api/two-factor/secret")
+        .get()
+        .go();
   }
 
   /**
@@ -848,10 +982,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SecretResponse, Void> generateTwoFactorSecretUsingJWT(String encodedJWT) {
-    return start(SecretResponse.class, Void.TYPE).uri("/api/two-factor/secret")
-                            .authorization("JWT " + encodedJWT)
-                            .get()
-                            .go();
+    return start(SecretResponse.class, Void.TYPE)
+        .uri("/api/two-factor/secret")
+        .authorization("JWT " + encodedJWT)
+        .get()
+        .go();
   }
 
   /**
@@ -863,10 +998,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> identityProviderLogin(IdentityProviderLoginRequest request) {
-    return start(LoginResponse.class, Errors.class).uri("/api/identity-provider/login")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LoginResponse.class, Errors.class)
+        .uri("/api/identity-provider/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -877,11 +1013,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> importKey(UUID keyId, KeyRequest request) {
-    return start(KeyResponse.class, Errors.class).uri("/api/key/import")
-                            .urlSegment(keyId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(KeyResponse.class, Errors.class)
+        .uri("/api/key/import")
+        .urlSegment(keyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -893,10 +1030,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> importUsers(ImportRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/user/import")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/import")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -911,11 +1049,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IssueResponse, Errors> issueJWT(UUID applicationId, String encodedJWT) {
-    return start(IssueResponse.class, Errors.class).uri("/api/jwt/issue")
-                            .authorization("JWT " + encodedJWT)
-                            .urlParameter("applicationId", applicationId)
-                            .get()
-                            .go();
+    return start(IssueResponse.class, Errors.class)
+        .uri("/api/jwt/issue")
+        .authorization("JWT " + encodedJWT)
+        .urlParameter("applicationId", applicationId)
+        .get()
+        .go();
   }
 
   /**
@@ -925,10 +1064,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> login(LoginRequest request) {
-    return start(LoginResponse.class, Errors.class).uri("/api/login")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LoginResponse.class, Errors.class)
+        .uri("/api/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -944,12 +1084,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> loginPing(UUID userId, UUID applicationId, String callerIPAddress) {
-    return start(Void.TYPE, Errors.class).uri("/api/login")
-                            .urlSegment(userId)
-                            .urlSegment(applicationId)
-                            .urlParameter("ipAddress", callerIPAddress)
-                            .put()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/login")
+        .urlSegment(userId)
+        .urlSegment(applicationId)
+        .urlParameter("ipAddress", callerIPAddress)
+        .put()
+        .go();
   }
 
   /**
@@ -964,11 +1105,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> logout(boolean global, String refreshToken) {
-    return start(Void.TYPE, Void.TYPE).uri("/api/logout")
-                            .urlParameter("global", global)
-                            .urlParameter("refreshToken", refreshToken)
-                            .post()
-                            .go();
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/logout")
+        .urlParameter("global", global)
+        .urlParameter("refreshToken", refreshToken)
+        .post()
+        .go();
   }
 
   /**
@@ -979,10 +1121,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LookupResponse, Void> lookupIdentityProvider(String domain) {
-    return start(LookupResponse.class, Void.TYPE).uri("/api/identity-provider/lookup")
-                            .urlParameter("domain", domain)
-                            .get()
-                            .go();
+    return start(LookupResponse.class, Void.TYPE)
+        .uri("/api/identity-provider/lookup")
+        .urlParameter("domain", domain)
+        .get()
+        .go();
   }
 
   /**
@@ -994,11 +1137,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> modifyAction(UUID actionId, ActionRequest request) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlSegment(actionId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlSegment(actionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -1008,10 +1152,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> passwordlessLogin(PasswordlessLoginRequest request) {
-    return start(LoginResponse.class, Errors.class).uri("/api/passwordless/login")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LoginResponse.class, Errors.class)
+        .uri("/api/passwordless/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1021,11 +1166,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> reactivateApplication(UUID applicationId) {
-    return start(ApplicationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlParameter("reactivate", true)
-                            .put()
-                            .go();
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlParameter("reactivate", true)
+        .put()
+        .go();
   }
 
   /**
@@ -1035,11 +1181,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> reactivateUser(UUID userId) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .urlParameter("reactivate", true)
-                            .put()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .urlParameter("reactivate", true)
+        .put()
+        .go();
   }
 
   /**
@@ -1049,11 +1196,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Errors> reactivateUserAction(UUID userActionId) {
-    return start(UserActionResponse.class, Errors.class).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .urlParameter("reactivate", true)
-                            .put()
-                            .go();
+    return start(UserActionResponse.class, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .urlParameter("reactivate", true)
+        .put()
+        .go();
   }
 
   /**
@@ -1063,10 +1211,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> reconcileJWT(IdentityProviderLoginRequest request) {
-    return start(LoginResponse.class, Errors.class).uri("/api/jwt/reconcile")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LoginResponse.class, Errors.class)
+        .uri("/api/jwt/reconcile")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1081,11 +1230,28 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RegistrationResponse, Errors> register(UUID userId, RegistrationRequest request) {
-    return start(RegistrationResponse.class, Errors.class).uri("/api/user/registration")
-                            .urlSegment(userId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(RegistrationResponse.class, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Removes a user from the family with the given id.
+   *
+   * @param familyId The id of the family to remove the user from.
+   * @param userId The id of the user to remove from the family.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> removeUserFromFamily(UUID familyId, UUID userId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/family")
+        .urlSegment(familyId)
+        .urlSegment(userId)
+        .delete()
+        .go();
   }
 
   /**
@@ -1095,10 +1261,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyEmailResponse, Void> resendEmailVerification(String email) {
-    return start(VerifyEmailResponse.class, Void.TYPE).uri("/api/user/verify-email")
-                            .urlParameter("email", email)
-                            .put()
-                            .go();
+    return start(VerifyEmailResponse.class, Void.TYPE)
+        .uri("/api/user/verify-email")
+        .urlParameter("email", email)
+        .put()
+        .go();
   }
 
   /**
@@ -1109,11 +1276,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyRegistrationResponse, Void> resendRegistrationVerification(String email, UUID applicationId) {
-    return start(VerifyRegistrationResponse.class, Void.TYPE).uri("/api/user/verify-registration")
-                            .urlParameter("email", email)
-                            .urlParameter("applicationId", applicationId)
-                            .put()
-                            .go();
+    return start(VerifyRegistrationResponse.class, Void.TYPE)
+        .uri("/api/user/verify-registration")
+        .urlParameter("email", email)
+        .urlParameter("applicationId", applicationId)
+        .put()
+        .go();
   }
 
   /**
@@ -1123,10 +1291,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> retrieveAction(UUID actionId) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlSegment(actionId)
-                            .get()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlSegment(actionId)
+        .get()
+        .go();
   }
 
   /**
@@ -1137,10 +1306,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> retrieveActions(UUID userId) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlParameter("userId", userId)
-                            .get()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlParameter("userId", userId)
+        .get()
+        .go();
   }
 
   /**
@@ -1150,11 +1320,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> retrieveActionsPreventingLogin(UUID userId) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlParameter("userId", userId)
-                            .urlParameter("preventingLogin", true)
-                            .get()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlParameter("userId", userId)
+        .urlParameter("preventingLogin", true)
+        .get()
+        .go();
   }
 
   /**
@@ -1165,11 +1336,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> retrieveActiveActions(UUID userId) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlParameter("userId", userId)
-                            .urlParameter("active", true)
-                            .get()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlParameter("userId", userId)
+        .urlParameter("active", true)
+        .get()
+        .go();
   }
 
   /**
@@ -1179,10 +1351,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Void> retrieveApplication(UUID applicationId) {
-    return start(ApplicationResponse.class, Void.TYPE).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .get()
-                            .go();
+    return start(ApplicationResponse.class, Void.TYPE)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .get()
+        .go();
   }
 
   /**
@@ -1191,9 +1364,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Void> retrieveApplications() {
-    return start(ApplicationResponse.class, Void.TYPE).uri("/api/application")
-                            .get()
-                            .go();
+    return start(ApplicationResponse.class, Void.TYPE)
+        .uri("/api/application")
+        .get()
+        .go();
   }
 
   /**
@@ -1203,10 +1377,37 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AuditLogResponse, Errors> retrieveAuditLog(Integer auditLogId) {
-    return start(AuditLogResponse.class, Errors.class).uri("/api/system/audit-log")
-                            .urlSegment(auditLogId)
-                            .get()
-                            .go();
+    return start(AuditLogResponse.class, Errors.class)
+        .uri("/api/system/audit-log")
+        .urlSegment(auditLogId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the Consent for the given Id.
+   *
+   * @param consentId The Id of the consent.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentResponse, Void> retrieveConsent(UUID consentId) {
+    return start(ConsentResponse.class, Void.TYPE)
+        .uri("/api/consent")
+        .urlSegment(consentId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the consent.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentResponse, Void> retrieveConsents() {
+    return start(ConsentResponse.class, Void.TYPE)
+        .uri("/api/consent")
+        .get()
+        .go();
   }
 
   /**
@@ -1219,12 +1420,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<DailyActiveUserReportResponse, Errors> retrieveDailyActiveReport(UUID applicationId, long start, long end) {
-    return start(DailyActiveUserReportResponse.class, Errors.class).uri("/api/report/daily-active-user")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(DailyActiveUserReportResponse.class, Errors.class)
+        .uri("/api/report/daily-active-user")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1234,10 +1436,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EmailTemplateResponse, Void> retrieveEmailTemplate(UUID emailTemplateId) {
-    return start(EmailTemplateResponse.class, Void.TYPE).uri("/api/email/template")
-                            .urlSegment(emailTemplateId)
-                            .get()
-                            .go();
+    return start(EmailTemplateResponse.class, Void.TYPE)
+        .uri("/api/email/template")
+        .urlSegment(emailTemplateId)
+        .get()
+        .go();
   }
 
   /**
@@ -1249,10 +1452,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PreviewResponse, Errors> retrieveEmailTemplatePreview(PreviewRequest request) {
-    return start(PreviewResponse.class, Errors.class).uri("/api/email/template/preview")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(PreviewResponse.class, Errors.class)
+        .uri("/api/email/template/preview")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1261,9 +1465,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EmailTemplateResponse, Void> retrieveEmailTemplates() {
-    return start(EmailTemplateResponse.class, Void.TYPE).uri("/api/email/template")
-                            .get()
-                            .go();
+    return start(EmailTemplateResponse.class, Void.TYPE)
+        .uri("/api/email/template")
+        .get()
+        .go();
   }
 
   /**
@@ -1273,10 +1478,39 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EventLogResponse, Errors> retrieveEventLog(Integer eventLogId) {
-    return start(EventLogResponse.class, Errors.class).uri("/api/system/event-log")
-                            .urlSegment(eventLogId)
-                            .get()
-                            .go();
+    return start(EventLogResponse.class, Errors.class)
+        .uri("/api/system/event-log")
+        .urlSegment(eventLogId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the families that a user belongs to.
+   *
+   * @param userId The User's id
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FamilyResponse, Void> retrieveFamilies(UUID userId) {
+    return start(FamilyResponse.class, Void.TYPE)
+        .uri("/api/user/family")
+        .urlParameter("userId", userId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the members of a family by the unique Family Id.
+   *
+   * @param familyId The unique Id of the Family.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FamilyResponse, Void> retrieveFamilyMembersByFamilyId(UUID familyId) {
+    return start(FamilyResponse.class, Void.TYPE)
+        .uri("/api/user/family")
+        .urlSegment(familyId)
+        .get()
+        .go();
   }
 
   /**
@@ -1286,10 +1520,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<GroupResponse, Errors> retrieveGroup(UUID groupId) {
-    return start(GroupResponse.class, Errors.class).uri("/api/group")
-                            .urlSegment(groupId)
-                            .get()
-                            .go();
+    return start(GroupResponse.class, Errors.class)
+        .uri("/api/group")
+        .urlSegment(groupId)
+        .get()
+        .go();
   }
 
   /**
@@ -1298,9 +1533,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<GroupResponse, Void> retrieveGroups() {
-    return start(GroupResponse.class, Void.TYPE).uri("/api/group")
-                            .get()
-                            .go();
+    return start(GroupResponse.class, Void.TYPE)
+        .uri("/api/group")
+        .get()
+        .go();
   }
 
   /**
@@ -1310,10 +1546,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderResponse, Void> retrieveIdentityProvider(UUID identityProviderId) {
-    return start(IdentityProviderResponse.class, Void.TYPE).uri("/api/identity-provider")
-                            .urlSegment(identityProviderId)
-                            .get()
-                            .go();
+    return start(IdentityProviderResponse.class, Void.TYPE)
+        .uri("/api/identity-provider")
+        .urlSegment(identityProviderId)
+        .get()
+        .go();
   }
 
   /**
@@ -1322,9 +1559,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderResponse, Void> retrieveIdentityProviders() {
-    return start(IdentityProviderResponse.class, Void.TYPE).uri("/api/identity-provider")
-                            .get()
-                            .go();
+    return start(IdentityProviderResponse.class, Void.TYPE)
+        .uri("/api/identity-provider")
+        .get()
+        .go();
   }
 
   /**
@@ -1335,11 +1573,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ActionResponse, Errors> retrieveInactiveActions(UUID userId) {
-    return start(ActionResponse.class, Errors.class).uri("/api/user/action")
-                            .urlParameter("userId", userId)
-                            .urlParameter("active", false)
-                            .get()
-                            .go();
+    return start(ActionResponse.class, Errors.class)
+        .uri("/api/user/action")
+        .urlParameter("userId", userId)
+        .urlParameter("active", false)
+        .get()
+        .go();
   }
 
   /**
@@ -1348,10 +1587,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Void> retrieveInactiveApplications() {
-    return start(ApplicationResponse.class, Void.TYPE).uri("/api/application")
-                            .urlParameter("inactive", true)
-                            .get()
-                            .go();
+    return start(ApplicationResponse.class, Void.TYPE)
+        .uri("/api/application")
+        .urlParameter("inactive", true)
+        .get()
+        .go();
   }
 
   /**
@@ -1360,10 +1600,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Void> retrieveInactiveUserActions() {
-    return start(UserActionResponse.class, Void.TYPE).uri("/api/user-action")
-                            .urlParameter("inactive", true)
-                            .get()
-                            .go();
+    return start(UserActionResponse.class, Void.TYPE)
+        .uri("/api/user-action")
+        .urlParameter("inactive", true)
+        .get()
+        .go();
   }
 
   /**
@@ -1372,9 +1613,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IntegrationResponse, Void> retrieveIntegration() {
-    return start(IntegrationResponse.class, Void.TYPE).uri("/api/integration")
-                            .get()
-                            .go();
+    return start(IntegrationResponse.class, Void.TYPE)
+        .uri("/api/integration")
+        .get()
+        .go();
   }
 
   /**
@@ -1386,10 +1628,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKey(String keyId) {
-    return start(PublicKeyResponse.class, Void.TYPE).uri("/api/jwt/public-key")
-                            .urlSegment(keyId)
-                            .get()
-                            .go();
+    return start(PublicKeyResponse.class, Void.TYPE)
+        .uri("/api/jwt/public-key")
+        .urlSegment(keyId)
+        .get()
+        .go();
   }
 
   /**
@@ -1398,9 +1641,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKeys() {
-    return start(PublicKeyResponse.class, Void.TYPE).uri("/api/jwt/public-key")
-                            .get()
-                            .go();
+    return start(PublicKeyResponse.class, Void.TYPE)
+        .uri("/api/jwt/public-key")
+        .get()
+        .go();
   }
 
   /**
@@ -1410,10 +1654,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> retrieveKey(UUID keyId) {
-    return start(KeyResponse.class, Errors.class).uri("/api/key")
-                            .urlSegment(keyId)
-                            .get()
-                            .go();
+    return start(KeyResponse.class, Errors.class)
+        .uri("/api/key")
+        .urlSegment(keyId)
+        .get()
+        .go();
   }
 
   /**
@@ -1422,9 +1667,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Void> retrieveKeys() {
-    return start(KeyResponse.class, Void.TYPE).uri("/api/key")
-                            .get()
-                            .go();
+    return start(KeyResponse.class, Void.TYPE)
+        .uri("/api/key")
+        .get()
+        .go();
   }
 
   /**
@@ -1434,10 +1680,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Errors> retrieveLambda(UUID lambdaId) {
-    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
-                            .urlSegment(lambdaId)
-                            .get()
-                            .go();
+    return start(LambdaResponse.class, Errors.class)
+        .uri("/api/lambda")
+        .urlSegment(lambdaId)
+        .get()
+        .go();
   }
 
   /**
@@ -1446,9 +1693,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Void> retrieveLambdas() {
-    return start(LambdaResponse.class, Void.TYPE).uri("/api/lambda")
-                            .get()
-                            .go();
+    return start(LambdaResponse.class, Void.TYPE)
+        .uri("/api/lambda")
+        .get()
+        .go();
   }
 
   /**
@@ -1458,10 +1706,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Void> retrieveLambdasByType(LambdaType type) {
-    return start(LambdaResponse.class, Void.TYPE).uri("/api/lambda")
-                            .urlParameter("type", type)
-                            .get()
-                            .go();
+    return start(LambdaResponse.class, Void.TYPE)
+        .uri("/api/lambda")
+        .urlParameter("type", type)
+        .get()
+        .go();
   }
 
   /**
@@ -1474,12 +1723,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginReportResponse, Errors> retrieveLoginReport(UUID applicationId, long start, long end) {
-    return start(LoginReportResponse.class, Errors.class).uri("/api/report/login")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(LoginReportResponse.class, Errors.class)
+        .uri("/api/report/login")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1492,12 +1742,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<MonthlyActiveUserReportResponse, Errors> retrieveMonthlyActiveReport(UUID applicationId, long start, long end) {
-    return start(MonthlyActiveUserReportResponse.class, Errors.class).uri("/api/report/monthly-active-user")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(MonthlyActiveUserReportResponse.class, Errors.class)
+        .uri("/api/report/monthly-active-user")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1507,11 +1758,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<OAuthConfigurationResponse, Errors> retrieveOauthConfiguration(UUID applicationId) {
-    return start(OAuthConfigurationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlSegment("oauth-configuration")
-                            .get()
-                            .go();
+    return start(OAuthConfigurationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("oauth-configuration")
+        .get()
+        .go();
   }
 
   /**
@@ -1520,9 +1772,24 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PasswordValidationRulesResponse, Void> retrievePasswordValidationRules() {
-    return start(PasswordValidationRulesResponse.class, Void.TYPE).uri("/api/system-configuration/password-validation-rules")
-                            .get()
-                            .go();
+    return start(PasswordValidationRulesResponse.class, Void.TYPE)
+        .uri("/api/system-configuration/password-validation-rules")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the children for the given parent email address.
+   *
+   * @param parentEmail The email of the parent.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PendingResponse, Errors> retrievePendingChildren(String parentEmail) {
+    return start(PendingResponse.class, Errors.class)
+        .uri("/api/user/family/pending")
+        .urlParameter("parentEmail", parentEmail)
+        .get()
+        .go();
   }
 
   /**
@@ -1533,11 +1800,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RecentLoginResponse, Errors> retrieveRecentLogins(int offset, Integer limit) {
-    return start(RecentLoginResponse.class, Errors.class).uri("/api/user/recent-login")
-                            .urlParameter("offset", offset)
-                            .urlParameter("limit", limit)
-                            .get()
-                            .go();
+    return start(RecentLoginResponse.class, Errors.class)
+        .uri("/api/user/recent-login")
+        .urlParameter("offset", offset)
+        .urlParameter("limit", limit)
+        .get()
+        .go();
   }
 
   /**
@@ -1547,10 +1815,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RefreshResponse, Errors> retrieveRefreshTokens(UUID userId) {
-    return start(RefreshResponse.class, Errors.class).uri("/api/jwt/refresh")
-                            .urlParameter("userId", userId)
-                            .get()
-                            .go();
+    return start(RefreshResponse.class, Errors.class)
+        .uri("/api/jwt/refresh")
+        .urlParameter("userId", userId)
+        .get()
+        .go();
   }
 
   /**
@@ -1561,11 +1830,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RegistrationResponse, Errors> retrieveRegistration(UUID userId, UUID applicationId) {
-    return start(RegistrationResponse.class, Errors.class).uri("/api/user/registration")
-                            .urlSegment(userId)
-                            .urlSegment(applicationId)
-                            .get()
-                            .go();
+    return start(RegistrationResponse.class, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .urlSegment(applicationId)
+        .get()
+        .go();
   }
 
   /**
@@ -1578,12 +1848,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RegistrationReportResponse, Errors> retrieveRegistrationReport(UUID applicationId, long start, long end) {
-    return start(RegistrationReportResponse.class, Errors.class).uri("/api/report/registration")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(RegistrationReportResponse.class, Errors.class)
+        .uri("/api/report/registration")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1592,9 +1863,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SystemConfigurationResponse, Void> retrieveSystemConfiguration() {
-    return start(SystemConfigurationResponse.class, Void.TYPE).uri("/api/system-configuration")
-                            .get()
-                            .go();
+    return start(SystemConfigurationResponse.class, Void.TYPE)
+        .uri("/api/system-configuration")
+        .get()
+        .go();
   }
 
   /**
@@ -1604,10 +1876,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<TenantResponse, Errors> retrieveTenant(UUID tenantId) {
-    return start(TenantResponse.class, Errors.class).uri("/api/tenant")
-                            .urlSegment(tenantId)
-                            .get()
-                            .go();
+    return start(TenantResponse.class, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .get()
+        .go();
   }
 
   /**
@@ -1616,9 +1889,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<TenantResponse, Void> retrieveTenants() {
-    return start(TenantResponse.class, Void.TYPE).uri("/api/tenant")
-                            .get()
-                            .go();
+    return start(TenantResponse.class, Void.TYPE)
+        .uri("/api/tenant")
+        .get()
+        .go();
   }
 
   /**
@@ -1628,9 +1902,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<TotalsReportResponse, Void> retrieveTotalReport() {
-    return start(TotalsReportResponse.class, Void.TYPE).uri("/api/report/totals")
-                            .get()
-                            .go();
+    return start(TotalsReportResponse.class, Void.TYPE)
+        .uri("/api/report/totals")
+        .get()
+        .go();
   }
 
   /**
@@ -1640,10 +1915,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUser(UUID userId) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .get()
+        .go();
   }
 
   /**
@@ -1654,10 +1930,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Void> retrieveUserAction(UUID userActionId) {
-    return start(UserActionResponse.class, Void.TYPE).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .get()
-                            .go();
+    return start(UserActionResponse.class, Void.TYPE)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .get()
+        .go();
   }
 
   /**
@@ -1668,10 +1945,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionReasonResponse, Void> retrieveUserActionReason(UUID userActionReasonId) {
-    return start(UserActionReasonResponse.class, Void.TYPE).uri("/api/user-action-reason")
-                            .urlSegment(userActionReasonId)
-                            .get()
-                            .go();
+    return start(UserActionReasonResponse.class, Void.TYPE)
+        .uri("/api/user-action-reason")
+        .urlSegment(userActionReasonId)
+        .get()
+        .go();
   }
 
   /**
@@ -1680,9 +1958,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionReasonResponse, Void> retrieveUserActionReasons() {
-    return start(UserActionReasonResponse.class, Void.TYPE).uri("/api/user-action-reason")
-                            .get()
-                            .go();
+    return start(UserActionReasonResponse.class, Void.TYPE)
+        .uri("/api/user-action-reason")
+        .get()
+        .go();
   }
 
   /**
@@ -1691,9 +1970,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Void> retrieveUserActions() {
-    return start(UserActionResponse.class, Void.TYPE).uri("/api/user-action")
-                            .get()
-                            .go();
+    return start(UserActionResponse.class, Void.TYPE)
+        .uri("/api/user-action")
+        .get()
+        .go();
   }
 
   /**
@@ -1704,10 +1984,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByChangePasswordId(String changePasswordId) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlParameter("changePasswordId", changePasswordId)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("changePasswordId", changePasswordId)
+        .get()
+        .go();
   }
 
   /**
@@ -1717,10 +1998,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByEmail(String email) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlParameter("email", email)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("email", email)
+        .get()
+        .go();
   }
 
   /**
@@ -1730,10 +2012,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlParameter("loginId", loginId)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("loginId", loginId)
+        .get()
+        .go();
   }
 
   /**
@@ -1743,10 +2026,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByUsername(String username) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlParameter("username", username)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("username", username)
+        .get()
+        .go();
   }
 
   /**
@@ -1757,10 +2041,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByVerificationId(String verificationId) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlParameter("verificationId", verificationId)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("verificationId", verificationId)
+        .get()
+        .go();
   }
 
   /**
@@ -1770,10 +2055,39 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserCommentResponse, Errors> retrieveUserComments(UUID userId) {
-    return start(UserCommentResponse.class, Errors.class).uri("/api/user/comment")
-                            .urlSegment(userId)
-                            .get()
-                            .go();
+    return start(UserCommentResponse.class, Errors.class)
+        .uri("/api/user/comment")
+        .urlSegment(userId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieve a single User consent by Id.
+   *
+   * @param userConsentId The User consent Id
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserConsentResponse, Void> retrieveUserConsent(UUID userConsentId) {
+    return start(UserConsentResponse.class, Void.TYPE)
+        .uri("/api/user/consent")
+        .urlSegment(userConsentId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the consents for a User.
+   *
+   * @param userId The User's Id
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserConsentResponse, Void> retrieveUserConsents(UUID userId) {
+    return start(UserConsentResponse.class, Void.TYPE)
+        .uri("/api/user/consent")
+        .urlParameter("userId", userId)
+        .get()
+        .go();
   }
 
   /**
@@ -1787,13 +2101,14 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReport(UUID applicationId, UUID userId, long start, long end) {
-    return start(LoginReportResponse.class, Errors.class).uri("/api/report/login")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("userId", userId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(LoginReportResponse.class, Errors.class)
+        .uri("/api/report/login")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("userId", userId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1807,13 +2122,14 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginId(UUID applicationId, String loginId, long start, long end) {
-    return start(LoginReportResponse.class, Errors.class).uri("/api/report/login")
-                            .urlParameter("applicationId", applicationId)
-                            .urlParameter("loginId", loginId)
-                            .urlParameter("start", start)
-                            .urlParameter("end", end)
-                            .get()
-                            .go();
+    return start(LoginReportResponse.class, Errors.class)
+        .uri("/api/report/login")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("loginId", loginId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .get()
+        .go();
   }
 
   /**
@@ -1825,12 +2141,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RecentLoginResponse, Errors> retrieveUserRecentLogins(UUID userId, int offset, Integer limit) {
-    return start(RecentLoginResponse.class, Errors.class).uri("/api/user/recent-login")
-                            .urlParameter("userId", userId)
-                            .urlParameter("offset", offset)
-                            .urlParameter("limit", limit)
-                            .get()
-                            .go();
+    return start(RecentLoginResponse.class, Errors.class)
+        .uri("/api/user/recent-login")
+        .urlParameter("userId", userId)
+        .urlParameter("offset", offset)
+        .urlParameter("limit", limit)
+        .get()
+        .go();
   }
 
   /**
@@ -1840,10 +2157,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserUsingJWT(String encodedJWT) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .authorization("JWT " + encodedJWT)
-                            .get()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .authorization("JWT " + encodedJWT)
+        .get()
+        .go();
   }
 
   /**
@@ -1853,10 +2171,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<WebhookResponse, Void> retrieveWebhook(UUID webhookId) {
-    return start(WebhookResponse.class, Void.TYPE).uri("/api/webhook")
-                            .urlSegment(webhookId)
-                            .get()
-                            .go();
+    return start(WebhookResponse.class, Void.TYPE)
+        .uri("/api/webhook")
+        .urlSegment(webhookId)
+        .get()
+        .go();
   }
 
   /**
@@ -1865,9 +2184,10 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<WebhookResponse, Void> retrieveWebhooks() {
-    return start(WebhookResponse.class, Void.TYPE).uri("/api/webhook")
-                            .get()
-                            .go();
+    return start(WebhookResponse.class, Void.TYPE)
+        .uri("/api/webhook")
+        .get()
+        .go();
   }
 
   /**
@@ -1880,12 +2200,27 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> revokeRefreshToken(String token, UUID userId, UUID applicationId) {
-    return start(Void.TYPE, Errors.class).uri("/api/jwt/refresh")
-                            .urlParameter("token", token)
-                            .urlParameter("userId", userId)
-                            .urlParameter("applicationId", applicationId)
-                            .delete()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/jwt/refresh")
+        .urlParameter("token", token)
+        .urlParameter("userId", userId)
+        .urlParameter("applicationId", applicationId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Revokes a single User consent by Id.
+   *
+   * @param userConsentId The User Consent Id
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> revokeUserConsent(UUID userConsentId) {
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/user/consent")
+        .urlSegment(userConsentId)
+        .delete()
+        .go();
   }
 
   /**
@@ -1895,10 +2230,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AuditLogSearchResponse, Void> searchAuditLogs(AuditLogSearchRequest request) {
-    return start(AuditLogSearchResponse.class, Void.TYPE).uri("/api/system/audit-log/search")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(AuditLogSearchResponse.class, Void.TYPE)
+        .uri("/api/system/audit-log/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1908,10 +2244,25 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EventLogSearchResponse, Void> searchEventLogs(EventLogSearchRequest request) {
-    return start(EventLogSearchResponse.class, Void.TYPE).uri("/api/system/event-log/search")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(EventLogSearchResponse.class, Void.TYPE)
+        .uri("/api/system/event-log/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches the login records with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginRecordSearchResponse, Void> searchLoginRecords(LoginRecordSearchRequest request) {
+    return start(LoginRecordSearchResponse.class, Void.TYPE)
+        .uri("/api/system/login-record/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1921,10 +2272,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SearchResponse, Errors> searchUsers(Collection<UUID> ids) {
-    return start(SearchResponse.class, Errors.class).uri("/api/user/search")
-                            .urlParameter("ids", ids)
-                            .get()
-                            .go();
+    return start(SearchResponse.class, Errors.class)
+        .uri("/api/user/search")
+        .urlParameter("ids", ids)
+        .get()
+        .go();
   }
 
   /**
@@ -1935,10 +2287,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SearchResponse, Errors> searchUsersByQueryString(SearchRequest request) {
-    return start(SearchResponse.class, Errors.class).uri("/api/user/search")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(SearchResponse.class, Errors.class)
+        .uri("/api/user/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1950,11 +2303,26 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SendResponse, Errors> sendEmail(UUID emailTemplateId, SendRequest request) {
-    return start(SendResponse.class, Errors.class).uri("/api/email/send")
-                            .urlSegment(emailTemplateId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(SendResponse.class, Errors.class)
+        .uri("/api/email/send")
+        .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Sends out an email to a parent that they need to register and create a family or need to log in and add a child to their existing family.
+   *
+   * @param request The request object that contains the parent email.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendFamilyRequestEmail(FamilyEmailRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/family/request")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1964,10 +2332,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendPasswordlessCode(PasswordlessSendRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/passwordless/send")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/passwordless/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1977,10 +2346,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendTwoFactorCode(TwoFactorSendRequest request) {
-    return start(Void.TYPE, Errors.class).uri("/api/two-factor/send")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/two-factor/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -1990,10 +2360,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendTwoFactorCodeForLogin(String twoFactorId) {
-    return start(Void.TYPE, Errors.class).uri("/api/two-factor/send")
-                            .urlSegment(twoFactorId)
-                            .post()
-                            .go();
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/two-factor/send")
+        .urlSegment(twoFactorId)
+        .post()
+        .go();
   }
 
   /**
@@ -2003,10 +2374,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> twoFactorLogin(TwoFactorLoginRequest request) {
-    return start(LoginResponse.class, Errors.class).uri("/api/two-factor/login")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .post()
-                            .go();
+    return start(LoginResponse.class, Errors.class)
+        .uri("/api/two-factor/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
   }
 
   /**
@@ -2017,11 +2389,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> updateApplication(UUID applicationId, ApplicationRequest request) {
-    return start(ApplicationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2033,13 +2406,30 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> updateApplicationRole(UUID applicationId, UUID roleId, ApplicationRequest request) {
-    return start(ApplicationResponse.class, Errors.class).uri("/api/application")
-                            .urlSegment(applicationId)
-                            .urlSegment("role")
-                            .urlSegment(roleId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("role")
+        .urlSegment(roleId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the consent with the given Id.
+   *
+   * @param consentId The Id of the consent to update.
+   * @param request The request that contains all of the new consent information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentResponse, Errors> updateConsent(UUID consentId, ConsentRequest request) {
+    return start(ConsentResponse.class, Errors.class)
+        .uri("/api/consent")
+        .urlSegment(consentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2050,11 +2440,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<EmailTemplateResponse, Errors> updateEmailTemplate(UUID emailTemplateId, EmailTemplateRequest request) {
-    return start(EmailTemplateResponse.class, Errors.class).uri("/api/email/template")
-                            .urlSegment(emailTemplateId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(EmailTemplateResponse.class, Errors.class)
+        .uri("/api/email/template")
+        .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2065,11 +2456,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<GroupResponse, Errors> updateGroup(UUID groupId, GroupRequest request) {
-    return start(GroupResponse.class, Errors.class).uri("/api/group")
-                            .urlSegment(groupId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(GroupResponse.class, Errors.class)
+        .uri("/api/group")
+        .urlSegment(groupId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2080,11 +2472,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderResponse, Errors> updateIdentityProvider(UUID identityProviderId, IdentityProviderRequest request) {
-    return start(IdentityProviderResponse.class, Errors.class).uri("/api/identity-provider")
-                            .urlSegment(identityProviderId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(IdentityProviderResponse.class, Errors.class)
+        .uri("/api/identity-provider")
+        .urlSegment(identityProviderId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2094,10 +2487,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IntegrationResponse, Errors> updateIntegrations(IntegrationRequest request) {
-    return start(IntegrationResponse.class, Errors.class).uri("/api/integration")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(IntegrationResponse.class, Errors.class)
+        .uri("/api/integration")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2108,11 +2502,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> updateKey(UUID keyId, KeyRequest request) {
-    return start(KeyResponse.class, Errors.class).uri("/api/key")
-                            .urlSegment(keyId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(KeyResponse.class, Errors.class)
+        .uri("/api/key")
+        .urlSegment(keyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2123,11 +2518,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Errors> updateLambda(UUID lambdaId, LambdaRequest request) {
-    return start(LambdaResponse.class, Errors.class).uri("/api/lambda")
-                            .urlSegment(lambdaId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(LambdaResponse.class, Errors.class)
+        .uri("/api/lambda")
+        .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2138,11 +2534,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<RegistrationResponse, Errors> updateRegistration(UUID userId, RegistrationRequest request) {
-    return start(RegistrationResponse.class, Errors.class).uri("/api/user/registration")
-                            .urlSegment(userId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(RegistrationResponse.class, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2152,10 +2549,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SystemConfigurationResponse, Errors> updateSystemConfiguration(SystemConfigurationRequest request) {
-    return start(SystemConfigurationResponse.class, Errors.class).uri("/api/system-configuration")
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(SystemConfigurationResponse.class, Errors.class)
+        .uri("/api/system-configuration")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2166,11 +2564,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<TenantResponse, Errors> updateTenant(UUID tenantId, TenantRequest request) {
-    return start(TenantResponse.class, Errors.class).uri("/api/tenant")
-                            .urlSegment(tenantId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(TenantResponse.class, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2181,11 +2580,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> updateUser(UUID userId, UserRequest request) {
-    return start(UserResponse.class, Errors.class).uri("/api/user")
-                            .urlSegment(userId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2196,11 +2596,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Errors> updateUserAction(UUID userActionId, UserActionRequest request) {
-    return start(UserActionResponse.class, Errors.class).uri("/api/user-action")
-                            .urlSegment(userActionId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(UserActionResponse.class, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2211,11 +2612,28 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionReasonResponse, Errors> updateUserActionReason(UUID userActionReasonId, UserActionReasonRequest request) {
-    return start(UserActionReasonResponse.class, Errors.class).uri("/api/user-action-reason")
-                            .urlSegment(userActionReasonId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(UserActionReasonResponse.class, Errors.class)
+        .uri("/api/user-action-reason")
+        .urlSegment(userActionReasonId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates a single User consent by Id.
+   *
+   * @param userConsentId The User Consent Id
+   * @param request The request that contains the user consent information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserConsentResponse, Errors> updateUserConsent(UUID userConsentId, UserConsentRequest request) {
+    return start(UserConsentResponse.class, Errors.class)
+        .uri("/api/user/consent")
+        .urlSegment(userConsentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2226,11 +2644,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<WebhookResponse, Errors> updateWebhook(UUID webhookId, WebhookRequest request) {
-    return start(WebhookResponse.class, Errors.class).uri("/api/webhook")
-                            .urlSegment(webhookId)
-                            .bodyHandler(new JSONBodyHandler(request, objectMapper))
-                            .put()
-                            .go();
+    return start(WebhookResponse.class, Errors.class)
+        .uri("/api/webhook")
+        .urlSegment(webhookId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
   }
 
   /**
@@ -2243,10 +2662,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ValidateResponse, Void> validateJWT(String encodedJWT) {
-    return start(ValidateResponse.class, Void.TYPE).uri("/api/jwt/validate")
-                            .authorization("JWT " + encodedJWT)
-                            .get()
-                            .go();
+    return start(ValidateResponse.class, Void.TYPE)
+        .uri("/api/jwt/validate")
+        .authorization("JWT " + encodedJWT)
+        .get()
+        .go();
   }
 
   /**
@@ -2256,10 +2676,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> verifyEmail(String verificationId) {
-    return start(Void.TYPE, Void.TYPE).uri("/api/user/verify-email")
-                            .urlSegment(verificationId)
-                            .post()
-                            .go();
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/user/verify-email")
+        .urlSegment(verificationId)
+        .post()
+        .go();
   }
 
   /**
@@ -2269,10 +2690,11 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> verifyRegistration(String verificationId) {
-    return start(Void.TYPE, Void.TYPE).uri("/api/user/verify-registration")
-                            .urlSegment(verificationId)
-                            .post()
-                            .go();
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/user/verify-registration")
+        .urlSegment(verificationId)
+        .post()
+        .go();
   }
 
 

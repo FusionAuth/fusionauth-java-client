@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,24 @@
  */
 package io.fusionauth.domain.api;
 
+import java.time.ZoneId;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.TwoFactorDelivery;
+import io.fusionauth.domain.search.LoginRecordSearchCriteria;
 
 /**
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String code;
-
-  public TwoFactorDelivery delivery;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+public class LoginRecordExportRequest extends BaseExportRequest {
+  public LoginRecordSearchCriteria criteria;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public LoginRecordExportRequest() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
-    this.code = code;
-    this.secret = secret;
-  }
-
-  public TwoFactorRequest(String code, String secret, TwoFactorDelivery delivery) {
-    this.code = code;
-    this.delivery = delivery;
-    this.secret = secret;
+  public LoginRecordExportRequest(LoginRecordSearchCriteria criteria, String dateTimeSecondsFormat, ZoneId zoneId) {
+    this.criteria = criteria;
+    this.dateTimeSecondsFormat = dateTimeSecondsFormat;
+    this.zoneId = zoneId;
   }
 }
