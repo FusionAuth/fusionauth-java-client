@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
  * @author Daniel DeGroff
@@ -37,6 +38,9 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
   public final Map<String, Object> data = new HashMap<>();
 
   public Map<UUID, D> applicationConfiguration = new HashMap<>();
+
+  @InternalJSONColumn
+  public boolean debug;
 
   public UUID id;
 
@@ -56,6 +60,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
     BaseIdentityProvider<?> that = (BaseIdentityProvider<?>) o;
     return Objects.equals(applicationConfiguration, that.applicationConfiguration) &&
         Objects.equals(data, that.data) &&
+        Objects.equals(debug, that.debug) &&
         Objects.equals(name, that.name) &&
         Objects.equals(getType(), that.getType());
   }
@@ -65,7 +70,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationConfiguration, data, name, getType());
+    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getType());
   }
 
   public boolean isEnabledForApplicationId(UUID applicationId) {
