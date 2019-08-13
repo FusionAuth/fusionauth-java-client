@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public class LookupResponse {
   @JsonSubTypes({
       @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT")
   })
-  @JsonIgnoreProperties(value = {"enabled", "type"})
+  @JsonIgnoreProperties(value = {"debug", "enabled", "type"})
   public BaseIdentityProvider<?> identityProvider;
 
   @JacksonConstructor
