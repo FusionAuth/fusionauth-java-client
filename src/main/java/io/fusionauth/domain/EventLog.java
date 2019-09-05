@@ -53,7 +53,7 @@ public class EventLog implements Buildable<EventLog> {
     StringWriter writer = new StringWriter();
     PrintWriter pw = new PrintWriter(writer);
     t.printStackTrace(pw);
-    this.message += "\nException:\n" + writer.toString();
+    this.message += "\n\nException:\n" + writer.toString();
   }
 
   public EventLog() {

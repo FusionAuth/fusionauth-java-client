@@ -15,22 +15,24 @@
  */
 package io.fusionauth.domain.api;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.FamilyMember;
+import java.util.UUID;
+
+import io.fusionauth.domain.Theme;
 
 /**
- * API request for managing families and members.
+ * Theme API request object.
  *
- * @author Brian Pontarelli
+ * @author Trevor Smith
  */
-public class FamilyRequest {
-  public FamilyMember familyMember;
+public class ThemeRequest {
+  public UUID sourceThemeId;
 
-  @JacksonConstructor
-  public FamilyRequest() {
+  public Theme theme;
+
+  public ThemeRequest() {
   }
 
-  public FamilyRequest(FamilyMember familyMember) {
-    this.familyMember = familyMember;
+  public ThemeRequest(Theme theme) {
+    this.theme = theme;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,14 @@ import com.inversoft.json.ToString;
  */
 public class RememberPreviousPasswords extends Enableable {
   public int count;
+
+  public RememberPreviousPasswords() {
+  }
+
+  public RememberPreviousPasswords(RememberPreviousPasswords other) {
+    this.count = other.count;
+    this.enabled = other.enabled;
+  }
 
   @Override
   public boolean equals(Object o) {

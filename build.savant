@@ -21,7 +21,7 @@ fusionauthJWTVersion = "3.1.1"
 fusionauthSAMLv2Version = "0.2.1"
 restifyVersion = "3.2.6"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.7.4", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.8.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -43,7 +43,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.7.4"
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
       dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.9")
       dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.9")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.9")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.11+2.9.9.2")
     }
     group(name: "test-compile") {
       dependency(id: "org.testng:testng:6.8.7")

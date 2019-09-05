@@ -33,7 +33,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 /**
  * @author Seth Musselman
  */
-public class Application implements Buildable<Application>, _InternalJSONColumn {
+public class Application implements Buildable<Application>, _InternalJSONColumn, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
   public boolean active;
@@ -138,6 +138,11 @@ public class Application implements Buildable<Application>, _InternalJSONColumn 
     }
 
     return null;
+  }
+
+  @Override
+  public UUID getTenantId() {
+    return tenantId;
   }
 
   public boolean hasDefaultRole() {

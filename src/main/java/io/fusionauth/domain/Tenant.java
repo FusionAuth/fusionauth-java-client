@@ -15,14 +15,18 @@
  */
 package io.fusionauth.domain;
 
+import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.util.Normalizer;
+import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
  * @author Daniel DeGroff
@@ -31,14 +35,62 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   @InternalJSONColumn
-  public TenantEmailConfiguration emailConfiguration = new TenantEmailConfiguration();
+  public boolean configured;
+
+  @InternalJSONColumn
+  public EmailConfiguration emailConfiguration = new EmailConfiguration();
+
+  @InternalJSONColumn
+  public EventConfiguration eventConfiguration = new EventConfiguration();
+
+  @InternalJSONColumn
+  public ExternalIdentifierConfiguration externalIdentifierConfiguration = new ExternalIdentifierConfiguration();
+
+  @InternalJSONColumn
+  public FailedAuthenticationConfiguration failedAuthenticationConfiguration = new FailedAuthenticationConfiguration();
 
   @InternalJSONColumn
   public FamilyConfiguration familyConfiguration = new FamilyConfiguration();
 
+  /**
+   * Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth
+   * OAuth frontend.
+   * <p>
+   * Default is 60 minutes.
+   */
+  @InternalJSONColumn
+  public int httpSessionMaxInactiveInterval = 3600;
+
   public UUID id;
 
+  @InternalJSONColumn
+  public String issuer;
+
+  @InternalJSONColumn
+  public JWTConfiguration jwtConfiguration = new JWTConfiguration();
+
+  /**
+   * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
+   * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
+   */
+  @InternalJSONColumn
+  public URI logoutURL;
+
+  @InternalJSONColumn
+  public MaximumPasswordAge maximumPasswordAge = new MaximumPasswordAge();
+
+  @InternalJSONColumn
+  public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
+
   public String name;
+
+  @InternalJSONColumn
+  public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
+
+  @InternalJSONColumn
+  public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
+
+  public UUID themeId;
 
   public Tenant() {
   }
@@ -48,12 +100,25 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.name = name;
   }
 
-  public Tenant(Tenant tenant) {
-    this.data.putAll(tenant.data);
-    this.emailConfiguration = new TenantEmailConfiguration(tenant.emailConfiguration);
-    this.familyConfiguration = new FamilyConfiguration(tenant.familyConfiguration);
-    this.id = tenant.id;
-    this.name = tenant.name;
+  public Tenant(Tenant other) {
+    this.configured = other.configured;
+    this.data.putAll(other.data);
+    this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
+    this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
+    this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
+    this.failedAuthenticationConfiguration = new FailedAuthenticationConfiguration(other.failedAuthenticationConfiguration);
+    this.familyConfiguration = new FamilyConfiguration(other.familyConfiguration);
+    this.httpSessionMaxInactiveInterval = other.httpSessionMaxInactiveInterval;
+    this.id = other.id;
+    this.issuer = other.issuer;
+    this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
+    this.logoutURL = other.logoutURL;
+    this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
+    this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
+    this.name = other.name;
+    this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
+    this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
+    this.themeId = other.themeId;
   }
 
   @Override
@@ -65,155 +130,53 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
       return false;
     }
     Tenant tenant = (Tenant) o;
-    return Objects.equals(data, tenant.data) &&
+    return configured == tenant.configured &&
+        httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
+        Objects.equals(data, tenant.data) &&
         Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
-        Objects.equals(name, tenant.name);
+        Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
+        Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
+        Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
+        Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
+        Objects.equals(issuer, tenant.issuer) &&
+        Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
+        Objects.equals(logoutURL, tenant.logoutURL) &&
+        Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
+        Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
+        Objects.equals(name, tenant.name) &&
+        Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
+        Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
+        Objects.equals(themeId, tenant.themeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, emailConfiguration, name);
+    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId);
+  }
+
+  @JsonIgnore
+  public JWTConfiguration lookupJWTConfiguration(Application application) {
+    if (application != null && application.jwtConfiguration != null && application.jwtConfiguration.enabled) {
+      return application.jwtConfiguration;
+    }
+
+    return jwtConfiguration;
+  }
+
+  public void normalize() {
+    // Clear verification settings if they are disabled
+    if (!emailConfiguration.verifyEmail) {
+      emailConfiguration.verifyEmailWhenChanged = false;
+      emailConfiguration.verificationEmailTemplateId = null;
+    }
+
+    Normalizer.removeEmpty(data);
+    name = trim(name);
+    emailConfiguration.normalize();
   }
 
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  public static class FamilyConfiguration extends Enableable implements Buildable<FamilyConfiguration> {
-    public boolean allowChildRegistrations = true;
-
-    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
-    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
-    //        select a template here.
-    public UUID confirmChildEmailTemplateId;
-
-    public boolean deleteOrphanedAccounts;
-
-    public int deleteOrphanedAccountsDays = 30;
-
-    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
-    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
-    //        select a template here.
-    public UUID familyRequestEmailTemplateId;
-
-    public int maximumChildAge = 12;
-
-    public int minimumOwnerAge = 21;
-
-    public boolean parentEmailRequired;
-
-    // TODO - Need to validate this option and all email template options in the edit SystemConfiguration form in the UI if the email
-    //        configuration is not valid. This should produce an error if the email configuration is disabled and the user tries to
-    //        select a template here.
-    public UUID parentRegistrationEmailTemplateId;
-
-    public FamilyConfiguration() {
-    }
-
-    public FamilyConfiguration(FamilyConfiguration other) {
-      this.allowChildRegistrations = other.allowChildRegistrations;
-      this.familyRequestEmailTemplateId = other.familyRequestEmailTemplateId;
-      this.confirmChildEmailTemplateId = other.confirmChildEmailTemplateId;
-      this.deleteOrphanedAccounts = other.deleteOrphanedAccounts;
-      this.deleteOrphanedAccountsDays = other.deleteOrphanedAccountsDays;
-      this.maximumChildAge = other.maximumChildAge;
-      this.minimumOwnerAge = other.minimumOwnerAge;
-      this.parentEmailRequired = other.parentEmailRequired;
-      this.parentRegistrationEmailTemplateId = other.parentRegistrationEmailTemplateId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof FamilyConfiguration)) {
-        return false;
-      }
-      if (!super.equals(o)) {
-        return false;
-      }
-      FamilyConfiguration that = (FamilyConfiguration) o;
-      return allowChildRegistrations == that.allowChildRegistrations &&
-          deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
-          deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
-          maximumChildAge == that.maximumChildAge &&
-          minimumOwnerAge == that.minimumOwnerAge &&
-          parentEmailRequired == that.parentEmailRequired &&
-          Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
-          Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
-          Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(super.hashCode(), allowChildRegistrations, familyRequestEmailTemplateId, confirmChildEmailTemplateId,
-                          deleteOrphanedAccounts, deleteOrphanedAccountsDays, maximumChildAge, minimumOwnerAge, parentEmailRequired,
-                          parentRegistrationEmailTemplateId);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-  }
-
-  public class TenantEmailConfiguration extends Enableable {
-    public UUID forgotPasswordEmailTemplateId;
-
-    public UUID passwordlessEmailTemplateId;
-
-    public UUID setPasswordEmailTemplateId;
-
-    public UUID verificationEmailTemplateId;
-
-    public boolean verifyEmail;
-
-    public boolean verifyEmailWhenChanged;
-
-    public TenantEmailConfiguration() {
-    }
-
-    public TenantEmailConfiguration(TenantEmailConfiguration other) {
-      this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
-      this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
-      this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
-      this.verificationEmailTemplateId = other.verificationEmailTemplateId;
-      this.verifyEmail = other.verifyEmail;
-      this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof TenantEmailConfiguration)) {
-        return false;
-      }
-      if (!super.equals(o)) {
-        return false;
-      }
-
-      TenantEmailConfiguration that = (TenantEmailConfiguration) o;
-      return verifyEmail == that.verifyEmail &&
-          verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
-          Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
-          Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
-          Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
-          Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId,
-                          verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
   }
 }

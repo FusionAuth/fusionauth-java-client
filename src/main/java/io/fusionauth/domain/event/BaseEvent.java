@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.inversoft.json.ToString;
 
 /**
  * Base-class for all FusionAuth events.
@@ -36,6 +37,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @Type(value = UserUpdateEvent.class, name = "user.update"),
     @Type(value = UserDeleteEvent.class, name = "user.delete"),
     @Type(value = UserDeactivateEvent.class, name = "user.deactivate"),
+    @Type(value = UserEmailVerifiedEvent.class, name = "user.email.verified"),
     @Type(value = UserReactivateEvent.class, name = "user.reactivate"),
     @Type(value = UserBulkCreateEvent.class, name = "user.bulk.create"),
     @Type(value = UserLoginFailedEvent.class, name = "user.login.failed"),
@@ -43,6 +45,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @Type(value = UserRegistrationCreateEvent.class, name = "user.registration.create"),
     @Type(value = UserRegistrationUpdateEvent.class, name = "user.registration.update"),
     @Type(value = UserRegistrationDeleteEvent.class, name = "user.registration.delete"),
+    @Type(value = UserRegistrationVerifiedEvent.class, name = "user.registration.verified"),
     @Type(value = JWTRefreshTokenRevokeEvent.class, name = "jwt.refresh-token.revoke"),
     @Type(value = JWTPublicKeyUpdateEvent.class, name = "jwt.public-key.update"),
     @Type(value = TestEvent.class, name = "test")
@@ -51,6 +54,8 @@ public abstract class BaseEvent {
   public ZonedDateTime createInstant;
 
   public UUID id;
+
+  public UUID tenantId;
 
   @Override
   public boolean equals(Object o) {
@@ -63,6 +68,7 @@ public abstract class BaseEvent {
     BaseEvent baseEvent = (BaseEvent) o;
     return Objects.equals(createInstant, baseEvent.createInstant) &&
         Objects.equals(id, baseEvent.id) &&
+        Objects.equals(tenantId, baseEvent.tenantId) &&
         Objects.equals(getType(), baseEvent.getType());
   }
 
@@ -74,6 +80,11 @@ public abstract class BaseEvent {
 
   @Override
   public int hashCode() {
-    return Objects.hash(createInstant, id, getType());
+    return Objects.hash(createInstant, id, tenantId, getType());
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

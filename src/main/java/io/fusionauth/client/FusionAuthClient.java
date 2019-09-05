@@ -76,6 +76,8 @@ import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantRequest;
 import io.fusionauth.domain.api.TenantResponse;
+import io.fusionauth.domain.api.ThemeRequest;
+import io.fusionauth.domain.api.ThemeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
 import io.fusionauth.domain.api.UserActionReasonRequest;
 import io.fusionauth.domain.api.UserActionReasonResponse;
@@ -474,6 +476,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates a Theme. You can optionally specify an Id for the theme, if not provided one will be generated.
+   *
+   * @param themeId (Optional) The Id for the theme. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the theme.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeResponse, Errors> createTheme(UUID themeId, ThemeRequest request) {
+    return start(ThemeResponse.class, Errors.class)
+        .uri("/api/theme")
+        .urlSegment(themeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a user. You can optionally specify an Id for the user, if not provided one will be generated.
    *
    * @param userId (Optional) The Id for the user. If not provided a secure random UUID will be generated.
@@ -776,6 +794,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the theme for the given Id.
+   *
+   * @param themeId The Id of the theme to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteTheme(UUID themeId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/theme")
+        .urlSegment(themeId)
+        .delete()
+        .go();
+  }
+
+  /**
    * Deletes the user for the given Id. This permanently deletes all information, metrics, reports and data associated
    * with the user.
    *
@@ -920,7 +952,7 @@ public class FusionAuthClient {
     return start(VerifyEmailResponse.class, Void.TYPE)
         .uri("/api/user/verify-email")
         .urlParameter("email", email)
-        .urlParameter("sendVerifyPasswordEmail", false)
+        .urlParameter("sendVerifyEmail", false)
         .put()
         .go();
   }
@@ -1058,7 +1090,9 @@ public class FusionAuthClient {
   }
 
   /**
-   * Logs a user in.
+   * Authenticates a user to FusionAuth. 
+   * 
+   * This API optionally requires an API key. See <code>Application.loginConfiguration.requireAuthentication</code>.
    *
    * @param request The login request that contains the user credentials used to log them in.
    * @return The ClientResponse object.
@@ -1219,6 +1253,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Request a refresh of the User search index. This API is not generally necessary and the search index will become consistent in a
+   * reasonable amount of time. There may be scenarios where you may wish to manually request an index refresh. One example may be 
+   * if you are using the Search API or Delete Tenant API immediately following a User Create etc, you may wish to request a refresh to
+   *  ensure the index immediately current before making a query request to the search index.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> refreshUserSearchIndex() {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/search")
+        .put()
+        .go();
+  }
+
+  /**
    * Registers a user for an application. If you provide the User and the UserRegistration object on this request, it
    * will create the user as well as register them for the application. This is called a Full Registration. However, if
    * you only provide the UserRegistration object, then the user must already exist and they will be registered for the
@@ -1260,8 +1309,8 @@ public class FusionAuthClient {
    * @param email The email address of the user that needs a new verification email.
    * @return The ClientResponse object.
    */
-  public ClientResponse<VerifyEmailResponse, Void> resendEmailVerification(String email) {
-    return start(VerifyEmailResponse.class, Void.TYPE)
+  public ClientResponse<VerifyEmailResponse, Errors> resendEmailVerification(String email) {
+    return start(VerifyEmailResponse.class, Errors.class)
         .uri("/api/user/verify-email")
         .urlParameter("email", email)
         .put()
@@ -1275,8 +1324,8 @@ public class FusionAuthClient {
    * @param applicationId The Id of the application to be verified.
    * @return The ClientResponse object.
    */
-  public ClientResponse<VerifyRegistrationResponse, Void> resendRegistrationVerification(String email, UUID applicationId) {
-    return start(VerifyRegistrationResponse.class, Void.TYPE)
+  public ClientResponse<VerifyRegistrationResponse, Errors> resendRegistrationVerification(String email, UUID applicationId) {
+    return start(VerifyRegistrationResponse.class, Errors.class)
         .uri("/api/user/verify-registration")
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
@@ -1620,17 +1669,29 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves the Public Key configured for verifying JSON Web Tokens (JWT) by the key Id. If the key Id is provided a
-   * single public key will be returned if one is found by that id. If the optional parameter key Id is not provided all
-   * public keys will be returned.
+   * Retrieves the Public Key configured for verifying JSON Web Tokens (JWT) by the key Id (kid).
    *
-   * @param keyId (Optional) The Id of the public key.
+   * @param keyId The Id of the public key (kid).
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKey(String keyId) {
     return start(PublicKeyResponse.class, Void.TYPE)
         .uri("/api/jwt/public-key")
-        .urlSegment(keyId)
+        .urlParameter("kid", keyId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the Public Key configured for verifying the JSON Web Tokens (JWT) issued by the Login API by the Application Id.
+   *
+   * @param applicationId The Id of the Application for which this key is used.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKeyByApplicationId(String applicationId) {
+    return start(PublicKeyResponse.class, Void.TYPE)
+        .uri("/api/jwt/public-key")
+        .urlParameter("applicationId", applicationId)
         .get()
         .go();
   }
@@ -1767,13 +1828,32 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves the password validation rules.
+   * Retrieves the password validation rules for a specific tenant. This method requires a tenantId to be provided 
+   * through the use of a Tenant scoped API key or an HTTP header X-FusionAuth-TenantId to specify the Tenant Id.
+   * 
+   * This API does not require an API key.
    *
    * @return The ClientResponse object.
    */
   public ClientResponse<PasswordValidationRulesResponse, Void> retrievePasswordValidationRules() {
     return start(PasswordValidationRulesResponse.class, Void.TYPE)
-        .uri("/api/system-configuration/password-validation-rules")
+        .uri("/api/tenant/password-validation-rules")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the password validation rules for a specific tenant.
+   * 
+   * This API does not require an API key.
+   *
+   * @param tenantId The Id of the tenant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PasswordValidationRulesResponse, Void> retrievePasswordValidationRulesWithTenantId(UUID tenantId) {
+    return start(PasswordValidationRulesResponse.class, Void.TYPE)
+        .uri("/api/tenant/password-validation-rules")
+        .urlSegment(tenantId)
         .get()
         .go();
   }
@@ -1891,6 +1971,32 @@ public class FusionAuthClient {
   public ClientResponse<TenantResponse, Void> retrieveTenants() {
     return start(TenantResponse.class, Void.TYPE)
         .uri("/api/tenant")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the theme for the given Id.
+   *
+   * @param themeId The Id of the theme.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeResponse, Errors> retrieveTheme(UUID themeId) {
+    return start(ThemeResponse.class, Errors.class)
+        .uri("/api/theme")
+        .urlSegment(themeId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the themes.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeResponse, Void> retrieveThemes() {
+    return start(ThemeResponse.class, Void.TYPE)
+        .uri("/api/theme")
         .get()
         .go();
   }
@@ -2573,6 +2679,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates the theme with the given Id.
+   *
+   * @param themeId The Id of the theme to update.
+   * @param request The request that contains all of the new theme information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeResponse, Errors> updateTheme(UUID themeId, ThemeRequest request) {
+    return start(ThemeResponse.class, Errors.class)
+        .uri("/api/theme")
+        .urlSegment(themeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
    * Updates the user with the given Id.
    *
    * @param userId The Id of the user to update.
@@ -2675,8 +2797,8 @@ public class FusionAuthClient {
    * @param verificationId The email verification id sent to the user.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> verifyEmail(String verificationId) {
-    return start(Void.TYPE, Void.TYPE)
+  public ClientResponse<Void, Errors> verifyEmail(String verificationId) {
+    return start(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
         .urlSegment(verificationId)
         .post()
@@ -2689,8 +2811,8 @@ public class FusionAuthClient {
    * @param verificationId The registration verification Id sent to the user.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> verifyRegistration(String verificationId) {
-    return start(Void.TYPE, Void.TYPE)
+  public ClientResponse<Void, Errors> verifyRegistration(String verificationId) {
+    return start(Void.TYPE, Errors.class)
         .uri("/api/user/verify-registration")
         .urlSegment(verificationId)
         .post()

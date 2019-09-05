@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.User;
 
 /**
  * Models the Refresh Token Revoke Event (and can be converted to JSON). This event might be for a single token, a user
@@ -37,21 +38,25 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
 
   public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>();
 
+  public User user;
+
   public UUID userId;
 
   @JacksonConstructor
   public JWTRefreshTokenRevokeEvent() {
   }
 
-  public JWTRefreshTokenRevokeEvent(UUID userId, UUID applicationId, int timeToLiveInSeconds) {
+  public JWTRefreshTokenRevokeEvent(User user, UUID applicationId, int timeToLiveInSeconds) {
     this.applicationId = applicationId;
     this.applicationTimeToLiveInSeconds.put(applicationId, timeToLiveInSeconds);
-    this.userId = userId;
+    this.user = user;
+    this.userId = user == null ? null : user.id;
   }
 
-  public JWTRefreshTokenRevokeEvent(UUID userId, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
+  public JWTRefreshTokenRevokeEvent(User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
     this.applicationTimeToLiveInSeconds.putAll(applicationTimeToLiveInSeconds);
-    this.userId = userId;
+    this.user = user;
+    this.userId = user == null ? null : user.id;
   }
 
   @Override
@@ -69,21 +74,23 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
     }
     JWTRefreshTokenRevokeEvent that = (JWTRefreshTokenRevokeEvent) o;
     return super.equals(o) &&
-        Objects.equals(applicationTimeToLiveInSeconds, that.applicationTimeToLiveInSeconds) && Objects.equals(userId, that.userId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationTimeToLiveInSeconds, userId);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+        Objects.equals(applicationTimeToLiveInSeconds, that.applicationTimeToLiveInSeconds) &&
+        Objects.equals(user, that.user) &&
+        Objects.equals(userId, that.userId);
   }
 
   @Override
   public EventType getType() {
     return EventType.JWTRefreshTokenRevoke;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), applicationTimeToLiveInSeconds, user, userId);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,15 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
   public boolean requireNumber;
 
   public PasswordValidationRules() {
+  }
+
+  public PasswordValidationRules(PasswordValidationRules other) {
+    this.maxLength = other.maxLength;
+    this.minLength = other.minLength;
+    this.rememberPreviousPasswords = new RememberPreviousPasswords(other.rememberPreviousPasswords);
+    this.requireMixedCase = other.requireMixedCase;
+    this.requireNonAlpha = other.requireNonAlpha;
+    this.requireNumber = other.requireNumber;
   }
 
   public PasswordValidationRules(int minLength, int maxLength, boolean requireMixedCase, boolean requireNonAlpha, boolean requireNumber) {

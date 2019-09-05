@@ -31,7 +31,6 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class RefreshToken implements Buildable<RefreshToken> {
-
   @JsonIgnore
   public Application application;
 

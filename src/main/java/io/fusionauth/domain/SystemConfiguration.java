@@ -17,21 +17,19 @@ package io.fusionauth.domain;
 
 import java.net.URI;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.event.EventType;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
-import static java.util.Arrays.asList;
+import io.fusionauth.domain.util.HTTPMethod;
 
 /**
  * @author Brian Pontarelli
@@ -54,63 +52,16 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   @InternalJSONColumn
   public String cookieEncryptionKey;
 
+  @InternalJSONColumn
+  public CORSConfiguration corsConfiguration = new CORSConfiguration();
+
   public Map<String, Object> data = new HashMap<>();
-
-  @InternalJSONColumn
-  public EmailConfiguration emailConfiguration = new EmailConfiguration();
-
-  @InternalJSONColumn
-  public EventConfiguration eventConfiguration = new EventConfiguration();
 
   @InternalJSONColumn
   public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
   @InternalJSONColumn
-  public ExternalIdentifierConfiguration externalIdentifierConfiguration = new ExternalIdentifierConfiguration();
-
-  /**
-   * Failed Authentication Cache.
-   */
-  @InternalJSONColumn
-  public FailedAuthenticationConfiguration failedAuthenticationConfiguration = new FailedAuthenticationConfiguration();
-
-  /**
-   * Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth
-   * OAuth frontend.
-   * <p>
-   * Default is 60 minutes.
-   */
-  public int httpSessionMaxInactiveInterval = 3600;
-
-  @InternalJSONColumn
-  public String issuer;
-
-  /**
-   * Global System JWT Configuration used to sign and drop a JWT cookie on a successful login.
-   */
-  @InternalJSONColumn
-  public JWTConfiguration jwtConfiguration = new JWTConfiguration();
-
-  @InternalJSONColumn
   public LoginRecordConfiguration loginRecordConfiguration = new LoginRecordConfiguration();
-
-  /**
-   * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
-   * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
-   */
-  public URI logoutURL;
-
-  @InternalJSONColumn
-  public MaximumPasswordAge maximumPasswordAge = new MaximumPasswordAge();
-
-  @InternalJSONColumn
-  public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
-
-  @InternalJSONColumn
-  public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
-
-  @InternalJSONColumn
-  public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
   public ZoneId reportTimezone;
 
@@ -129,35 +80,25 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
         Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
         Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
+        Objects.equals(corsConfiguration, that.corsConfiguration) &&
         Objects.equals(data, that.data) &&
-        Objects.equals(emailConfiguration, that.emailConfiguration) &&
-        Objects.equals(eventConfiguration, that.eventConfiguration) &&
         Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
-        Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
-        Objects.equals(failedAuthenticationConfiguration, that.failedAuthenticationConfiguration) &&
-        httpSessionMaxInactiveInterval == that.httpSessionMaxInactiveInterval &&
-        Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
-        Objects.equals(issuer, that.issuer) &&
         Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
-        Objects.equals(logoutURL, that.logoutURL) &&
-        Objects.equals(maximumPasswordAge, that.maximumPasswordAge) &&
-        Objects.equals(minimumPasswordAge, that.minimumPasswordAge) &&
-        Objects.equals(passwordEncryptionConfiguration, that.passwordEncryptionConfiguration) &&
-        Objects.equals(passwordValidationRules, that.passwordValidationRules) &&
         Objects.equals(reportTimezone, that.reportTimezone) &&
         Objects.equals(uiConfiguration, that.uiConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionIV, cookieEncryptionKey, data, emailConfiguration, eventConfiguration, eventLogConfiguration, externalIdentifierConfiguration,
-                        failedAuthenticationConfiguration, httpSessionMaxInactiveInterval, jwtConfiguration, issuer, loginRecordConfiguration, logoutURL, maximumPasswordAge,
-                        minimumPasswordAge, passwordEncryptionConfiguration, passwordValidationRules, reportTimezone, uiConfiguration);
+    return Objects.hash(cookieEncryptionIV, cookieEncryptionKey, corsConfiguration, data, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {
     if (uiConfiguration != null) {
       uiConfiguration.normalize();
+    }
+    if (corsConfiguration != null) {
+      corsConfiguration.normalize();
     }
   }
 
@@ -171,6 +112,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public String toString() {
     return ToString.toString(this);
   }
+
 
   public static class AuditLogConfiguration {
     public DeleteConfiguration delete = new DeleteConfiguration();
@@ -190,6 +132,64 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     @Override
     public int hashCode() {
       return Objects.hash(delete);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class CORSConfiguration extends Enableable implements Buildable<CORSConfiguration> {
+    public boolean allowCredentials;
+
+    public List<String> allowedHeaders = new ArrayList<>();
+
+    public List<HTTPMethod> allowedMethods = new ArrayList<>();
+
+    public List<URI> allowedOrigins = new ArrayList<>();
+
+    public List<String> exposedHeaders = new ArrayList<>();
+
+    public int preflightMaxAgeInSeconds;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      CORSConfiguration that = (CORSConfiguration) o;
+      Collections.sort(allowedHeaders);
+      Collections.sort(that.allowedHeaders);
+      Collections.sort(allowedMethods);
+      Collections.sort(that.allowedMethods);
+      Collections.sort(allowedOrigins);
+      Collections.sort(that.allowedOrigins);
+      Collections.sort(exposedHeaders);
+      Collections.sort(that.exposedHeaders);
+      return preflightMaxAgeInSeconds == that.preflightMaxAgeInSeconds &&
+          allowCredentials == that.allowCredentials &&
+          Objects.equals(allowedHeaders, that.allowedHeaders) &&
+          Objects.equals(allowedMethods, that.allowedMethods) &&
+          Objects.equals(allowedOrigins, that.allowedOrigins) &&
+          Objects.equals(exposedHeaders, that.exposedHeaders);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), allowedHeaders, allowedMethods, allowedOrigins, exposedHeaders, preflightMaxAgeInSeconds, allowCredentials);
+    }
+
+    public void normalize() {
+      Set<HTTPMethod> methods = new HashSet<>(allowedMethods);
+      allowedMethods.clear();
+      allowedMethods.addAll(methods);
     }
 
     @Override
@@ -228,154 +228,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
   }
 
-  public static class EmailConfiguration extends Enableable implements Buildable<EmailConfiguration> {
-    public UUID forgotPasswordEmailTemplateId;
-
-    public String host;
-
-    public String password;
-
-    public UUID passwordlessEmailTemplateId;
-
-    public Integer port;
-
-    public String properties;
-
-    public EmailSecurityType security;
-
-    public UUID setPasswordEmailTemplateId;
-
-    public String username;
-
-    public UUID verificationEmailTemplateId;
-
-    public boolean verifyEmail;
-
-    public boolean verifyEmailWhenChanged;
-
-    public EmailConfiguration() {
-    }
-
-    public EmailConfiguration(EmailConfiguration other) {
-      this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
-      this.host = other.host;
-      this.password = other.password;
-      this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
-      this.port = other.port;
-      this.properties = other.properties;
-      this.security = other.security;
-      this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
-      this.username = other.username;
-      this.verificationEmailTemplateId = other.verificationEmailTemplateId;
-      this.verifyEmail = other.verifyEmail;
-      this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof EmailConfiguration)) {
-        return false;
-      }
-      if (!super.equals(o)) {
-        return false;
-      }
-      EmailConfiguration that = (EmailConfiguration) o;
-      return verifyEmail == that.verifyEmail &&
-          verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
-          Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
-          Objects.equals(host, that.host) &&
-          Objects.equals(password, that.password) &&
-          Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
-          Objects.equals(port, that.port) &&
-          Objects.equals(properties, that.properties) &&
-          security == that.security &&
-          Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
-          Objects.equals(username, that.username) &&
-          Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(super.hashCode(), forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-
-    public enum EmailSecurityType {
-      NONE,
-      SSL,
-      TLS
-    }
-  }
-
-  public static class EventConfiguration implements Buildable<EventConfiguration> {
-    public Map<EventType, EventConfigurationData> events = new HashMap<>();
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-        return false;
-      }
-      EventConfiguration that = (EventConfiguration) o;
-      return Objects.equals(events, that.events);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(events);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-
-    public static class EventConfigurationData extends Enableable {
-      public TransactionType transactionType;
-
-      @JacksonConstructor
-      public EventConfigurationData() {
-      }
-
-      public EventConfigurationData(boolean enabled, TransactionType transactionType) {
-        this.enabled = enabled;
-        this.transactionType = transactionType;
-      }
-
-      @Override
-      public boolean equals(Object o) {
-        if (this == o) {
-          return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-          return false;
-        }
-        EventConfigurationData that = (EventConfigurationData) o;
-        return super.equals(o) &&
-            Objects.equals(transactionType, that.transactionType);
-      }
-
-      @Override
-      public int hashCode() {
-        return Objects.hash(super.hashCode(), transactionType);
-      }
-
-      @Override
-      public String toString() {
-        return ToString.toString(this);
-      }
-    }
-  }
-
   public static class EventLogConfiguration {
     public int numberToRetain = 10_000;
 
@@ -394,58 +246,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     @Override
     public int hashCode() {
       return Objects.hash(numberToRetain);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-  }
-
-  public static class ExternalIdentifierConfiguration implements Buildable<ExternalIdentifierConfiguration> {
-    public int authorizationGrantIdTimeToLiveInSeconds;
-
-    public int changePasswordIdTimeToLiveInSeconds;
-
-    public int emailVerificationIdTimeToLiveInSeconds;
-
-    public int oneTimePasswordTimeToLiveInSeconds;
-
-    public int passwordlessLoginTimeToLiveInSeconds;
-
-    public int registrationVerificationIdTimeToLiveInSeconds;
-
-    public int setupPasswordIdTimeToLiveInSeconds;
-
-    public int twoFactorIdTimeToLiveInSeconds;
-
-    public int twoFactorTrustIdTimeToLiveInSeconds;
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof ExternalIdentifierConfiguration)) {
-        return false;
-      }
-      ExternalIdentifierConfiguration that = (ExternalIdentifierConfiguration) o;
-      return authorizationGrantIdTimeToLiveInSeconds == that.authorizationGrantIdTimeToLiveInSeconds &&
-          changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
-          emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
-          oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
-          passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
-          registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
-          setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
-          twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
-          twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(authorizationGrantIdTimeToLiveInSeconds, changePasswordIdTimeToLiveInSeconds, emailVerificationIdTimeToLiveInSeconds,
-                          oneTimePasswordTimeToLiveInSeconds, registrationVerificationIdTimeToLiveInSeconds, passwordlessLoginTimeToLiveInSeconds,
-                          setupPasswordIdTimeToLiveInSeconds, twoFactorIdTimeToLiveInSeconds, twoFactorTrustIdTimeToLiveInSeconds);
     }
 
     @Override
@@ -483,8 +283,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public static class UIConfiguration implements Buildable<UIConfiguration> {
     public String headerColor;
 
-    public LoginTheme loginTheme;
-
     public String logoURL;
 
     public String menuFontColor;
@@ -500,162 +298,15 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       UIConfiguration that = (UIConfiguration) o;
       return Objects.equals(logoURL, that.logoURL) &&
           Objects.equals(headerColor, that.headerColor) &&
-          Objects.equals(loginTheme, that.loginTheme) &&
           Objects.equals(menuFontColor, that.menuFontColor);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(logoURL, headerColor, loginTheme, menuFontColor);
+      return Objects.hash(logoURL, headerColor, menuFontColor);
     }
 
     public void normalize() {
-      if (loginTheme != null) {
-        loginTheme.normalize();
-      }
-    }
-
-    public static class LoginTheme extends Enableable implements Buildable<LoginTheme> {
-      public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-          "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
-          "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Error", "oauth2Register",
-          "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete",
-          "registrationSend", "registrationVerify"
-      )));
-
-      public String emailComplete;
-
-      public String emailSend;
-
-      public String emailVerify;
-
-      public String helpers;
-
-      public ZonedDateTime lastModified;
-
-      public String oauth2Authorize;
-
-      public String oauth2ChildRegistrationNotAllowed;
-
-      public String oauth2ChildRegistrationNotAllowedComplete;
-
-      public String oauth2CompleteRegistration;
-
-      public String oauth2Error;
-
-      public String oauth2Register;
-
-      public String oauth2TwoFactor;
-
-      public String passwordChange;
-
-      public String passwordComplete;
-
-      public String passwordForgot;
-
-      public String passwordSent;
-
-      public String registrationComplete;
-
-      public String registrationSend;
-
-      public String registrationVerify;
-
-      public String stylesheet;
-
-      @Override
-      public boolean equals(Object o) {
-        if (this == o) {
-          return true;
-        }
-        if (!(o instanceof LoginTheme)) {
-          return false;
-        }
-        if (!super.equals(o)) {
-          return false;
-        }
-        LoginTheme that = (LoginTheme) o;
-        return Objects.equals(emailComplete, that.emailComplete) &&
-            Objects.equals(emailSend, that.emailSend) &&
-            Objects.equals(emailVerify, that.emailVerify) &&
-            Objects.equals(helpers, that.helpers) &&
-            Objects.equals(lastModified, that.lastModified) &&
-            Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
-            Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
-            Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
-            Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
-            Objects.equals(oauth2Error, that.oauth2Error) &&
-            Objects.equals(oauth2Register, that.oauth2Register) &&
-            Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
-            Objects.equals(passwordChange, that.passwordChange) &&
-            Objects.equals(passwordComplete, that.passwordComplete) &&
-            Objects.equals(passwordForgot, that.passwordForgot) &&
-            Objects.equals(passwordSent, that.passwordSent) &&
-            Objects.equals(registrationComplete, that.registrationComplete) &&
-            Objects.equals(registrationSend, that.registrationSend) &&
-            Objects.equals(registrationVerify, that.registrationVerify) &&
-            Objects.equals(stylesheet, that.stylesheet);
-      }
-
-      @Override
-      public int hashCode() {
-        return Objects.hash(super.hashCode(), emailComplete, emailSend, emailVerify, helpers, lastModified, oauth2Authorize,
-                            oauth2ChildRegistrationNotAllowed, oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration,
-                            oauth2Error, oauth2Register, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent,
-                            registrationComplete, registrationSend, registrationVerify, stylesheet);
-      }
-
-      public void normalize() {
-        emailComplete = normalize(emailComplete);
-        emailSend = normalize(emailSend);
-        emailVerify = normalize(emailVerify);
-        helpers = normalize(helpers);
-        oauth2Authorize = normalize(oauth2Authorize);
-        oauth2ChildRegistrationNotAllowed = normalize(oauth2ChildRegistrationNotAllowed);
-        oauth2ChildRegistrationNotAllowedComplete = normalize(oauth2ChildRegistrationNotAllowedComplete);
-        oauth2CompleteRegistration = normalize(oauth2CompleteRegistration);
-        oauth2Error = normalize(oauth2Error);
-        oauth2Register = normalize(oauth2Register);
-        oauth2TwoFactor = normalize(oauth2TwoFactor);
-        passwordChange = normalize(passwordChange);
-        passwordComplete = normalize(passwordComplete);
-        passwordForgot = normalize(passwordForgot);
-        passwordSent = normalize(passwordSent);
-        registrationComplete = normalize(registrationComplete);
-        registrationSend = normalize(registrationSend);
-        registrationVerify = normalize(registrationVerify);
-        stylesheet = normalize(stylesheet);
-      }
-
-      public boolean wasUpdated(LoginTheme other) {
-        if (other == null) {
-          return true;
-        }
-
-        return !Objects.equals(emailComplete, other.emailComplete) ||
-            !Objects.equals(emailSend, other.emailSend) ||
-            !Objects.equals(emailVerify, other.emailVerify) ||
-            !Objects.equals(helpers, other.helpers) ||
-            !Objects.equals(oauth2Authorize, other.oauth2Authorize) ||
-            !Objects.equals(oauth2ChildRegistrationNotAllowed, other.oauth2ChildRegistrationNotAllowed) ||
-            !Objects.equals(oauth2ChildRegistrationNotAllowedComplete, other.oauth2ChildRegistrationNotAllowedComplete) ||
-            !Objects.equals(oauth2CompleteRegistration, other.oauth2CompleteRegistration) ||
-            !Objects.equals(oauth2Error, other.oauth2Error) ||
-            !Objects.equals(oauth2Register, other.oauth2Register) ||
-            !Objects.equals(oauth2TwoFactor, other.oauth2TwoFactor) ||
-            !Objects.equals(passwordChange, other.passwordChange) ||
-            !Objects.equals(passwordComplete, other.passwordComplete) ||
-            !Objects.equals(passwordForgot, other.passwordForgot) ||
-            !Objects.equals(passwordSent, other.passwordSent) ||
-            !Objects.equals(registrationComplete, other.registrationComplete) ||
-            !Objects.equals(registrationSend, other.registrationSend) ||
-            !Objects.equals(registrationVerify, other.registrationVerify) ||
-            !Objects.equals(stylesheet, other.stylesheet);
-      }
-
-      private String normalize(String value) {
-        return value == null || value.trim().length() == 0 ? null : value;
-      }
     }
   }
 }

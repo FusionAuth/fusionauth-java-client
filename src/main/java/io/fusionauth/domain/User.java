@@ -45,7 +45,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  *
  * @author Seth Musselman
  */
-public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn {
+public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn, Tenantable {
   @InternalJSONColumn
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
@@ -139,6 +139,16 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     }
   }
 
+  /**
+   * Safely adds a membership to a user. This ensures no duplicates.
+   *
+   * @param member The member.
+   */
+  public void addMemberships(GroupMember member) {
+    memberships.removeIf(m -> m.groupId.equals(member.groupId));
+    memberships.add(member);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -226,6 +236,11 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     return registration != null ? registration.roles : null;
   }
 
+  @Override
+  public UUID getTenantId() {
+    return tenantId;
+  }
+
   /**
    * Return true if user data is provided for this user or any registrations.
    *
@@ -285,6 +300,10 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
       username = null;
     }
     getRegistrations().forEach(UserRegistration::normalize);
+  }
+
+  public void removeMembershipById(UUID groupId) {
+    memberships.removeIf(m -> m.groupId.equals(groupId));
   }
 
   /**

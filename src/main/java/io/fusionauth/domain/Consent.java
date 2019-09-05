@@ -26,6 +26,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.Normalizer;
@@ -129,6 +130,7 @@ public class Consent implements Buildable<Consent>, _InternalJSONColumn {
   }
 
   public static class EmailPlus extends Enableable {
+    @ExcludeFromDatabaseDataColumn
     public UUID emailTemplateId;
 
     public int maximumTimeToSendEmailInHours = 48;

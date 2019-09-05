@@ -13,24 +13,16 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.FamilyMember;
+import java.util.UUID;
 
 /**
- * API request for managing families and members.
- *
  * @author Brian Pontarelli
  */
-public class FamilyRequest {
-  public FamilyMember familyMember;
-
-  @JacksonConstructor
-  public FamilyRequest() {
-  }
-
-  public FamilyRequest(FamilyMember familyMember) {
-    this.familyMember = familyMember;
-  }
+public interface Tenantable {
+  /**
+   * @return The tenant if for this entity.
+   */
+  UUID getTenantId();
 }

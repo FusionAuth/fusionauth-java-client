@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -167,6 +167,11 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
   }
 
   @Override
+  public EventType getType() {
+    return EventType.UserAction;
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), actionId, applicationIds, action, actioneeUserId, actionerUserId, comment, email, expiry,
                         localizedAction, localizedDuration, localizedOption, localizedReason, notifyUser, option, emailedUser,
@@ -176,10 +181,5 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserAction;
   }
 }

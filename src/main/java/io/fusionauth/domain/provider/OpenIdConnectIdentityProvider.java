@@ -115,7 +115,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   @Override
   public void normalize() {
     super.normalize();
-    normalizeDoamins();
+    normalizeDomains();
   }
 
   @Override

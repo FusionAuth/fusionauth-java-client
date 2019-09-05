@@ -90,7 +90,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   @Override
   public void normalize() {
     super.normalize();
-    normalizeDoamins();
+    normalizeDomains();
 
     // remove empty values, and then normalize PEM line returns
     keys.entrySet().removeIf(entry -> entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty());

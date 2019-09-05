@@ -15,22 +15,30 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.FamilyMember;
+import io.fusionauth.domain.Theme;
 
 /**
- * API request for managing families and members.
+ * Theme API response object.
  *
- * @author Brian Pontarelli
+ * @author Trevor Smith
  */
-public class FamilyRequest {
-  public FamilyMember familyMember;
+public class ThemeResponse {
+  public Theme theme;
+
+  public List<Theme> themes;
 
   @JacksonConstructor
-  public FamilyRequest() {
+  public ThemeResponse() {
   }
 
-  public FamilyRequest(FamilyMember familyMember) {
-    this.familyMember = familyMember;
+  public ThemeResponse(Theme theme) {
+    this.theme = theme;
+  }
+
+  public ThemeResponse(List<Theme> themes) {
+    this.themes = themes;
   }
 }

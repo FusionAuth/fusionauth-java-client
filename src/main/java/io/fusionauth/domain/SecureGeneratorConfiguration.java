@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,24 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
  * @author Daniel DeGroff
  */
-public class MaximumPasswordAge extends Enableable {
-  public int days = 180;
+public class SecureGeneratorConfiguration {
+  public int length;
 
-  public MaximumPasswordAge() {
+  public SecureGeneratorType type;
+
+  @JacksonConstructor
+  public SecureGeneratorConfiguration() {
   }
 
-  public MaximumPasswordAge(MaximumPasswordAge other) {
-    this.days = other.days;
+  public SecureGeneratorConfiguration(int length, SecureGeneratorType type) {
+    this.length = length;
+    this.type = type;
   }
 
   @Override
@@ -37,17 +42,17 @@ public class MaximumPasswordAge extends Enableable {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof SecureGeneratorConfiguration)) {
       return false;
     }
-    MaximumPasswordAge that = (MaximumPasswordAge) o;
-    return super.equals(o) &&
-        Objects.equals(days, that.days);
+    SecureGeneratorConfiguration that = (SecureGeneratorConfiguration) o;
+    return length == that.length &&
+        type == that.type;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), days);
+    return Objects.hash(length, type);
   }
 
   @Override

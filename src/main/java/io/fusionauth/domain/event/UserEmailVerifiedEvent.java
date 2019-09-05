@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.event;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.User;
 
 /**
- * @author Daniel DeGroff
+ * Models the User Email Verify Event (and can be converted to JSON).
+ *
+ * @author Trevor Smith
  */
-public class MaximumPasswordAge extends Enableable {
-  public int days = 180;
+public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserEmailVerifiedEvent> {
+  public User user;
 
-  public MaximumPasswordAge() {
+  @JacksonConstructor
+  public UserEmailVerifiedEvent() {
   }
 
-  public MaximumPasswordAge(MaximumPasswordAge other) {
-    this.days = other.days;
+  public UserEmailVerifiedEvent(User user) {
+    this.user = user;
   }
 
   @Override
@@ -40,18 +46,23 @@ public class MaximumPasswordAge extends Enableable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MaximumPasswordAge that = (MaximumPasswordAge) o;
+    UserEmailVerifiedEvent that = (UserEmailVerifiedEvent) o;
     return super.equals(o) &&
-        Objects.equals(days, that.days);
+        Objects.equals(user, that.user);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), days);
+    return Objects.hash(super.hashCode(), user);
   }
 
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  @Override
+  public EventType getType() {
+    return EventType.UserEmailVerified;
   }
 }

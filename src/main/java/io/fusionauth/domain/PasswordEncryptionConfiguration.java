@@ -25,12 +25,20 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class PasswordEncryptionConfiguration implements Buildable<PasswordEncryptionConfiguration> {
-
   public String encryptionScheme;
 
   public int encryptionSchemeFactor;
 
   public boolean modifyEncryptionSchemeOnLogin;
+
+  public PasswordEncryptionConfiguration() {
+  }
+
+  public PasswordEncryptionConfiguration(PasswordEncryptionConfiguration other) {
+    this.encryptionScheme = other.encryptionScheme;
+    this.encryptionSchemeFactor = other.encryptionSchemeFactor;
+    this.modifyEncryptionSchemeOnLogin = other.modifyEncryptionSchemeOnLogin;
+  }
 
   @Override
   public boolean equals(Object o) {

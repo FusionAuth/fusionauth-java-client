@@ -13,24 +13,19 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.internal.annotation;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.FamilyMember;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * API request for managing families and members.
+ * Determines if a field is excluded from the JSON data columns.
  *
  * @author Brian Pontarelli
  */
-public class FamilyRequest {
-  public FamilyMember familyMember;
-
-  @JacksonConstructor
-  public FamilyRequest() {
-  }
-
-  public FamilyRequest(FamilyMember familyMember) {
-    this.familyMember = familyMember;
-  }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface ExcludeFromDatabaseDataColumn {
 }

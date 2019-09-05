@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 
 /**
  * Configuration for the behavior of failed login attempts. This helps us protect against brute force password attacks.
@@ -50,7 +51,19 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
   /**
    * Id of the User Action used when a user reaches the threshold defined by <code>tooManyAttempts</code>.
    */
+  @ExcludeFromDatabaseDataColumn
   public UUID userActionId;
+
+  public FailedAuthenticationConfiguration() {
+  }
+
+  public FailedAuthenticationConfiguration(FailedAuthenticationConfiguration other) {
+    this.actionDuration = other.actionDuration;
+    this.actionDurationUnit = other.actionDurationUnit;
+    this.resetCountInSeconds = other.resetCountInSeconds;
+    this.tooManyAttempts = other.tooManyAttempts;
+    this.userActionId = other.userActionId;
+  }
 
   @Override
   public boolean equals(Object o) {

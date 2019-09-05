@@ -13,24 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.FamilyMember;
+package io.fusionauth.domain;
 
 /**
- * API request for managing families and members.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class FamilyRequest {
-  public FamilyMember familyMember;
-
-  @JacksonConstructor
-  public FamilyRequest() {
-  }
-
-  public FamilyRequest(FamilyMember familyMember) {
-    this.familyMember = familyMember;
-  }
+public enum SecureGeneratorType {
+  randomDigits,
+  randomBytes
 }

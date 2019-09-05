@@ -57,6 +57,12 @@ public enum EventType {
 
   UserRegistrationDelete("user.registration.delete"),
 
+  UserRegistrationVerified("user.registration.verified"),
+
+  UserEmailVerified("user.email.verified"),
+
+  // TODO : Future : Add an event for each time we cut an Event Log? This way we could push out events to a 3rd party system?
+
   Test("test");
 
   private static Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
@@ -81,10 +87,12 @@ public enum EventType {
                          EventType.UserRegistrationCreate,
                          EventType.UserRegistrationUpdate,
                          EventType.UserRegistrationDelete,
+                         EventType.UserRegistrationVerified,
                          EventType.UserDeactivate,
                          EventType.UserDelete,
                          EventType.UserReactivate,
-                         EventType.UserUpdate);
+                         EventType.UserUpdate,
+                         EventType.UserEmailVerified);
   }
 
   /**
@@ -102,10 +110,12 @@ public enum EventType {
                          EventType.UserRegistrationCreate,
                          EventType.UserRegistrationUpdate,
                          EventType.UserRegistrationDelete,
+                         EventType.UserRegistrationVerified,
                          EventType.UserDeactivate,
                          EventType.UserDelete,
                          EventType.UserReactivate,
-                         EventType.UserUpdate);
+                         EventType.UserUpdate,
+                         EventType.UserEmailVerified);
   }
 
   @JsonCreator

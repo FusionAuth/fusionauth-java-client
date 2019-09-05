@@ -29,7 +29,7 @@ import com.inversoft.json.ToString;
 /**
  * @author Tyler Scott
  */
-public class Group implements Buildable<Group> {
+public class Group implements Buildable<Group>, Tenantable {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;
@@ -68,6 +68,11 @@ public class Group implements Buildable<Group> {
         Objects.equals(name, group.name) &&
         Objects.equals(roles, group.roles) &&
         Objects.equals(tenantId, group.tenantId);
+  }
+
+  @Override
+  public UUID getTenantId() {
+    return tenantId;
   }
 
   @Override

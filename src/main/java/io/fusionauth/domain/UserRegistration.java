@@ -18,7 +18,6 @@ package io.fusionauth.domain;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +27,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -50,9 +48,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   @InternalJSONColumn
   public final Map<String, String> tokens;
 
-  @JsonIgnore
-  public Application application;
-
   public UUID applicationId;
 
   public String authenticationToken;
@@ -69,9 +64,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public ZoneId timezone;
 
-  @JsonIgnore
-  public UUID userId;
-
   public String username;
 
   public ContentStatus usernameStatus;
@@ -79,34 +71,16 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   public boolean verified;
 
   public UserRegistration() {
-    tokens = new LinkedHashMap<>();
     this.data = new LinkedHashMap<>();
+    this.tokens = new LinkedHashMap<>();
   }
 
-  public UserRegistration(UUID id, UUID applicationId, UUID userId, ZonedDateTime lastLoginInstant, String username,
-                          ContentStatus usernameStatus, UUID cleanSpeakId, Map<String, Object> data,
-                          List<Locale> preferredLanguages, String... roles) {
-    this.id = id;
-    this.applicationId = applicationId;
-    this.userId = userId;
-    this.cleanSpeakId = cleanSpeakId;
-    this.lastLoginInstant = lastLoginInstant;
+  public UserRegistration(Map<String, Object> mockData) {
+    this.data = mockData;
     this.tokens = new LinkedHashMap<>();
-    this.username = username;
-    this.usernameStatus = usernameStatus;
-    this.verified = true;
-    this.preferredLanguages.addAll(preferredLanguages);
-
-    this.data = new LinkedHashMap<>();
-    if (data != null) {
-      this.data.putAll(data);
-    }
-
-    Collections.addAll(this.roles, roles);
   }
 
   public UserRegistration(UserRegistration userRegistration) {
-    this.application = userRegistration.application;
     this.applicationId = userRegistration.applicationId;
     this.authenticationToken = userRegistration.authenticationToken;
     this.cleanSpeakId = userRegistration.cleanSpeakId;
@@ -116,7 +90,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
     this.preferredLanguages.addAll(userRegistration.preferredLanguages);
     this.roles.addAll(userRegistration.roles);
     this.timezone = userRegistration.timezone;
-    this.userId = userRegistration.userId;
     this.username = userRegistration.username;
     this.usernameStatus = userRegistration.usernameStatus;
     this.verified = userRegistration.verified;
@@ -149,7 +122,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
         Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
         Objects.equals(roles, that.roles) &&
         Objects.equals(tokens, that.tokens) &&
-        Objects.equals(userId, that.userId) &&
         Objects.equals(username, that.username) &&
         Objects.equals(usernameStatus, that.usernameStatus) &&
         Objects.equals(verified, that.verified);
@@ -157,7 +129,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, authenticationToken, cleanSpeakId, data, insertInstant, lastLoginInstant, roles, tokens, userId, username, usernameStatus);
+    return Objects.hash(applicationId, authenticationToken, cleanSpeakId, data, insertInstant, lastLoginInstant, roles, tokens, username, usernameStatus);
   }
 
   public void normalize() {

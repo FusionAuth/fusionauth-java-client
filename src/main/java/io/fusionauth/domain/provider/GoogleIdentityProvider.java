@@ -58,7 +58,6 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
         Objects.equals(scope, that.scope);
   }
 
-
   @Override
   public IdentityProviderType getType() {
     return IdentityProviderType.Google;

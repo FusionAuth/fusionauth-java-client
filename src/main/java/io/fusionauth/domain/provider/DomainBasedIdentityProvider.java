@@ -28,9 +28,9 @@ public interface DomainBasedIdentityProvider {
   Set<String> getDomains();
 
   /**
-   * Normalizes this IDP's domains by lowercasing them all.
+   * Normalizes this IDP's domains by lower-casing them all.
    */
-  default void normalizeDoamins() {
+  default void normalizeDomains() {
     Set<String> domains = getDomains();
     if (domains.size() > 0) {
       Set<String> newDomains = domains.stream().map(d -> d.toLowerCase().trim()).collect(Collectors.toSet());

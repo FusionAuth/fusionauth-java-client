@@ -30,6 +30,6 @@ public class FamilyEmailRequest {
   }
 
   @JacksonConstructor
-  FamilyEmailRequest() {
+  public FamilyEmailRequest() {
   }
 }

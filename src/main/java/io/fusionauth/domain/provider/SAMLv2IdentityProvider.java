@@ -112,7 +112,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   @Override
   public void normalize() {
     super.normalize();
-    normalizeDoamins();
+    normalizeDomains();
   }
 
   public SAMLv2IdentityProvider secure() {

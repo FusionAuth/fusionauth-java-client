@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 
 /**
  * JWT Configuration. A JWT Configuration for an Application may not be active if it is using the global configuration, the configuration
@@ -30,11 +31,13 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   /**
    * The signing key used to sign the access token
    */
+  @ExcludeFromDatabaseDataColumn
   public UUID accessTokenKeyId;
 
   /**
    * The signing key used to sign the Id token
    */
+  @ExcludeFromDatabaseDataColumn
   public UUID idTokenKeyId;
 
   /**
@@ -46,6 +49,17 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
    */
   public int timeToLiveInSeconds;
+
+  public JWTConfiguration() {
+  }
+
+  public JWTConfiguration(JWTConfiguration other) {
+    this.accessTokenKeyId = other.accessTokenKeyId;
+    this.enabled = other.enabled;
+    this.idTokenKeyId = other.idTokenKeyId;
+    this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
+    this.timeToLiveInSeconds = other.timeToLiveInSeconds;
+  }
 
   @Override
   public boolean equals(Object o) {
