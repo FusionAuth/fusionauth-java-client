@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -57,7 +58,7 @@ public class Family implements Buildable<Family>, _InternalJSONColumn {
       return false;
     }
     Family family = (Family) o;
-    members.sort(Comparator.comparing(m -> m.insertInstant));
+    members.sort(Comparator.<FamilyMember, ZonedDateTime>comparing(m -> m.insertInstant).thenComparing(m -> m.role));
     return Objects.equals(members, family.members) &&
         Objects.equals(id, family.id);
   }
