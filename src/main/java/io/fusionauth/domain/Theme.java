@@ -42,8 +42,6 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   public ZonedDateTime insertInstant;
 
-  public boolean isDefault;
-
   public ZonedDateTime lastUpdateInstant;
 
   public String name;
@@ -65,7 +63,6 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     Theme that = (Theme) o;
     return Objects.equals(data, that.data) &&
         Objects.equals(insertInstant, that.insertInstant) &&
-        Objects.equals(isDefault, that.isDefault) &&
         Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
         Objects.equals(templates, that.templates) &&
         Objects.equals(name, that.name) &&
@@ -74,7 +71,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, insertInstant, isDefault, lastUpdateInstant, templates, name, stylesheet);
+    return Objects.hash(data, insertInstant, lastUpdateInstant, templates, name, stylesheet);
   }
 
   public void normalize() {
