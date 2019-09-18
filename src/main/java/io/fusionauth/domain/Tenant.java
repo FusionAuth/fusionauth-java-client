@@ -151,7 +151,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId);
+    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration,
+                        familyConfiguration, httpSessionMaxInactiveInterval, issuer, jwtConfiguration, logoutURL, maximumPasswordAge,
+                        minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId);
   }
 
   @JsonIgnore

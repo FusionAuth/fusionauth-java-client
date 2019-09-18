@@ -19,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -38,11 +39,17 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   public Map<String, Object> data = new HashMap<>();
 
+  @InternalJSONColumn
+  public String defaultMessages;
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
   public ZonedDateTime lastUpdateInstant;
+
+  @InternalJSONColumn
+  public LocalizedStrings localizedMessages = new LocalizedStrings();
 
   public String name;
 
@@ -51,6 +58,31 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   @InternalJSONColumn
   public Templates templates;
+
+  public Theme() {
+  }
+
+  public Theme(Theme theme) {
+    this.data.putAll(theme.data);
+    this.defaultMessages = theme.defaultMessages;
+    this.id = theme.id;
+    this.insertInstant = theme.insertInstant;
+    this.lastUpdateInstant = theme.lastUpdateInstant;
+    this.localizedMessages.putAll(theme.localizedMessages);
+    this.name = theme.name;
+    this.stylesheet = theme.stylesheet;
+    if (theme.templates != null) {
+      this.templates = new Templates(theme.templates);
+    }
+  }
+
+  /**
+   * @return This implementation always returns an empty set, but this is overridden in FusionAuth-App to provide the correct set of
+   * additional locales.
+   */
+  public Set<Locale> additionalLocales() {
+    return Collections.emptySet();
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -62,24 +94,52 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     }
     Theme that = (Theme) o;
     return Objects.equals(data, that.data) &&
+        Objects.equals(defaultMessages, that.defaultMessages) &&
         Objects.equals(insertInstant, that.insertInstant) &&
         Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
-        Objects.equals(templates, that.templates) &&
+        Objects.equals(localizedMessages, that.localizedMessages) &&
         Objects.equals(name, that.name) &&
-        Objects.equals(stylesheet, that.stylesheet);
+        Objects.equals(stylesheet, that.stylesheet) &&
+        Objects.equals(templates, that.templates);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, insertInstant, lastUpdateInstant, templates, name, stylesheet);
+    return Objects.hash(data, defaultMessages, insertInstant, lastUpdateInstant, localizedMessages, name, stylesheet, templates);
+  }
+
+  /**
+   * Looks up a message. This is defined here to assist with code completion in FreeMarker templates. The FusionAuth-App package overrides
+   * this with the actual lookup method.
+   *
+   * @param key       The key of the message to lookup.
+   * @param arguments Optional arguments used to format the message (printf style)/
+   * @return This version always returns an empty String.
+   */
+  public String message(String key, Object... arguments) {
+    return "";
   }
 
   public void normalize() {
     if (templates != null) {
       templates.normalize();
     }
+    if (localizedMessages != null) {
+      localizedMessages.normalize();
+    }
 
     stylesheet = Normalizer.trimToNull(stylesheet);
+  }
+
+  /**
+   * @return Safely return the stylesheet or an empty string.
+   */
+  public String stylesheet() {
+    if (stylesheet == null) {
+      return "";
+    }
+
+    return stylesheet;
   }
 
   @Override
@@ -132,6 +192,31 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String registrationSend;
 
     public String registrationVerify;
+
+    public Templates() {
+    }
+
+    public Templates(Templates other) {
+      this.emailComplete = other.emailComplete;
+      this.emailSend = other.emailSend;
+      this.emailVerify = other.emailVerify;
+      this.helpers = other.helpers;
+      this.oauth2Authorize = other.oauth2Authorize;
+      this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
+      this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
+      this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
+      this.oauth2Error = other.oauth2Error;
+      this.oauth2Passwordless = other.oauth2Passwordless;
+      this.oauth2Register = other.oauth2Register;
+      this.oauth2TwoFactor = other.oauth2TwoFactor;
+      this.passwordChange = other.passwordChange;
+      this.passwordComplete = other.passwordComplete;
+      this.passwordForgot = other.passwordForgot;
+      this.passwordSent = other.passwordSent;
+      this.registrationComplete = other.registrationComplete;
+      this.registrationSend = other.registrationSend;
+      this.registrationVerify = other.registrationVerify;
+    }
 
     @Override
     public boolean equals(Object o) {
