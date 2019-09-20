@@ -252,7 +252,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     }
 
     for (UserRegistration userRegistration : registrations) {
-      if (!userRegistration.data.isEmpty()) {
+      if (userRegistration.hasRegistrationData()) {
         return true;
       }
     }

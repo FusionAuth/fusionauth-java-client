@@ -94,6 +94,7 @@ public class OAuthError implements OAuthResponse {
 
     login_prevented,
     user_expired,
+    user_locked,
     user_not_found,
 
     // Bad client authentication

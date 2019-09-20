@@ -70,6 +70,15 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public boolean verified;
 
+  /**
+   * Return true if user registration data is provided.
+   *
+   * @return true if user data exists.
+   */
+  public boolean hasRegistrationData() {
+    return !data.isEmpty();
+  }
+
   public UserRegistration() {
     this.data = new LinkedHashMap<>();
     this.tokens = new LinkedHashMap<>();
