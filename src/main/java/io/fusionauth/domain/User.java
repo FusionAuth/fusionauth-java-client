@@ -281,6 +281,22 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     return null;
   }
 
+  public Locale lookupPreferredLanguage(UUID applicationId) {
+    for (UserRegistration registration : registrations) {
+      if (registration.applicationId.equals(applicationId)) {
+        if (registration.preferredLanguages.size() > 0) {
+          return registration.preferredLanguages.get(0);
+        }
+      }
+    }
+
+    if (preferredLanguages.size() > 0) {
+      return preferredLanguages.get(0);
+    }
+
+    return null;
+  }
+
   /**
    * Normalizes all of the fields.
    */
