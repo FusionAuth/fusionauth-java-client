@@ -174,11 +174,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.11+2.9.9.2/jackson-databind-2.9.11+2.9.9.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.12+2.9.9.3/jackson-databind-2.9.12+2.9.9.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.11+2.9.9.2/jackson-databind-2.9.11+2.9.9.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.9.12+2.9.9.3/jackson-databind-2.9.12+2.9.9.3-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

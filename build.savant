@@ -43,7 +43,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.9.0"
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
       dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.9.9")
       dependency(id: "com.fasterxml.jackson.core:jackson-core:2.9.9")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.11+2.9.9.2")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.9.12+2.9.9.3")
     }
     group(name: "test-compile") {
       dependency(id: "org.testng:testng:6.8.7")
