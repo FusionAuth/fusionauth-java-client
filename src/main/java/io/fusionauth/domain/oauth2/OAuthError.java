@@ -79,6 +79,8 @@ public class OAuthError implements OAuthResponse {
     invalid_pkce_code_challenge_method,
     invalid_redirect_uri,
     invalid_response_type,
+    invalid_id_token_hint,
+    invalid_post_logout_redirect_uri,
 
     // Grant disabled
     grant_type_disabled,

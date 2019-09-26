@@ -28,7 +28,13 @@ import java.util.List;
 public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   public String authorization_endpoint = "%s/oauth2/authorize";
 
+  public boolean backchannel_logout_supported = false;
+
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "aud", "authenticationType", "birthdate", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "middle_name", "name", "nbf", "phone_number", "picture", "preferred_username", "roles", "sub"));
+
+  public String end_session_endpoint = "%s/oauth2/logout";
+
+  public boolean frontchannel_logout_supported = true;
 
   public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token"));
 
