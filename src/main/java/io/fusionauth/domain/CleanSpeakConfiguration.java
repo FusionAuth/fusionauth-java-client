@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -44,6 +46,7 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
    * <p>
    * If there is a 1 to 1 relationship between the FusionAuth and CleanSpeak applications, the application Ids are expected to be equal.
    */
+  @JsonMerge(OptBoolean.FALSE)
   public List<UUID> applicationIds = new ArrayList<>();
 
   /**

@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -44,6 +46,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
+  @JsonMerge(OptBoolean.FALSE)
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;

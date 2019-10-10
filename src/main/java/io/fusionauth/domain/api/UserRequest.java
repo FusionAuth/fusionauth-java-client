@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
 

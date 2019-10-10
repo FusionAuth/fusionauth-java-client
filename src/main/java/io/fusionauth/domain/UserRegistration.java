@@ -27,6 +27,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -40,9 +42,11 @@ import static io.fusionauth.domain.util.Normalizer.trimToNull;
  * @author Brian Pontarelli
  */
 public class UserRegistration implements Buildable<UserRegistration>, _InternalJSONColumn {
+  @JsonMerge(OptBoolean.FALSE)
   public final Map<String, Object> data;
 
   @InternalJSONColumn
+  @JsonMerge(OptBoolean.FALSE)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   @InternalJSONColumn
@@ -60,6 +64,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public ZonedDateTime lastLoginInstant;
 
+  @JsonMerge(OptBoolean.FALSE)
   public SortedSet<String> roles = new TreeSet<>();
 
   public ZoneId timezone;

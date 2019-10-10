@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import static io.fusionauth.domain.util.Normalizer.removeEmpty;
@@ -32,14 +34,17 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Daniel DeGroff
  */
 public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
+  @JsonMerge(OptBoolean.FALSE)
   public List<URI> authorizedOriginURLs = new ArrayList<>();
 
+  @JsonMerge(OptBoolean.FALSE)
   public List<URI> authorizedRedirectURLs = new ArrayList<>();
 
   public String clientId;
 
   public String clientSecret;
 
+  @JsonMerge(OptBoolean.FALSE)
   public Set<GrantType> enabledGrants = new TreeSet<>(Comparator.comparing(Enum::name, Comparator.reverseOrder()));
 
   public boolean generateRefreshTokens;

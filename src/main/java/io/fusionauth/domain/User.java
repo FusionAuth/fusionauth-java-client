@@ -32,6 +32,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -47,6 +49,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  */
 public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn, Tenantable {
   @InternalJSONColumn
+  @JsonMerge(OptBoolean.FALSE)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   private final List<GroupMember> memberships = new ArrayList<>();
@@ -59,6 +62,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public UUID cleanSpeakId;
 
+  @JsonMerge(OptBoolean.FALSE)
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public String email;
