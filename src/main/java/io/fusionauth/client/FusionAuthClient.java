@@ -102,6 +102,7 @@ import io.fusionauth.domain.api.jwt.RefreshResponse;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
 import io.fusionauth.domain.api.passwordless.PasswordlessSendRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessStartRequest;
 import io.fusionauth.domain.api.report.DailyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
@@ -2469,6 +2470,21 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/two-factor/send")
         .urlSegment(twoFactorId)
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a passwordless login request by generating a passwordless code. This code can be sent to the User using the Send
+   * Passwordless Code API or using a mechanism outside of FusionAuth. The passwordless login is completed by using the Passwordless Login API with this code.
+   *
+   * @param request The passwordless start request that contains all of the information used to begin the passwordless login request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> startPasswordlessLogin(PasswordlessStartRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/passwordless/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
   }
