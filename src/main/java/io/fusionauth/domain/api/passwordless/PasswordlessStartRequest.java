@@ -24,20 +24,18 @@ import io.fusionauth.domain.Buildable;
 /**
  * @author Daniel DeGroff
  */
-public class PasswordlessSendRequest implements Buildable<PasswordlessSendRequest> {
+public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequest> {
   public UUID applicationId;
-
-  public String code;
 
   public String loginId;
 
   public Map<String, Object> state;
 
   @JacksonConstructor
-  public PasswordlessSendRequest() {
+  public PasswordlessStartRequest() {
   }
 
-  public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
+  public PasswordlessStartRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
     this.state = state;

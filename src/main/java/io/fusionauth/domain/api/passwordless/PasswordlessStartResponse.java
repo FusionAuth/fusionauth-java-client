@@ -15,31 +15,20 @@
  */
 package io.fusionauth.domain.api.passwordless;
 
-import java.util.Map;
-import java.util.UUID;
-
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
-public class PasswordlessSendRequest implements Buildable<PasswordlessSendRequest> {
-  public UUID applicationId;
-
+public class PasswordlessStartResponse implements Buildable<PasswordlessStartResponse> {
   public String code;
 
-  public String loginId;
-
-  public Map<String, Object> state;
-
   @JacksonConstructor
-  public PasswordlessSendRequest() {
+  public PasswordlessStartResponse() {
   }
 
-  public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
-    this.applicationId = applicationId;
-    this.loginId = loginId;
-    this.state = state;
+  public PasswordlessStartResponse(String code) {
+    this.code = code;
   }
 }
