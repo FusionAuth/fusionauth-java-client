@@ -44,10 +44,14 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public String clientSecret;
 
+  public URI deviceVerificationURL;
+
   @JsonMerge(OptBoolean.FALSE)
-  public Set<GrantType> enabledGrants = new TreeSet<>(Comparator.comparing(Enum::name, Comparator.reverseOrder()));
+  public Set<GrantType> enabledGrants = new TreeSet<>(Comparator.comparing(GrantType::grantName, Comparator.reverseOrder()));
 
   public boolean generateRefreshTokens;
+
+  public LogoutBehavior logoutBehavior = LogoutBehavior.AllApplications;
 
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this is left null,
@@ -74,20 +78,21 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
       return false;
     }
     OAuth2Configuration that = (OAuth2Configuration) o;
-    return requireClientAuthentication == that.requireClientAuthentication &&
-        generateRefreshTokens == that.generateRefreshTokens &&
+    return generateRefreshTokens == that.generateRefreshTokens &&
+        requireClientAuthentication == that.requireClientAuthentication &&
         Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
         Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
         Objects.equals(clientId, that.clientId) &&
         Objects.equals(clientSecret, that.clientSecret) &&
+        Objects.equals(deviceVerificationURL, that.deviceVerificationURL) &&
         Objects.equals(enabledGrants, that.enabledGrants) &&
+        Objects.equals(logoutBehavior, that.logoutBehavior) &&
         Objects.equals(logoutURL, that.logoutURL);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, enabledGrants, logoutURL, requireClientAuthentication,
-                        generateRefreshTokens);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication);
   }
 
   public void normalize() {

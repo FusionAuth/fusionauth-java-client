@@ -78,9 +78,13 @@ public class OAuthError implements OAuthResponse {
     invalid_pkce_code_challenge,
     invalid_pkce_code_challenge_method,
     invalid_redirect_uri,
+    invalid_response_mode,
     invalid_response_type,
     invalid_id_token_hint,
     invalid_post_logout_redirect_uri,
+    invalid_device_code,
+    invalid_user_code,
+    invalid_additional_client_id,
 
     // Grant disabled
     grant_type_disabled,
@@ -88,13 +92,17 @@ public class OAuthError implements OAuthResponse {
     // Missing request parameters
     missing_client_id,
     missing_code,
+    missing_device_code,
     missing_grant_type,
     missing_redirect_uri,
     missing_refresh_token,
     missing_response_type,
     missing_token,
+    missing_user_code,
+    missing_verification_uri,
 
     login_prevented,
+    user_code_expired,
     user_expired,
     user_locked,
     user_not_found,
@@ -125,5 +133,9 @@ public class OAuthError implements OAuthResponse {
     // RFC 6749 does not account for these states, so we invented them.
     change_password_required,
     two_factor_required,
+
+    // RFC 8628 Device Authorization
+    authorization_pending,
+    expired_token
   }
 }

@@ -30,6 +30,10 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int changePasswordIdTimeToLiveInSeconds;
 
+  public int deviceCodeTimeToLiveInSeconds;
+
+  public SecureGeneratorConfiguration deviceUserCodeIdGenerator;
+
   public SecureGeneratorConfiguration emailVerificationIdGenerator;
 
   public int emailVerificationIdTimeToLiveInSeconds;
@@ -60,6 +64,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.authorizationGrantIdTimeToLiveInSeconds = other.authorizationGrantIdTimeToLiveInSeconds;
     this.changePasswordIdGenerator = other.changePasswordIdGenerator;
     this.changePasswordIdTimeToLiveInSeconds = other.changePasswordIdTimeToLiveInSeconds;
+    this.deviceCodeTimeToLiveInSeconds = other.deviceCodeTimeToLiveInSeconds;
+    this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
     this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
     this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
@@ -78,12 +84,13 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ExternalIdentifierConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     ExternalIdentifierConfiguration that = (ExternalIdentifierConfiguration) o;
     return authorizationGrantIdTimeToLiveInSeconds == that.authorizationGrantIdTimeToLiveInSeconds &&
         changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
+        deviceCodeTimeToLiveInSeconds == that.deviceCodeTimeToLiveInSeconds &&
         emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
         oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
         passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
@@ -92,6 +99,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
         twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
         twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
         Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
+        Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
         Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
         Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
         Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
@@ -100,7 +108,22 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizationGrantIdTimeToLiveInSeconds, changePasswordIdGenerator, changePasswordIdTimeToLiveInSeconds, emailVerificationIdGenerator, emailVerificationIdTimeToLiveInSeconds, oneTimePasswordTimeToLiveInSeconds, passwordlessLoginTimeToLiveInSeconds, passwordlessLoginGenerator, registrationVerificationIdGenerator, registrationVerificationIdTimeToLiveInSeconds, setupPasswordIdGenerator, setupPasswordIdTimeToLiveInSeconds, twoFactorIdTimeToLiveInSeconds, twoFactorTrustIdTimeToLiveInSeconds);
+    return Objects.hash(authorizationGrantIdTimeToLiveInSeconds,
+                        changePasswordIdGenerator,
+                        changePasswordIdTimeToLiveInSeconds,
+                        deviceCodeTimeToLiveInSeconds,
+                        deviceUserCodeIdGenerator,
+                        emailVerificationIdGenerator,
+                        emailVerificationIdTimeToLiveInSeconds,
+                        oneTimePasswordTimeToLiveInSeconds,
+                        passwordlessLoginGenerator,
+                        passwordlessLoginTimeToLiveInSeconds,
+                        registrationVerificationIdGenerator,
+                        registrationVerificationIdTimeToLiveInSeconds,
+                        setupPasswordIdGenerator,
+                        setupPasswordIdTimeToLiveInSeconds,
+                        twoFactorIdTimeToLiveInSeconds,
+                        twoFactorTrustIdTimeToLiveInSeconds);
   }
 
   @Override

@@ -150,9 +150,9 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   public static class Templates implements Buildable<Templates> {
     public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
         "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
-        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Error", "oauth2Logout", "oauth2Passwordless", "oauth2Register",
-        "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete",
-        "registrationSend", "registrationVerify"
+        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2Error", "oauth2Logout",
+        "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
+        "registrationComplete", "registrationSend", "registrationVerify"
     )));
 
     public String emailComplete;
@@ -170,6 +170,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String oauth2ChildRegistrationNotAllowedComplete;
 
     public String oauth2CompleteRegistration;
+
+    public String oauth2Device;
 
     public String oauth2Error;
 
@@ -207,6 +209,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
+      this.oauth2Device = other.oauth2Device;
       this.oauth2Error = other.oauth2Error;
       this.oauth2Logout = other.oauth2Logout;
       this.oauth2Passwordless = other.oauth2Passwordless;
@@ -238,6 +241,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
           Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
           Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
+          Objects.equals(oauth2Device, that.oauth2Device) &&
           Objects.equals(oauth2Error, that.oauth2Error) &&
           Objects.equals(oauth2Logout, that.oauth2Logout) &&
           Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
@@ -255,7 +259,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     @Override
     public int hashCode() {
       return Objects.hash(emailComplete, emailSend, emailVerify, helpers, oauth2Authorize, oauth2ChildRegistrationNotAllowed,
-                          oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration, oauth2Error, oauth2Logout, oauth2Passwordless,
+                          oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration, oauth2Device, oauth2Error, oauth2Logout, oauth2Passwordless,
                           oauth2Register, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
                           registrationSend, registrationVerify);
     }
@@ -269,6 +273,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       oauth2ChildRegistrationNotAllowed = Normalizer.trimToNull(oauth2ChildRegistrationNotAllowed);
       oauth2ChildRegistrationNotAllowedComplete = Normalizer.trimToNull(oauth2ChildRegistrationNotAllowedComplete);
       oauth2CompleteRegistration = Normalizer.trimToNull(oauth2CompleteRegistration);
+      oauth2Device = Normalizer.trimToNull(oauth2Device);
       oauth2Error = Normalizer.trimToNull(oauth2Error);
       oauth2Logout = Normalizer.trimToNull(oauth2Logout);
       oauth2Passwordless = Normalizer.trimToNull(oauth2Passwordless);

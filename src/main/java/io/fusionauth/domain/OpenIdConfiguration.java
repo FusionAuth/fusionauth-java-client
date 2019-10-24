@@ -17,10 +17,11 @@ package io.fusionauth.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * OpenID Configuration as described by the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">OpenID
+ * OpenID Connect Configuration as described by the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">OpenID
  * Provider Metadata</a>.
  *
  * @author Daniel DeGroff
@@ -32,11 +33,13 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "aud", "authenticationType", "birthdate", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "middle_name", "name", "nbf", "phone_number", "picture", "preferred_username", "roles", "sub"));
 
+  public String device_authorization_endpoint = "%s/oauth2/device_authorize";
+
   public String end_session_endpoint = "%s/oauth2/logout";
 
   public boolean frontchannel_logout_supported = true;
 
-  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token"));
+  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code"));
 
   public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"));
 
@@ -44,11 +47,13 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String jwks_uri = "%s/.well-known/jwks.json";
 
+  public List<String> response_modes_supported = new ArrayList<>(Arrays.asList("form_post", "fragment", "query"));
+
   public List<String> response_types_supported = new ArrayList<>(Arrays.asList("code", "id_token", "token id_token"));
 
   public List<String> scopes_supported = new ArrayList<>(Arrays.asList("openid", "offline_access"));
 
-  public List<String> subject_types_supported = new ArrayList<>(Arrays.asList("public"));
+  public List<String> subject_types_supported = new ArrayList<>(Collections.singletonList("public"));
 
   public String token_endpoint = "%s/oauth2/token";
 

@@ -15,6 +15,12 @@
  */
 package io.fusionauth.domain.oauth2;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Authorization Grant types as defined by the <a href="https://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization
  * Framework - RFC 6749</a>.
@@ -26,40 +32,52 @@ package io.fusionauth.domain.oauth2;
  */
 public enum GrantType {
   // Authorization Code Grant
-  authorization_code,
+  authorization_code("authorization_code"),
 
   // Implicit Grant
-  implicit,
+  implicit("implicit"),
 
   // Resource Owner Password Credentials Grant
-  password,
+  password("password"),
 
   // Client Credentials Grant
-  client_credentials,
+  client_credentials("client_credentials"),
 
   // Refresh Token Grant
-  refresh_token,
+  refresh_token("refresh_token"),
 
   // Unknown
-  unknown;
+  unknown("unknown"),
 
-  /**
-   * Lookup the Grant Type from the provided <code>response_type</code>.
-   *
-   * @param response_type the response_type
-   * @return the grant type
-   */
-  public static GrantType lookupResponseType(String response_type) {
-    switch (response_type) {
-      case "code":
-        return authorization_code;
-      case "token":
-      case "token id_token":
-      case "id_token":
-      case "id_token token":
-        return implicit;
-      default:
-        return unknown;
+  // Device Code
+  device_code("urn:ietf:params:oauth:grant-type:device_code");
+
+  private static Map<String, GrantType> nameMap = new HashMap<>(GrantType.values().length);
+
+  private String grantName;
+
+  GrantType(final String grantName) {
+    this.grantName = grantName;
+  }
+
+  @JsonCreator
+  public static GrantType forValue(String value) {
+    GrantType grantType = nameMap.get(value);
+    if (grantType != null) {
+      return grantType;
+    }
+
+    return unknown;
+  }
+
+  @JsonValue
+  public String grantName() {
+    return grantName;
+  }
+
+  static {
+    for (GrantType grantType : GrantType.values()) {
+      nameMap.put(grantType.grantName(), grantType);
     }
   }
 }

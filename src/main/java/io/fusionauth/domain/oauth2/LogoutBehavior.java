@@ -13,14 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.oauth2;
 
 /**
- * @author Daniel DeGroff
+ * @author Matthew Altman
  */
-public enum SecureGeneratorType {
-  randomDigits,
-  randomBytes,
-  randomAlpha,
-  randomAlphaNumeric
+public enum LogoutBehavior {
+  RedirectOnly,
+  AllApplications
 }
