@@ -21,7 +21,7 @@ fusionauthJWTVersion = "3.1.4"
 fusionauthSAMLv2Version = "0.2.3"
 restifyVersion = "3.2.6"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.11.0", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.11.1", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
