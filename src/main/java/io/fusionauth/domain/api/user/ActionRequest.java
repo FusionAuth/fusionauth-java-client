@@ -21,13 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.User;
-import io.fusionauth.domain.UserAction;
-import io.fusionauth.domain.UserActionLog;
-import io.fusionauth.domain.UserActionReason;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -57,16 +52,7 @@ public class ActionRequest {
   }
 
   public static class ActionData implements Buildable<ActionData> {
-    @JsonIgnore
-    public UserAction action;
-
-    @JsonIgnore
-    public User actionee;
-
     public UUID actioneeUserId;
-
-    @JsonIgnore
-    public User actioner;
 
     public UUID actionerUserId;
 
@@ -78,18 +64,12 @@ public class ActionRequest {
 
     public ZonedDateTime expiry;
 
-    @JsonIgnore
-    public UserActionLog log;
-
     /**
      * Flag instructing webhooks to notify the user
      */
     public boolean notifyUser;
 
     public String option;
-
-    @JsonIgnore
-    public UserActionReason reason;
 
     public UUID reasonId;
 
