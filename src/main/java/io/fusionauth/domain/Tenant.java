@@ -177,6 +177,11 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     emailConfiguration.normalize();
   }
 
+  public Tenant secure() {
+    this.emailConfiguration.password = null;
+    return this;
+  }
+
   @Override
   public String toString() {
     return ToString.toString(this);
