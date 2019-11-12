@@ -26,7 +26,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  *
  * @author Brian Pontarelli
  */
-public class UserActionReason implements Comparable<UserActionReason> {
+public class UserActionReason implements Buildable<UserActionReason>, Comparable<UserActionReason> {
   public String code;
 
   public UUID id;
