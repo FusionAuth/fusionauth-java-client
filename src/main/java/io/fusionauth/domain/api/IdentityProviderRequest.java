@@ -15,33 +15,21 @@
  */
 package io.fusionauth.domain.api;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
-import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
-import io.fusionauth.domain.provider.FacebookIdentityProvider;
-import io.fusionauth.domain.provider.GoogleIdentityProvider;
-import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
-import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
-import io.fusionauth.domain.provider.TwitterIdentityProvider;
+import io.fusionauth.domain.provider.IdentityProviderType;
+import io.fusionauth.json.IdentityProviderDeserializer;
 
 /**
  * @author Daniel DeGroff
  */
+@JsonDeserialize(using = IdentityProviderDeserializer.class)
 public class IdentityProviderRequest {
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
-  @JsonSubTypes({
-      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
-      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
-      @Type(value = GoogleIdentityProvider.class, name = "Google"),
-      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
-      @Type(value = TwitterIdentityProvider.class, name = "Twitter"),
-      @Type(value = SAMLv2IdentityProvider.class, name = "SAMLv2")
-  })
+
   public BaseIdentityProvider<?> identityProvider;
+
+  public IdentityProviderType type;
 
   @JacksonConstructor
   public IdentityProviderRequest() {
@@ -49,5 +37,6 @@ public class IdentityProviderRequest {
 
   public IdentityProviderRequest(BaseIdentityProvider<?> identityProvider) {
     this.identityProvider = identityProvider;
+    this.type = identityProvider.getType();
   }
 }

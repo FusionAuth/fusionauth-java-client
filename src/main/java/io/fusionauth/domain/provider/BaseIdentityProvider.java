@@ -33,7 +33,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Daniel DeGroff
  */
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
-@JsonIgnoreProperties(value = "type", allowGetters = true, allowSetters = false)
 public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplicationConfiguration> extends Enableable implements _InternalJSONColumn {
   public final Map<String, Object> data = new HashMap<>();
 
@@ -45,6 +44,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
   public UUID id;
 
   public String name;
+
+  public IdentityProviderType type;
 
   @Override
   public boolean equals(Object o) {
