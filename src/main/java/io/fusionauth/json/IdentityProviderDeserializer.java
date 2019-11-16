@@ -34,13 +34,8 @@ import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
 
 public class IdentityProviderDeserializer extends StdDeserializer<IdentityProviderRequest> {
-
   public IdentityProviderDeserializer() {
-    this(null);
-  }
-
-  protected IdentityProviderDeserializer(Class<?> c) {
-    super(c);
+    super(IdentityProviderRequest.class);
   }
 
   @Override
@@ -51,6 +46,7 @@ public class IdentityProviderDeserializer extends StdDeserializer<IdentityProvid
   @Override
   public IdentityProviderRequest deserialize(JsonParser p, DeserializationContext ctxt, IdentityProviderRequest req) throws IOException {
     JsonNode incomingNode = p.getCodec().readTree(p);
+    // Review question: If idpNode is null, can we bail early? Is there a test for when this would be null?
     JsonNode idpNode = incomingNode.get("identityProvider");
     BaseIdentityProvider idp = req.identityProvider;
     if (idp == null) {
@@ -92,6 +88,7 @@ public class IdentityProviderDeserializer extends StdDeserializer<IdentityProvid
         }
       }
     }
+
     if (idp == null) {
       idp = new ExternalJWTIdentityProvider();
     }
