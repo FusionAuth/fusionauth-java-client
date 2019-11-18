@@ -32,6 +32,7 @@ import io.fusionauth.domain.provider.IdentityProviderType;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
 import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
+import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
 
 public class IdentityProviderDeserializer extends StdDeserializer<IdentityProviderRequest> {
   public IdentityProviderDeserializer() {
@@ -46,53 +47,45 @@ public class IdentityProviderDeserializer extends StdDeserializer<IdentityProvid
   @Override
   public IdentityProviderRequest deserialize(JsonParser p, DeserializationContext ctxt, IdentityProviderRequest req) throws IOException {
     JsonNode incomingNode = p.getCodec().readTree(p);
-    // Review question: If idpNode is null, can we bail early? Is there a test for when this would be null?
     JsonNode idpNode = incomingNode.get("identityProvider");
     BaseIdentityProvider idp = req.identityProvider;
     if (idp == null) {
-      idp = getIdentityProvider(incomingNode, idpNode);
+      idp = getIdentityProvider(idpNode);
     }
 
-    ObjectReader reader = ((ObjectMapper) p.getCodec()).readerForUpdating(idp);
-    reader.readValue(idpNode);
+    if (idp != null) {
+      ObjectReader reader = ((ObjectMapper) p.getCodec()).readerForUpdating(idp);
+      reader.readValue(idpNode);
+    }
+
     req.identityProvider = idp;
     return req;
   }
 
-  private BaseIdentityProvider getIdentityProvider(JsonNode incomingNode, JsonNode idpNode) {
-    BaseIdentityProvider idp = null;
-    if (idpNode != null) {
-      JsonNode typeNode = idpNode.get("type");
-      if (typeNode == null) {
-        typeNode = incomingNode.get("type");
-      }
-      if (typeNode != null) {
-        switch (IdentityProviderType.valueOf(typeNode.asText())) {
-          case Facebook:
-            idp = new FacebookIdentityProvider();
-            break;
-          case Google:
-            idp = new GoogleIdentityProvider();
-            break;
-          case OpenIDConnect:
-            idp = new OpenIdConnectIdentityProvider();
-            break;
-          case SAMLv2:
-            idp = new SAMLv2IdentityProvider();
-            break;
-          case Twitter:
-            idp = new TwitterIdentityProvider();
-            break;
-          default:
-            idp = new ExternalJWTIdentityProvider();
-        }
-      }
+  private BaseIdentityProvider getIdentityProvider(JsonNode idpNode) {
+    if (idpNode == null) {
+      return null;
     }
 
-    if (idp == null) {
-      idp = new ExternalJWTIdentityProvider();
-    }
+    // Default to ExternalJWT to support backwards compatibility
+    JsonNode typeNode = idpNode.get("type");
+    IdentityProviderType type = typeNode == null ? ExternalJWT : IdentityProviderType.valueOf(typeNode.asText());
 
-    return idp;
+    switch (type) {
+      case ExternalJWT:
+        return new ExternalJWTIdentityProvider();
+      case Facebook:
+        return new FacebookIdentityProvider();
+      case Google:
+        return new GoogleIdentityProvider();
+      case OpenIDConnect:
+        return new OpenIdConnectIdentityProvider();
+      case SAMLv2:
+        return new SAMLv2IdentityProvider();
+      case Twitter:
+        return new TwitterIdentityProvider();
+      default:
+        throw new IllegalStateException("Unexpected type [" + type + "]. This is a FusionAuth bug, this deserializer is missing support for this new IdP type.");
+    }
   }
 }

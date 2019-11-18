@@ -18,7 +18,6 @@ package io.fusionauth.domain.api;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
-import io.fusionauth.domain.provider.IdentityProviderType;
 import io.fusionauth.json.IdentityProviderDeserializer;
 
 /**
@@ -29,14 +28,11 @@ public class IdentityProviderRequest {
 
   public BaseIdentityProvider<?> identityProvider;
 
-  public IdentityProviderType type;
-
   @JacksonConstructor
   public IdentityProviderRequest() {
   }
 
   public IdentityProviderRequest(BaseIdentityProvider<?> identityProvider) {
     this.identityProvider = identityProvider;
-    this.type = identityProvider.getType();
   }
 }
