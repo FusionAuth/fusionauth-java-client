@@ -22,7 +22,6 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
@@ -47,6 +46,10 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public IdentityProviderType type;
 
+  public BaseIdentityProvider() {
+    this.type = getIdpType();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -63,15 +66,15 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
         Objects.equals(data, that.data) &&
         Objects.equals(debug, that.debug) &&
         Objects.equals(name, that.name) &&
-        Objects.equals(getType(), that.getType());
+        Objects.equals(getIdpType(), that.getIdpType());
   }
 
   @JsonTypeId
-  public abstract IdentityProviderType getType();
+  public abstract IdentityProviderType getIdpType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getType());
+    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getIdpType());
   }
 
   public boolean isEnabledForApplicationId(UUID applicationId) {

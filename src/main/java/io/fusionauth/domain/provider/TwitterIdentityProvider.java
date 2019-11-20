@@ -55,7 +55,7 @@ public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplica
   }
 
   @Override
-  public IdentityProviderType getType() {
+  public IdentityProviderType getIdpType() {
     return IdentityProviderType.Twitter;
   }
 

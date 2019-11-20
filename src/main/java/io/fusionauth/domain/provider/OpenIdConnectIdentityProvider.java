@@ -67,7 +67,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   }
 
   @Override
-  public IdentityProviderType getType() {
+  public IdentityProviderType getIdpType() {
     return IdentityProviderType.OpenIDConnect;
   }
 

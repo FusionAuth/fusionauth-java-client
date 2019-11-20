@@ -63,7 +63,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
   }
 
   @Override
-  public IdentityProviderType getType() {
+  public IdentityProviderType getIdpType() {
     return IdentityProviderType.Facebook;
   }
 
@@ -71,7 +71,6 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
   public int hashCode() {
     return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, permissions);
   }
-
 
   public String lookupAppId(UUID applicationId) {
     return lookup(() -> appId, () -> app(applicationId, app -> app.appId));

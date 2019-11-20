@@ -34,8 +34,13 @@ import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
 import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
 
-public class IdentityProviderDeserializer extends StdDeserializer<IdentityProviderRequest> {
-  public IdentityProviderDeserializer() {
+/**
+ * Custom JSON deserializer for IdentityProviderRequest.
+ *
+ * @author Matthew Altman
+ */
+public class IdentityProviderRequestDeserializer extends StdDeserializer<IdentityProviderRequest> {
+  public IdentityProviderRequestDeserializer() {
     super(IdentityProviderRequest.class);
   }
 
