@@ -15,31 +15,48 @@
  */
 package io.fusionauth.domain.api.identityProvider;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import java.util.UUID;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
 import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
+import io.fusionauth.domain.provider.IdentityProviderOauth2Configuration;
+import io.fusionauth.domain.provider.IdentityProviderType;
+import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
 
 /**
  * @author Daniel DeGroff
  */
 public class LookupResponse {
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
-  @JsonSubTypes({
-      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT")
-  })
-  @JsonIgnoreProperties(value = {"debug", "enabled", "type"})
-  public BaseIdentityProvider<?> identityProvider;
+  public LookupIdentityProviderDetails identityProvider;
 
   @JacksonConstructor
   public LookupResponse() {
   }
 
   public LookupResponse(BaseIdentityProvider<?> identityProvider) {
-    this.identityProvider = identityProvider;
+    this.identityProvider = new LookupIdentityProviderDetails();
+    this.identityProvider.id = identityProvider.id;
+    this.identityProvider.name = identityProvider.name;
+    this.identityProvider.type = identityProvider.getType();
+
+    if (identityProvider instanceof ExternalJWTIdentityProvider) {
+      this.identityProvider.oauth2 = ((ExternalJWTIdentityProvider) identityProvider).oauth2;
+    }
+
+    if (identityProvider instanceof OpenIdConnectIdentityProvider) {
+      this.identityProvider.oauth2 = ((OpenIdConnectIdentityProvider) identityProvider).oauth2;
+    }
+  }
+
+  public static class LookupIdentityProviderDetails {
+    public UUID id;
+
+    public String name;
+
+    public IdentityProviderOauth2Configuration oauth2;
+
+    public IdentityProviderType type;
+
   }
 }

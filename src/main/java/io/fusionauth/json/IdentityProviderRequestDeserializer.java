@@ -21,7 +21,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.provider.IdentityProviderType;
@@ -52,9 +51,7 @@ public class IdentityProviderRequestDeserializer extends StdDeserializer<Identit
       req.identityProvider = IdentityProviderJacksonHelper.newIdentityProvider(idpType);
     }
 
-    ObjectReader reader = ((ObjectMapper) p.getCodec()).readerForUpdating(req.identityProvider);
-    reader.readValue(idpNode);
-
+    ((ObjectMapper) p.getCodec()).readerForUpdating(req.identityProvider).readValue(idpNode);
     return req;
   }
 }
