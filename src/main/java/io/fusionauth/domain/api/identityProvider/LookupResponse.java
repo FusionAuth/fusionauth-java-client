@@ -28,14 +28,14 @@ import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
  * @author Daniel DeGroff
  */
 public class LookupResponse {
-  public LookupIdentityProviderDetails identityProvider;
+  public IdentityProviderDetails identityProvider;
 
   @JacksonConstructor
   public LookupResponse() {
   }
 
   public LookupResponse(BaseIdentityProvider<?> identityProvider) {
-    this.identityProvider = new LookupIdentityProviderDetails();
+    this.identityProvider = new IdentityProviderDetails();
     this.identityProvider.id = identityProvider.id;
     this.identityProvider.name = identityProvider.name;
     this.identityProvider.type = identityProvider.getType();
@@ -49,7 +49,7 @@ public class LookupResponse {
     }
   }
 
-  public static class LookupIdentityProviderDetails {
+  public static class IdentityProviderDetails {
     public UUID id;
 
     public String name;
