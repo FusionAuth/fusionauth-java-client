@@ -59,7 +59,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   }
 
   @Override
-  public IdentityProviderType getIdpType() {
+  public IdentityProviderType getType() {
     return IdentityProviderType.Google;
   }
 

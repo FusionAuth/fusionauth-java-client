@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,44 +17,18 @@ package io.fusionauth.domain.api;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
-import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
-import io.fusionauth.domain.provider.FacebookIdentityProvider;
-import io.fusionauth.domain.provider.GoogleIdentityProvider;
-import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
-import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
-import io.fusionauth.domain.provider.TwitterIdentityProvider;
+import io.fusionauth.json.IdentityProviderResponseDeserializer;
 
 /**
  * @author Daniel DeGroff
  */
+@JsonDeserialize(using = IdentityProviderResponseDeserializer.class)
 public class IdentityProviderResponse {
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
-  @JsonSubTypes({
-      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
-      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
-      @Type(value = GoogleIdentityProvider.class, name = "Google"),
-      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
-      @Type(value = SAMLv2IdentityProvider.class, name = "SAMLv2"),
-      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
-
-  })
   public BaseIdentityProvider<?> identityProvider;
 
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type", defaultImpl = ExternalJWTIdentityProvider.class)
-  @JsonSubTypes({
-      @Type(value = ExternalJWTIdentityProvider.class, name = "ExternalJWT"),
-      @Type(value = FacebookIdentityProvider.class, name = "Facebook"),
-      @Type(value = GoogleIdentityProvider.class, name = "Google"),
-      @Type(value = OpenIdConnectIdentityProvider.class, name = "OpenIDConnect"),
-      @Type(value = SAMLv2IdentityProvider.class, name = "SAMLv2"),
-      @Type(value = TwitterIdentityProvider.class, name = "Twitter")
-  })
   public List<BaseIdentityProvider<?>> identityProviders;
 
   @JacksonConstructor

@@ -84,7 +84,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   }
 
   @Override
-  public IdentityProviderType getIdpType() {
+  public IdentityProviderType getType() {
     return IdentityProviderType.SAMLv2;
   }
 

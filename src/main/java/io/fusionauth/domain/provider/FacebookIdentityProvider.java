@@ -63,7 +63,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
   }
 
   @Override
-  public IdentityProviderType getIdpType() {
+  public IdentityProviderType getType() {
     return IdentityProviderType.Facebook;
   }
 

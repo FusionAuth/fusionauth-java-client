@@ -17,7 +17,6 @@ package io.fusionauth.domain.provider;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;

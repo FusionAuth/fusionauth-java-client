@@ -24,15 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import io.fusionauth.domain.api.IdentityProviderRequest;
-import io.fusionauth.domain.provider.BaseIdentityProvider;
-import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
-import io.fusionauth.domain.provider.FacebookIdentityProvider;
-import io.fusionauth.domain.provider.GoogleIdentityProvider;
 import io.fusionauth.domain.provider.IdentityProviderType;
-import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
-import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
-import io.fusionauth.domain.provider.TwitterIdentityProvider;
-import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
 
 /**
  * Custom JSON deserializer for IdentityProviderRequest.
@@ -46,51 +38,23 @@ public class IdentityProviderRequestDeserializer extends StdDeserializer<Identit
 
   @Override
   public IdentityProviderRequest deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-    return p.readValueAs(IdentityProviderRequest.class);
+    return deserialize(p, ctxt, new IdentityProviderRequest());
   }
 
   @Override
-  public IdentityProviderRequest deserialize(JsonParser p, DeserializationContext ctxt, IdentityProviderRequest req) throws IOException {
-    JsonNode incomingNode = p.getCodec().readTree(p);
-    JsonNode idpNode = incomingNode.get("identityProvider");
-    BaseIdentityProvider idp = req.identityProvider;
-    if (idp == null) {
-      idp = getIdentityProvider(idpNode);
+  public IdentityProviderRequest deserialize(JsonParser p, DeserializationContext ctxt, IdentityProviderRequest req)
+      throws IOException {
+    JsonNode node = p.getCodec().readTree(p);
+    JsonNode idpNode = node.at("/identityProvider");
+
+    if (req.identityProvider == null) {
+      IdentityProviderType idpType = IdentityProviderJacksonHelper.extractType(ctxt, p, idpNode);
+      req.identityProvider = IdentityProviderJacksonHelper.newIdentityProvider(idpType);
     }
 
-    if (idp != null) {
-      ObjectReader reader = ((ObjectMapper) p.getCodec()).readerForUpdating(idp);
-      reader.readValue(idpNode);
-    }
+    ObjectReader reader = ((ObjectMapper) p.getCodec()).readerForUpdating(req.identityProvider);
+    reader.readValue(idpNode);
 
-    req.identityProvider = idp;
     return req;
-  }
-
-  private BaseIdentityProvider getIdentityProvider(JsonNode idpNode) {
-    if (idpNode == null) {
-      return null;
-    }
-
-    // Default to ExternalJWT to support backwards compatibility
-    JsonNode typeNode = idpNode.get("type");
-    IdentityProviderType type = typeNode == null ? ExternalJWT : IdentityProviderType.valueOf(typeNode.asText());
-
-    switch (type) {
-      case ExternalJWT:
-        return new ExternalJWTIdentityProvider();
-      case Facebook:
-        return new FacebookIdentityProvider();
-      case Google:
-        return new GoogleIdentityProvider();
-      case OpenIDConnect:
-        return new OpenIdConnectIdentityProvider();
-      case SAMLv2:
-        return new SAMLv2IdentityProvider();
-      case Twitter:
-        return new TwitterIdentityProvider();
-      default:
-        throw new IllegalStateException("Unexpected type [" + type + "]. This is a FusionAuth bug, this deserializer is missing support for this new IdP type.");
-    }
   }
 }

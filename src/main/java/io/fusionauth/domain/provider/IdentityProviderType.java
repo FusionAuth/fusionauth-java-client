@@ -36,6 +36,18 @@ public enum IdentityProviderType {
     this.id = id;
   }
 
+  public static IdentityProviderType safeValueOf(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    try {
+      return IdentityProviderType.valueOf(value);
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
   /**
    * @return the fixed Id for the type, or generate a new UUID.
    */

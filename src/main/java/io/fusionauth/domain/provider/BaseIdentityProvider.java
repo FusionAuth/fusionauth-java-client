@@ -22,7 +22,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
@@ -32,6 +32,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Daniel DeGroff
  */
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
+@JsonIgnoreProperties(value = "type", allowGetters = true, allowSetters = false)
 public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplicationConfiguration> extends Enableable implements _InternalJSONColumn {
   public final Map<String, Object> data = new HashMap<>();
 
@@ -43,12 +44,6 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
   public UUID id;
 
   public String name;
-
-  public IdentityProviderType type;
-
-  public BaseIdentityProvider() {
-    this.type = getIdpType();
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -66,15 +61,14 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
         Objects.equals(data, that.data) &&
         Objects.equals(debug, that.debug) &&
         Objects.equals(name, that.name) &&
-        Objects.equals(getIdpType(), that.getIdpType());
+        Objects.equals(getType(), that.getType());
   }
 
-  @JsonTypeId
-  public abstract IdentityProviderType getIdpType();
+  public abstract IdentityProviderType getType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getIdpType());
+    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getType());
   }
 
   public boolean isEnabledForApplicationId(UUID applicationId) {

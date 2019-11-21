@@ -78,7 +78,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   }
 
   @Override
-  public IdentityProviderType getIdpType() {
+  public IdentityProviderType getType() {
     return IdentityProviderType.ExternalJWT;
   }
 
