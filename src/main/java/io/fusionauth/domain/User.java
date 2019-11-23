@@ -52,8 +52,10 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   @JsonMerge(OptBoolean.FALSE)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
+  @JsonMerge(OptBoolean.FALSE)
   private final List<GroupMember> memberships = new ArrayList<>();
 
+  @JsonMerge(OptBoolean.FALSE)
   private final List<UserRegistration> registrations = new ArrayList<>();
 
   public boolean active;
