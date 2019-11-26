@@ -33,6 +33,7 @@ import com.inversoft.rest.JSONBodyHandler;
 import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
+import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
@@ -127,6 +128,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.OAuthError;
+import io.fusionauth.domain.oauth2.JWKSResponse;
 
 /**
  * Client that connects to a FusionAuth server and provides access to the full set of FusionAuth APIs.
@@ -259,7 +261,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ChangePasswordResponse, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
-    return start(ChangePasswordResponse.class, Errors.class)
+    return startAnonymous(ChangePasswordResponse.class, Errors.class)
         .uri("/api/user/change-password")
         .urlSegment(changePasswordId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
@@ -915,15 +917,93 @@ public class FusionAuthClient {
   }
 
   /**
+   * Exchanges an OAuth authorization code for an access token.
+   * If you will be using the Authorization Code grant, you will make a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
+   *
+   * @param code The authorization code returned on the /oauth2/authorize response.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
+   * @param redirect_uri The URI to redirect to upon a successful request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret, String redirect_uri) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("code", code);
+    parameters.put("client_id", client_id);
+    parameters.put("client_secret", client_secret);
+    parameters.put("grant_type", "authorization_code");
+    parameters.put("redirect_uri", redirect_uri);
+    return startAnonymous(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
+  /**
+   * Exchange a Refresh Token for an Access Token.
+   * If you will be using the Refresh Token Grant, you will make a request to the Token endpoint to exchange the user’s refresh token for an access token.
+   *
+   * @param refresh_token The refresh token that you would like to use to exchange for an access token.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
+   * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
+   * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<AccessToken, OAuthError> exchangeRefreshTokenForAccessToken(String refresh_token, String client_id, String client_secret, String scope, String user_code) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("refresh_token", refresh_token);
+    parameters.put("client_id", client_id);
+    parameters.put("client_secret", client_secret);
+    parameters.put("grant_type", "refresh_token");
+    parameters.put("scope", scope);
+    parameters.put("user_code", user_code);
+    return startAnonymous(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
+  /**
    * Exchange a refresh token for a new JWT.
    *
    * @param request The refresh request.
    * @return The ClientResponse object.
    */
   public ClientResponse<RefreshResponse, Errors> exchangeRefreshTokenForJWT(RefreshRequest request) {
-    return start(RefreshResponse.class, Errors.class)
+    return startAnonymous(RefreshResponse.class, Errors.class)
         .uri("/api/jwt/refresh")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Exchange User Credentials for a Token.
+   * If you will be using the Resource Owner Password Credential Grant, you will make a request to the Token endpoint to exchange the user’s email and password for an access token.
+   *
+   * @param username The login identifier of the user. The login identifier can be either the email or the username.
+   * @param password The user’s password.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
+   * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
+   * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<AccessToken, OAuthError> exchangeUserCredentialsForAccessToken(String username, String password, String client_id, String client_secret, String scope, String user_code) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("username", username);
+    parameters.put("password", password);
+    parameters.put("client_id", client_id);
+    parameters.put("client_secret", client_secret);
+    parameters.put("grant_type", "password");
+    parameters.put("scope", scope);
+    parameters.put("user_code", user_code);
+    return startAnonymous(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -935,7 +1015,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ForgotPasswordResponse, Errors> forgotPassword(ForgotPasswordRequest request) {
-    return start(ForgotPasswordResponse.class, Errors.class)
+    return startAnonymous(ForgotPasswordResponse.class, Errors.class)
         .uri("/api/user/forgot-password")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -1031,7 +1111,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> identityProviderLogin(IdentityProviderLoginRequest request) {
-    return start(LoginResponse.class, Errors.class)
+    return startAnonymous(LoginResponse.class, Errors.class)
         .uri("/api/identity-provider/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -1140,7 +1220,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> logout(boolean global, String refreshToken) {
-    return start(Void.TYPE, Void.TYPE)
+    return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/api/logout")
         .urlParameter("global", global)
         .urlParameter("refreshToken", refreshToken)
@@ -1187,10 +1267,265 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> passwordlessLogin(PasswordlessLoginRequest request) {
-    return start(LoginResponse.class, Errors.class)
+    return startAnonymous(LoginResponse.class, Errors.class)
         .uri("/api/passwordless/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the application with the given Id.
+   *
+   * @param applicationId The Id of the application to update.
+   * @param request The request that contains just the new application information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ApplicationResponse, Errors> patchApplication(UUID applicationId, Map<String, Object> request) {
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the application role with the given id for the application.
+   *
+   * @param applicationId The Id of the application that the role belongs to.
+   * @param roleId The Id of the role to update.
+   * @param request The request that contains just the new role information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ApplicationResponse, Errors> patchApplicationRole(UUID applicationId, UUID roleId, Map<String, Object> request) {
+    return start(ApplicationResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("role")
+        .urlSegment(roleId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the consent with the given Id.
+   *
+   * @param consentId The Id of the consent to update.
+   * @param request The request that contains just the new consent information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentResponse, Errors> patchConsent(UUID consentId, Map<String, Object> request) {
+    return start(ConsentResponse.class, Errors.class)
+        .uri("/api/consent")
+        .urlSegment(consentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the email template with the given Id.
+   *
+   * @param emailTemplateId The Id of the email template to update.
+   * @param request The request that contains just the new email template information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EmailTemplateResponse, Errors> patchEmailTemplate(UUID emailTemplateId, Map<String, Object> request) {
+    return start(EmailTemplateResponse.class, Errors.class)
+        .uri("/api/email/template")
+        .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the group with the given Id.
+   *
+   * @param groupId The Id of the group to update.
+   * @param request The request that contains just the new group information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<GroupResponse, Errors> patchGroup(UUID groupId, Map<String, Object> request) {
+    return start(GroupResponse.class, Errors.class)
+        .uri("/api/group")
+        .urlSegment(groupId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the identity provider with the given Id.
+   *
+   * @param identityProviderId The Id of the identity provider to update.
+   * @param request The request object that contains just the updated identity provider information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderResponse, Errors> patchIdentityProvider(UUID identityProviderId, Map<String, Object> request) {
+    return start(IdentityProviderResponse.class, Errors.class)
+        .uri("/api/identity-provider")
+        .urlSegment(identityProviderId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the available integrations.
+   *
+   * @param request The request that contains just the new integration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IntegrationResponse, Errors> patchIntegrations(Map<String, Object> request) {
+    return start(IntegrationResponse.class, Errors.class)
+        .uri("/api/integration")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the lambda with the given Id.
+   *
+   * @param lambdaId The Id of the lambda to update.
+   * @param request The request that contains just the new lambda information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaResponse, Errors> patchLambda(UUID lambdaId, Map<String, Object> request) {
+    return start(LambdaResponse.class, Errors.class)
+        .uri("/api/lambda")
+        .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the registration for the user with the given id and the application defined in the request.
+   *
+   * @param userId The Id of the user whose registration is going to be updated.
+   * @param request The request that contains just the new registration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<RegistrationResponse, Errors> patchRegistration(UUID userId, Map<String, Object> request) {
+    return start(RegistrationResponse.class, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the system configuration.
+   *
+   * @param request The request that contains just the new system configuration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<SystemConfigurationResponse, Errors> patchSystemConfiguration(Map<String, Object> request) {
+    return start(SystemConfigurationResponse.class, Errors.class)
+        .uri("/api/system-configuration")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the tenant with the given Id.
+   *
+   * @param tenantId The Id of the tenant to update.
+   * @param request The request that contains just the new tenant information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantResponse, Errors> patchTenant(UUID tenantId, Map<String, Object> request) {
+    return start(TenantResponse.class, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the theme with the given Id.
+   *
+   * @param themeId The Id of the theme to update.
+   * @param request The request that contains just the new theme information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeResponse, Errors> patchTheme(UUID themeId, Map<String, Object> request) {
+    return start(ThemeResponse.class, Errors.class)
+        .uri("/api/theme")
+        .urlSegment(themeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the user with the given Id.
+   *
+   * @param userId The Id of the user to update.
+   * @param request The request that contains just the new user information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, Errors> patchUser(UUID userId, Map<String, Object> request) {
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the user action with the given Id.
+   *
+   * @param userActionId The Id of the user action to update.
+   * @param request The request that contains just the new user action information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserActionResponse, Errors> patchUserAction(UUID userActionId, Map<String, Object> request) {
+    return start(UserActionResponse.class, Errors.class)
+        .uri("/api/user-action")
+        .urlSegment(userActionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the user action reason with the given Id.
+   *
+   * @param userActionReasonId The Id of the user action reason to update.
+   * @param request The request that contains just the new user action reason information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserActionReasonResponse, Errors> patchUserActionReason(UUID userActionReasonId, Map<String, Object> request) {
+    return start(UserActionReasonResponse.class, Errors.class)
+        .uri("/api/user-action-reason")
+        .urlSegment(userActionReasonId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, a single User consent by Id.
+   *
+   * @param userConsentId The User Consent Id
+   * @param request The request that contains just the new user consent information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserConsentResponse, Errors> patchUserConsent(UUID userConsentId, Map<String, Object> request) {
+    return start(UserConsentResponse.class, Errors.class)
+        .uri("/api/user/consent")
+        .urlSegment(userConsentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
         .go();
   }
 
@@ -1246,7 +1581,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> reconcileJWT(IdentityProviderLoginRequest request) {
-    return start(LoginResponse.class, Errors.class)
+    return startAnonymous(LoginResponse.class, Errors.class)
         .uri("/api/jwt/reconcile")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -1311,7 +1646,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyEmailResponse, Errors> resendEmailVerification(String email) {
-    return start(VerifyEmailResponse.class, Errors.class)
+    return startAnonymous(VerifyEmailResponse.class, Errors.class)
         .uri("/api/user/verify-email")
         .urlParameter("email", email)
         .put()
@@ -1326,7 +1661,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyRegistrationResponse, Errors> resendRegistrationVerification(String email, UUID applicationId) {
-    return start(VerifyRegistrationResponse.class, Errors.class)
+    return startAnonymous(VerifyRegistrationResponse.class, Errors.class)
         .uri("/api/user/verify-registration")
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
@@ -1676,7 +2011,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKey(String keyId) {
-    return start(PublicKeyResponse.class, Void.TYPE)
+    return startAnonymous(PublicKeyResponse.class, Void.TYPE)
         .uri("/api/jwt/public-key")
         .urlParameter("kid", keyId)
         .get()
@@ -1690,7 +2025,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKeyByApplicationId(String applicationId) {
-    return start(PublicKeyResponse.class, Void.TYPE)
+    return startAnonymous(PublicKeyResponse.class, Void.TYPE)
         .uri("/api/jwt/public-key")
         .urlParameter("applicationId", applicationId)
         .get()
@@ -1703,8 +2038,20 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PublicKeyResponse, Void> retrieveJWTPublicKeys() {
-    return start(PublicKeyResponse.class, Void.TYPE)
+    return startAnonymous(PublicKeyResponse.class, Void.TYPE)
         .uri("/api/jwt/public-key")
+        .get()
+        .go();
+  }
+
+  /**
+   * Returns public keys used by FusionAuth to cryptographically verify JWTs using the JSON Web Key format.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<JWKSResponse, Void> retrieveJsonWebKeySet() {
+    return startAnonymous(JWKSResponse.class, Void.TYPE)
+        .uri("/.well-known/jwks.json")
         .get()
         .go();
   }
@@ -1829,6 +2176,18 @@ public class FusionAuthClient {
   }
 
   /**
+   * Returns the well known OpenID Configuration JSON document
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<OpenIdConfiguration, Void> retrieveOpenIdConfiguration() {
+    return startAnonymous(OpenIdConfiguration.class, Void.TYPE)
+        .uri("/.well-known/openid-configuration")
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the password validation rules for a specific tenant. This method requires a tenantId to be provided 
    * through the use of a Tenant scoped API key or an HTTP header X-FusionAuth-TenantId to specify the Tenant Id.
    * 
@@ -1837,7 +2196,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PasswordValidationRulesResponse, Void> retrievePasswordValidationRules() {
-    return start(PasswordValidationRulesResponse.class, Void.TYPE)
+    return startAnonymous(PasswordValidationRulesResponse.class, Void.TYPE)
         .uri("/api/tenant/password-validation-rules")
         .get()
         .go();
@@ -1852,7 +2211,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<PasswordValidationRulesResponse, Void> retrievePasswordValidationRulesWithTenantId(UUID tenantId) {
-    return start(PasswordValidationRulesResponse.class, Void.TYPE)
+    return startAnonymous(PasswordValidationRulesResponse.class, Void.TYPE)
         .uri("/api/tenant/password-validation-rules")
         .urlSegment(tenantId)
         .get()
@@ -2264,7 +2623,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserUsingJWT(String encodedJWT) {
-    return start(UserResponse.class, Errors.class)
+    return startAnonymous(UserResponse.class, Errors.class)
         .uri("/api/user")
         .authorization("JWT " + encodedJWT)
         .get()
@@ -2439,7 +2798,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendPasswordlessCode(PasswordlessSendRequest request) {
-    return start(Void.TYPE, Errors.class)
+    return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/passwordless/send")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -2467,7 +2826,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendTwoFactorCodeForLogin(String twoFactorId) {
-    return start(Void.TYPE, Errors.class)
+    return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/two-factor/send")
         .urlSegment(twoFactorId)
         .post()
@@ -2496,7 +2855,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginResponse, Errors> twoFactorLogin(TwoFactorLoginRequest request) {
-    return start(LoginResponse.class, Errors.class)
+    return startAnonymous(LoginResponse.class, Errors.class)
         .uri("/api/two-factor/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -2791,6 +3150,23 @@ public class FusionAuthClient {
   }
 
   /**
+   * Validates the end-user provided user_code from the user-interaction of the Device Authorization Grant.
+   * If you build your own activation form you should validate the user provided code prior to beginning the Authorization grant.
+   *
+   * @param user_code The end-user verification code.
+   * @param client_id The client id.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> validateDevice(String user_code, String client_id) {
+    return startAnonymous(Void.TYPE, Void.TYPE)
+        .uri("/oauth2/device/validate")
+        .urlParameter("user_code", user_code)
+        .urlParameter("client_id", client_id)
+        .get()
+        .go();
+  }
+
+  /**
    * Validates the provided JWT (encoded JWT string) to ensure the token is valid. A valid access token is properly
    * signed and not expired.
    * <p>
@@ -2800,7 +3176,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ValidateResponse, Void> validateJWT(String encodedJWT) {
-    return start(ValidateResponse.class, Void.TYPE)
+    return startAnonymous(ValidateResponse.class, Void.TYPE)
         .uri("/api/jwt/validate")
         .authorization("JWT " + encodedJWT)
         .get()
@@ -2814,7 +3190,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> verifyEmail(String verificationId) {
-    return start(Void.TYPE, Errors.class)
+    return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
         .urlSegment(verificationId)
         .post()
@@ -2828,7 +3204,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> verifyRegistration(String verificationId) {
-    return start(Void.TYPE, Errors.class)
+    return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/user/verify-registration")
         .urlSegment(verificationId)
         .post()
@@ -2836,33 +3212,12 @@ public class FusionAuthClient {
   }
 
 
-  /**
-   * Exchanges an OAuth authorization code for an access token.
-   *
-   * @param code          The OAuth authorization code.
-   * @param client_id     The OAuth client_id.
-   * @param client_secret (Optional) The OAuth client _secret used for Basic Auth.
-   * @param redirect_uri   The OAuth redirect_uri.
-   * @return The ClientResponse that contains the access token if the request was successful.
-   */
-  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret,
-                                                                                 String redirect_uri) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("code", code);
-    parameters.put("grant_type", "authorization_code");
-    parameters.put("client_id", client_id);
-    parameters.put("redirect_uri", redirect_uri);
-    return start(AccessToken.class, OAuthError.class)
-        .uri("/oauth2/token")
-        .basicAuthorization(client_id, client_secret)
-        .bodyHandler(new FormDataBodyHandler(parameters))
-        .post()
-        .go();
+  protected <T, U> RESTClient<T, U> start(Class<T> type, Class<U> errorType) {
+    return startAnonymous(type, errorType).authorization(apiKey);
   }
 
-  protected <T, U> RESTClient<T, U> start(Class<T> type, Class<U> errorType) {
+  protected <T, U> RESTClient<T, U> startAnonymous(Class<T> type, Class<U> errorType) {
     RESTClient<T, U> client = new RESTClient<>(type, errorType)
-        .authorization(apiKey)
         .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
         .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
         .url(baseURL)

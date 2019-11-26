@@ -19,7 +19,7 @@ jackson5Version = "2.4.4"
 javaErrorVersion = "2.2.0"
 fusionauthJWTVersion = "3.1.5"
 fusionauthSAMLv2Version = "0.2.3"
-restifyVersion = "3.2.6"
+restifyVersion = "3.3.0"
 
 project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.12.0", licenses: ["ApacheV2_0"]) {
   workflow {
