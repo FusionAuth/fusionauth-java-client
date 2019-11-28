@@ -72,7 +72,7 @@ public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationCo
   }
 
   public URI lookupLicensingURL(UUID applicationId) {
-    return lookup(() -> licensingURL, () -> app(applicationId, app -> app.licensingURL));
+    return lookup(() -> licensingURL, () -> app(applicationId, app -> app.licensingEnabledOverride ? app.licensingURL : null));
   }
 
   public String lookupRelyingPartyApplicationId(UUID applicationId) {
