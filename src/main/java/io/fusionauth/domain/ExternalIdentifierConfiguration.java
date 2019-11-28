@@ -38,6 +38,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int emailVerificationIdTimeToLiveInSeconds;
 
+  public int externalAuthenticationIdTimeToLiveInSeconds;
+
   public int oneTimePasswordTimeToLiveInSeconds;
 
   public SecureGeneratorConfiguration passwordlessLoginGenerator;
@@ -68,6 +70,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
     this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
     this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
+    this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
     this.passwordlessLoginGenerator = other.passwordlessLoginGenerator;
@@ -92,6 +95,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
         changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
         deviceCodeTimeToLiveInSeconds == that.deviceCodeTimeToLiveInSeconds &&
         emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
+        externalAuthenticationIdTimeToLiveInSeconds == that.externalAuthenticationIdTimeToLiveInSeconds &&
         oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
         passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
         registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
@@ -115,6 +119,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         deviceUserCodeIdGenerator,
                         emailVerificationIdGenerator,
                         emailVerificationIdTimeToLiveInSeconds,
+                        externalAuthenticationIdTimeToLiveInSeconds,
                         oneTimePasswordTimeToLiveInSeconds,
                         passwordlessLoginGenerator,
                         passwordlessLoginTimeToLiveInSeconds,

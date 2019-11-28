@@ -25,6 +25,7 @@ import io.fusionauth.domain.provider.BaseIdentityProvider;
 import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
 import io.fusionauth.domain.provider.FacebookIdentityProvider;
 import io.fusionauth.domain.provider.GoogleIdentityProvider;
+import io.fusionauth.domain.provider.HYPRIdentityProvider;
 import io.fusionauth.domain.provider.IdentityProviderType;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
 import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
@@ -61,6 +62,8 @@ public class IdentityProviderJacksonHelper {
         return new FacebookIdentityProvider();
       case Google:
         return new GoogleIdentityProvider();
+      case HYPR:
+        return new HYPRIdentityProvider();
       case OpenIDConnect:
         return new OpenIdConnectIdentityProvider();
       case SAMLv2:

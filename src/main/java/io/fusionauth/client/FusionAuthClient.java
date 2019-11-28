@@ -96,6 +96,8 @@ import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginResponse;
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
 import io.fusionauth.domain.api.jwt.IssueResponse;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
@@ -2829,6 +2831,21 @@ public class FusionAuthClient {
     return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/two-factor/send")
         .urlSegment(twoFactorId)
+        .post()
+        .go();
+  }
+
+  /**
+   * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
+   *
+   * @param request The third-party login request that contains information from the third-party login
+   *     providers that FusionAuth uses to reconcile the user's account.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderStartLoginResponse, Errors> startIdentityProviderLogin(IdentityProviderStartLoginRequest request) {
+    return start(IdentityProviderStartLoginResponse.class, Errors.class)
+        .uri("/api/identity-provider/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
   }

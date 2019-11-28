@@ -183,6 +183,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String oauth2TwoFactor;
 
+    public String oauth2Wait;
+
     public String passwordChange;
 
     public String passwordComplete;
@@ -215,6 +217,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2Passwordless = other.oauth2Passwordless;
       this.oauth2Register = other.oauth2Register;
       this.oauth2TwoFactor = other.oauth2TwoFactor;
+      this.oauth2Wait = other.oauth2Wait;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
@@ -247,6 +250,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
           Objects.equals(oauth2Register, that.oauth2Register) &&
           Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
+          Objects.equals(oauth2Wait, that.oauth2Wait) &&
           Objects.equals(passwordChange, that.passwordChange) &&
           Objects.equals(passwordComplete, that.passwordComplete) &&
           Objects.equals(passwordForgot, that.passwordForgot) &&
@@ -260,7 +264,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public int hashCode() {
       return Objects.hash(emailComplete, emailSend, emailVerify, helpers, oauth2Authorize, oauth2ChildRegistrationNotAllowed,
                           oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration, oauth2Device, oauth2Error, oauth2Logout, oauth2Passwordless,
-                          oauth2Register, oauth2TwoFactor, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
+                          oauth2Register, oauth2TwoFactor, oauth2Wait, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
                           registrationSend, registrationVerify);
     }
 
@@ -279,6 +283,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       oauth2Passwordless = Normalizer.trimToNull(oauth2Passwordless);
       oauth2Register = Normalizer.trimToNull(oauth2Register);
       oauth2TwoFactor = Normalizer.trimToNull(oauth2TwoFactor);
+      oauth2Wait = Normalizer.trimToNull(oauth2Wait);
       passwordChange = Normalizer.trimToNull(passwordChange);
       passwordComplete = Normalizer.trimToNull(passwordComplete);
       passwordForgot = Normalizer.trimToNull(passwordForgot);
