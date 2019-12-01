@@ -24,7 +24,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -118,6 +120,33 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
    */
   public String message(String key, Object... arguments) {
     return "";
+  }
+
+  @JsonIgnore
+  public boolean missingTemplate() {
+    return Stream.of(templates.emailComplete,
+                     templates.emailSend,
+                     templates.emailVerify,
+                     templates.helpers,
+                     templates.oauth2Authorize,
+                     templates.oauth2ChildRegistrationNotAllowed,
+                     templates.oauth2ChildRegistrationNotAllowedComplete,
+                     templates.oauth2CompleteRegistration,
+                     templates.oauth2Device,
+                     templates.oauth2Error,
+                     templates.oauth2Logout,
+                     templates.oauth2Passwordless,
+                     templates.oauth2Register,
+                     templates.oauth2TwoFactor,
+                     templates.oauth2Wait,
+                     templates.passwordChange,
+                     templates.passwordComplete,
+                     templates.passwordForgot,
+                     templates.passwordSent,
+                     templates.registrationComplete,
+                     templates.registrationSend,
+                     templates.registrationVerify)
+                 .anyMatch(Objects::isNull);
   }
 
   public void normalize() {
