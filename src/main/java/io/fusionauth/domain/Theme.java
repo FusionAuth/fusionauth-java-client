@@ -124,6 +124,10 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   @JsonIgnore
   public boolean missingTemplate() {
+    if (templates == null) {
+      return true;
+    }
+
     return Stream.of(templates.emailComplete,
                      templates.emailSend,
                      templates.emailVerify,
