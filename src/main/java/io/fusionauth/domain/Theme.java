@@ -31,6 +31,8 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.Normalizer;
+import static io.fusionauth.domain.util.Normalizer.lineReturns;
+import static io.fusionauth.domain.util.Normalizer.trimToNull;
 import static java.util.Arrays.asList;
 
 /**
@@ -137,6 +139,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.oauth2ChildRegistrationNotAllowedComplete,
                      templates.oauth2CompleteRegistration,
                      templates.oauth2Device,
+                     templates.oauth2DeviceComplete,
                      templates.oauth2Error,
                      templates.oauth2Logout,
                      templates.oauth2Passwordless,
@@ -154,14 +157,19 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   }
 
   public void normalize() {
+    if (defaultMessages != null) {
+      defaultMessages = lineReturns(defaultMessages);
+    }
+
     if (templates != null) {
       templates.normalize();
     }
+
     if (localizedMessages != null) {
       localizedMessages.normalize();
     }
 
-    stylesheet = Normalizer.trimToNull(stylesheet);
+    stylesheet = lineReturns(stylesheet);
   }
 
   /**
@@ -172,7 +180,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       return "";
     }
 
-    return stylesheet;
+    return Normalizer.lineReturns(stylesheet);
   }
 
   @Override
@@ -183,7 +191,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   public static class Templates implements Buildable<Templates> {
     public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
         "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
-        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2Error", "oauth2Logout",
+        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout",
         "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
         "registrationComplete", "registrationSend", "registrationVerify"
     )));
@@ -205,6 +213,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String oauth2CompleteRegistration;
 
     public String oauth2Device;
+
+    public String oauth2DeviceComplete;
 
     public String oauth2Error;
 
@@ -245,6 +255,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
       this.oauth2Device = other.oauth2Device;
+      this.oauth2DeviceComplete = other.oauth2DeviceComplete;
       this.oauth2Error = other.oauth2Error;
       this.oauth2Logout = other.oauth2Logout;
       this.oauth2Passwordless = other.oauth2Passwordless;
@@ -278,6 +289,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
           Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
           Objects.equals(oauth2Device, that.oauth2Device) &&
+          Objects.equals(oauth2DeviceComplete, that.oauth2DeviceComplete) &&
           Objects.equals(oauth2Error, that.oauth2Error) &&
           Objects.equals(oauth2Logout, that.oauth2Logout) &&
           Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
@@ -295,35 +307,56 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     @Override
     public int hashCode() {
-      return Objects.hash(emailComplete, emailSend, emailVerify, helpers, oauth2Authorize, oauth2ChildRegistrationNotAllowed,
-                          oauth2ChildRegistrationNotAllowedComplete, oauth2CompleteRegistration, oauth2Device, oauth2Error, oauth2Logout, oauth2Passwordless,
-                          oauth2Register, oauth2TwoFactor, oauth2Wait, passwordChange, passwordComplete, passwordForgot, passwordSent, registrationComplete,
-                          registrationSend, registrationVerify);
+      return Objects.hash(emailComplete,
+                          emailSend,
+                          emailVerify,
+                          helpers,
+                          oauth2Authorize,
+                          oauth2ChildRegistrationNotAllowed,
+                          oauth2ChildRegistrationNotAllowedComplete,
+                          oauth2CompleteRegistration,
+                          oauth2Device,
+                          oauth2DeviceComplete,
+                          oauth2Error,
+                          oauth2Logout,
+                          oauth2Passwordless,
+                          oauth2Register,
+                          oauth2TwoFactor,
+                          oauth2Wait,
+                          passwordChange,
+                          passwordComplete,
+                          passwordForgot,
+                          passwordSent,
+                          registrationComplete,
+                          registrationSend,
+                          registrationVerify);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     public void normalize() {
-      emailComplete = Normalizer.trimToNull(emailComplete);
-      emailSend = Normalizer.trimToNull(emailSend);
-      emailVerify = Normalizer.trimToNull(emailVerify);
-      helpers = Normalizer.trimToNull(helpers);
-      oauth2Authorize = Normalizer.trimToNull(oauth2Authorize);
-      oauth2ChildRegistrationNotAllowed = Normalizer.trimToNull(oauth2ChildRegistrationNotAllowed);
-      oauth2ChildRegistrationNotAllowedComplete = Normalizer.trimToNull(oauth2ChildRegistrationNotAllowedComplete);
-      oauth2CompleteRegistration = Normalizer.trimToNull(oauth2CompleteRegistration);
-      oauth2Device = Normalizer.trimToNull(oauth2Device);
-      oauth2Error = Normalizer.trimToNull(oauth2Error);
-      oauth2Logout = Normalizer.trimToNull(oauth2Logout);
-      oauth2Passwordless = Normalizer.trimToNull(oauth2Passwordless);
-      oauth2Register = Normalizer.trimToNull(oauth2Register);
-      oauth2TwoFactor = Normalizer.trimToNull(oauth2TwoFactor);
-      oauth2Wait = Normalizer.trimToNull(oauth2Wait);
-      passwordChange = Normalizer.trimToNull(passwordChange);
-      passwordComplete = Normalizer.trimToNull(passwordComplete);
-      passwordForgot = Normalizer.trimToNull(passwordForgot);
-      passwordSent = Normalizer.trimToNull(passwordSent);
-      registrationComplete = Normalizer.trimToNull(registrationComplete);
-      registrationSend = Normalizer.trimToNull(registrationSend);
-      registrationVerify = Normalizer.trimToNull(registrationVerify);
+      emailComplete = lineReturns(trimToNull(emailComplete));
+      emailSend = lineReturns(trimToNull(emailSend));
+      emailVerify = lineReturns(trimToNull(emailVerify));
+      helpers = lineReturns(trimToNull(helpers));
+      oauth2Authorize = lineReturns(trimToNull(oauth2Authorize));
+      oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
+      oauth2ChildRegistrationNotAllowedComplete = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowedComplete));
+      oauth2CompleteRegistration = lineReturns(trimToNull(oauth2CompleteRegistration));
+      oauth2Device = lineReturns(trimToNull(oauth2Device));
+      oauth2DeviceComplete = lineReturns(trimToNull(oauth2DeviceComplete));
+      oauth2Error = lineReturns(trimToNull(oauth2Error));
+      oauth2Logout = lineReturns(trimToNull(oauth2Logout));
+      oauth2Passwordless = lineReturns(trimToNull(oauth2Passwordless));
+      oauth2Register = lineReturns(trimToNull(oauth2Register));
+      oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
+      oauth2Wait = lineReturns(trimToNull(oauth2Wait));
+      passwordChange = lineReturns(trimToNull(passwordChange));
+      passwordComplete = lineReturns(trimToNull(passwordComplete));
+      passwordForgot = lineReturns(trimToNull(passwordForgot));
+      passwordSent = lineReturns(trimToNull(passwordSent));
+      registrationComplete = lineReturns(trimToNull(registrationComplete));
+      registrationSend = lineReturns(trimToNull(registrationSend));
+      registrationVerify = lineReturns(trimToNull(registrationVerify));
     }
 
     @Override
