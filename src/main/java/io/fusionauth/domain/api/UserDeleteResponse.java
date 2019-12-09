@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,43 +16,31 @@
 package io.fusionauth.domain.api;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 
 /**
- * User API delete request object.
+ * User API bulk response object.
  *
- * @author Daniel DeGroff
+ * @author Trevor Smith
  */
-public class UserDeleteRequest {
+public class UserDeleteResponse {
   public boolean dryRun;
 
   public boolean hardDelete;
 
-  public String query;
+  public int total;
 
-  public String queryString;
-
-  public List<UUID> userIds;
+  public List<String> userIds;
 
   @JacksonConstructor
-  public UserDeleteRequest() {
+  public UserDeleteResponse() {
   }
 
-  public UserDeleteRequest(List<UUID> userIds) {
+  public UserDeleteResponse(List<String> userIds, int total, boolean hardDelete, boolean dryRun) {
     this.userIds = userIds;
-  }
-
-  public UserDeleteRequest(String query) {
-    this.query = query;
-  }
-
-  public UserDeleteRequest(List<UUID> userIds, String query, String queryString, boolean dryRun, boolean hardDelete) {
-    this.dryRun = dryRun;
+    this.total = total;
     this.hardDelete = hardDelete;
-    this.query = query;
-    this.queryString = queryString;
-    this.userIds = userIds;
+    this.dryRun = dryRun;
   }
 }

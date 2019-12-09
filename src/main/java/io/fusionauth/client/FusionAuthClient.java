@@ -40,6 +40,7 @@ import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
+import io.fusionauth.domain.api.UserDeleteResponse;
 import io.fusionauth.domain.api.ConsentRequest;
 import io.fusionauth.domain.api.ConsentResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
@@ -626,10 +627,29 @@ public class FusionAuthClient {
    * @param userIds The ids of the users to deactivate.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> deactivateUsers(Collection<UUID> userIds) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<UserDeleteResponse, Errors> deactivateUsers(Collection<UUID> userIds) {
+    return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
         .urlParameter("userId", userIds)
+        .urlParameter("dryRun", false)
+        .urlParameter("hardDelete", false)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deactivates the users found with the given search query string.
+   *
+   * @param queryString The search query string.
+   * @param dryRun Whether to preview or deactivate the users found by the queryString
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserDeleteResponse, Errors> deactivateUsersByQuery(String queryString, boolean dryRun) {
+    return start(UserDeleteResponse.class, Errors.class)
+        .uri("/api/user/bulk")
+        .urlParameter("queryString", queryString)
+        .urlParameter("dryRun", dryRun)
+        .urlParameter("hardDelete", false)
         .delete()
         .go();
   }
@@ -859,15 +879,34 @@ public class FusionAuthClient {
   }
 
   /**
-   * Deletes the users with the given ids.
+   * Deletes the users with the given ids, or users matching the provided queryString.
+   * If you provide both userIds and queryString, the userIds will be honored.  This can be used to deactivate or hard-delete 
+   * a user based on the hardDelete request body parameter.
    *
-   * @param request The ids of the users to delete.
+   * @param request The UserDeleteRequest.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> deleteUsers(UserDeleteRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<UserDeleteResponse, Errors> deleteUsers(UserDeleteRequest request) {
+    return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
+  }
+
+  /**
+   * Delete the users found with the given search query string.
+   *
+   * @param queryString The search query string.
+   * @param dryRun Whether to preview or delete the users found by the queryString
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserDeleteResponse, Errors> deleteUsersByQuery(String queryString, boolean dryRun) {
+    return start(UserDeleteResponse.class, Errors.class)
+        .uri("/api/user/bulk")
+        .urlParameter("queryString", queryString)
+        .urlParameter("dryRun", dryRun)
+        .urlParameter("hardDelete", true)
         .delete()
         .go();
   }

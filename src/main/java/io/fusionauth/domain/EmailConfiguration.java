@@ -79,7 +79,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof EmailConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     EmailConfiguration that = (EmailConfiguration) o;

@@ -70,6 +70,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
+  @InternalJSONColumn
+  public ApplicationRegistrationDeletePolicy registrationDeletePolicy = new ApplicationRegistrationDeletePolicy();
+
   public List<ApplicationRole> roles = new ArrayList<>();
 
   @InternalJSONColumn
@@ -113,7 +116,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Application)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Application that = (Application) o;
@@ -128,8 +131,11 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
         Objects.equals(name, that.name) &&
         Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
         Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
+        Objects.equals(registrationConfiguration, that.registrationConfiguration) &&
         Objects.equals(roles, that.roles) &&
+        Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
         Objects.equals(tenantId, that.tenantId) &&
+        Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
         Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
   }
 
@@ -154,8 +160,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration,
-                        passwordlessConfiguration, roles, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, roles, samlv2Configuration, tenantId, registrationDeletePolicy, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {
@@ -325,7 +330,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       if (this == o) {
         return true;
       }
-      if (!(o instanceof RegistrationConfiguration)) {
+      if (o == null || getClass() != o.getClass()) {
         return false;
       }
       if (!super.equals(o)) {

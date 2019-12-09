@@ -92,6 +92,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public UUID themeId;
 
+  @InternalJSONColumn
+  public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
+
   public Tenant() {
   }
 
@@ -103,6 +106,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public Tenant(Tenant other) {
     this.configured = other.configured;
     this.data.putAll(other.data);
+    this.userDeletePolicy = other.userDeletePolicy;
     this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
     this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
     this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
@@ -126,7 +130,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Tenant)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Tenant tenant = (Tenant) o;
@@ -143,6 +147,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
         Objects.equals(logoutURL, tenant.logoutURL) &&
         Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
         Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
+        Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&
         Objects.equals(name, tenant.name) &&
         Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
         Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
@@ -151,9 +156,10 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration,
-                        familyConfiguration, httpSessionMaxInactiveInterval, issuer, jwtConfiguration, logoutURL, maximumPasswordAge,
-                        minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId);
+    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
+                        failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer,
+                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, userDeletePolicy, name,
+                        passwordEncryptionConfiguration, passwordValidationRules, themeId);
   }
 
   @JsonIgnore
