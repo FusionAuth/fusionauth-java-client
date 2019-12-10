@@ -32,9 +32,8 @@ public class TimeBasedDeletePolicy extends Enableable implements Buildable<TimeB
   public TimeBasedDeletePolicy() {
   }
 
-  public TimeBasedDeletePolicy(boolean enabled, int numberOfDaysToRetain) {
-    this.enabled = enabled;
-    this.numberOfDaysToRetain = numberOfDaysToRetain;
+  public TimeBasedDeletePolicy(TimeBasedDeletePolicy other) {
+    this.numberOfDaysToRetain = other.numberOfDaysToRetain;
   }
 
   @Override
@@ -42,7 +41,7 @@ public class TimeBasedDeletePolicy extends Enableable implements Buildable<TimeB
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof TimeBasedDeletePolicy)) {
       return false;
     }
     if (!super.equals(o)) {

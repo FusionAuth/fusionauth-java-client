@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -95,6 +96,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @InternalJSONColumn
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
 
+  @JacksonConstructor
   public Tenant() {
   }
 
@@ -106,7 +108,6 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public Tenant(Tenant other) {
     this.configured = other.configured;
     this.data.putAll(other.data);
-    this.userDeletePolicy = other.userDeletePolicy;
     this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
     this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
     this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
@@ -123,6 +124,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.themeId = other.themeId;
+    this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
   }
 
   @Override
@@ -147,19 +149,19 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
         Objects.equals(logoutURL, tenant.logoutURL) &&
         Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
         Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
-        Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&
         Objects.equals(name, tenant.name) &&
         Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
         Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
-        Objects.equals(themeId, tenant.themeId);
+        Objects.equals(themeId, tenant.themeId) &&
+        Objects.equals(userDeletePolicy, tenant.userDeletePolicy);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
                         failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer,
-                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, userDeletePolicy, name,
-                        passwordEncryptionConfiguration, passwordValidationRules, themeId);
+                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name,
+                        passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
   }
 
   @JsonIgnore

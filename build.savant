@@ -15,7 +15,7 @@
  */
 savantVersion = "1.0.0"
 
-jackson5Version = "2.4.4"
+jackson5Version = "2.4.5"
 javaErrorVersion = "2.2.0"
 fusionauthJWTVersion = "3.1.5"
 fusionauthSAMLv2Version = "0.2.3"

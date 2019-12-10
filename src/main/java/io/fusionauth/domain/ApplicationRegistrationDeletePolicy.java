@@ -32,7 +32,7 @@ public class ApplicationRegistrationDeletePolicy implements Buildable<Applicatio
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof ApplicationRegistrationDeletePolicy)) {
       return false;
     }
     ApplicationRegistrationDeletePolicy that = (ApplicationRegistrationDeletePolicy) o;

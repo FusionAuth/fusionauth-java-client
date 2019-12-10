@@ -26,6 +26,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -85,6 +86,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public boolean verifyRegistration;
 
+  @JacksonConstructor
   public Application() {
   }
 
@@ -132,10 +134,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
         Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
         Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
         Objects.equals(registrationConfiguration, that.registrationConfiguration) &&
+        Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
         Objects.equals(roles, that.roles) &&
         Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
         Objects.equals(tenantId, that.tenantId) &&
-        Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
         Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
   }
 
@@ -160,7 +162,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, roles, samlv2Configuration, tenantId, registrationDeletePolicy, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {
