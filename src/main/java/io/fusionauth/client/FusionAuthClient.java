@@ -264,7 +264,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ChangePasswordResponse, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
-    return startAnonymous(ChangePasswordResponse.class, Errors.class)
+    return start(ChangePasswordResponse.class, Errors.class)
         .uri("/api/user/change-password")
         .urlSegment(changePasswordId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
@@ -1056,7 +1056,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ForgotPasswordResponse, Errors> forgotPassword(ForgotPasswordRequest request) {
-    return startAnonymous(ForgotPasswordResponse.class, Errors.class)
+    return start(ForgotPasswordResponse.class, Errors.class)
         .uri("/api/user/forgot-password")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -1687,7 +1687,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyEmailResponse, Errors> resendEmailVerification(String email) {
-    return startAnonymous(VerifyEmailResponse.class, Errors.class)
+    return start(VerifyEmailResponse.class, Errors.class)
         .uri("/api/user/verify-email")
         .urlParameter("email", email)
         .put()
