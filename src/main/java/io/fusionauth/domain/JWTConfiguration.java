@@ -50,17 +50,6 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
    */
   public int timeToLiveInSeconds;
 
-  public JWTConfiguration() {
-  }
-
-  public JWTConfiguration(JWTConfiguration other) {
-    this.accessTokenKeyId = other.accessTokenKeyId;
-    this.enabled = other.enabled;
-    this.idTokenKeyId = other.idTokenKeyId;
-    this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
-    this.timeToLiveInSeconds = other.timeToLiveInSeconds;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

@@ -54,17 +54,6 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
   @ExcludeFromDatabaseDataColumn
   public UUID userActionId;
 
-  public FailedAuthenticationConfiguration() {
-  }
-
-  public FailedAuthenticationConfiguration(FailedAuthenticationConfiguration other) {
-    this.actionDuration = other.actionDuration;
-    this.actionDurationUnit = other.actionDurationUnit;
-    this.resetCountInSeconds = other.resetCountInSeconds;
-    this.tooManyAttempts = other.tooManyAttempts;
-    this.userActionId = other.userActionId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

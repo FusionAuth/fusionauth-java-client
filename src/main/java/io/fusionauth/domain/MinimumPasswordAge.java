@@ -25,13 +25,6 @@ import com.inversoft.json.ToString;
 public class MinimumPasswordAge extends Enableable {
   public int seconds = 30;
 
-  public MinimumPasswordAge() {
-  }
-
-  public MinimumPasswordAge(MinimumPasswordAge other) {
-    this.seconds = other.seconds;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

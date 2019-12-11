@@ -25,14 +25,6 @@ import com.inversoft.json.ToString;
 public class RememberPreviousPasswords extends Enableable {
   public int count;
 
-  public RememberPreviousPasswords() {
-  }
-
-  public RememberPreviousPasswords(RememberPreviousPasswords other) {
-    this.count = other.count;
-    this.enabled = other.enabled;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

@@ -47,22 +47,6 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
   @ExcludeFromDatabaseDataColumn
   public UUID parentRegistrationEmailTemplateId;
 
-  @JacksonConstructor
-  public FamilyConfiguration() {
-  }
-
-  public FamilyConfiguration(FamilyConfiguration other) {
-    this.allowChildRegistrations = other.allowChildRegistrations;
-    this.familyRequestEmailTemplateId = other.familyRequestEmailTemplateId;
-    this.confirmChildEmailTemplateId = other.confirmChildEmailTemplateId;
-    this.deleteOrphanedAccounts = other.deleteOrphanedAccounts;
-    this.deleteOrphanedAccountsDays = other.deleteOrphanedAccountsDays;
-    this.maximumChildAge = other.maximumChildAge;
-    this.minimumOwnerAge = other.minimumOwnerAge;
-    this.parentEmailRequired = other.parentEmailRequired;
-    this.parentRegistrationEmailTemplateId = other.parentRegistrationEmailTemplateId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

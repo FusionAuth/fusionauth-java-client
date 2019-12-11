@@ -31,15 +31,6 @@ public class PasswordEncryptionConfiguration implements Buildable<PasswordEncryp
 
   public boolean modifyEncryptionSchemeOnLogin;
 
-  public PasswordEncryptionConfiguration() {
-  }
-
-  public PasswordEncryptionConfiguration(PasswordEncryptionConfiguration other) {
-    this.encryptionScheme = other.encryptionScheme;
-    this.encryptionSchemeFactor = other.encryptionSchemeFactor;
-    this.modifyEncryptionSchemeOnLogin = other.modifyEncryptionSchemeOnLogin;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

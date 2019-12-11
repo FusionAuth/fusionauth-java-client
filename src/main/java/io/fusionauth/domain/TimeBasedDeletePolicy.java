@@ -17,7 +17,6 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -27,14 +26,6 @@ import com.inversoft.json.ToString;
  */
 public class TimeBasedDeletePolicy extends Enableable implements Buildable<TimeBasedDeletePolicy> {
   public int numberOfDaysToRetain;
-
-  @JacksonConstructor
-  public TimeBasedDeletePolicy() {
-  }
-
-  public TimeBasedDeletePolicy(TimeBasedDeletePolicy other) {
-    this.numberOfDaysToRetain = other.numberOfDaysToRetain;
-  }
 
   @Override
   public boolean equals(Object o) {

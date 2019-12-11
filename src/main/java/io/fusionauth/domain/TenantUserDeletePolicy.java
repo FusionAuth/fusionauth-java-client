@@ -17,7 +17,6 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -27,14 +26,6 @@ import com.inversoft.json.ToString;
  */
 public class TenantUserDeletePolicy implements Buildable<TenantUserDeletePolicy> {
   public TimeBasedDeletePolicy unverified = new TimeBasedDeletePolicy();
-
-  @JacksonConstructor
-  public TenantUserDeletePolicy() {
-  }
-
-  public TenantUserDeletePolicy(TenantUserDeletePolicy other) {
-    this.unverified = new TimeBasedDeletePolicy(other.unverified);
-  }
 
   @Override
   public boolean equals(Object o) {

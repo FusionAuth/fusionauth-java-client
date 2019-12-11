@@ -18,7 +18,6 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 import static io.fusionauth.domain.util.Normalizer.trim;
@@ -54,25 +53,6 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   public boolean verifyEmail;
 
   public boolean verifyEmailWhenChanged;
-
-  @JacksonConstructor
-  public EmailConfiguration() {
-  }
-
-  public EmailConfiguration(EmailConfiguration other) {
-    this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
-    this.host = other.host;
-    this.password = other.password;
-    this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
-    this.port = other.port;
-    this.properties = other.properties;
-    this.security = other.security;
-    this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
-    this.username = other.username;
-    this.verificationEmailTemplateId = other.verificationEmailTemplateId;
-    this.verifyEmail = other.verifyEmail;
-    this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
-  }
 
   @Override
   public boolean equals(Object o) {

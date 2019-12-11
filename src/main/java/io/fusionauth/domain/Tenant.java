@@ -22,7 +22,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -95,37 +94,6 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @InternalJSONColumn
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
-
-  @JacksonConstructor
-  public Tenant() {
-  }
-
-  public Tenant(UUID id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public Tenant(Tenant other) {
-    this.configured = other.configured;
-    this.data.putAll(other.data);
-    this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
-    this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
-    this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
-    this.failedAuthenticationConfiguration = new FailedAuthenticationConfiguration(other.failedAuthenticationConfiguration);
-    this.familyConfiguration = new FamilyConfiguration(other.familyConfiguration);
-    this.httpSessionMaxInactiveInterval = other.httpSessionMaxInactiveInterval;
-    this.id = other.id;
-    this.issuer = other.issuer;
-    this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
-    this.logoutURL = other.logoutURL;
-    this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
-    this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
-    this.name = other.name;
-    this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
-    this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
-    this.themeId = other.themeId;
-    this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
-  }
 
   @Override
   public boolean equals(Object o) {
