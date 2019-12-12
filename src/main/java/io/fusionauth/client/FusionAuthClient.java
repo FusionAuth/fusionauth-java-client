@@ -1702,7 +1702,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<VerifyRegistrationResponse, Errors> resendRegistrationVerification(String email, UUID applicationId) {
-    return startAnonymous(VerifyRegistrationResponse.class, Errors.class)
+    return start(VerifyRegistrationResponse.class, Errors.class)
         .uri("/api/user/verify-registration")
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
