@@ -15,11 +15,15 @@
  */
 package io.fusionauth.domain.util;
 
+/**
+ * @author Daniel DeGroff
+ */
 public enum HTTPMethod {
   GET,
   POST,
   PUT,
   DELETE,
   HEAD,
-  OPTIONS;
+  OPTIONS,
+  PATCH
 }
