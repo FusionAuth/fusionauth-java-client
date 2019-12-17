@@ -2896,8 +2896,8 @@ public class FusionAuthClient {
    * @param request The passwordless start request that contains all of the information used to begin the passwordless login request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> startPasswordlessLogin(PasswordlessStartRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<PasswordlessStartResponse, Errors> startPasswordlessLogin(PasswordlessStartRequest request) {
+    return start(PasswordlessStartResponse.class, Errors.class)
         .uri("/api/passwordless/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
