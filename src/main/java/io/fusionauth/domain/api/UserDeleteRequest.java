@@ -44,15 +44,8 @@ public class UserDeleteRequest {
     this.userIds = userIds;
   }
 
-  public UserDeleteRequest(String query) {
-    this.query = query;
-  }
-
-  public UserDeleteRequest(List<UUID> userIds, String query, String queryString, boolean dryRun, boolean hardDelete) {
-    this.dryRun = dryRun;
+  public UserDeleteRequest(List<UUID> userIds, boolean hardDelete) {
     this.hardDelete = hardDelete;
-    this.query = query;
-    this.queryString = queryString;
     this.userIds = userIds;
   }
 }

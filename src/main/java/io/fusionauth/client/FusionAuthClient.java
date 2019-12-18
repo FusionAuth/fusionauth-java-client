@@ -627,7 +627,9 @@ public class FusionAuthClient {
    *
    * @param userIds The ids of the users to deactivate.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to deactivateUsersByIds, use this method instead.
    */
+  @Deprecated
   public ClientResponse<UserDeleteResponse, Errors> deactivateUsers(Collection<UUID> userIds) {
     return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
@@ -639,17 +641,16 @@ public class FusionAuthClient {
   }
 
   /**
-   * Deactivates the users found with the given search query string.
+   * Deactivates the users with the given ids.
    *
-   * @param queryString The search query string.
-   * @param dryRun Whether to preview or deactivate the users found by the queryString
+   * @param userIds The ids of the users to deactivate.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserDeleteResponse, Errors> deactivateUsersByQuery(String queryString, boolean dryRun) {
+  public ClientResponse<UserDeleteResponse, Errors> deactivateUsersByIds(Collection<UUID> userIds) {
     return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
-        .urlParameter("queryString", queryString)
-        .urlParameter("dryRun", dryRun)
+        .urlParameter("userId", userIds)
+        .urlParameter("dryRun", false)
         .urlParameter("hardDelete", false)
         .delete()
         .go();
@@ -880,13 +881,17 @@ public class FusionAuthClient {
   }
 
   /**
-   * Deletes the users with the given ids, or users matching the provided queryString.
-   * If you provide both userIds and queryString, the userIds will be honored.  This can be used to deactivate or hard-delete 
-   * a user based on the hardDelete request body parameter.
+   * Deletes the users with the given ids, or users matching the provided JSON query or queryString.
+   * The order of preference is ids, query and then queryString, it is recommended to only provide one of the three for the request.
+   * 
+   * This method can be used to deactivate or permanently delete (hard-delete) users based upon the hardDelete boolean in the request body.
+   * Using the dryRun parameter you may also request the result of the action without actually deleting or deactivating any users.
    *
    * @param request The UserDeleteRequest.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to deleteUsersByQuery, use this method instead.
    */
+  @Deprecated
   public ClientResponse<UserDeleteResponse, Errors> deleteUsers(UserDeleteRequest request) {
     return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
@@ -896,18 +901,19 @@ public class FusionAuthClient {
   }
 
   /**
-   * Delete the users found with the given search query string.
+   * Deletes the users with the given ids, or users matching the provided JSON query or queryString.
+   * The order of preference is ids, query and then queryString, it is recommended to only provide one of the three for the request.
+   * 
+   * This method can be used to deactivate or permanently delete (hard-delete) users based upon the hardDelete boolean in the request body.
+   * Using the dryRun parameter you may also request the result of the action without actually deleting or deactivating any users.
    *
-   * @param queryString The search query string.
-   * @param dryRun Whether to preview or delete the users found by the queryString
+   * @param request The UserDeleteRequest.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserDeleteResponse, Errors> deleteUsersByQuery(String queryString, boolean dryRun) {
+  public ClientResponse<UserDeleteResponse, Errors> deleteUsersByQuery(UserDeleteRequest request) {
     return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
-        .urlParameter("queryString", queryString)
-        .urlParameter("dryRun", dryRun)
-        .urlParameter("hardDelete", true)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .delete()
         .go();
   }
@@ -2778,8 +2784,24 @@ public class FusionAuthClient {
    *
    * @param ids The user ids to search for.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to searchUsersByIds, use this method instead.
    */
+  @Deprecated
   public ClientResponse<SearchResponse, Errors> searchUsers(Collection<UUID> ids) {
+    return start(SearchResponse.class, Errors.class)
+        .uri("/api/user/search")
+        .urlParameter("ids", ids)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the users for the given ids. If any id is invalid, it is ignored.
+   *
+   * @param ids The user ids to search for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<SearchResponse, Errors> searchUsersByIds(Collection<UUID> ids) {
     return start(SearchResponse.class, Errors.class)
         .uri("/api/user/search")
         .urlParameter("ids", ids)
@@ -2790,10 +2812,27 @@ public class FusionAuthClient {
   /**
    * Retrieves the users for the given search criteria and pagination.
    *
-   * @param request The search criteria and pagination constraints. Fields used: queryString, numberOfResults, startRow,
-   *     and sort fields.
+   * @param request The search criteria and pagination constraints. Fields used: ids, query, queryString, numberOfResults, orderBy, startRow,
+   *     and sortFields.
    * @return The ClientResponse object.
    */
+  public ClientResponse<SearchResponse, Errors> searchUsersByQuery(SearchRequest request) {
+    return start(SearchResponse.class, Errors.class)
+        .uri("/api/user/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Retrieves the users for the given search criteria and pagination.
+   *
+   * @param request The search criteria and pagination constraints. Fields used: ids, query, queryString, numberOfResults, orderBy, startRow,
+   *     and sortFields.
+   * @return The ClientResponse object.
+   * @deprecated This method has been renamed to searchUsersByQuery, use this method instead.
+   */
+  @Deprecated
   public ClientResponse<SearchResponse, Errors> searchUsersByQueryString(SearchRequest request) {
     return start(SearchResponse.class, Errors.class)
         .uri("/api/user/search")

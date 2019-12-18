@@ -27,12 +27,6 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class UserSearchCriteria extends BaseSearchCriteria implements Buildable<UserSearchCriteria> {
-  public String email;
-
-  public String fullName;
-
-  public UUID id;
-
   public List<UUID> ids = new ArrayList<>();
 
   public String query;
@@ -40,8 +34,6 @@ public class UserSearchCriteria extends BaseSearchCriteria implements Buildable<
   public String queryString;
 
   public List<SortField> sortFields = new ArrayList<>();
-
-  public String username;
 
   @Override
   public void prepare() {
