@@ -627,7 +627,7 @@ public class FusionAuthClient {
    *
    * @param userIds The ids of the users to deactivate.
    * @return The ClientResponse object.
-   * @deprecated This method has been renamed to deactivateUsersByIds, use this method instead.
+   * @deprecated This method has been renamed to deactivateUsersByIds, use that method instead.
    */
   @Deprecated
   public ClientResponse<UserDeleteResponse, Errors> deactivateUsers(Collection<UUID> userIds) {
@@ -889,7 +889,7 @@ public class FusionAuthClient {
    *
    * @param request The UserDeleteRequest.
    * @return The ClientResponse object.
-   * @deprecated This method has been renamed to deleteUsersByQuery, use this method instead.
+   * @deprecated This method has been renamed to deleteUsersByQuery, use that method instead.
    */
   @Deprecated
   public ClientResponse<UserDeleteResponse, Errors> deleteUsers(UserDeleteRequest request) {
@@ -2784,7 +2784,7 @@ public class FusionAuthClient {
    *
    * @param ids The user ids to search for.
    * @return The ClientResponse object.
-   * @deprecated This method has been renamed to searchUsersByIds, use this method instead.
+   * @deprecated This method has been renamed to searchUsersByIds, use that method instead.
    */
   @Deprecated
   public ClientResponse<SearchResponse, Errors> searchUsers(Collection<UUID> ids) {
@@ -2830,7 +2830,7 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination constraints. Fields used: ids, query, queryString, numberOfResults, orderBy, startRow,
    *     and sortFields.
    * @return The ClientResponse object.
-   * @deprecated This method has been renamed to searchUsersByQuery, use this method instead.
+   * @deprecated This method has been renamed to searchUsersByQuery, use that method instead.
    */
   @Deprecated
   public ClientResponse<SearchResponse, Errors> searchUsersByQueryString(SearchRequest request) {
