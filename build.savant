@@ -69,6 +69,7 @@ javaTestNG.settings.javaVersion = "1.8"
 
 target(name: "clean", description: "Cleans the project") {
   java.clean()
+  file.prune(dir: "target") // clean the mvn directory so we release properly
 }
 
 target(name: "compile", description: "Compiles the project") {
