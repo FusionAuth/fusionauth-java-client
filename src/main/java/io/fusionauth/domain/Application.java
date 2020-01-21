@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonMerge;
-import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
@@ -47,7 +45,6 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
-  @JsonMerge(OptBoolean.FALSE)
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;

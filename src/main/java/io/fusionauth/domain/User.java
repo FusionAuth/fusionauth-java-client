@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonMerge;
-import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -49,13 +47,10 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  */
 public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn, Tenantable {
   @InternalJSONColumn
-  @JsonMerge(OptBoolean.FALSE)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
-  @JsonMerge(OptBoolean.FALSE)
   private final List<GroupMember> memberships = new ArrayList<>();
 
-  @JsonMerge(OptBoolean.FALSE)
   private final List<UserRegistration> registrations = new ArrayList<>();
 
   public boolean active;
@@ -64,7 +59,6 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public UUID cleanSpeakId;
 
-  @JsonMerge(OptBoolean.FALSE)
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public String email;

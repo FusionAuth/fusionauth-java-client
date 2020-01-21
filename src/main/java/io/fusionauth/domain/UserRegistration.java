@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonMerge;
-import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -42,11 +40,9 @@ import static io.fusionauth.domain.util.Normalizer.trimToNull;
  * @author Brian Pontarelli
  */
 public class UserRegistration implements Buildable<UserRegistration>, _InternalJSONColumn {
-  @JsonMerge(OptBoolean.FALSE)
   public final Map<String, Object> data;
 
   @InternalJSONColumn
-  @JsonMerge(OptBoolean.FALSE)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   @InternalJSONColumn
@@ -64,7 +60,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public ZonedDateTime lastLoginInstant;
 
-  @JsonMerge(OptBoolean.FALSE)
   public SortedSet<String> roles = new TreeSet<>();
 
   public ZoneId timezone;
@@ -74,15 +69,6 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   public ContentStatus usernameStatus;
 
   public boolean verified;
-
-  /**
-   * Return true if user registration data is provided.
-   *
-   * @return true if user data exists.
-   */
-  public boolean hasRegistrationData() {
-    return !data.isEmpty();
-  }
 
   public UserRegistration() {
     this.data = new LinkedHashMap<>();
@@ -139,6 +125,15 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
         Objects.equals(username, that.username) &&
         Objects.equals(usernameStatus, that.usernameStatus) &&
         Objects.equals(verified, that.verified);
+  }
+
+  /**
+   * Return true if user registration data is provided.
+   *
+   * @return true if user data exists.
+   */
+  public boolean hasRegistrationData() {
+    return !data.isEmpty();
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ public class IdentityProviderStartLoginResponse implements Buildable<IdentityPro
   public IdentityProviderStartLoginResponse() {
   }
 
-  @JacksonConstructor
   public IdentityProviderStartLoginResponse(String code) {
     this.code = code;
   }
