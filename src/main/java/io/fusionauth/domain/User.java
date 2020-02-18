@@ -102,6 +102,8 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public User(User user) {
     this.active = user.active;
+    this.breachedPasswordLastCheckedInstant = user.breachedPasswordLastCheckedInstant;
+    this.breachedPasswordStatus = user.breachedPasswordStatus;
     this.birthDate = user.birthDate;
     this.cleanSpeakId = user.cleanSpeakId;
     this.email = user.email;
@@ -120,6 +122,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.mobilePhone = user.mobilePhone;
     this.parentEmail = user.parentEmail;
     this.password = user.password;
+    this.passwordChangeReason = user.passwordChangeReason;
     this.passwordChangeRequired = user.passwordChangeRequired;
     this.passwordLastUpdateInstant = user.passwordLastUpdateInstant;
     this.preferredLanguages.addAll(user.preferredLanguages);

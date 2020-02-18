@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,16 @@ package io.fusionauth.domain;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.event.EventType;
+import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.Normalizer;
 
 /**
@@ -33,15 +35,17 @@ import io.fusionauth.domain.util.Normalizer;
  *
  * @author Brian Pontarelli
  */
-public class Webhook implements Buildable<Webhook> {
+public class Webhook implements Buildable<Webhook>, _InternalJSONColumn {
   public List<UUID> applicationIds = new ArrayList<>();
 
   public Integer connectTimeout;
 
-  @JsonUnwrapped
-  public WebhookData data = new WebhookData();
+  public Map<String, Object> data = new LinkedHashMap<>();
 
   public String description;
+
+  @InternalJSONColumn
+  public Map<EventType, Boolean> eventsEnabled = new HashMap<>();
 
   public boolean global;
 
@@ -75,6 +79,7 @@ public class Webhook implements Buildable<Webhook> {
         Objects.equals(connectTimeout, that.connectTimeout) &&
         Objects.equals(data, that.data) &&
         Objects.equals(description, that.description) &&
+        Objects.equals(eventsEnabled, that.eventsEnabled) &&
         Objects.equals(headers, that.headers) &&
         Objects.equals(httpAuthenticationPassword, that.httpAuthenticationPassword) &&
         Objects.equals(httpAuthenticationUsername, that.httpAuthenticationUsername) &&
@@ -85,7 +90,7 @@ public class Webhook implements Buildable<Webhook> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationIds, connectTimeout, description, global, headers, httpAuthenticationPassword, httpAuthenticationUsername,
+    return Objects.hash(applicationIds, connectTimeout, data, description, eventsEnabled, global, headers, httpAuthenticationPassword, httpAuthenticationUsername,
                         readTimeout, sslCertificate, url);
   }
 
@@ -98,26 +103,5 @@ public class Webhook implements Buildable<Webhook> {
 
   public String toString() {
     return ToString.toString(this);
-  }
-
-  public static class WebhookData {
-    public Map<EventType, Boolean> eventsEnabled = new HashMap<>();
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof WebhookData)) {
-        return false;
-      }
-      WebhookData that = (WebhookData) o;
-      return Objects.equals(eventsEnabled, that.eventsEnabled);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(eventsEnabled);
-    }
   }
 }

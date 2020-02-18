@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -11,6 +11,10 @@ import java.util.UUID;
  * @author Daniel DeGroff
  */
 public class SecureIdentity {
+  public ZonedDateTime breachedPasswordLastCheckedInstant;
+
+  public BreachedPasswordStatus breachedPasswordStatus;
+
   public String encryptionScheme;
 
   public Integer factor;
@@ -18,6 +22,8 @@ public class SecureIdentity {
   public UUID id;
 
   public String password;
+
+  public ChangePasswordReason passwordChangeReason;
 
   public boolean passwordChangeRequired;
 
@@ -35,18 +41,21 @@ public class SecureIdentity {
     if (!(o instanceof SecureIdentity)) {
       return false;
     }
-    SecureIdentity identity = (SecureIdentity) o;
-    return Objects.equals(encryptionScheme, identity.encryptionScheme) &&
-        Objects.equals(factor, identity.factor) &&
-        Objects.equals(password, identity.password) &&
-        Objects.equals(passwordChangeRequired, identity.passwordChangeRequired) &&
-        Objects.equals(passwordLastUpdateInstant, identity.passwordLastUpdateInstant) &&
-        Objects.equals(salt, identity.salt) &&
-        Objects.equals(verified, identity.verified);
+    SecureIdentity that = (SecureIdentity) o;
+    return passwordChangeRequired == that.passwordChangeRequired &&
+        passwordChangeReason == that.passwordChangeReason &&
+        verified == that.verified &&
+        Objects.equals(breachedPasswordLastCheckedInstant, that.breachedPasswordLastCheckedInstant) &&
+        breachedPasswordStatus == that.breachedPasswordStatus &&
+        Objects.equals(encryptionScheme, that.encryptionScheme) &&
+        Objects.equals(factor, that.factor) &&
+        Objects.equals(password, that.password) &&
+        Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
+        Objects.equals(salt, that.salt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(encryptionScheme, factor, password, passwordChangeRequired, passwordLastUpdateInstant, salt, verified);
+    return Objects.hash(breachedPasswordLastCheckedInstant, breachedPasswordStatus, encryptionScheme, factor, password, passwordChangeReason, passwordChangeRequired, passwordLastUpdateInstant, salt, verified);
   }
 }

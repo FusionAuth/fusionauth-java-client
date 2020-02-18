@@ -42,6 +42,7 @@ import com.inversoft.json.ToString;
     @Type(value = UserBulkCreateEvent.class, name = "user.bulk.create"),
     @Type(value = UserLoginFailedEvent.class, name = "user.login.failed"),
     @Type(value = UserLoginSuccessEvent.class, name = "user.login.success"),
+    @Type(value = UserPasswordBreachEvent.class, name = "user.password.breach"),
     @Type(value = UserRegistrationCreateEvent.class, name = "user.registration.create"),
     @Type(value = UserRegistrationUpdateEvent.class, name = "user.registration.update"),
     @Type(value = UserRegistrationDeleteEvent.class, name = "user.registration.delete"),

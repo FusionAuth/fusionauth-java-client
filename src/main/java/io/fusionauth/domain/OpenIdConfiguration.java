@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
+import com.inversoft.json.ToString;
 
 /**
  * OpenID Connect Configuration as described by the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">OpenID
@@ -62,4 +65,43 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   public String userinfo_endpoint = "%s/oauth2/userinfo";
 
   public List<String> userinfo_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof OpenIdConfiguration)) {
+      return false;
+    }
+    OpenIdConfiguration that = (OpenIdConfiguration) o;
+    return backchannel_logout_supported == that.backchannel_logout_supported &&
+        frontchannel_logout_supported == that.frontchannel_logout_supported &&
+        Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
+        Objects.equals(claims_supported, that.claims_supported) &&
+        Objects.equals(device_authorization_endpoint, that.device_authorization_endpoint) &&
+        Objects.equals(end_session_endpoint, that.end_session_endpoint) &&
+        Objects.equals(grant_types_supported, that.grant_types_supported) &&
+        Objects.equals(id_token_signing_alg_values_supported, that.id_token_signing_alg_values_supported) &&
+        Objects.equals(issuer, that.issuer) &&
+        Objects.equals(jwks_uri, that.jwks_uri) &&
+        Objects.equals(response_modes_supported, that.response_modes_supported) &&
+        Objects.equals(response_types_supported, that.response_types_supported) &&
+        Objects.equals(scopes_supported, that.scopes_supported) &&
+        Objects.equals(subject_types_supported, that.subject_types_supported) &&
+        Objects.equals(token_endpoint, that.token_endpoint) &&
+        Objects.equals(token_endpoint_auth_methods_supported, that.token_endpoint_auth_methods_supported) &&
+        Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
+        Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
+  }
 }

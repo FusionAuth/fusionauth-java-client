@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.util.Map;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.ChangePasswordReason;
 import io.fusionauth.domain.User;
 
 /**
@@ -29,6 +30,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
   public List<LoginPreventedResponse> actions;
 
   public String changePasswordId;
+
+  public ChangePasswordReason changePasswordReason;
 
   public String refreshToken;
 

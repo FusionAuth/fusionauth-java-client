@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,6 +61,8 @@ public enum EventType {
 
   UserEmailVerified("user.email.verified"),
 
+  UserPasswordBreach("user.password.breach"),
+
   // TODO : Future : Add an event for each time we cut an Event Log? This way we could push out events to a 3rd party system?
 
   Test("test");
@@ -92,7 +94,8 @@ public enum EventType {
                          EventType.UserDelete,
                          EventType.UserReactivate,
                          EventType.UserUpdate,
-                         EventType.UserEmailVerified);
+                         EventType.UserEmailVerified,
+                         EventType.UserPasswordBreach);
   }
 
   /**
@@ -115,7 +118,8 @@ public enum EventType {
                          EventType.UserDelete,
                          EventType.UserReactivate,
                          EventType.UserUpdate,
-                         EventType.UserEmailVerified);
+                         EventType.UserEmailVerified,
+                         EventType.UserPasswordBreach);
   }
 
   @JsonCreator

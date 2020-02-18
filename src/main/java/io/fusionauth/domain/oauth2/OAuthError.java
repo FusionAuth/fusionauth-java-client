@@ -114,6 +114,12 @@ public class OAuthError implements OAuthResponse {
     invalid_client_authentication,
     client_id_mismatch,
 
+    // Change password reasons
+    change_password_administrative,
+    change_password_breached,
+    change_password_expired,
+    change_password_validation,
+
     unknown
   }
 

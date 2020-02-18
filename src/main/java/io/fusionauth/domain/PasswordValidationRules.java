@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,14 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.ToString;
+
 /**
  * @author Derek Klatt
  */
 public class PasswordValidationRules implements Buildable<PasswordValidationRules> {
+  public PasswordBreachDetection breachDetection = new PasswordBreachDetection();
+
   public int maxLength = 256;
 
   public int minLength = 8;
@@ -36,6 +40,8 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
   // Require a number
   public boolean requireNumber;
 
+  public boolean validateOnLogin;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,16 +51,22 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
       return false;
     }
     PasswordValidationRules that = (PasswordValidationRules) o;
-    return Objects.equals(maxLength, that.maxLength) &&
-        Objects.equals(minLength, that.minLength) &&
-        Objects.equals(rememberPreviousPasswords, that.rememberPreviousPasswords) &&
-        Objects.equals(requireMixedCase, that.requireMixedCase) &&
-        Objects.equals(requireNonAlpha, that.requireNonAlpha) &&
-        Objects.equals(requireNumber, that.requireNumber);
+    return maxLength == that.maxLength &&
+        minLength == that.minLength &&
+        requireMixedCase == that.requireMixedCase &&
+        requireNonAlpha == that.requireNonAlpha &&
+        requireNumber == that.requireNumber &&
+        Objects.equals(breachDetection, that.breachDetection) &&
+        Objects.equals(rememberPreviousPasswords, that.rememberPreviousPasswords);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maxLength, minLength, rememberPreviousPasswords, requireMixedCase, requireNonAlpha, requireNumber);
+    return Objects.hash(breachDetection, maxLength, minLength, rememberPreviousPasswords, requireMixedCase, requireNonAlpha, requireNumber, validateOnLogin);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

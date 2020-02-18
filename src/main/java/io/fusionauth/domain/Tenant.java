@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,8 +128,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public int hashCode() {
     return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
                         failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer,
-                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name,
-                        passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
+                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
   }
 
   @JsonIgnore
