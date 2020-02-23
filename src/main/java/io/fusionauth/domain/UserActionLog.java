@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,7 +148,7 @@ public class UserActionLog implements Buildable<UserActionLog> {
 
   @JsonIgnore
   public boolean isActive() {
-    return expiry != null && expiry.isAfter(ZonedDateTime.now());
+    return expiry != null && expiry.isAfter(ZonedDateTime.now(ZoneOffset.UTC));
   }
 
   public void normalize() {

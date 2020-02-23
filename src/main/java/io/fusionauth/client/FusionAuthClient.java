@@ -207,18 +207,15 @@ public class FusionAuthClient {
 
   /**
    * Takes an action on a user. The user being actioned is called the "actionee" and the user taking the action is called the
-   * "actioner". Both user ids are required. You pass the actionee's user id into the method and the actioner's is put into the
-   * request object.
+   * "actioner". Both user ids are required in the request object.
    *
-   * @param actioneeUserId The actionee's user id.
    * @param request The action request that includes all of the information about the action being taken including
    *     the id of the action, any options and the duration (if applicable).
    * @return The ClientResponse object.
    */
-  public ClientResponse<ActionResponse, Errors> actionUser(UUID actioneeUserId, ActionRequest request) {
+  public ClientResponse<ActionResponse, Errors> actionUser(ActionRequest request) {
     return start(ActionResponse.class, Errors.class)
         .uri("/api/user/action")
-        .urlSegment(actioneeUserId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
