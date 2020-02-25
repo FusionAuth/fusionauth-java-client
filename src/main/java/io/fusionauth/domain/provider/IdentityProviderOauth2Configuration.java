@@ -87,7 +87,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
   }
 
   public static class ClientAuthenticationMethod {
-    public boolean clientSecretPost;
+    public boolean client_secret_post;
 
     @Override
     public boolean equals(Object o) {
@@ -98,12 +98,12 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
         return false;
       }
       ClientAuthenticationMethod that = (ClientAuthenticationMethod) o;
-      return clientSecretPost == that.clientSecretPost;
+      return client_secret_post == that.client_secret_post;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(clientSecretPost);
+      return Objects.hash(client_secret_post);
     }
 
     @Override
