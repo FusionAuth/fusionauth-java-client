@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
  * @author Daniel DeGroff
@@ -29,6 +30,13 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
    * <code>authorization_endpoint</code> is the OpenId well-known name for the Authorization endpoint.
    */
   public URI authorization_endpoint;
+
+  /**
+   * Allow override of the default client authentication method client_secret_basic
+   * see https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
+   */
+  @InternalJSONColumn
+  public ClientAuthenticationMethod clientAuthenticationMethod;
 
   public String client_id;
 
@@ -76,5 +84,31 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  public static class ClientAuthenticationMethod {
+    public boolean clientSecretPost;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof ClientAuthenticationMethod)) {
+        return false;
+      }
+      ClientAuthenticationMethod that = (ClientAuthenticationMethod) o;
+      return clientSecretPost == that.clientSecretPost;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(clientSecretPost);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 }
