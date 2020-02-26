@@ -1204,13 +1204,17 @@ public class FusionAuthClient {
    *
    * @param applicationId The Application Id for which you are requesting a new access token be issued.
    * @param encodedJWT The encoded JWT (access token).
+   * @param refreshToken (Optional) An existing refresh token used to request a refresh token in addition to a JWT in the response.
+   *     <p>The target application represented by the applicationid request parameter must have refresh 
+   *     tokens enabled in order to receive a refresh token in the response.</p>
    * @return The ClientResponse object.
    */
-  public ClientResponse<IssueResponse, Errors> issueJWT(UUID applicationId, String encodedJWT) {
+  public ClientResponse<IssueResponse, Errors> issueJWT(UUID applicationId, String encodedJWT, String refreshToken) {
     return start(IssueResponse.class, Errors.class)
         .uri("/api/jwt/issue")
         .authorization("JWT " + encodedJWT)
         .urlParameter("applicationId", applicationId)
+        .urlParameter("refreshToken", refreshToken)
         .get()
         .go();
   }
