@@ -63,6 +63,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
     }
     IdentityProviderOauth2Configuration that = (IdentityProviderOauth2Configuration) o;
     return Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
+        clientAuthenticationMethod == that.clientAuthenticationMethod &&
         Objects.equals(client_id, that.client_id) &&
         Objects.equals(client_secret, that.client_secret) &&
         Objects.equals(issuer, that.issuer) &&
@@ -73,7 +74,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, client_id, client_secret, issuer, scope, token_endpoint, userinfo_endpoint);
+    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, issuer, scope, token_endpoint, userinfo_endpoint);
   }
 
   public IdentityProviderOauth2Configuration secure() {
@@ -86,29 +87,8 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
     return ToString.toString(this);
   }
 
-  public static class ClientAuthenticationMethod {
-    public boolean client_secret_post;
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof ClientAuthenticationMethod)) {
-        return false;
-      }
-      ClientAuthenticationMethod that = (ClientAuthenticationMethod) o;
-      return client_secret_post == that.client_secret_post;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(client_secret_post);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
+  public enum ClientAuthenticationMethod {
+    client_secret_basic,
+    client_secret_post
   }
 }
