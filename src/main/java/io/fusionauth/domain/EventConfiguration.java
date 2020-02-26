@@ -29,6 +29,16 @@ import io.fusionauth.domain.event.EventType;
 public class EventConfiguration implements Buildable<EventConfiguration> {
   public Map<EventType, EventConfigurationData> events = new HashMap<>();
 
+  @JacksonConstructor
+  public EventConfiguration() {
+  }
+
+  public EventConfiguration(EventConfiguration other) {
+    for (Map.Entry<EventType, EventConfigurationData> entry : other.events.entrySet()) {
+      events.put(entry.getKey(), new EventConfigurationData(entry.getValue()));
+    }
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -61,6 +71,11 @@ public class EventConfiguration implements Buildable<EventConfiguration> {
     public EventConfigurationData(boolean enabled, TransactionType transactionType) {
       this.enabled = enabled;
       this.transactionType = transactionType;
+    }
+
+    public EventConfigurationData(EventConfigurationData other) {
+      this.enabled = other.enabled;
+      this.transactionType = other.transactionType;
     }
 
     @Override

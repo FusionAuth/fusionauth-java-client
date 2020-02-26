@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  */
 package io.fusionauth.domain.provider;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -37,11 +37,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
 
   public final Set<String> domains = new HashSet<>();
 
-  /**
-   * Map of keys used for signature validation for this provider. Key Id to PEM encoded certificate of public key.
-   */
-  @InternalJSONColumn
-  public final Map<String, String> keys = new HashMap<>();
+  public UUID defaultKeyId;
 
   @InternalJSONColumn
   public String headerKeyParameter;
@@ -65,8 +61,8 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
     }
     ExternalJWTIdentityProvider that = (ExternalJWTIdentityProvider) o;
     return Objects.equals(claimMap, that.claimMap) &&
+        Objects.equals(defaultKeyId, that.defaultKeyId) &&
         Objects.equals(headerKeyParameter, that.headerKeyParameter) &&
-        Objects.equals(keys, that.keys) &&
         Objects.equals(oauth2, that.oauth2) &&
         Objects.equals(uniqueIdentityClaim, that.uniqueIdentityClaim) &&
         Objects.equals(domains, that.domains);
@@ -84,17 +80,13 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), claimMap, headerKeyParameter, keys, oauth2, uniqueIdentityClaim, domains);
+    return Objects.hash(super.hashCode(), claimMap, defaultKeyId, headerKeyParameter, oauth2, uniqueIdentityClaim, domains);
   }
 
   @Override
   public void normalize() {
     super.normalize();
     normalizeDomains();
-
-    // remove empty values, and then normalize PEM line returns
-    keys.entrySet().removeIf(entry -> entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty());
-    keys.entrySet().forEach(entry -> entry.setValue(entry.getValue().trim().replace("\r\n", "\n").replace("\r", "\n")));
   }
 
   public ExternalJWTIdentityProvider secure() {
@@ -103,7 +95,6 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
     }
 
     claimMap.clear();
-    keys.clear();
     headerKeyParameter = null;
     uniqueIdentityClaim = null;
     domains.clear();

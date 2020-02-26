@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,45 +100,45 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   public User() {
   }
 
-  public User(User user) {
-    this.active = user.active;
-    this.breachedPasswordLastCheckedInstant = user.breachedPasswordLastCheckedInstant;
-    this.breachedPasswordStatus = user.breachedPasswordStatus;
-    this.birthDate = user.birthDate;
-    this.cleanSpeakId = user.cleanSpeakId;
-    this.email = user.email;
-    this.encryptionScheme = user.encryptionScheme;
-    this.expiry = user.expiry;
-    this.factor = user.factor;
-    this.firstName = user.firstName;
-    this.fullName = user.fullName;
-    this.id = user.id;
-    this.imageUrl = user.imageUrl;
-    this.insertInstant = user.insertInstant;
-    this.lastLoginInstant = user.lastLoginInstant;
-    this.lastName = user.lastName;
-    this.memberships.addAll(user.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
-    this.middleName = user.middleName;
-    this.mobilePhone = user.mobilePhone;
-    this.parentEmail = user.parentEmail;
-    this.password = user.password;
-    this.passwordChangeReason = user.passwordChangeReason;
-    this.passwordChangeRequired = user.passwordChangeRequired;
-    this.passwordLastUpdateInstant = user.passwordLastUpdateInstant;
-    this.preferredLanguages.addAll(user.preferredLanguages);
-    this.registrations.addAll(user.registrations.stream().map(UserRegistration::new).collect(Collectors.toList()));
-    this.salt = user.salt;
-    this.tenantId = user.tenantId;
-    this.timezone = user.timezone;
-    this.twoFactorDelivery = user.twoFactorDelivery;
-    this.twoFactorEnabled = user.twoFactorEnabled;
-    this.twoFactorSecret = user.twoFactorSecret;
-    this.username = user.username;
-    this.usernameStatus = user.usernameStatus;
-    this.verified = user.verified;
+  public User(User other) {
+    this.active = other.active;
+    this.breachedPasswordLastCheckedInstant = other.breachedPasswordLastCheckedInstant;
+    this.breachedPasswordStatus = other.breachedPasswordStatus;
+    this.birthDate = other.birthDate;
+    this.cleanSpeakId = other.cleanSpeakId;
+    this.email = other.email;
+    this.encryptionScheme = other.encryptionScheme;
+    this.expiry = other.expiry;
+    this.factor = other.factor;
+    this.firstName = other.firstName;
+    this.fullName = other.fullName;
+    this.id = other.id;
+    this.imageUrl = other.imageUrl;
+    this.insertInstant = other.insertInstant;
+    this.lastLoginInstant = other.lastLoginInstant;
+    this.lastName = other.lastName;
+    this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
+    this.middleName = other.middleName;
+    this.mobilePhone = other.mobilePhone;
+    this.parentEmail = other.parentEmail;
+    this.password = other.password;
+    this.passwordChangeReason = other.passwordChangeReason;
+    this.passwordChangeRequired = other.passwordChangeRequired;
+    this.passwordLastUpdateInstant = other.passwordLastUpdateInstant;
+    this.preferredLanguages.addAll(other.preferredLanguages);
+    this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toList()));
+    this.salt = other.salt;
+    this.tenantId = other.tenantId;
+    this.timezone = other.timezone;
+    this.twoFactorDelivery = other.twoFactorDelivery;
+    this.twoFactorEnabled = other.twoFactorEnabled;
+    this.twoFactorSecret = other.twoFactorSecret;
+    this.username = other.username;
+    this.usernameStatus = other.usernameStatus;
+    this.verified = other.verified;
 
-    if (user.data != null) {
-      this.data.putAll(user.data);
+    if (other.data != null) {
+      this.data.putAll(other.data);
     }
   }
 

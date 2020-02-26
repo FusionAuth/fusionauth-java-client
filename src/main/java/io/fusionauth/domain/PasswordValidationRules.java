@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -41,6 +42,21 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
   public boolean requireNumber;
 
   public boolean validateOnLogin;
+
+  @JacksonConstructor
+  public PasswordValidationRules() {
+  }
+
+  public PasswordValidationRules(PasswordValidationRules other) {
+    this.breachDetection = new PasswordBreachDetection(other.breachDetection);
+    this.maxLength = other.maxLength;
+    this.minLength = other.minLength;
+    this.rememberPreviousPasswords = new RememberPreviousPasswords(other.rememberPreviousPasswords);
+    this.requireMixedCase = other.requireMixedCase;
+    this.requireNonAlpha = other.requireNonAlpha;
+    this.requireNumber = other.requireNumber;
+    this.validateOnLogin = other.validateOnLogin;
+  }
 
   @Override
   public boolean equals(Object o) {

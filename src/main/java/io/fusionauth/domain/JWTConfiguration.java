@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 
@@ -49,6 +50,18 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
    */
   public int timeToLiveInSeconds;
+
+  @JacksonConstructor
+  public JWTConfiguration() {
+  }
+
+  public JWTConfiguration(JWTConfiguration other) {
+    this.accessTokenKeyId = other.accessTokenKeyId;
+    this.enabled = other.enabled;
+    this.idTokenKeyId = other.idTokenKeyId;
+    this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
+    this.timeToLiveInSeconds = other.timeToLiveInSeconds;
+  }
 
   @Override
   public boolean equals(Object o) {

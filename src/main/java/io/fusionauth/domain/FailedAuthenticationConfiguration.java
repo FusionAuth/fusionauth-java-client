@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 
@@ -53,6 +54,18 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
    */
   @ExcludeFromDatabaseDataColumn
   public UUID userActionId;
+
+  @JacksonConstructor
+  public FailedAuthenticationConfiguration() {
+  }
+
+  public FailedAuthenticationConfiguration(FailedAuthenticationConfiguration other) {
+    this.actionDuration = other.actionDuration;
+    this.actionDurationUnit = other.actionDurationUnit;
+    this.resetCountInSeconds = other.resetCountInSeconds;
+    this.tooManyAttempts = other.tooManyAttempts;
+    this.userActionId = other.userActionId;
+  }
 
   @Override
   public boolean equals(Object o) {

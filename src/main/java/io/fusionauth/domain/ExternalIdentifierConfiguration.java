@@ -17,6 +17,7 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -26,6 +27,30 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
   public int authorizationGrantIdTimeToLiveInSeconds;
 
   public SecureGeneratorConfiguration changePasswordIdGenerator;
+
+  @JacksonConstructor
+  public ExternalIdentifierConfiguration() {
+  }
+
+  public ExternalIdentifierConfiguration(ExternalIdentifierConfiguration other) {
+    this.authorizationGrantIdTimeToLiveInSeconds = other.authorizationGrantIdTimeToLiveInSeconds;
+    this.changePasswordIdGenerator = other.changePasswordIdGenerator;
+    this.changePasswordIdTimeToLiveInSeconds = other.changePasswordIdTimeToLiveInSeconds;
+    this.deviceCodeTimeToLiveInSeconds = other.deviceCodeTimeToLiveInSeconds;
+    this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
+    this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
+    this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
+    this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
+    this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
+    this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
+    this.passwordlessLoginGenerator = other.passwordlessLoginGenerator;
+    this.registrationVerificationIdGenerator = other.registrationVerificationIdGenerator;
+    this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
+    this.setupPasswordIdGenerator = other.setupPasswordIdGenerator;
+    this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
+    this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
+    this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
+  }
 
   public int changePasswordIdTimeToLiveInSeconds;
 

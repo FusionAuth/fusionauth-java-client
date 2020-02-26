@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -24,6 +25,15 @@ import com.inversoft.json.ToString;
  */
 public class MaximumPasswordAge extends Enableable {
   public int days = 180;
+
+  @JacksonConstructor
+  public MaximumPasswordAge() {
+  }
+
+  public MaximumPasswordAge(MaximumPasswordAge other) {
+    this.days = other.days;
+    this.enabled = other.enabled;
+  }
 
   @Override
   public boolean equals(Object o) {

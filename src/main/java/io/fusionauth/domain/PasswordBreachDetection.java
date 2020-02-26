@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -29,6 +30,18 @@ public class PasswordBreachDetection extends Enableable implements Buildable<Pas
   public UUID notifyUserEmailTemplateId;
 
   public BreachAction onLogin;
+
+  @JacksonConstructor
+  public PasswordBreachDetection() {
+
+  }
+
+  public PasswordBreachDetection(PasswordBreachDetection other) {
+    this.enabled = other.enabled;
+    this.matchMode = other.matchMode;
+    this.notifyUserEmailTemplateId = other.notifyUserEmailTemplateId;
+    this.onLogin = other.onLogin;
+  }
 
   @Override
   public boolean equals(Object o) {
