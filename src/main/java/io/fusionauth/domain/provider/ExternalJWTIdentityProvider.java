@@ -95,6 +95,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
     }
 
     claimMap.clear();
+    defaultKeyId = null;
     headerKeyParameter = null;
     uniqueIdentityClaim = null;
     domains.clear();
