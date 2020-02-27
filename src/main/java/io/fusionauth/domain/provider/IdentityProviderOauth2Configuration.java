@@ -88,14 +88,8 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
   }
 
   public enum ClientAuthenticationMethod {
-    none("None (none)"),
-    client_secret_basic("HTTP Basic authentication (client_secret_basic)"),
-    client_secret_post("Client credentials in the request body (client_secret_post)");
-
-    public String description;
-
-    ClientAuthenticationMethod(String description) {
-      this.description = description;
-    }
+    none,
+    client_secret_basic,
+    client_secret_post
   }
 }
