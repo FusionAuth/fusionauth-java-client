@@ -16,12 +16,12 @@
 package io.fusionauth.client;
 
 import com.inversoft.error.Errors;
+import com.inversoft.rest.ClientResponse;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
 import io.fusionauth.domain.api.user.ForgotPasswordRequest;
 import io.fusionauth.domain.api.user.ForgotPasswordResponse;
-import com.inversoft.rest.ClientResponse;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -33,7 +33,9 @@ import static org.testng.Assert.assertTrue;
 public class FusionAuthClientTest {
   @Test(enabled = false)
   public void forgotPassword_with_and_without_api_key() throws Exception {
-    FusionAuthClient apiKeyClient = new FusionAuthClient("api-key", "http://localhost:9011");
+    String fusionauthUrl = System.getenv().getOrDefault("FUSIONAUTH_URL","http://localhost:9011");
+    String fusionauthApiKey = System.getenv().getOrDefault("FUSIONAUTH_API_KEY","api-key");
+    FusionAuthClient apiKeyClient = new FusionAuthClient(fusionauthApiKey, fusionauthUrl);
 
     ClientResponse<UserResponse, Errors> userResponse = apiKeyClient.retrieveUserByEmail("client_java@fusionauth.io");
     if (userResponse.status != 404) {
