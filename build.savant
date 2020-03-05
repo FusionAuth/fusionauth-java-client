@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,9 +39,9 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.15.4
       dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
       dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
-      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.10.1")
-      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.10.1")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.10.1")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.10.3")
+      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.10.3")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.10.3")
     }
     group(name: "test-compile") {
       dependency(id: "org.testng:testng:6.8.7")
