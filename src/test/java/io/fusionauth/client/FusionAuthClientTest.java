@@ -31,17 +31,16 @@ import static org.testng.Assert.assertTrue;
  * @author Daniel DeGroff
  */
 public class FusionAuthClientTest {
-  @Test(enabled = false)
+  @Test
   public void forgotPassword_with_and_without_api_key() throws Exception {
-    String fusionauthUrl = System.getenv().getOrDefault("FUSIONAUTH_URL","http://localhost:9011");
-    String fusionauthApiKey = System.getenv().getOrDefault("FUSIONAUTH_API_KEY","api-key");
+    String fusionauthUrl = System.getenv().getOrDefault("FUSIONAUTH_URL", "http://localhost:9011");
+    String fusionauthApiKey = System.getenv().getOrDefault("FUSIONAUTH_API_KEY", "api-key");
     FusionAuthClient apiKeyClient = new FusionAuthClient(fusionauthApiKey, fusionauthUrl);
 
     ClientResponse<UserResponse, Errors> userResponse = apiKeyClient.retrieveUserByEmail("client_java@fusionauth.io");
     if (userResponse.status != 404) {
       apiKeyClient.deleteUser(userResponse.successResponse.user.id);
     }
-
 
     ClientResponse<UserResponse, Errors> response = apiKeyClient.createUser(null, new UserRequest(new User()
                                                                                                       .with(u -> u.email = "client_java@fusionauth.io")
@@ -50,14 +49,13 @@ public class FusionAuthClientTest {
 
     // w/ API key, success with response body
     ClientResponse<ForgotPasswordResponse, Errors> forgotPasswordResponse = apiKeyClient.forgotPassword(new ForgotPasswordRequest(response.successResponse.user.email, false));
-    System.out.println(forgotPasswordResponse.status);
     assertTrue(forgotPasswordResponse.wasSuccessful());
     assertNotNull(forgotPasswordResponse.successResponse);
     assertNotNull(forgotPasswordResponse.successResponse.changePasswordId);
 
 
     // w/out API Key, success but no response body
-    FusionAuthClient noApiKeyClient = new FusionAuthClient(null, "http://localhost:9011");
+    FusionAuthClient noApiKeyClient = new FusionAuthClient(null, fusionauthUrl);
     forgotPasswordResponse = noApiKeyClient.forgotPassword(new ForgotPasswordRequest(response.successResponse.user.email, false));
     assertTrue(forgotPasswordResponse.wasSuccessful());
     assertNull(forgotPasswordResponse.successResponse);
