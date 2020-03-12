@@ -86,7 +86,7 @@ target(name: "doc", description: "Generate the project's JavaDoc", dependsOn: ["
   java.document()
 }
 
-target(name: "int", description: "Releases a local integration build of the project", dependsOn: ["test"]) {
+target(name: "int", description: "Releases a local integration build of the project", dependsOn: ["jar"]) {
   dependency.integrate()
 }
 
