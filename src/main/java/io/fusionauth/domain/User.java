@@ -220,7 +220,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
       return firstName + (lastName != null ? " " + lastName : "");
     }
 
-    return getLogin();
+    return null;
   }
 
   public UserRegistration getRegistrationForApplication(UUID id) {
