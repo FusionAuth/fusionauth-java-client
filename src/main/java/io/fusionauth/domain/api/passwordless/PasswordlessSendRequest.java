@@ -37,6 +37,12 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
   public PasswordlessSendRequest() {
   }
 
+  public PasswordlessSendRequest(UUID applicationId, String loginId, String code) {
+    this.applicationId = applicationId;
+    this.loginId = loginId;
+    this.code = code;
+  }
+
   public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
