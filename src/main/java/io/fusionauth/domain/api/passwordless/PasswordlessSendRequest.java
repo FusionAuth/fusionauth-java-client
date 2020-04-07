@@ -43,6 +43,7 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
     this.code = code;
   }
 
+  // TODO : Code Review : Dead code, or do we need this? If so, we can add a Ignore Unused annotation.
   public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
