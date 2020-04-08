@@ -32,7 +32,7 @@ FusionAuthClient client = new FusionAuthClient(apiKey, "http://localhost:9011");
 ### Login a user
 
 ```java
-String applicationId = "68364852-7a38-4e15-8c48-394eceafa601";
+UUID applicationId = UUID.fromString("68364852-7a38-4e15-8c48-394eceafa601");
 
 LoginRequest request = new LoginRequest(applicationId, "joe@fusionauth.io", null, "abc123");
 ClientResponse<LoginResponse, Errors> result = client.login(request);
