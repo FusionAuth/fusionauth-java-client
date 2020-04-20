@@ -17,6 +17,7 @@ package io.fusionauth.domain.api;
 
 import java.util.List;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Tenant;
 
 /**
@@ -31,11 +32,11 @@ public class TenantResponse {
     this.tenants = tenants;
   }
 
-
   public TenantResponse(Tenant tenant) {
     this.tenant = tenant;
   }
 
+  @JacksonConstructor
   public TenantResponse() {
   }
 }

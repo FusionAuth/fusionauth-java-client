@@ -78,14 +78,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
     SystemConfiguration that = (SystemConfiguration) o;
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
-        Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
-        Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
-        Objects.equals(corsConfiguration, that.corsConfiguration) &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
-        Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
-        Objects.equals(reportTimezone, that.reportTimezone) &&
-        Objects.equals(uiConfiguration, that.uiConfiguration);
+           Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
+           Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
+           Objects.equals(corsConfiguration, that.corsConfiguration) &&
+           Objects.equals(data, that.data) &&
+           Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
+           Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
+           Objects.equals(reportTimezone, that.reportTimezone) &&
+           Objects.equals(uiConfiguration, that.uiConfiguration);
   }
 
   @Override
@@ -112,7 +112,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public String toString() {
     return ToString.toString(this);
   }
-
 
   public static class AuditLogConfiguration {
     public DeleteConfiguration delete = new DeleteConfiguration();
@@ -174,11 +173,11 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       Collections.sort(exposedHeaders);
       Collections.sort(that.exposedHeaders);
       return preflightMaxAgeInSeconds == that.preflightMaxAgeInSeconds &&
-          allowCredentials == that.allowCredentials &&
-          Objects.equals(allowedHeaders, that.allowedHeaders) &&
-          Objects.equals(allowedMethods, that.allowedMethods) &&
-          Objects.equals(allowedOrigins, that.allowedOrigins) &&
-          Objects.equals(exposedHeaders, that.exposedHeaders);
+             allowCredentials == that.allowCredentials &&
+             Objects.equals(allowedHeaders, that.allowedHeaders) &&
+             Objects.equals(allowedMethods, that.allowedMethods) &&
+             Objects.equals(allowedOrigins, that.allowedOrigins) &&
+             Objects.equals(exposedHeaders, that.exposedHeaders);
     }
 
     @Override
@@ -297,8 +296,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
       }
       UIConfiguration that = (UIConfiguration) o;
       return Objects.equals(logoURL, that.logoURL) &&
-          Objects.equals(headerColor, that.headerColor) &&
-          Objects.equals(menuFontColor, that.menuFontColor);
+             Objects.equals(headerColor, that.headerColor) &&
+             Objects.equals(menuFontColor, that.menuFontColor);
     }
 
     @Override

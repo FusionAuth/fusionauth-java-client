@@ -15,7 +15,7 @@
  */
 package io.fusionauth.domain.search;
 
-
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -39,6 +39,7 @@ public class SortField {
    */
   public Sort order = Sort.asc;
 
+  @JacksonConstructor
   public SortField() {
   }
 

@@ -27,6 +27,10 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Brian Pontarelli
  */
 public class EmailConfiguration implements Buildable<EmailConfiguration> {
+  public String defaultFromEmail;
+
+  public String defaultFromName;
+
   @ExcludeFromDatabaseDataColumn
   public UUID forgotPasswordEmailTemplateId;
 
@@ -60,6 +64,8 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   }
 
   public EmailConfiguration(EmailConfiguration other) {
+    this.defaultFromEmail = other.defaultFromEmail;
+    this.defaultFromName = other.defaultFromName;
     this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
     this.host = other.host;
     this.password = other.password;
@@ -85,6 +91,8 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
     EmailConfiguration that = (EmailConfiguration) o;
     return verifyEmail == that.verifyEmail &&
         verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
+        Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
+        Objects.equals(defaultFromName, that.defaultFromName) &&
         Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
         Objects.equals(host, that.host) &&
         Objects.equals(password, that.password) &&
@@ -99,7 +107,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+    return Objects.hash(defaultFromEmail, defaultFromName, forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
   }
 
   public void normalize() {

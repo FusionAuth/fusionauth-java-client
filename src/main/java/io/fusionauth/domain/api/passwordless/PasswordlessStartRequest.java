@@ -35,6 +35,7 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
   public PasswordlessStartRequest() {
   }
 
+  @SuppressWarnings("unused")
   public PasswordlessStartRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;

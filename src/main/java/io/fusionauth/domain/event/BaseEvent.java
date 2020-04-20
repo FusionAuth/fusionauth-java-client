@@ -49,6 +49,7 @@ import com.inversoft.json.ToString;
     @Type(value = UserRegistrationVerifiedEvent.class, name = "user.registration.verified"),
     @Type(value = JWTRefreshTokenRevokeEvent.class, name = "jwt.refresh-token.revoke"),
     @Type(value = JWTPublicKeyUpdateEvent.class, name = "jwt.public-key.update"),
+    @Type(value = JWTRefreshEvent.class, name = "jwt.refresh"),
     @Type(value = TestEvent.class, name = "test")
 })
 public abstract class BaseEvent {
@@ -68,9 +69,9 @@ public abstract class BaseEvent {
     }
     BaseEvent baseEvent = (BaseEvent) o;
     return Objects.equals(createInstant, baseEvent.createInstant) &&
-        Objects.equals(id, baseEvent.id) &&
-        Objects.equals(tenantId, baseEvent.tenantId) &&
-        Objects.equals(getType(), baseEvent.getType());
+           Objects.equals(id, baseEvent.id) &&
+           Objects.equals(tenantId, baseEvent.tenantId) &&
+           Objects.equals(getType(), baseEvent.getType());
   }
 
   /**

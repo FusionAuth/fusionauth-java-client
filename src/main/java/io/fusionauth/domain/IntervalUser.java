@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -32,6 +33,7 @@ public class IntervalUser {
 
   public UUID userId;
 
+  @JacksonConstructor
   public IntervalUser() {
   }
 
@@ -51,8 +53,8 @@ public class IntervalUser {
     }
     IntervalUser other = (IntervalUser) o;
     return Objects.equals(applicationId, other.applicationId) &&
-        Objects.equals(period, other.period) &&
-        Objects.equals(userId, other.userId);
+           Objects.equals(period, other.period) &&
+           Objects.equals(userId, other.userId);
   }
 
   @Override

@@ -21,14 +21,15 @@ import com.inversoft.json.JacksonConstructor;
  * @author Daniel DeGroff
  */
 public class RefreshRequest {
-
   public String refreshToken;
+
+  public String token;
 
   @JacksonConstructor
   public RefreshRequest() {
   }
 
-  public RefreshRequest(String token) {
-    this.refreshToken = token;
+  public RefreshRequest(String refreshToken) {
+    this.refreshToken = refreshToken;
   }
 }

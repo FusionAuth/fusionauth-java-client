@@ -26,6 +26,8 @@ import io.fusionauth.domain.User;
 public class UserResponse {
   public User user;
 
+  public String token;
+
   @JacksonConstructor
   public UserResponse() {
   }

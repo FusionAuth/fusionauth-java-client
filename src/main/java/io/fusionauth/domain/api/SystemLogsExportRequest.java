@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,26 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user;
+package io.fusionauth.domain.api;
+
+import java.time.ZoneId;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
-import io.fusionauth.domain.UserRegistration;
 
 /**
- * Registration API request object.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class RegistrationResponse {
-  public UserRegistration registration;
-
-  public String token;
-
-  public User user;
+public class SystemLogsExportRequest extends BaseExportRequest {
+  // Default to 64k
+  public int lastNBytes = 64 * 1024;
 
   @JacksonConstructor
-  public RegistrationResponse() {
+  public SystemLogsExportRequest() {
   }
 
-  public RegistrationResponse(User user, UserRegistration registration) {
-    this.user = user;
-    this.registration = registration;
+  public SystemLogsExportRequest(String dateTimeSecondsFormat, ZoneId zoneId, int lastNBytes) {
+    this.dateTimeSecondsFormat = dateTimeSecondsFormat;
+    this.zoneId = zoneId;
+    this.lastNBytes = lastNBytes;
   }
 }

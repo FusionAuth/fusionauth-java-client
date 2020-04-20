@@ -43,7 +43,10 @@ public enum EventType {
 
   UserAction("user.action"),
 
+  // 2.0 Rename -> refresh-token.revoke
   JWTRefreshTokenRevoke("jwt.refresh-token.revoke"),
+
+  JWTRefresh("jwt.refresh"),
 
   JWTPublicKeyUpdate("jwt.public-key.update"),
 
@@ -67,7 +70,7 @@ public enum EventType {
 
   Test("test");
 
-  private static Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
+  private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
   private final String eventName;
 
@@ -81,6 +84,7 @@ public enum EventType {
   public static List<EventType> allTypes() {
     return Arrays.asList(EventType.JWTPublicKeyUpdate,
                          EventType.JWTRefreshTokenRevoke,
+                         EventType.JWTRefresh,
                          EventType.UserLoginSuccess,
                          EventType.UserLoginFailed,
                          EventType.UserAction,
@@ -106,6 +110,7 @@ public enum EventType {
   public static List<EventType> allTypesForTransactionConfiguration() {
     return Arrays.asList(EventType.JWTPublicKeyUpdate,
                          EventType.JWTRefreshTokenRevoke,
+                         EventType.JWTRefresh,
                          EventType.UserLoginSuccess,
                          EventType.UserLoginFailed,
                          EventType.UserBulkCreate,

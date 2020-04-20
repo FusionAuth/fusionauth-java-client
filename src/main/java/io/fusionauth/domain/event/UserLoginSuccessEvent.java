@@ -44,7 +44,7 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
   public UserLoginSuccessEvent() {
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider identityProvider, User user) {
+  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     this.identityProviderId = identityProvider.id;
@@ -68,11 +68,11 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
     }
     UserLoginSuccessEvent that = (UserLoginSuccessEvent) o;
     return super.equals(o) &&
-        Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(authenticationType, that.authenticationType) &&
-        Objects.equals(identityProviderId, that.identityProviderId) &&
-        Objects.equals(identityProviderName, that.identityProviderName) &&
-        Objects.equals(user, that.user);
+           Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(authenticationType, that.authenticationType) &&
+           Objects.equals(identityProviderId, that.identityProviderId) &&
+           Objects.equals(identityProviderName, that.identityProviderName) &&
+           Objects.equals(user, that.user);
   }
 
   @Override

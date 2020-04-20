@@ -32,10 +32,10 @@ import static org.testng.Assert.assertTrue;
  */
 public class FusionAuthClientTest {
   @Test
-  public void forgotPassword_with_and_without_api_key() throws Exception {
-    String fusionauthUrl = System.getenv().getOrDefault("FUSIONAUTH_URL", "http://localhost:9011");
+  public void forgotPassword_with_and_without_api_key() {
+    String fusionauthURL = System.getenv().getOrDefault("FUSIONAUTH_URL", "http://localhost:9011");
     String fusionauthApiKey = System.getenv().getOrDefault("FUSIONAUTH_API_KEY", "api-key");
-    FusionAuthClient apiKeyClient = new FusionAuthClient(fusionauthApiKey, fusionauthUrl);
+    FusionAuthClient apiKeyClient = new FusionAuthClient(fusionauthApiKey, fusionauthURL);
 
     ClientResponse<UserResponse, Errors> userResponse = apiKeyClient.retrieveUserByEmail("client_java@fusionauth.io");
     if (userResponse.status != 404) {
@@ -55,7 +55,7 @@ public class FusionAuthClientTest {
 
 
     // w/out API Key, success but no response body
-    FusionAuthClient noApiKeyClient = new FusionAuthClient(null, fusionauthUrl);
+    FusionAuthClient noApiKeyClient = new FusionAuthClient(null, fusionauthURL);
     forgotPasswordResponse = noApiKeyClient.forgotPassword(new ForgotPasswordRequest(response.successResponse.user.email, false));
     assertTrue(forgotPasswordResponse.wasSuccessful());
     assertNull(forgotPasswordResponse.successResponse);
