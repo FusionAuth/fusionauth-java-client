@@ -92,19 +92,19 @@ public class Key implements Buildable<Key> {
     }
     Key key = (Key) o;
     return Objects.equals(algorithm, key.algorithm) &&
-        Objects.equals(certificateInformation, key.certificateInformation) &&
-        Objects.equals(expirationInstant, key.expirationInstant) &&
-        Objects.equals(id, key.id) &&
-        Objects.equals(insertInstant, key.insertInstant) &&
-        Objects.equals(issuer, key.issuer) &&
-        Objects.equals(kid, key.kid) &&
-        Objects.equals(length, key.length) &&
-        Objects.equals(name, key.name) &&
-        Objects.equals(pair, key.pair) &&
-        Objects.equals(privateKey, key.privateKey) &&
-        Objects.equals(publicKey, key.publicKey) &&
-        Objects.equals(secret, key.secret) &&
-        Objects.equals(type, key.type);
+           Objects.equals(certificateInformation, key.certificateInformation) &&
+           Objects.equals(expirationInstant, key.expirationInstant) &&
+           Objects.equals(id, key.id) &&
+           Objects.equals(insertInstant, key.insertInstant) &&
+           Objects.equals(issuer, key.issuer) &&
+           Objects.equals(kid, key.kid) &&
+           Objects.equals(length, key.length) &&
+           Objects.equals(name, key.name) &&
+           Objects.equals(pair, key.pair) &&
+           Objects.equals(privateKey, key.privateKey) &&
+           Objects.equals(publicKey, key.publicKey) &&
+           Objects.equals(secret, key.secret) &&
+           Objects.equals(type, key.type);
   }
 
   @JsonIgnore
@@ -222,15 +222,15 @@ public class Key implements Buildable<Key> {
       }
       CertificateInformation that = (CertificateInformation) o;
       return Objects.equals(issuer, that.issuer) &&
-          Objects.equals(md5Fingerprint, that.md5Fingerprint) &&
-          Objects.equals(serialNumber, that.serialNumber) &&
-          Objects.equals(sha1Fingerprint, that.sha1Fingerprint) &&
-          Objects.equals(sha1Thumbprint, that.sha1Thumbprint) &&
-          Objects.equals(sha256Fingerprint, that.sha256Fingerprint) &&
-          Objects.equals(sha256Thumbprint, that.sha256Thumbprint) &&
-          Objects.equals(subject, that.subject) &&
-          Objects.equals(validFrom, that.validFrom) &&
-          Objects.equals(validTo, that.validTo);
+             Objects.equals(md5Fingerprint, that.md5Fingerprint) &&
+             Objects.equals(serialNumber, that.serialNumber) &&
+             Objects.equals(sha1Fingerprint, that.sha1Fingerprint) &&
+             Objects.equals(sha1Thumbprint, that.sha1Thumbprint) &&
+             Objects.equals(sha256Fingerprint, that.sha256Fingerprint) &&
+             Objects.equals(sha256Thumbprint, that.sha256Thumbprint) &&
+             Objects.equals(subject, that.subject) &&
+             Objects.equals(validFrom, that.validFrom) &&
+             Objects.equals(validTo, that.validTo);
     }
 
     @Override
