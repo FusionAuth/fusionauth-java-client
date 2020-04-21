@@ -55,9 +55,9 @@ public class RawLogin {
     }
     RawLogin rawLogin = (RawLogin) o;
     return Objects.equals(applicationId, rawLogin.applicationId) &&
-        Objects.equals(instant, rawLogin.instant) &&
-        Objects.equals(ipAddress, rawLogin.ipAddress) &&
-        Objects.equals(userId, rawLogin.userId);
+           Objects.equals(instant, rawLogin.instant) &&
+           Objects.equals(ipAddress, rawLogin.ipAddress) &&
+           Objects.equals(userId, rawLogin.userId);
   }
 
   @Override
