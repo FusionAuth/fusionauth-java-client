@@ -28,12 +28,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationConfiguration> implements Buildable<HYPRIdentityProvider>, PasswordlessIdentityProvider {
   @InternalJSONColumn
-  public boolean licensingEnabled;
-
-  @InternalJSONColumn
-  public URI licensingURL;
-
-  @InternalJSONColumn
   public String relyingPartyApplicationId;
 
   @InternalJSONColumn
@@ -51,10 +45,8 @@ public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationCo
       return false;
     }
     HYPRIdentityProvider that = (HYPRIdentityProvider) o;
-    return licensingEnabled == that.licensingEnabled &&
-        Objects.equals(licensingURL, that.licensingURL) &&
-        Objects.equals(relyingPartyApplicationId, that.relyingPartyApplicationId) &&
-        Objects.equals(relyingPartyURL, that.relyingPartyURL);
+    return Objects.equals(relyingPartyApplicationId, that.relyingPartyApplicationId) &&
+           Objects.equals(relyingPartyURL, that.relyingPartyURL);
   }
 
   @Override
@@ -64,15 +56,7 @@ public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), licensingEnabled, licensingURL, relyingPartyApplicationId, relyingPartyURL);
-  }
-
-  public boolean lookupLicensingEnabled(UUID applicationId) {
-    return lookup(() -> licensingEnabled, () -> app(applicationId, app -> app.licensingEnabledOverride ? app.licensingEnabled : null));
-  }
-
-  public URI lookupLicensingURL(UUID applicationId) {
-    return lookup(() -> licensingURL, () -> app(applicationId, app -> app.licensingEnabledOverride ? app.licensingURL : null));
+    return Objects.hash(super.hashCode(), relyingPartyApplicationId, relyingPartyURL);
   }
 
   public String lookupRelyingPartyApplicationId(UUID applicationId) {

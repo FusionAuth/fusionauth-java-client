@@ -27,16 +27,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class HYPRApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<HYPRApplicationConfiguration> {
   @InternalJSONColumn
-  public boolean licensingEnabled;
-
-  // An additional boolean is used to identify if licensingEnabled and licensingURL have been configured for this application.
-  @InternalJSONColumn
-  public boolean licensingEnabledOverride;
-
-  @InternalJSONColumn
-  public URI licensingURL;
-
-  @InternalJSONColumn
   public String relyingPartyApplicationId;
 
   @InternalJSONColumn
@@ -54,16 +44,13 @@ public class HYPRApplicationConfiguration extends BaseIdentityProviderApplicatio
       return false;
     }
     HYPRApplicationConfiguration that = (HYPRApplicationConfiguration) o;
-    return licensingEnabledOverride == that.licensingEnabledOverride &&
-        Objects.equals(licensingEnabled, that.licensingEnabled) &&
-        Objects.equals(licensingURL, that.licensingURL) &&
-        Objects.equals(relyingPartyApplicationId, that.relyingPartyApplicationId) &&
-        Objects.equals(relyingPartyURL, that.relyingPartyURL);
+    return Objects.equals(relyingPartyApplicationId, that.relyingPartyApplicationId) &&
+           Objects.equals(relyingPartyURL, that.relyingPartyURL);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), licensingEnabled, licensingEnabledOverride, licensingURL, relyingPartyApplicationId, relyingPartyURL);
+    return Objects.hash(super.hashCode(), relyingPartyApplicationId, relyingPartyURL);
   }
 
   @Override
