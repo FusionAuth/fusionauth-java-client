@@ -53,7 +53,7 @@ $ mvn install
 
 ### Building with Savant
 
-**Note:** This project uses the Savant build tool. To compile using using Savant, follow these instructions:
+**Note:** This project uses the Savant build tool. To compile using Savant, follow these instructions:
 
 ```bash
 $ mkdir ~/savant
