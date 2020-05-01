@@ -123,3 +123,7 @@ target(name: "bundle", description: "Builds the project release bundle", depends
     fileSet(dir: "build/jars")
   }
 }
+
+target(name: "write-licenses", description: "Write licenses to build/licenses") {
+  dependency.writeLicenses(to: "build/licenses")
+}
