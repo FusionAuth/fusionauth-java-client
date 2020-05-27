@@ -15,21 +15,14 @@
  */
 package io.fusionauth.domain;
 
-import java.net.URI;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
-import io.fusionauth.domain.util.HTTPMethod;
 
 /**
  * @author Brian Pontarelli
@@ -139,64 +132,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     }
   }
 
-  public static class CORSConfiguration extends Enableable implements Buildable<CORSConfiguration> {
-    public boolean allowCredentials;
-
-    public List<String> allowedHeaders = new ArrayList<>();
-
-    public List<HTTPMethod> allowedMethods = new ArrayList<>();
-
-    public List<URI> allowedOrigins = new ArrayList<>();
-
-    public List<String> exposedHeaders = new ArrayList<>();
-
-    public int preflightMaxAgeInSeconds;
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-        return false;
-      }
-      if (!super.equals(o)) {
-        return false;
-      }
-      CORSConfiguration that = (CORSConfiguration) o;
-      Collections.sort(allowedHeaders);
-      Collections.sort(that.allowedHeaders);
-      Collections.sort(allowedMethods);
-      Collections.sort(that.allowedMethods);
-      Collections.sort(allowedOrigins);
-      Collections.sort(that.allowedOrigins);
-      Collections.sort(exposedHeaders);
-      Collections.sort(that.exposedHeaders);
-      return preflightMaxAgeInSeconds == that.preflightMaxAgeInSeconds &&
-             allowCredentials == that.allowCredentials &&
-             Objects.equals(allowedHeaders, that.allowedHeaders) &&
-             Objects.equals(allowedMethods, that.allowedMethods) &&
-             Objects.equals(allowedOrigins, that.allowedOrigins) &&
-             Objects.equals(exposedHeaders, that.exposedHeaders);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(super.hashCode(), allowedHeaders, allowedMethods, allowedOrigins, exposedHeaders, preflightMaxAgeInSeconds, allowCredentials);
-    }
-
-    public void normalize() {
-      Set<HTTPMethod> methods = new HashSet<>(allowedMethods);
-      allowedMethods.clear();
-      allowedMethods.addAll(methods);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-  }
-
   public static class DeleteConfiguration extends Enableable {
     public Integer numberOfDaysToRetain;
 
@@ -219,7 +154,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     public int hashCode() {
       return Objects.hash(super.hashCode(), numberOfDaysToRetain);
     }
-
 
     @Override
     public String toString() {

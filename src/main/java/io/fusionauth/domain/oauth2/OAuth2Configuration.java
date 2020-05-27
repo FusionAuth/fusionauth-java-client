@@ -25,6 +25,7 @@ import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import static io.fusionauth.domain.util.Normalizer.removeEmpty;
@@ -61,6 +62,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public boolean requireClientAuthentication = true;
 
+  @JacksonConstructor
   public OAuth2Configuration() {
   }
 
@@ -79,15 +81,15 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     }
     OAuth2Configuration that = (OAuth2Configuration) o;
     return generateRefreshTokens == that.generateRefreshTokens &&
-        requireClientAuthentication == that.requireClientAuthentication &&
-        Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
-        Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
-        Objects.equals(clientId, that.clientId) &&
-        Objects.equals(clientSecret, that.clientSecret) &&
-        Objects.equals(deviceVerificationURL, that.deviceVerificationURL) &&
-        Objects.equals(enabledGrants, that.enabledGrants) &&
-        Objects.equals(logoutBehavior, that.logoutBehavior) &&
-        Objects.equals(logoutURL, that.logoutURL);
+           requireClientAuthentication == that.requireClientAuthentication &&
+           Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
+           Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
+           Objects.equals(clientId, that.clientId) &&
+           Objects.equals(clientSecret, that.clientSecret) &&
+           Objects.equals(deviceVerificationURL, that.deviceVerificationURL) &&
+           Objects.equals(enabledGrants, that.enabledGrants) &&
+           Objects.equals(logoutBehavior, that.logoutBehavior) &&
+           Objects.equals(logoutURL, that.logoutURL);
   }
 
   @Override

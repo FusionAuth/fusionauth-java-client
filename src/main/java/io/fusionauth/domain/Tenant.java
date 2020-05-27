@@ -132,23 +132,23 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     }
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
-        httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
-        Objects.equals(data, tenant.data) &&
-        Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
-        Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
-        Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
-        Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
-        Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
-        Objects.equals(issuer, tenant.issuer) &&
-        Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
-        Objects.equals(logoutURL, tenant.logoutURL) &&
-        Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
-        Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
-        Objects.equals(name, tenant.name) &&
-        Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
-        Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
-        Objects.equals(themeId, tenant.themeId) &&
-        Objects.equals(userDeletePolicy, tenant.userDeletePolicy);
+           httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
+           Objects.equals(data, tenant.data) &&
+           Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
+           Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
+           Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
+           Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
+           Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
+           Objects.equals(issuer, tenant.issuer) &&
+           Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
+           Objects.equals(logoutURL, tenant.logoutURL) &&
+           Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
+           Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
+           Objects.equals(name, tenant.name) &&
+           Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
+           Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
+           Objects.equals(themeId, tenant.themeId) &&
+           Objects.equals(userDeletePolicy, tenant.userDeletePolicy);
   }
 
   @Override

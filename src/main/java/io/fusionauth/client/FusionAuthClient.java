@@ -153,9 +153,10 @@ public class FusionAuthClient {
                                                                     .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true)
                                                                     .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                                                                     .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
-                                                                    .configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false)
                                                                     .configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false)
                                                                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                                                                    .configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
+                                                                    .configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
                                                                     .registerModule(new JacksonModule());
 
   private final String apiKey;

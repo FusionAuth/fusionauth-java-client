@@ -56,10 +56,10 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
     }
     FacebookIdentityProvider that = (FacebookIdentityProvider) o;
     return Objects.equals(appId, that.appId) &&
-        Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(client_secret, that.client_secret) &&
-        Objects.equals(fields, that.fields) &&
-        Objects.equals(permissions, that.permissions);
+           Objects.equals(buttonText, that.buttonText) &&
+           Objects.equals(client_secret, that.client_secret) &&
+           Objects.equals(fields, that.fields) &&
+           Objects.equals(permissions, that.permissions);
   }
 
   @Override

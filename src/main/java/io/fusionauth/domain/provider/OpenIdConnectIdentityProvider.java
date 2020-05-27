@@ -37,8 +37,6 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   @InternalJSONColumn
   public String buttonText;
 
-  public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
-
   @InternalJSONColumn
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
@@ -55,10 +53,10 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
     }
     OpenIdConnectIdentityProvider that = (OpenIdConnectIdentityProvider) o;
     return Objects.equals(domains, that.domains) &&
-        Objects.equals(buttonImageURL, that.buttonImageURL) &&
-        Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
-        Objects.equals(oauth2, that.oauth2);
+           Objects.equals(buttonImageURL, that.buttonImageURL) &&
+           Objects.equals(buttonText, that.buttonText) &&
+           Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
+           Objects.equals(oauth2, that.oauth2);
   }
 
   @Override
@@ -73,7 +71,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, lambdaConfiguration, oauth2);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, oauth2);
   }
 
   public URI lookupButtonImageURL(String clientId) {

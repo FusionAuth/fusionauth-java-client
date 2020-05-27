@@ -64,11 +64,11 @@ public class RefreshToken implements Buildable<RefreshToken> {
     }
     RefreshToken that = (RefreshToken) o;
     return Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(insertInstant, that.insertInstant) &&
-        Objects.equals(metaData, that.metaData) &&
-        Objects.equals(startInstant, that.startInstant) &&
-        Objects.equals(token, that.token) &&
-        Objects.equals(userId, that.userId);
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(metaData, that.metaData) &&
+           Objects.equals(startInstant, that.startInstant) &&
+           Objects.equals(token, that.token) &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override
@@ -96,7 +96,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
       }
       MetaData metaData = (MetaData) o;
       return Objects.equals(device, metaData.device) &&
-          Objects.equals(scopes, metaData.scopes);
+             Objects.equals(scopes, metaData.scopes);
     }
 
     @Override

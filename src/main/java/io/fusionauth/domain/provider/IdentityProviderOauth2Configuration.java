@@ -63,13 +63,13 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
     }
     IdentityProviderOauth2Configuration that = (IdentityProviderOauth2Configuration) o;
     return Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
-        clientAuthenticationMethod == that.clientAuthenticationMethod &&
-        Objects.equals(client_id, that.client_id) &&
-        Objects.equals(client_secret, that.client_secret) &&
-        Objects.equals(issuer, that.issuer) &&
-        Objects.equals(scope, that.scope) &&
-        Objects.equals(token_endpoint, that.token_endpoint) &&
-        Objects.equals(userinfo_endpoint, that.userinfo_endpoint);
+           clientAuthenticationMethod == that.clientAuthenticationMethod &&
+           Objects.equals(client_id, that.client_id) &&
+           Objects.equals(client_secret, that.client_secret) &&
+           Objects.equals(issuer, that.issuer) &&
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(token_endpoint, that.token_endpoint) &&
+           Objects.equals(userinfo_endpoint, that.userinfo_endpoint);
   }
 
   @Override

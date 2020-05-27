@@ -52,9 +52,9 @@ public enum GrantType {
   // Device Code
   device_code("urn:ietf:params:oauth:grant-type:device_code");
 
-  private static Map<String, GrantType> nameMap = new HashMap<>(GrantType.values().length);
+  private static final Map<String, GrantType> nameMap = new HashMap<>(GrantType.values().length);
 
-  private String grantName;
+  private final String grantName;
 
   GrantType(final String grantName) {
     this.grantName = grantName;

@@ -30,7 +30,9 @@ public enum IdentityProviderType {
 
   SAMLv2(null),
 
-  HYPR(UUID.fromString("778985b7-6fd8-414d-acf2-94f18fb7c7e0"));
+  HYPR(UUID.fromString("778985b7-6fd8-414d-acf2-94f18fb7c7e0")),
+
+  Apple(UUID.fromString("13d2a5db-7ef9-4d62-b909-0df58612e775"));
 
   public final UUID id;
 

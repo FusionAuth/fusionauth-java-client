@@ -32,6 +32,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -97,6 +98,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public ContentStatus usernameStatus;
 
+  @JacksonConstructor
   public User() {
   }
 
@@ -164,30 +166,30 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     sort();
     user.sort();
     return super.equals(o) &&
-        Objects.equals(active, user.active) &&
-        Objects.equals(birthDate, user.birthDate) &&
-        Objects.equals(cleanSpeakId, user.cleanSpeakId) &&
-        Objects.equals(data, user.data) &&
-        Objects.equals(email, user.email) &&
-        Objects.equals(expiry, user.expiry) &&
-        Objects.equals(firstName, user.firstName) &&
-        Objects.equals(fullName, user.fullName) &&
-        Objects.equals(imageUrl, user.imageUrl) &&
-        Objects.equals(insertInstant, user.insertInstant) &&
-        Objects.equals(lastLoginInstant, user.lastLoginInstant) &&
-        Objects.equals(lastName, user.lastName) &&
-        Objects.equals(memberships, user.memberships) &&
-        Objects.equals(middleName, user.middleName) &&
-        Objects.equals(mobilePhone, user.mobilePhone) &&
-        Objects.equals(registrations, user.registrations) &&
-        Objects.equals(parentEmail, user.parentEmail) &&
-        Objects.equals(tenantId, user.tenantId) &&
-        Objects.equals(timezone, user.timezone) &&
-        Objects.equals(twoFactorDelivery, user.twoFactorDelivery) &&
-        Objects.equals(twoFactorEnabled, user.twoFactorEnabled) &&
-        Objects.equals(twoFactorSecret, user.twoFactorSecret) &&
-        Objects.equals(username, user.username) &&
-        Objects.equals(usernameStatus, user.usernameStatus);
+           Objects.equals(active, user.active) &&
+           Objects.equals(birthDate, user.birthDate) &&
+           Objects.equals(cleanSpeakId, user.cleanSpeakId) &&
+           Objects.equals(data, user.data) &&
+           Objects.equals(email, user.email) &&
+           Objects.equals(expiry, user.expiry) &&
+           Objects.equals(firstName, user.firstName) &&
+           Objects.equals(fullName, user.fullName) &&
+           Objects.equals(imageUrl, user.imageUrl) &&
+           Objects.equals(insertInstant, user.insertInstant) &&
+           Objects.equals(lastLoginInstant, user.lastLoginInstant) &&
+           Objects.equals(lastName, user.lastName) &&
+           Objects.equals(memberships, user.memberships) &&
+           Objects.equals(middleName, user.middleName) &&
+           Objects.equals(mobilePhone, user.mobilePhone) &&
+           Objects.equals(registrations, user.registrations) &&
+           Objects.equals(parentEmail, user.parentEmail) &&
+           Objects.equals(tenantId, user.tenantId) &&
+           Objects.equals(timezone, user.timezone) &&
+           Objects.equals(twoFactorDelivery, user.twoFactorDelivery) &&
+           Objects.equals(twoFactorEnabled, user.twoFactorEnabled) &&
+           Objects.equals(twoFactorSecret, user.twoFactorSecret) &&
+           Objects.equals(username, user.username) &&
+           Objects.equals(usernameStatus, user.usernameStatus);
   }
 
   @JsonIgnore

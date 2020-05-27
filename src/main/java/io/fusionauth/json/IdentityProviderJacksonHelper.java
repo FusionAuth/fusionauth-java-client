@@ -21,6 +21,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.fusionauth.domain.provider.AppleIdentityProvider;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
 import io.fusionauth.domain.provider.ExternalJWTIdentityProvider;
 import io.fusionauth.domain.provider.FacebookIdentityProvider;
@@ -56,6 +57,8 @@ public class IdentityProviderJacksonHelper {
 
   public static BaseIdentityProvider<?> newIdentityProvider(IdentityProviderType type) {
     switch (type) {
+      case Apple:
+        return new AppleIdentityProvider();
       case ExternalJWT:
         return new ExternalJWTIdentityProvider();
       case Facebook:

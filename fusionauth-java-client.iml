@@ -185,11 +185,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.1.5/fusionauth-jwt-3.1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.3.0-{integration}/fusionauth-jwt-3.3.0-{integration}.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.1.5/fusionauth-jwt-3.1.5-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-jwt/3.3.0-{integration}/fusionauth-jwt-3.3.0-{integration}-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

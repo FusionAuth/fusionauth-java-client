@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 package io.fusionauth.domain.provider;
 
 import java.net.URI;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,41 +25,36 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.RequiresCORSConfiguration;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.jwks.JSONWebKeyInfoProvider;
 import io.fusionauth.domain.util.HTTPMethod;
 
 /**
- * SAML v2 identity provider configuration.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration> implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration {
-  public final Set<String> domains = new HashSet<>();
+public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplicationConfiguration> implements Buildable<AppleIdentityProvider>, JSONWebKeyInfoProvider, RequiresCORSConfiguration {
+  public static final URI ISSUER = URI.create("https://appleid.apple.com");
 
-  @InternalJSONColumn
-  public URI buttonImageURL;
+  public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
 
   @InternalJSONColumn
   public String buttonText;
 
-  @InternalJSONColumn
-  public String emailClaim;
-
-  @InternalJSONColumn
-  public URI idpEndpoint;
-
-  @InternalJSONColumn
-  public String issuer;
-
   public UUID keyId;
 
   @InternalJSONColumn
-  public boolean useNameIdForEmail;
+  public String scope;
+
+  @InternalJSONColumn
+  public String servicesId;
+
+  @InternalJSONColumn
+  public String teamId;
 
   @Override
   @JsonIgnore
   public CORSConfiguration corsConfiguration() {
     return new CORSConfiguration().with(override -> override.allowedMethods.add(HTTPMethod.POST))
-                                  .with(override -> override.allowedOrigins.add(URI.create(idpEndpoint.getScheme() + "://" + idpEndpoint.getHost() + (idpEndpoint.getPort() == -1 ? "" : ":" + idpEndpoint.getPort()))));
+                                  .with(override -> override.allowedOrigins.add(issuer()));
   }
 
   @Override
@@ -69,45 +62,38 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SAMLv2IdentityProvider)) {
+    if (!(o instanceof AppleIdentityProvider)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
-
-    SAMLv2IdentityProvider that = (SAMLv2IdentityProvider) o;
-    return Objects.equals(domains, that.domains) &&
-           Objects.equals(buttonImageURL, that.buttonImageURL) &&
-           Objects.equals(buttonText, that.buttonText) &&
-           Objects.equals(emailClaim, that.emailClaim) &&
-           Objects.equals(idpEndpoint, that.idpEndpoint) &&
-           Objects.equals(issuer, that.issuer) &&
+    AppleIdentityProvider that = (AppleIdentityProvider) o;
+    return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(keyId, that.keyId) &&
-           useNameIdForEmail == that.useNameIdForEmail;
-  }
-
-  @Override
-  public Set<String> getDomains() {
-    return domains;
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(servicesId, that.servicesId) &&
+           Objects.equals(teamId, that.teamId);
   }
 
   @Override
   public IdentityProviderType getType() {
-    return IdentityProviderType.SAMLv2;
+    return IdentityProviderType.Apple;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, useNameIdForEmail);
+    return Objects.hash(super.hashCode(), buttonText, keyId, scope, servicesId, teamId);
   }
 
-  public URI lookupButtonImageURL(String clientId) {
-    return lookup(() -> buttonImageURL, () -> app(clientId, app -> app.buttonImageURL));
+  @Override
+  public URI issuer() {
+    return ISSUER;
   }
 
-  public URI lookupButtonImageURL(UUID applicationId) {
-    return lookup(() -> buttonImageURL, () -> app(applicationId, app -> app.buttonImageURL));
+  @Override
+  public URI jwksURI() {
+    return JWKS_URI;
   }
 
   public String lookupButtonText(String clientId) {
@@ -118,15 +104,37 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
     return lookup(() -> buttonText, () -> app(applicationId, app -> app.buttonText));
   }
 
+  public String lookupScope(String clientId) {
+    return lookup(() -> scope, () -> app(clientId, app -> app.scope));
+  }
+
+  public String lookupScope(UUID applicationId) {
+    return lookup(() -> scope, () -> app(applicationId, app -> app.scope));
+  }
+
+  public String lookupServicesId(String clientId) {
+    return lookup(() -> servicesId, () -> app(clientId, app -> app.servicesId));
+  }
+
+  public String lookupServicesId(UUID applicationId) {
+    return lookup(() -> servicesId, () -> app(applicationId, app -> servicesId));
+  }
+
+  public String lookupTeamId(String clientId) {
+    return lookup(() -> teamId, () -> app(clientId, app -> app.teamId));
+  }
+
+  public String lookupTeamId(UUID applicationId) {
+    return lookup(() -> teamId, () -> app(applicationId, app -> app.teamId));
+  }
+
   @Override
   public void normalize() {
     super.normalize();
-    normalizeDomains();
   }
 
-  public SAMLv2IdentityProvider secure() {
-    domains.clear();
-    emailClaim = null;
+  @Override
+  public AppleIdentityProvider secure() {
     return this;
   }
 

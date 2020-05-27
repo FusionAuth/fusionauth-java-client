@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,21 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.jwks;
 
-import java.util.List;
-
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+import java.net.URI;
 
 /**
- * @author Brian Pontarelli
+ * Interface for any object that can provide JSON Web key Information.
  */
-public class PendingResponse {
-  public List<User> users;
+public interface JSONWebKeyInfoProvider {
+  /**
+   * @return the Identity Provider issuer URI.
+   */
+  URI issuer();
 
-  @JacksonConstructor
-  public PendingResponse() {
-  }
-
-  public PendingResponse(List<User> users) {
-    this.users = users;
-  }
+  /**
+   * @return the URL to retrieve the JSON Web Key Set.
+   */
+  URI jwksURI();
 }

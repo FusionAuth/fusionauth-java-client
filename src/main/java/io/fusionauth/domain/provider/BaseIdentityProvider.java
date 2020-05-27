@@ -22,6 +22,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
@@ -43,6 +44,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public UUID id;
 
+  public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
+
   public String name;
 
   @Override
@@ -58,17 +61,23 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
     }
     BaseIdentityProvider<?> that = (BaseIdentityProvider<?>) o;
     return Objects.equals(applicationConfiguration, that.applicationConfiguration) &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(debug, that.debug) &&
-        Objects.equals(name, that.name) &&
-        Objects.equals(getType(), that.getType());
+           Objects.equals(data, that.data) &&
+           Objects.equals(debug, that.debug) &&
+           Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
+           Objects.equals(name, that.name) &&
+           Objects.equals(getType(), that.getType());
   }
 
   public abstract IdentityProviderType getType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, name, getType());
+    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, lambdaConfiguration, name, getType());
+  }
+
+  @JsonIgnore
+  public boolean inUse() {
+    return enabled && applicationConfiguration.values().stream().anyMatch(c -> c.enabled);
   }
 
   public boolean isEnabledForApplicationId(UUID applicationId) {

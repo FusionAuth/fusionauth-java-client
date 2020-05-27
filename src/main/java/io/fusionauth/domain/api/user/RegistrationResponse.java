@@ -25,6 +25,8 @@ import io.fusionauth.domain.UserRegistration;
  * @author Brian Pontarelli
  */
 public class RegistrationResponse {
+  public String refreshToken;
+
   public UserRegistration registration;
 
   public String token;

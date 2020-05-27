@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -38,6 +39,9 @@ public class Key implements Buildable<Key> {
 
   public ZonedDateTime expirationInstant;
 
+  // Using a non-primitive so that we can omit this from the serialized response for HMAC keys
+  public Boolean hasPrivateKey;
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
@@ -51,8 +55,6 @@ public class Key implements Buildable<Key> {
 
   public String name;
 
-  public boolean pair;
-
   public String privateKey;
 
   public String publicKey;
@@ -61,6 +63,7 @@ public class Key implements Buildable<Key> {
 
   public KeyType type;
 
+  @JacksonConstructor
   public Key() {
   }
 
@@ -69,13 +72,13 @@ public class Key implements Buildable<Key> {
     this.certificate = key.certificate;
     this.certificateInformation = key.certificateInformation;
     this.expirationInstant = key.expirationInstant;
+    this.hasPrivateKey = key.hasPrivateKey;
     this.id = key.id;
     this.insertInstant = key.insertInstant;
     this.issuer = key.issuer;
     this.kid = key.kid;
     this.length = key.length;
     this.name = key.name;
-    this.pair = key.pair;
     this.privateKey = key.privateKey;
     this.publicKey = key.publicKey;
     this.secret = key.secret;
@@ -94,13 +97,13 @@ public class Key implements Buildable<Key> {
     return Objects.equals(algorithm, key.algorithm) &&
            Objects.equals(certificateInformation, key.certificateInformation) &&
            Objects.equals(expirationInstant, key.expirationInstant) &&
+           Objects.equals(hasPrivateKey, key.hasPrivateKey) &&
            Objects.equals(id, key.id) &&
            Objects.equals(insertInstant, key.insertInstant) &&
            Objects.equals(issuer, key.issuer) &&
            Objects.equals(kid, key.kid) &&
            Objects.equals(length, key.length) &&
            Objects.equals(name, key.name) &&
-           Objects.equals(pair, key.pair) &&
            Objects.equals(privateKey, key.privateKey) &&
            Objects.equals(publicKey, key.publicKey) &&
            Objects.equals(secret, key.secret) &&
@@ -116,9 +119,14 @@ public class Key implements Buildable<Key> {
     return name + " (" + algorithm.name() + ")";
   }
 
+  @JsonIgnore
+  public boolean hasPrivateKey() {
+    return hasPrivateKey != null && hasPrivateKey;
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(algorithm, certificateInformation, expirationInstant, id, insertInstant, issuer, kid, length, name, pair, privateKey, publicKey, secret, type);
+    return Objects.hash(algorithm, certificateInformation, expirationInstant, hasPrivateKey, id, insertInstant, issuer, kid, length, name, privateKey, publicKey, secret, type);
   }
 
   @JsonIgnore
@@ -131,13 +139,11 @@ public class Key implements Buildable<Key> {
   }
 
   /**
-   * This method only works if the private key is known. It won't work on API responses since the private key is never returned.
-   *
    * @return True if the key has a public and private key.
    */
   @JsonIgnore
   public boolean isPair() {
-    return pair;
+    return (publicKey != null || certificate != null) && hasPrivateKey();
   }
 
   public void normalize() {
@@ -151,6 +157,11 @@ public class Key implements Buildable<Key> {
     if (privateKey != null) {
       privateKey = privateKey.replace("\r\n", "\n").replace("\r", "\n");
     }
+  }
+
+  @JsonIgnore
+  public boolean privateKeyOnly() {
+    return hasPrivateKey() && publicKey == null && certificate == null;
   }
 
   public Key secure() {

@@ -120,22 +120,22 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     }
     Application that = (Application) o;
     return active == that.active &&
-        verifyRegistration == that.verifyRegistration &&
-        Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
-        Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
-        Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
-        Objects.equals(loginConfiguration, that.loginConfiguration) &&
-        Objects.equals(name, that.name) &&
-        Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
-        Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
-        Objects.equals(registrationConfiguration, that.registrationConfiguration) &&
-        Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
-        Objects.equals(roles, that.roles) &&
-        Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
-        Objects.equals(tenantId, that.tenantId) &&
-        Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
+           verifyRegistration == that.verifyRegistration &&
+           Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
+           Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
+           Objects.equals(data, that.data) &&
+           Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
+           Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
+           Objects.equals(loginConfiguration, that.loginConfiguration) &&
+           Objects.equals(name, that.name) &&
+           Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
+           Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
+           Objects.equals(registrationConfiguration, that.registrationConfiguration) &&
+           Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
+           Objects.equals(roles, that.roles) &&
+           Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
+           Objects.equals(tenantId, that.tenantId) &&
+           Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
   }
 
   public ApplicationRole getRole(String name) {
@@ -172,6 +172,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     if (oauthConfiguration != null) {
       oauthConfiguration.normalize();
     }
+
+    // Null un-available JWT Configuration options
+    jwtConfiguration.refreshTokenRevocationPolicy = null;
 
     roles.forEach(ApplicationRole::normalize);
   }
@@ -235,8 +238,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       LambdaConfiguration that = (LambdaConfiguration) o;
       return Objects.equals(accessTokenPopulateId, that.accessTokenPopulateId) &&
-          Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
-          Objects.equals(samlv2PopulateId, that.samlv2PopulateId);
+             Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
+             Objects.equals(samlv2PopulateId, that.samlv2PopulateId);
     }
 
     @Override
@@ -267,8 +270,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       LoginConfiguration that = (LoginConfiguration) o;
       return requireAuthentication == that.requireAuthentication &&
-          allowTokenRefresh == that.allowTokenRefresh &&
-          generateRefreshTokens == that.generateRefreshTokens;
+             allowTokenRefresh == that.allowTokenRefresh &&
+             generateRefreshTokens == that.generateRefreshTokens;
     }
 
     @Override
@@ -336,13 +339,13 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       RegistrationConfiguration that = (RegistrationConfiguration) o;
       return confirmPassword == that.confirmPassword &&
-          Objects.equals(birthDate, that.birthDate) &&
-          Objects.equals(firstName, that.firstName) &&
-          Objects.equals(fullName, that.fullName) &&
-          Objects.equals(lastName, that.lastName) &&
-          loginIdType == that.loginIdType &&
-          Objects.equals(middleName, that.middleName) &&
-          Objects.equals(mobilePhone, that.mobilePhone);
+             Objects.equals(birthDate, that.birthDate) &&
+             Objects.equals(firstName, that.firstName) &&
+             Objects.equals(fullName, that.fullName) &&
+             Objects.equals(lastName, that.lastName) &&
+             loginIdType == that.loginIdType &&
+             Objects.equals(middleName, that.middleName) &&
+             Objects.equals(mobilePhone, that.mobilePhone);
     }
 
     @Override
@@ -388,12 +391,12 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       SAMLv2Configuration that = (SAMLv2Configuration) o;
       return Objects.equals(audience, that.audience) &&
-          Objects.equals(callbackURL, that.callbackURL) &&
-          Objects.equals(debug, that.debug) &&
-          Objects.equals(issuer, that.issuer) &&
-          Objects.equals(keyId, that.keyId) &&
-          Objects.equals(logoutURL, that.logoutURL) &&
-          Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
+             Objects.equals(callbackURL, that.callbackURL) &&
+             Objects.equals(debug, that.debug) &&
+             Objects.equals(issuer, that.issuer) &&
+             Objects.equals(keyId, that.keyId) &&
+             Objects.equals(logoutURL, that.logoutURL) &&
+             Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
     }
 
     @Override

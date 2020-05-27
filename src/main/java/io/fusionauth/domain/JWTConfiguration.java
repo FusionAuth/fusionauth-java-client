@@ -41,10 +41,19 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   @ExcludeFromDatabaseDataColumn
   public UUID idTokenKeyId;
 
+  public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy;
+
+  /**
+   * This can only be set at the tenant level.
+   */
+  public RefreshTokenRevocationPolicy refreshTokenRevocationPolicy;
+
   /**
    * The length of time in minutes a Refresh Token is valid from the time it was issued. This should be a non-zero value.
    */
   public int refreshTokenTimeToLiveInMinutes;
+
+  public RefreshTokenUsagePolicy refreshTokenUsagePolicy;
 
   /**
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
@@ -59,7 +68,10 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     this.accessTokenKeyId = other.accessTokenKeyId;
     this.enabled = other.enabled;
     this.idTokenKeyId = other.idTokenKeyId;
+    this.refreshTokenExpirationPolicy = other.refreshTokenExpirationPolicy;
+    this.refreshTokenRevocationPolicy = other.refreshTokenRevocationPolicy;
     this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
+    this.refreshTokenUsagePolicy = other.refreshTokenUsagePolicy;
     this.timeToLiveInSeconds = other.timeToLiveInSeconds;
   }
 
@@ -73,15 +85,17 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     }
     JWTConfiguration that = (JWTConfiguration) o;
     return super.equals(o) &&
-        Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
-        Objects.equals(idTokenKeyId, that.idTokenKeyId) &&
-        Objects.equals(refreshTokenTimeToLiveInMinutes, that.refreshTokenTimeToLiveInMinutes) &&
-        Objects.equals(timeToLiveInSeconds, that.timeToLiveInSeconds);
+           Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
+           Objects.equals(idTokenKeyId, that.idTokenKeyId) &&
+           Objects.equals(refreshTokenExpirationPolicy, that.refreshTokenExpirationPolicy) &&
+           Objects.equals(refreshTokenTimeToLiveInMinutes, that.refreshTokenTimeToLiveInMinutes) &&
+           Objects.equals(refreshTokenUsagePolicy, that.refreshTokenUsagePolicy) &&
+           Objects.equals(timeToLiveInSeconds, that.timeToLiveInSeconds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), accessTokenKeyId, idTokenKeyId, refreshTokenTimeToLiveInMinutes, timeToLiveInSeconds);
+    return Objects.hash(super.hashCode(), accessTokenKeyId, idTokenKeyId, refreshTokenExpirationPolicy, refreshTokenTimeToLiveInMinutes, refreshTokenUsagePolicy, timeToLiveInSeconds);
   }
 
   @Override

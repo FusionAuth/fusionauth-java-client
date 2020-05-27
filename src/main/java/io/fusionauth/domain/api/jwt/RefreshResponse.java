@@ -24,6 +24,8 @@ import io.fusionauth.domain.jwt.RefreshToken;
  * @author Daniel DeGroff
  */
 public class RefreshResponse {
+  public String refreshToken;
+
   public List<RefreshToken> refreshTokens;
 
   public String token;
@@ -32,7 +34,8 @@ public class RefreshResponse {
   public RefreshResponse() {
   }
 
-  public RefreshResponse(String token) {
+  public RefreshResponse(String refreshToken, String token) {
+    this.refreshToken = refreshToken;
     this.token = token;
   }
 
