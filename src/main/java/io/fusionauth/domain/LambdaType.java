@@ -90,18 +90,9 @@ public enum LambdaType {
       "\n" +
       "}\n"),
 
-  GenericIdpReconcile("reconcile", "" +
-      "// Using the IdP response, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, arg) {\n" +
-      "  //  This lambda can be assigned to an Apple, Facebook, Google, Twitter or\n" +
-      "  //  an ExternalJWT identity provider. The third argument named 'arg' varies based\n" +
-      "  //  upon the identity provider as follows:\n" +
-      "  //    - Apple: The id_token returned from Apple.\n" +
-      "  //    - Facebook: The user object returned from the Me API.\n" +
-      "  //    - Google: The id_token returned from Google.\n" +
-      "  //    - Twitter: The user object returned from the verify_credentials API.\n" +
-      "  //    - ExternalJWT: The validated external JWT.\n" +
-      "  //\n" +
+  AppleReconcile("reconcile", "" +
+      "// Using the idToken returned from Apple, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -114,7 +105,92 @@ public enum LambdaType {
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +
-      "}\n");
+      "}\n"),
+
+  ExternalJWTReconcile("reconcile", "" +
+      "// Using the JWT provided by an external IdP, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, jwt) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  FacebookReconcile("reconcile", "" +
+      "// Using the response from Facebook Me API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, facebookUser) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  GoogleReconcile("reconcile", "" +
+      "// Using the response from the Google Token info API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, jwt) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  HYPRReconcile("reconcile", "" +
+      "// Reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  TwitterReconcile("reconcile", "" +
+      "// Using the response from the Twitter verify_credentials API, reconcile the User and User Registration.\n" +
+       "function reconcile(user, registration, twitterUser) {\n" +
+       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+       "  //  \n" +
+       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+       "  //  console.info(JSON.stringify(user)); \n" +
+       "\n" +
+       "  // Happy coding! Reconcile the User here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
+       "}\n");
 
   private final String example;
 
