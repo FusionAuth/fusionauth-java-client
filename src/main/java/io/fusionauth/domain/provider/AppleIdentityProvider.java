@@ -104,6 +104,10 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
     return lookup(() -> buttonText, () -> app(applicationId, app -> app.buttonText));
   }
 
+  public UUID lookupKeyId(UUID applicationId) {
+    return lookup(() -> keyId, () -> app(applicationId, app -> app.keyId));
+  }
+
   public String lookupScope(String clientId) {
     return lookup(() -> scope, () -> app(clientId, app -> app.scope));
   }
