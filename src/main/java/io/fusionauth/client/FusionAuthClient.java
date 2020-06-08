@@ -763,13 +763,13 @@ public class FusionAuthClient {
   /**
    * Deletes the key for the given Id.
    *
-   * @param keyOd The Id of the key to delete.
+   * @param keyId The Id of the key to delete.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> deleteKey(UUID keyOd) {
+  public ClientResponse<Void, Errors> deleteKey(UUID keyId) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/key")
-        .urlSegment(keyOd)
+        .urlSegment(keyId)
         .delete()
         .go();
   }
