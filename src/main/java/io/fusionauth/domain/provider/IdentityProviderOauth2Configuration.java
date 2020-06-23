@@ -42,6 +42,8 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
 
   public String client_secret;
 
+  public String emailClaim;
+
   public URI issuer;
 
   public String scope;
@@ -66,6 +68,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
            clientAuthenticationMethod == that.clientAuthenticationMethod &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
+           Objects.equals(emailClaim, that.emailClaim) &&
            Objects.equals(issuer, that.issuer) &&
            Objects.equals(scope, that.scope) &&
            Objects.equals(token_endpoint, that.token_endpoint) &&
@@ -74,7 +77,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, issuer, scope, token_endpoint, userinfo_endpoint);
+    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, issuer, scope, token_endpoint, userinfo_endpoint);
   }
 
   public IdentityProviderOauth2Configuration secure() {

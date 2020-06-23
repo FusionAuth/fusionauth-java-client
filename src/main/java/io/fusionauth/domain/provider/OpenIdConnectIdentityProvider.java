@@ -24,6 +24,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
  * @author Daniel DeGroff
