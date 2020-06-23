@@ -54,6 +54,7 @@ public class LookupResponse {
 
     if (identityProvider instanceof OpenIdConnectIdentityProvider) {
       this.identityProvider.oauth2 = ((OpenIdConnectIdentityProvider) identityProvider).oauth2;
+      this.identityProvider.oauth2.emailClaim = null;
     }
 
     if (identityProvider instanceof SAMLv2IdentityProvider) {
