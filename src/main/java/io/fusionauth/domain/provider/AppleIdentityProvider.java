@@ -121,7 +121,7 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   }
 
   public String lookupServicesId(UUID applicationId) {
-    return lookup(() -> servicesId, () -> app(applicationId, app -> servicesId));
+    return lookup(() -> servicesId, () -> app(applicationId, app -> app.servicesId));
   }
 
   public String lookupTeamId(String clientId) {
