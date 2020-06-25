@@ -6,7 +6,7 @@
 
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-  <version>1.17.3</version>
+  <version>1.17.4</version>
   <packaging>jar</packaging>
 
   <name>FusionAuth Java Client Library</name>
