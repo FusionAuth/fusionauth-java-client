@@ -229,35 +229,6 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     }
   }
 
-  public static class CustomRegistration extends Enableable implements Buildable<CustomRegistration> {
-    public UUID formId;
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof CustomRegistration)) {
-        return false;
-      }
-      if (!super.equals(o)) {
-        return false;
-      }
-      CustomRegistration that = (CustomRegistration) o;
-      return Objects.equals(formId, that.formId);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(super.hashCode(), formId);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
-  }
-
   public static class LambdaConfiguration {
     public UUID accessTokenPopulateId;
 
