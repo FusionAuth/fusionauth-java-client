@@ -41,12 +41,12 @@ public class LDAPConnectorConfiguration extends BaseConnectorConfiguration imple
   public int connectTimeout;
 
   @InternalJSONColumn
-  public String loginIdAttribute;
-
-  @InternalJSONColumn
   public String identifyingAttribute;
 
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
+
+  @InternalJSONColumn
+  public String loginIdAttribute;
 
   @InternalJSONColumn
   public int readTimeout;
