@@ -15,13 +15,13 @@
  */
 package io.fusionauth.domain;
 
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -92,6 +92,7 @@ public class LogHistory {
 
     public ZonedDateTime expiry;
 
+    @JacksonConstructor
     public HistoryItem() {
     }
 
@@ -112,9 +113,9 @@ public class LogHistory {
       }
       HistoryItem that = (HistoryItem) o;
       return Objects.equals(actionerUserId, that.actionerUserId) &&
-          Objects.equals(comment, that.comment) &&
-          Objects.equals(createInstant, that.createInstant) &&
-          Objects.equals(expiry, that.expiry);
+             Objects.equals(comment, that.comment) &&
+             Objects.equals(createInstant, that.createInstant) &&
+             Objects.equals(expiry, that.expiry);
     }
 
     @Override

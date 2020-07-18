@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,30 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.provider;
+package io.fusionauth.domain.api;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import io.fusionauth.domain.util.Normalizer;
+import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.form.FormField;
 
 /**
- * Interface for all identity providers that can be domain based.
+ * The FormField API request object.
+ *
+ * @author Brett Guy
  */
-public interface DomainBasedIdentityProvider {
-  /**
-   * @return Any domains for the identity provider.
-   */
-  Set<String> getDomains();
+public class FormFieldRequest {
+  public FormField field;
 
-  /**
-   * Normalizes this IDP's domains by lower-casing them all.
-   */
-  default void normalizeDomains() {
-    Normalizer.toLowerCase(getDomains(), HashSet::new);
+  public List<FormField> fields;
+
+  @JacksonConstructor
+  public FormFieldRequest() {
   }
+
+  public FormFieldRequest(FormField field) {
+    this.field = field;
+  }
+
+  public FormFieldRequest(List<FormField> fields) { this.fields = fields; }
 }

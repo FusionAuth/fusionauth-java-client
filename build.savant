@@ -15,12 +15,12 @@
  */
 savantVersion = "1.0.0"
 
-jackson5Version = "2.4.6"
+jackson5Version = "2.4.7"
 javaErrorVersion = "2.2.2"
-fusionauthJWTVersion = "3.3.1"
+fusionauthJWTVersion = "3.4.1"
 restifyVersion = "3.4.1"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.17.5", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.18.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }

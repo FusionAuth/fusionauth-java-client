@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,10 @@ public class UserAction implements Comparable<UserAction>, Buildable<UserAction>
   public UUID id;
 
   public boolean includeEmailInEventJSON;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public LocalizedStrings localizedNames;
 
@@ -127,21 +132,24 @@ public class UserAction implements Comparable<UserAction>, Buildable<UserAction>
       return false;
     }
     UserAction that = (UserAction) o;
-    return Objects.equals(active, that.active) &&
-        Objects.equals(includeEmailInEventJSON, that.includeEmailInEventJSON) &&
-        Objects.equals(preventLogin, that.preventLogin) &&
-        Objects.equals(sendEndEvent, that.sendEndEvent) &&
-        Objects.equals(temporal, that.temporal) &&
-        Objects.equals(transactionType, that.transactionType) &&
-        Objects.equals(userNotificationsEnabled, that.userNotificationsEnabled) &&
-        Objects.equals(userEmailingEnabled, that.userEmailingEnabled) &&
-        Objects.equals(localizedNames, that.localizedNames) &&
-        Objects.equals(name, that.name) &&
-        Objects.equals(options, that.options) &&
-        Objects.equals(startEmailTemplateId, that.startEmailTemplateId) &&
-        Objects.equals(modifyEmailTemplateId, that.modifyEmailTemplateId) &&
-        Objects.equals(cancelEmailTemplateId, that.cancelEmailTemplateId) &&
-        Objects.equals(endEmailTemplateId, that.endEmailTemplateId);
+    return active == that.active &&
+           includeEmailInEventJSON == that.includeEmailInEventJSON &&
+           preventLogin == that.preventLogin &&
+           sendEndEvent == that.sendEndEvent &&
+           temporal == that.temporal &&
+           userEmailingEnabled == that.userEmailingEnabled &&
+           userNotificationsEnabled == that.userNotificationsEnabled &&
+           Objects.equals(cancelEmailTemplateId, that.cancelEmailTemplateId) &&
+           Objects.equals(endEmailTemplateId, that.endEmailTemplateId) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(localizedNames, that.localizedNames) &&
+           Objects.equals(modifyEmailTemplateId, that.modifyEmailTemplateId) &&
+           Objects.equals(name, that.name) &&
+           Objects.equals(options, that.options) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(startEmailTemplateId, that.startEmailTemplateId) &&
+           transactionType == that.transactionType;
   }
 
   @JsonIgnore
@@ -161,9 +169,7 @@ public class UserAction implements Comparable<UserAction>, Buildable<UserAction>
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, includeEmailInEventJSON, localizedNames, name, options, preventLogin, sendEndEvent,
-                        temporal, transactionType, userNotificationsEnabled, userEmailingEnabled, startEmailTemplateId,
-                        modifyEmailTemplateId, cancelEmailTemplateId, endEmailTemplateId);
+    return Objects.hash(active, cancelEmailTemplateId, endEmailTemplateId, id, includeEmailInEventJSON, localizedNames, modifyEmailTemplateId, name, options, preventLogin, insertInstant, lastUpdateInstant, sendEndEvent, startEmailTemplateId, temporal, transactionType, userEmailingEnabled, userNotificationsEnabled);
   }
 
   public void normalize() {

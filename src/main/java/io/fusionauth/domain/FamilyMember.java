@@ -35,6 +35,8 @@ public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColum
 
   public ZonedDateTime insertInstant;
 
+  public ZonedDateTime lastUpdateInstant;
+
   public boolean owner;
 
   public FamilyRole role;
@@ -48,6 +50,7 @@ public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColum
   public FamilyMember(FamilyMember familyMember) {
     this.data.putAll(familyMember.data);
     this.insertInstant = familyMember.insertInstant;
+    this.lastUpdateInstant = familyMember.lastUpdateInstant;
     this.owner = familyMember.owner;
     this.role = familyMember.role;
     this.userId = familyMember.userId;
@@ -64,6 +67,7 @@ public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColum
     FamilyMember that = (FamilyMember) o;
     return Objects.equals(data, that.data) &&
         Objects.equals(insertInstant, that.insertInstant) &&
+        Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
         owner == that.owner &&
         role == that.role &&
         Objects.equals(userId, that.userId);
@@ -71,7 +75,7 @@ public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColum
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, insertInstant, owner, role, userId);
+    return Objects.hash(data, insertInstant, lastUpdateInstant, owner, role, userId);
   }
 
   @Override

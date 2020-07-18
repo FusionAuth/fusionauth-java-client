@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,25 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.provider;
+package io.fusionauth.domain.connector;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import io.fusionauth.domain.util.Normalizer;
+import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 
 /**
- * Interface for all identity providers that can be domain based.
+ * Models the FusionAuth connector.
+ *
+ * @author Trevor Smith
  */
-public interface DomainBasedIdentityProvider {
-  /**
-   * @return Any domains for the identity provider.
-   */
-  Set<String> getDomains();
+public class FusionAuthConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<FusionAuthConnectorConfiguration> {
 
-  /**
-   * Normalizes this IDP's domains by lower-casing them all.
-   */
-  default void normalizeDomains() {
-    Normalizer.toLowerCase(getDomains(), HashSet::new);
+  @Override
+  public ConnectorType getType() {
+    return ConnectorType.FusionAuth;
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

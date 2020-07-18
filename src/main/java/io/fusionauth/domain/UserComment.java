@@ -32,18 +32,18 @@ public class UserComment implements Buildable<UserComment> {
 
   public UUID commenterId;
 
-  public ZonedDateTime createInstant;
-
   public UUID id;
+
+  public ZonedDateTime insertInstant;
 
   public UUID userId;
 
   public UserComment() {
   }
 
-  public UserComment(String comment, ZonedDateTime createInstant, UUID id, UUID userId, UUID commenterId) {
+  public UserComment(String comment, ZonedDateTime insertInstant, UUID id, UUID userId, UUID commenterId) {
     this.comment = comment;
-    this.createInstant = createInstant;
+    this.insertInstant = insertInstant;
     this.id = id;
     this.userId = userId;
     this.commenterId = commenterId;
@@ -53,7 +53,7 @@ public class UserComment implements Buildable<UserComment> {
     return new UserActionLog().with((l) -> l.actioneeUserId = userComment.userId)
                               .with((l) -> l.actionerUserId = userComment.commenterId)
                               .with((l) -> l.comment = userComment.comment)
-                              .with((l) -> l.createInstant = userComment.createInstant);
+                              .with((l) -> l.insertInstant = userComment.insertInstant);
   }
 
   @Override
@@ -66,14 +66,15 @@ public class UserComment implements Buildable<UserComment> {
     }
     UserComment that = (UserComment) o;
     return Objects.equals(comment, that.comment) &&
-        Objects.equals(commenterId, that.commenterId) &&
-        Objects.equals(createInstant, that.createInstant) &&
-        Objects.equals(userId, that.userId);
+           Objects.equals(commenterId, that.commenterId) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(comment, commenterId, createInstant, userId);
+    return Objects.hash(comment, commenterId, id, insertInstant, userId);
   }
 
   public void normalize() {

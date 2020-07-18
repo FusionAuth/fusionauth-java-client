@@ -50,6 +50,8 @@ public class Key implements Buildable<Key> {
 
   public String kid;
 
+  public ZonedDateTime lastUpdateInstant;
+
   // Response only
   public Integer length;
 
@@ -77,6 +79,7 @@ public class Key implements Buildable<Key> {
     this.insertInstant = key.insertInstant;
     this.issuer = key.issuer;
     this.kid = key.kid;
+    this.lastUpdateInstant = key.lastUpdateInstant;
     this.length = key.length;
     this.name = key.name;
     this.privateKey = key.privateKey;
@@ -94,7 +97,8 @@ public class Key implements Buildable<Key> {
       return false;
     }
     Key key = (Key) o;
-    return Objects.equals(algorithm, key.algorithm) &&
+    return algorithm == key.algorithm &&
+           Objects.equals(certificate, key.certificate) &&
            Objects.equals(certificateInformation, key.certificateInformation) &&
            Objects.equals(expirationInstant, key.expirationInstant) &&
            Objects.equals(hasPrivateKey, key.hasPrivateKey) &&
@@ -102,12 +106,13 @@ public class Key implements Buildable<Key> {
            Objects.equals(insertInstant, key.insertInstant) &&
            Objects.equals(issuer, key.issuer) &&
            Objects.equals(kid, key.kid) &&
+           Objects.equals(lastUpdateInstant, key.lastUpdateInstant) &&
            Objects.equals(length, key.length) &&
            Objects.equals(name, key.name) &&
            Objects.equals(privateKey, key.privateKey) &&
            Objects.equals(publicKey, key.publicKey) &&
            Objects.equals(secret, key.secret) &&
-           Objects.equals(type, key.type);
+           type == key.type;
   }
 
   @JsonIgnore
@@ -126,7 +131,7 @@ public class Key implements Buildable<Key> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(algorithm, certificateInformation, expirationInstant, hasPrivateKey, id, insertInstant, issuer, kid, length, name, privateKey, publicKey, secret, type);
+    return Objects.hash(algorithm, certificate, certificateInformation, expirationInstant, hasPrivateKey, id, insertInstant, issuer, kid, lastUpdateInstant, length, name, privateKey, publicKey, secret, type);
   }
 
   @JsonIgnore

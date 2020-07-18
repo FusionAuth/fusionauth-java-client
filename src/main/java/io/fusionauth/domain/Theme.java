@@ -98,18 +98,19 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     }
     Theme that = (Theme) o;
     return Objects.equals(data, that.data) &&
-        Objects.equals(defaultMessages, that.defaultMessages) &&
-        Objects.equals(insertInstant, that.insertInstant) &&
-        Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
-        Objects.equals(localizedMessages, that.localizedMessages) &&
-        Objects.equals(name, that.name) &&
-        Objects.equals(stylesheet, that.stylesheet) &&
-        Objects.equals(templates, that.templates);
+           Objects.equals(defaultMessages, that.defaultMessages) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(localizedMessages, that.localizedMessages) &&
+           Objects.equals(name, that.name) &&
+           Objects.equals(stylesheet, that.stylesheet) &&
+           Objects.equals(templates, that.templates);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, defaultMessages, insertInstant, lastUpdateInstant, localizedMessages, name, stylesheet, templates);
+    return Objects.hash(data, defaultMessages, id, insertInstant, lastUpdateInstant, localizedMessages, name, stylesheet, templates);
   }
 
   /**
@@ -170,6 +171,18 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     }
 
     stylesheet = lineReturns(stylesheet);
+  }
+
+  /**
+   * Looks up a message, if it does not exist the key is returned. This is defined here to assist with code completion in FreeMarker templates. The FusionAuth-App package overrides
+   * this with the actual lookup method.
+   *
+   * @param key       The key of the message to lookup.
+   * @param arguments Optional arguments used to format the message (printf style)/
+   * @return This version always returns an empty String.
+   */
+  public String optionalMessage(String key, Object... arguments) {
+    return "";
   }
 
   /**
@@ -281,28 +294,28 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       }
       Templates that = (Templates) o;
       return Objects.equals(emailComplete, that.emailComplete) &&
-          Objects.equals(emailSend, that.emailSend) &&
-          Objects.equals(emailVerify, that.emailVerify) &&
-          Objects.equals(helpers, that.helpers) &&
-          Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
-          Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
-          Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
-          Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
-          Objects.equals(oauth2Device, that.oauth2Device) &&
-          Objects.equals(oauth2DeviceComplete, that.oauth2DeviceComplete) &&
-          Objects.equals(oauth2Error, that.oauth2Error) &&
-          Objects.equals(oauth2Logout, that.oauth2Logout) &&
-          Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
-          Objects.equals(oauth2Register, that.oauth2Register) &&
-          Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
-          Objects.equals(oauth2Wait, that.oauth2Wait) &&
-          Objects.equals(passwordChange, that.passwordChange) &&
-          Objects.equals(passwordComplete, that.passwordComplete) &&
-          Objects.equals(passwordForgot, that.passwordForgot) &&
-          Objects.equals(passwordSent, that.passwordSent) &&
-          Objects.equals(registrationComplete, that.registrationComplete) &&
-          Objects.equals(registrationSend, that.registrationSend) &&
-          Objects.equals(registrationVerify, that.registrationVerify);
+             Objects.equals(emailSend, that.emailSend) &&
+             Objects.equals(emailVerify, that.emailVerify) &&
+             Objects.equals(helpers, that.helpers) &&
+             Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+             Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
+             Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
+             Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
+             Objects.equals(oauth2Device, that.oauth2Device) &&
+             Objects.equals(oauth2DeviceComplete, that.oauth2DeviceComplete) &&
+             Objects.equals(oauth2Error, that.oauth2Error) &&
+             Objects.equals(oauth2Logout, that.oauth2Logout) &&
+             Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
+             Objects.equals(oauth2Register, that.oauth2Register) &&
+             Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
+             Objects.equals(oauth2Wait, that.oauth2Wait) &&
+             Objects.equals(passwordChange, that.passwordChange) &&
+             Objects.equals(passwordComplete, that.passwordComplete) &&
+             Objects.equals(passwordForgot, that.passwordForgot) &&
+             Objects.equals(passwordSent, that.passwordSent) &&
+             Objects.equals(registrationComplete, that.registrationComplete) &&
+             Objects.equals(registrationSend, that.registrationSend) &&
+             Objects.equals(registrationVerify, that.registrationVerify);
     }
 
     @Override

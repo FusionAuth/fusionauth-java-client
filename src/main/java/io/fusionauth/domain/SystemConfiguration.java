@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -53,6 +54,10 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   @InternalJSONColumn
   public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
+
   @InternalJSONColumn
   public LoginRecordConfiguration loginRecordConfiguration = new LoginRecordConfiguration();
 
@@ -73,6 +78,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
            Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
            Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(corsConfiguration, that.corsConfiguration) &&
            Objects.equals(data, that.data) &&
            Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
@@ -83,7 +90,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   @Override
   public int hashCode() {
-    return Objects.hash(cookieEncryptionIV, cookieEncryptionKey, corsConfiguration, data, reportTimezone, uiConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionIV, cookieEncryptionKey, insertInstant, lastUpdateInstant, corsConfiguration, data, eventLogConfiguration, loginRecordConfiguration, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {

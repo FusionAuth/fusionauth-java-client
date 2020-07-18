@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -35,9 +36,13 @@ public class ApplicationRole implements Comparable<ApplicationRole>, Buildable<A
 
   public UUID id;
 
+  public ZonedDateTime insertInstant;
+
   public boolean isDefault;
 
   public boolean isSuperRole;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public String name;
 
@@ -72,11 +77,14 @@ public class ApplicationRole implements Comparable<ApplicationRole>, Buildable<A
       return false;
     }
     ApplicationRole that = (ApplicationRole) o;
-    return Objects.equals(isDefault, that.isDefault) &&
-        Objects.equals(isSuperRole, that.isSuperRole) &&
-        Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(description, that.description) &&
-        Objects.equals(name, that.name);
+    return isDefault == that.isDefault &&
+           isSuperRole == that.isSuperRole &&
+           Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(description, that.description) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(name, that.name);
   }
 
   @JsonIgnore
@@ -86,7 +94,7 @@ public class ApplicationRole implements Comparable<ApplicationRole>, Buildable<A
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, description, isDefault, isSuperRole, name);
+    return Objects.hash(applicationId, description, id, insertInstant, isDefault, isSuperRole, lastUpdateInstant, name);
   }
 
   public void normalize() {

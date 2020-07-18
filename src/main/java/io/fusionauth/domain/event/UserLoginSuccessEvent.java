@@ -23,6 +23,7 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
+import static io.fusionauth.domain.connector.BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
 /**
  * Models the User Login Success Event.
@@ -33,6 +34,8 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
   public UUID applicationId;
 
   public String authenticationType;
+
+  public UUID connectorId;
 
   public UUID identityProviderId;
 
@@ -47,14 +50,17 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
   public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
+    // Identity provider login always takes the FusionAuth connector Id
+    this.connectorId = FUSIONAUTH_CONNECTOR_ID;
     this.identityProviderId = identityProvider.id;
     this.identityProviderName = identityProvider.name;
     this.user = user;
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, User user) {
+  public UserLoginSuccessEvent(UUID applicationId, UUID connectorId, String authenticationType, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
+    this.connectorId = connectorId;
     this.user = user;
   }
 
@@ -63,26 +69,29 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof UserLoginSuccessEvent)) {
+      return false;
+    }
+    if (!super.equals(o)) {
       return false;
     }
     UserLoginSuccessEvent that = (UserLoginSuccessEvent) o;
-    return super.equals(o) &&
-           Objects.equals(applicationId, that.applicationId) &&
+    return Objects.equals(applicationId, that.applicationId) &&
            Objects.equals(authenticationType, that.authenticationType) &&
+           Objects.equals(connectorId, that.connectorId) &&
            Objects.equals(identityProviderId, that.identityProviderId) &&
            Objects.equals(identityProviderName, that.identityProviderName) &&
            Objects.equals(user, that.user);
   }
 
   @Override
-  public EventType getType() {
-    return EventType.UserLoginSuccess;
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, user);
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, identityProviderId, identityProviderName, user);
+  public EventType getType() {
+    return EventType.UserLoginSuccess;
   }
 
   @Override

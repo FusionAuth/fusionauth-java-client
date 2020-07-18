@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.provider;
 
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -44,35 +45,42 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public UUID id;
 
+  public ZonedDateTime insertInstant;
+
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
+
+  public ZonedDateTime lastUpdateInstant;
 
   public String name;
 
   @Override
   public boolean equals(Object o) {
+
     if (this == o) {
       return true;
     }
-    if (!(o instanceof BaseIdentityProvider<?>)) {
+    if (!(o instanceof BaseIdentityProvider)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
     BaseIdentityProvider<?> that = (BaseIdentityProvider<?>) o;
-    return Objects.equals(applicationConfiguration, that.applicationConfiguration) &&
+    return debug == that.debug &&
            Objects.equals(data, that.data) &&
-           Objects.equals(debug, that.debug) &&
+           Objects.equals(applicationConfiguration, that.applicationConfiguration) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
-           Objects.equals(name, that.name) &&
-           Objects.equals(getType(), that.getType());
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(name, that.name);
   }
 
   public abstract IdentityProviderType getType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationConfiguration, data, debug, lambdaConfiguration, name, getType());
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, name);
   }
 
   @JsonIgnore

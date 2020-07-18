@@ -15,7 +15,7 @@
  */
 package io.fusionauth.domain;
 
-import java.util.Comparator;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +33,10 @@ public class Group implements Buildable<Group>, Tenantable {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public String name;
 
@@ -62,12 +66,13 @@ public class Group implements Buildable<Group>, Tenantable {
       return false;
     }
     Group group = (Group) o;
-    roles.values().forEach(c -> c.sort(Comparator.comparing(r -> r.id)));
-    group.roles.values().forEach(c -> c.sort(Comparator.comparing(r -> r.id)));
     return Objects.equals(data, group.data) &&
-        Objects.equals(name, group.name) &&
-        Objects.equals(roles, group.roles) &&
-        Objects.equals(tenantId, group.tenantId);
+           Objects.equals(id, group.id) &&
+           Objects.equals(name, group.name) &&
+           Objects.equals(roles, group.roles) &&
+           Objects.equals(tenantId, group.tenantId) &&
+           Objects.equals(insertInstant, group.insertInstant) &&
+           Objects.equals(lastUpdateInstant, group.lastUpdateInstant);
   }
 
   @Override
@@ -77,7 +82,7 @@ public class Group implements Buildable<Group>, Tenantable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, name, roles, tenantId);
+    return Objects.hash(data, id, name, roles, tenantId, insertInstant, lastUpdateInstant);
   }
 
   @Override

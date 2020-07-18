@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,6 +31,10 @@ public class UserActionReason implements Buildable<UserActionReason>, Comparable
   public String code;
 
   public UUID id;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public LocalizedStrings localizedTexts;
 
@@ -60,13 +65,16 @@ public class UserActionReason implements Buildable<UserActionReason>, Comparable
     }
     UserActionReason that = (UserActionReason) o;
     return Objects.equals(code, that.code) &&
-        Objects.equals(localizedTexts, that.localizedTexts) &&
-        Objects.equals(text, that.text);
+           Objects.equals(id, that.id) &&
+           Objects.equals(localizedTexts, that.localizedTexts) &&
+           Objects.equals(text, that.text) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, localizedTexts, text);
+    return Objects.hash(code, id, localizedTexts, text, insertInstant, lastUpdateInstant);
   }
 
   public void normalize() {

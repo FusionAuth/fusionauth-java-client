@@ -68,17 +68,18 @@ public class AuditLog implements Buildable<AuditLog>, _InternalJSONColumn {
     }
     AuditLog auditLog = (AuditLog) o;
     return Objects.equals(data, auditLog.data) &&
-        Objects.equals(insertInstant, auditLog.insertInstant) &&
-        Objects.equals(insertUser, auditLog.insertUser) &&
-        Objects.equals(message, auditLog.message) &&
-        Objects.equals(newValue, auditLog.newValue) &&
-        Objects.equals(oldValue, auditLog.oldValue) &&
-        Objects.equals(reason, auditLog.reason);
+           Objects.equals(id, auditLog.id) &&
+           Objects.equals(insertInstant, auditLog.insertInstant) &&
+           Objects.equals(insertUser, auditLog.insertUser) &&
+           Objects.equals(message, auditLog.message) &&
+           Objects.equals(newValue, auditLog.newValue) &&
+           Objects.equals(oldValue, auditLog.oldValue) &&
+           Objects.equals(reason, auditLog.reason);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, insertInstant, insertUser, message, newValue, oldValue, reason);
+    return Objects.hash(data, id, insertInstant, insertUser, message, newValue, oldValue, reason);
   }
 
   public void normalize() {

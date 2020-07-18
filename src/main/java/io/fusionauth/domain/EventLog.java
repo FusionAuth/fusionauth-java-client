@@ -20,6 +20,7 @@ import java.io.StringWriter;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -56,6 +57,7 @@ public class EventLog implements Buildable<EventLog> {
     this.message += "\n\nException:\n" + writer.toString();
   }
 
+  @JacksonConstructor
   public EventLog() {
   }
 
@@ -68,14 +70,15 @@ public class EventLog implements Buildable<EventLog> {
       return false;
     }
     EventLog eventLog = (EventLog) o;
-    return Objects.equals(insertInstant, eventLog.insertInstant) &&
-        Objects.equals(message, eventLog.message) &&
-        Objects.equals(type, eventLog.type);
+    return Objects.equals(id, eventLog.id) &&
+           Objects.equals(insertInstant, eventLog.insertInstant) &&
+           Objects.equals(message, eventLog.message) &&
+           Objects.equals(type, eventLog.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(insertInstant, message, type);
+    return Objects.hash(id, insertInstant, message, type);
   }
 
   public String toString() {

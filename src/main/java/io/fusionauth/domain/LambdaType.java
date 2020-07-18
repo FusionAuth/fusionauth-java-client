@@ -21,6 +21,7 @@ package io.fusionauth.domain;
  * @author Brian Pontarelli
  */
 public enum LambdaType {
+  // @formatter:off
   JWTPopulate("populate", "" +
       "// Using the user and registration parameters add additional values to the jwt object.\n" +
       "function populate(jwt, user, registration) {\n" +
@@ -143,7 +144,7 @@ public enum LambdaType {
 
   GoogleReconcile("reconcile", "" +
       "// Using the response from the Google Token info API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, jwt) {\n" +
+      "function reconcile(user, registration, idToken) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -190,7 +191,25 @@ public enum LambdaType {
        "\n" +
        "  console.info('Hello World!');" +
        "\n" +
-       "}\n");
+      "}\n"),
+
+  LDAPConnectorReconcile("reconcile", "" +
+      "// Using the response from an LDAP connector, reconcile the User.\n" +
+      "function reconcile(user, userAttributes) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n");
+  // @formatter:on
 
   private final String example;
 

@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -49,10 +50,14 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public UUID id;
 
+  public ZonedDateTime insertInstant;
+
   @InternalJSONColumn
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
+
+  public ZonedDateTime lastUpdateInstant;
 
   @InternalJSONColumn
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
@@ -115,7 +120,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof Application)) {
       return false;
     }
     Application that = (Application) o;
@@ -124,6 +129,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
            Objects.equals(data, that.data) &&
+           Objects.equals(id, that.id) &&
            Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
            Objects.equals(loginConfiguration, that.loginConfiguration) &&
@@ -134,6 +140,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
   }
@@ -159,7 +167,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {
@@ -213,6 +221,35 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     @Override
     public int hashCode() {
       return Objects.hash(super.hashCode());
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class CustomRegistration extends Enableable implements Buildable<CustomRegistration> {
+    public UUID formId;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof CustomRegistration)) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      CustomRegistration that = (CustomRegistration) o;
+      return Objects.equals(formId, that.formId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), formId);
     }
 
     @Override
@@ -316,6 +353,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public Requirable firstName = new Requirable();
 
+    public UUID formId;
+
     public Requirable fullName = new Requirable();
 
     public Requirable lastName = new Requirable();
@@ -326,12 +365,14 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public Requirable mobilePhone = new Requirable();
 
+    public RegistrationType type;
+
     @Override
     public boolean equals(Object o) {
       if (this == o) {
         return true;
       }
-      if (o == null || getClass() != o.getClass()) {
+      if (!(o instanceof RegistrationConfiguration)) {
         return false;
       }
       if (!super.equals(o)) {
@@ -341,16 +382,18 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       return confirmPassword == that.confirmPassword &&
              Objects.equals(birthDate, that.birthDate) &&
              Objects.equals(firstName, that.firstName) &&
+             Objects.equals(formId, that.formId) &&
              Objects.equals(fullName, that.fullName) &&
              Objects.equals(lastName, that.lastName) &&
              loginIdType == that.loginIdType &&
              Objects.equals(middleName, that.middleName) &&
-             Objects.equals(mobilePhone, that.mobilePhone);
+             Objects.equals(mobilePhone, that.mobilePhone) &&
+             type == that.type;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, fullName, lastName, loginIdType, middleName, mobilePhone);
+      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, type);
     }
 
     public String toString() {
@@ -360,6 +403,11 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     public enum LoginIdType {
       email,
       username
+    }
+
+    public enum RegistrationType {
+      basic,
+      advanced
     }
   }
 
@@ -413,7 +461,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
       inclusive_with_comments(javax.xml.crypto.dsig.CanonicalizationMethod.INCLUSIVE_WITH_COMMENTS);
 
-      private String uri;
+      private final String uri;
 
       CanonicalizationMethod(String uri) {
         this.uri = uri;

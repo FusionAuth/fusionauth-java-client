@@ -25,6 +25,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
  * External JWT-only identity provider.
@@ -86,7 +87,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   @Override
   public void normalize() {
     super.normalize();
-    normalizeDomains();
+    Normalizer.toLowerCase(domains, HashSet::new);
   }
 
   public ExternalJWTIdentityProvider secure() {

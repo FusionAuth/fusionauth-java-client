@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,8 +27,8 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.Normalizer;
 
@@ -54,6 +55,10 @@ public class Consent implements Buildable<Consent>, _InternalJSONColumn {
   public EmailPlus emailPlus = new EmailPlus();
 
   public UUID id;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   @InternalJSONColumn
   public boolean multipleValuesAllowed;
@@ -85,16 +90,18 @@ public class Consent implements Buildable<Consent>, _InternalJSONColumn {
     if (!(o instanceof Consent)) {
       return false;
     }
-    Consent that = (Consent) o;
-    return multipleValuesAllowed == that.multipleValuesAllowed &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(consentEmailTemplateId, that.consentEmailTemplateId) &&
-        Objects.equals(countryMinimumAgeForSelfConsent, that.countryMinimumAgeForSelfConsent) &&
-        Objects.equals(defaultMinimumAgeForSelfConsent, that.defaultMinimumAgeForSelfConsent) &&
-        Objects.equals(emailPlus, that.emailPlus) &&
-        Objects.equals(id, that.id) &&
-        Objects.equals(name, that.name) &&
-        Objects.equals(values, that.values);
+    Consent consent = (Consent) o;
+    return multipleValuesAllowed == consent.multipleValuesAllowed &&
+           Objects.equals(data, consent.data) &&
+           Objects.equals(consentEmailTemplateId, consent.consentEmailTemplateId) &&
+           Objects.equals(countryMinimumAgeForSelfConsent, consent.countryMinimumAgeForSelfConsent) &&
+           Objects.equals(defaultMinimumAgeForSelfConsent, consent.defaultMinimumAgeForSelfConsent) &&
+           Objects.equals(emailPlus, consent.emailPlus) &&
+           Objects.equals(id, consent.id) &&
+           Objects.equals(insertInstant, consent.insertInstant) &&
+           Objects.equals(lastUpdateInstant, consent.lastUpdateInstant) &&
+           Objects.equals(name, consent.name) &&
+           Objects.equals(values, consent.values);
   }
 
   @JsonIgnore
@@ -111,7 +118,7 @@ public class Consent implements Buildable<Consent>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, consentEmailTemplateId, countryMinimumAgeForSelfConsent, defaultMinimumAgeForSelfConsent, emailPlus, id, multipleValuesAllowed, name, values);
+    return Objects.hash(data, consentEmailTemplateId, countryMinimumAgeForSelfConsent, defaultMinimumAgeForSelfConsent, emailPlus, id, insertInstant, lastUpdateInstant, multipleValuesAllowed, name, values);
   }
 
   public void normalize() {
@@ -150,8 +157,8 @@ public class Consent implements Buildable<Consent>, _InternalJSONColumn {
       }
       EmailPlus emailPlus = (EmailPlus) o;
       return maximumTimeToSendEmailInHours == emailPlus.maximumTimeToSendEmailInHours &&
-          minimumTimeToSendEmailInHours == emailPlus.minimumTimeToSendEmailInHours &&
-          Objects.equals(emailTemplateId, emailPlus.emailTemplateId);
+             minimumTimeToSendEmailInHours == emailPlus.minimumTimeToSendEmailInHours &&
+             Objects.equals(emailTemplateId, emailPlus.emailTemplateId);
     }
 
     @Override

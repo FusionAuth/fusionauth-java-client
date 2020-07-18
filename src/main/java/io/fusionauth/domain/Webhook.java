@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -57,6 +58,10 @@ public class Webhook implements Buildable<Webhook>, _InternalJSONColumn {
 
   public UUID id;
 
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
+
   public Integer readTimeout;
 
   public String sslCertificate;
@@ -71,27 +76,27 @@ public class Webhook implements Buildable<Webhook>, _InternalJSONColumn {
     if (!(o instanceof Webhook)) {
       return false;
     }
-    Webhook that = (Webhook) o;
-    applicationIds.sort(UUID::compareTo);
-    that.applicationIds.sort(UUID::compareTo);
-    return Objects.equals(global, that.global) &&
-        Objects.equals(applicationIds, that.applicationIds) &&
-        Objects.equals(connectTimeout, that.connectTimeout) &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(description, that.description) &&
-        Objects.equals(eventsEnabled, that.eventsEnabled) &&
-        Objects.equals(headers, that.headers) &&
-        Objects.equals(httpAuthenticationPassword, that.httpAuthenticationPassword) &&
-        Objects.equals(httpAuthenticationUsername, that.httpAuthenticationUsername) &&
-        Objects.equals(readTimeout, that.readTimeout) &&
-        Objects.equals(sslCertificate, that.sslCertificate) &&
-        Objects.equals(url, that.url);
+    Webhook webhook = (Webhook) o;
+    return global == webhook.global &&
+           Objects.equals(applicationIds, webhook.applicationIds) &&
+           Objects.equals(connectTimeout, webhook.connectTimeout) &&
+           Objects.equals(data, webhook.data) &&
+           Objects.equals(description, webhook.description) &&
+           Objects.equals(eventsEnabled, webhook.eventsEnabled) &&
+           Objects.equals(headers, webhook.headers) &&
+           Objects.equals(httpAuthenticationPassword, webhook.httpAuthenticationPassword) &&
+           Objects.equals(httpAuthenticationUsername, webhook.httpAuthenticationUsername) &&
+           Objects.equals(id, webhook.id) &&
+           Objects.equals(insertInstant, webhook.insertInstant) &&
+           Objects.equals(lastUpdateInstant, webhook.lastUpdateInstant) &&
+           Objects.equals(readTimeout, webhook.readTimeout) &&
+           Objects.equals(sslCertificate, webhook.sslCertificate) &&
+           Objects.equals(url, webhook.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationIds, connectTimeout, data, description, eventsEnabled, global, headers, httpAuthenticationPassword, httpAuthenticationUsername,
-                        readTimeout, sslCertificate, url);
+    return Objects.hash(applicationIds, connectTimeout, data, description, eventsEnabled, global, headers, httpAuthenticationPassword, httpAuthenticationUsername, id, insertInstant, lastUpdateInstant, readTimeout, sslCertificate, url);
   }
 
   public void normalize() {

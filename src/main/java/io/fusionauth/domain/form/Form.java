@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,26 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.form;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
- * Models a family grouping of users.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class Family implements Buildable<Family>, _InternalJSONColumn {
-  public final List<FamilyMember> members = new ArrayList<>();
+public class Form implements Buildable<Form>, _InternalJSONColumn {
+  public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;
 
@@ -39,44 +40,39 @@ public class Family implements Buildable<Family>, _InternalJSONColumn {
 
   public ZonedDateTime lastUpdateInstant;
 
-  @JacksonConstructor
-  public Family() {
-  }
+  public String name;
 
-  public Family(UUID id) {
-    this.id = id;
-  }
+  public List<FormStep> steps = new ArrayList<>();
 
-  public Family(UUID id, List<FamilyMember> members) {
-    this.id = id;
-    this.members.addAll(members);
-  }
+  public FormType type = FormType.registration;
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Family)) {
+    if (!(o instanceof Form)) {
       return false;
     }
-    Family family = (Family) o;
-    return Objects.equals(id, family.id) &&
-           Objects.equals(insertInstant, family.insertInstant) &&
-           Objects.equals(lastUpdateInstant, family.lastUpdateInstant) &&
-           Objects.equals(members, family.members);
-  }
-
-  public FamilyMember getMember(UUID userId) {
-    return members.stream()
-                  .filter(fm -> fm.userId.equals(userId))
-                  .findFirst()
-                  .orElse(null);
+    Form form = (Form) o;
+    return Objects.equals(data, form.data) &&
+           Objects.equals(id, form.id) &&
+           Objects.equals(insertInstant, form.insertInstant) &&
+           Objects.equals(lastUpdateInstant, form.lastUpdateInstant) &&
+           Objects.equals(name, form.name) &&
+           Objects.equals(steps, form.steps) &&
+           type == form.type;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, insertInstant, lastUpdateInstant, members);
+    return Objects.hash(data, id, insertInstant, lastUpdateInstant, name, steps, type);
+  }
+
+  public void normalize() {
+    Normalizer.removeEmpty(data);
+    Normalizer.removeEmpty(steps);
+    steps.removeIf(step -> step.fields.isEmpty());
   }
 
   @Override

@@ -80,9 +80,9 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
     }
     CleanSpeakConfiguration that = (CleanSpeakConfiguration) o;
     return super.equals(o) &&
-        Objects.equals(apiKey, that.apiKey) &&
-        Objects.equals(usernameModeration, that.usernameModeration) &&
-        Objects.equals(url, that.url);
+           Objects.equals(apiKey, that.apiKey) &&
+           Objects.equals(usernameModeration, that.usernameModeration) &&
+           Objects.equals(url, that.url);
   }
 
   @Override
@@ -120,7 +120,7 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
       }
       UsernameModeration that = (UsernameModeration) o;
       return super.equals(o) &&
-          Objects.equals(applicationId, that.applicationId);
+             Objects.equals(applicationId, that.applicationId);
     }
 
     @Override

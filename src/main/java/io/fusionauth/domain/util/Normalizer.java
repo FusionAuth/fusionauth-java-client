@@ -17,9 +17,12 @@ package io.fusionauth.domain.util;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Helper methods for normalizing values.
@@ -52,6 +55,23 @@ public final class Normalizer {
         map.put(key, value.replaceAll("\\r\\n|\\r", "\n"));
       }
     });
+  }
+
+  /**
+   * Lowercase the string values of the collection using the provided collection reference.
+   *
+   * @param collection the collection
+   * @param supplier   a collections supplier
+   * @param <T>        the type of collection
+   */
+  public static <T extends Collection<String>> void toLowerCase(Collection<String> collection, Supplier<T> supplier) {
+    if (collection.isEmpty()) {
+      return;
+    }
+
+    Collection<String> lc = collection.stream().map(String::toLowerCase).collect(Collectors.toCollection(supplier));
+    collection.clear();
+    collection.addAll(lc);
   }
 
   /**

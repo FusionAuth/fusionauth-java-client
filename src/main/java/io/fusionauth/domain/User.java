@@ -74,9 +74,9 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public ZonedDateTime insertInstant;
 
-  public ZonedDateTime lastLoginInstant;
-
   public String lastName;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public String middleName;
 
@@ -88,22 +88,13 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public ZoneId timezone;
 
-  public TwoFactorDelivery twoFactorDelivery;
-
-  public boolean twoFactorEnabled;
-
-  public String twoFactorSecret;
-
-  public String username;
-
-  public ContentStatus usernameStatus;
-
   @JacksonConstructor
   public User() {
   }
 
   public User(User other) {
     this.active = other.active;
+    this.connectorId = other.connectorId;
     this.breachedPasswordLastCheckedInstant = other.breachedPasswordLastCheckedInstant;
     this.breachedPasswordStatus = other.breachedPasswordStatus;
     this.birthDate = other.birthDate;
@@ -118,6 +109,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.imageUrl = other.imageUrl;
     this.insertInstant = other.insertInstant;
     this.lastLoginInstant = other.lastLoginInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
     this.lastName = other.lastName;
     this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
     this.middleName = other.middleName;
@@ -162,11 +154,16 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     if (!(o instanceof User)) {
       return false;
     }
+    if (!super.equals(o)) {
+      return false;
+    }
     User user = (User) o;
     sort();
     user.sort();
-    return super.equals(o) &&
-           Objects.equals(active, user.active) &&
+    return active == user.active &&
+           Objects.equals(preferredLanguages, user.preferredLanguages) &&
+           Objects.equals(memberships, user.memberships) &&
+           Objects.equals(registrations, user.registrations) &&
            Objects.equals(birthDate, user.birthDate) &&
            Objects.equals(cleanSpeakId, user.cleanSpeakId) &&
            Objects.equals(data, user.data) &&
@@ -176,20 +173,13 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
            Objects.equals(fullName, user.fullName) &&
            Objects.equals(imageUrl, user.imageUrl) &&
            Objects.equals(insertInstant, user.insertInstant) &&
-           Objects.equals(lastLoginInstant, user.lastLoginInstant) &&
            Objects.equals(lastName, user.lastName) &&
-           Objects.equals(memberships, user.memberships) &&
+           Objects.equals(lastUpdateInstant, user.lastUpdateInstant) &&
            Objects.equals(middleName, user.middleName) &&
            Objects.equals(mobilePhone, user.mobilePhone) &&
-           Objects.equals(registrations, user.registrations) &&
            Objects.equals(parentEmail, user.parentEmail) &&
            Objects.equals(tenantId, user.tenantId) &&
-           Objects.equals(timezone, user.timezone) &&
-           Objects.equals(twoFactorDelivery, user.twoFactorDelivery) &&
-           Objects.equals(twoFactorEnabled, user.twoFactorEnabled) &&
-           Objects.equals(twoFactorSecret, user.twoFactorSecret) &&
-           Objects.equals(username, user.username) &&
-           Objects.equals(usernameStatus, user.usernameStatus);
+           Objects.equals(timezone, user.timezone);
   }
 
   @JsonIgnore
@@ -199,6 +189,13 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     }
 
     return (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);
+  }
+
+  public GroupMember getGroupMemberForGroup(UUID id) {
+    return getMemberships().stream()
+                           .filter(m -> m.id.equals(id))
+                           .findFirst()
+                           .orElse(null);
   }
 
   /**
@@ -267,9 +264,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant,
-                        lastLoginInstant, lastName, memberships, middleName, mobilePhone, registrations, parentEmail, tenantId, timezone,
-                        twoFactorDelivery, twoFactorEnabled, twoFactorSecret, username, usernameStatus);
+    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone);
   }
 
   /**
@@ -320,6 +315,11 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     if (username != null && username.length() == 0) {
       username = null;
     }
+
+    // Clear out groups that don't have groupId
+    memberships.removeIf(m -> m.groupId == null);
+
+    // Normalize the registrations
     getRegistrations().forEach(UserRegistration::normalize);
   }
 

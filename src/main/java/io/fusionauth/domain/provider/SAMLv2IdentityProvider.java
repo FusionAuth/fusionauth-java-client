@@ -28,6 +28,7 @@ import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.RequiresCORSConfiguration;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.HTTPMethod;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
  * SAML v2 identity provider configuration.

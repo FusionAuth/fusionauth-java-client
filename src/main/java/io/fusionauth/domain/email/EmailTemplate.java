@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.email;
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
@@ -45,6 +46,10 @@ public class EmailTemplate implements Buildable<EmailTemplate> {
   public String fromEmail;
 
   public UUID id;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public LocalizedStrings localizedFromNames = new LocalizedStrings();
 
@@ -97,16 +102,19 @@ public class EmailTemplate implements Buildable<EmailTemplate> {
       return false;
     }
     EmailTemplate that = (EmailTemplate) o;
-    return Objects.equals(fromEmail, that.fromEmail) &&
-        Objects.equals(defaultFromName, that.defaultFromName) &&
-        Objects.equals(defaultHtmlTemplate, that.defaultHtmlTemplate) &&
-        Objects.equals(defaultSubject, that.defaultSubject) &&
-        Objects.equals(defaultTextTemplate, that.defaultTextTemplate) &&
-        Objects.equals(localizedFromNames, that.localizedFromNames) &&
-        Objects.equals(localizedHtmlTemplates, that.localizedHtmlTemplates) &&
-        Objects.equals(localizedSubjects, that.localizedSubjects) &&
-        Objects.equals(localizedTextTemplates, that.localizedTextTemplates) &&
-        Objects.equals(name, that.name);
+    return Objects.equals(defaultFromName, that.defaultFromName) &&
+           Objects.equals(defaultHtmlTemplate, that.defaultHtmlTemplate) &&
+           Objects.equals(defaultSubject, that.defaultSubject) &&
+           Objects.equals(defaultTextTemplate, that.defaultTextTemplate) &&
+           Objects.equals(fromEmail, that.fromEmail) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(localizedFromNames, that.localizedFromNames) &&
+           Objects.equals(localizedHtmlTemplates, that.localizedHtmlTemplates) &&
+           Objects.equals(localizedSubjects, that.localizedSubjects) &&
+           Objects.equals(localizedTextTemplates, that.localizedTextTemplates) &&
+           Objects.equals(name, that.name);
   }
 
   @JsonIgnore
@@ -120,8 +128,7 @@ public class EmailTemplate implements Buildable<EmailTemplate> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(defaultFromName, fromEmail, defaultHtmlTemplate, defaultSubject, defaultTextTemplate, localizedFromNames,
-                        localizedHtmlTemplates, localizedSubjects, localizedTextTemplates, name);
+    return Objects.hash(defaultFromName, defaultHtmlTemplate, defaultSubject, defaultTextTemplate, fromEmail, id, insertInstant, lastUpdateInstant, localizedFromNames, localizedHtmlTemplates, localizedSubjects, localizedTextTemplates, name);
   }
 
   public void normalize() {

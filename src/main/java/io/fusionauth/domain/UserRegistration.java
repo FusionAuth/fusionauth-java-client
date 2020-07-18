@@ -60,6 +60,8 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   public ZonedDateTime lastLoginInstant;
 
+  public ZonedDateTime lastUpdateInstant;
+
   public SortedSet<String> roles = new TreeSet<>();
 
   public ZoneId timezone;
@@ -87,6 +89,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
     this.id = userRegistration.id;
     this.insertInstant = userRegistration.insertInstant;
     this.lastLoginInstant = userRegistration.lastLoginInstant;
+    this.lastUpdateInstant = userRegistration.lastUpdateInstant;
     this.preferredLanguages.addAll(userRegistration.preferredLanguages);
     this.roles.addAll(userRegistration.roles);
     this.timezone = userRegistration.timezone;
@@ -114,17 +117,21 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
       return false;
     }
     UserRegistration that = (UserRegistration) o;
-    return Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(authenticationToken, that.authenticationToken) &&
-        Objects.equals(cleanSpeakId, that.cleanSpeakId) &&
-        Objects.equals(data, that.data) &&
-        Objects.equals(insertInstant, that.insertInstant) &&
-        Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
-        Objects.equals(roles, that.roles) &&
-        Objects.equals(tokens, that.tokens) &&
-        Objects.equals(username, that.username) &&
-        Objects.equals(usernameStatus, that.usernameStatus) &&
-        Objects.equals(verified, that.verified);
+    return verified == that.verified &&
+           Objects.equals(data, that.data) &&
+           Objects.equals(preferredLanguages, that.preferredLanguages) &&
+           Objects.equals(tokens, that.tokens) &&
+           Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(authenticationToken, that.authenticationToken) &&
+           Objects.equals(cleanSpeakId, that.cleanSpeakId) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
+           Objects.equals(roles, that.roles) &&
+           Objects.equals(timezone, that.timezone) &&
+           Objects.equals(username, that.username) &&
+           usernameStatus == that.usernameStatus;
   }
 
   /**
@@ -138,7 +145,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, authenticationToken, cleanSpeakId, data, insertInstant, lastLoginInstant, roles, tokens, username, usernameStatus);
+    return Objects.hash(data, preferredLanguages, tokens, applicationId, authenticationToken, cleanSpeakId, id, insertInstant, lastUpdateInstant, lastLoginInstant, roles, timezone, username, usernameStatus, verified);
   }
 
   public void normalize() {

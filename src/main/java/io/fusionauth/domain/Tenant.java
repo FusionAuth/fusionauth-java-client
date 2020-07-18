@@ -16,14 +16,21 @@
 package io.fusionauth.domain;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.connector.BaseConnectorConfiguration;
+import io.fusionauth.domain.connector.ConnectorPolicy;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.Normalizer;
@@ -37,6 +44,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @InternalJSONColumn
   public boolean configured;
+
+  public List<ConnectorPolicy> connectorPolicies = new ArrayList<>();
 
   @InternalJSONColumn
   public EmailConfiguration emailConfiguration = new EmailConfiguration();
@@ -64,11 +73,15 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public UUID id;
 
+  public ZonedDateTime insertInstant;
+
   @InternalJSONColumn
   public String issuer;
 
   @InternalJSONColumn
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
+
+  public ZonedDateTime lastUpdateInstant;
 
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
@@ -102,6 +115,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public Tenant(Tenant other) {
     this.configured = other.configured;
+    this.connectorPolicies.addAll(other.connectorPolicies.stream().map(ConnectorPolicy::new).collect(Collectors.toList()));
     this.data.putAll(other.data);
     this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
     this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
@@ -110,8 +124,10 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.familyConfiguration = new FamilyConfiguration(other.familyConfiguration);
     this.httpSessionMaxInactiveInterval = other.httpSessionMaxInactiveInterval;
     this.id = other.id;
+    this.insertInstant = other.insertInstant;
     this.issuer = other.issuer;
     this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
+    this.lastUpdateInstant = other.lastUpdateInstant;
     this.logoutURL = other.logoutURL;
     this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
     this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
@@ -127,19 +143,23 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof Tenant)) {
       return false;
     }
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
            Objects.equals(data, tenant.data) &&
+           Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
            Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
            Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
            Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
            Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
+           Objects.equals(id, tenant.id) &&
            Objects.equals(issuer, tenant.issuer) &&
+           Objects.equals(insertInstant, tenant.insertInstant) &&
+           Objects.equals(lastUpdateInstant, tenant.lastUpdateInstant) &&
            Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
            Objects.equals(logoutURL, tenant.logoutURL) &&
            Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
@@ -151,11 +171,14 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(userDeletePolicy, tenant.userDeletePolicy);
   }
 
+  @JsonIgnore
+  public ConnectorPolicy getPolicyByConnectorId(UUID connectorId) {
+    return connectorPolicies.stream().filter(reg -> reg.connectorId.equals(connectorId)).findFirst().orElse(null);
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, emailConfiguration, eventConfiguration, externalIdentifierConfiguration,
-                        failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, issuer,
-                        jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
+    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
   }
 
   @JsonIgnore
@@ -177,6 +200,21 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     Normalizer.removeEmpty(data);
     name = trim(name);
     emailConfiguration.normalize();
+
+    // Lower case any domain entries
+    connectorPolicies.forEach(policy -> Normalizer.toLowerCase(policy.domains, HashSet::new));
+
+    // Always have the FusionAuth Connector if the policies are empty (default) or ensure that the FusionAuth policy is migrate=false and '*' domains
+    if (connectorPolicies.isEmpty()) {
+      connectorPolicies.add(new ConnectorPolicy().with(cp -> cp.connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID)
+                                                 .with(cp -> cp.domains.add("*")));
+    } else {
+      connectorPolicies.stream()
+                       .filter(cp -> cp.connectorId.equals(BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID))
+                       .forEach(cp -> cp.with(cpInner -> cpInner.domains.clear())
+                                        .with(cpInner -> cpInner.domains.add("*"))
+                                        .with(cpInner -> cpInner.migrate = false));
+    }
   }
 
   public Tenant secure() {

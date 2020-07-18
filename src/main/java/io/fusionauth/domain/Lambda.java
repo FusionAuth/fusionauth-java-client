@@ -35,6 +35,8 @@ public class Lambda extends Enableable implements Buildable<Lambda> {
 
   public ZonedDateTime insertInstant;
 
+  public ZonedDateTime lastUpdateInstant;
+
   public String name;
 
   public LambdaType type;
@@ -50,6 +52,7 @@ public class Lambda extends Enableable implements Buildable<Lambda> {
     this.enabled = lambda.enabled;
     this.id = lambda.id;
     this.insertInstant = lambda.insertInstant;
+    this.lastUpdateInstant = lambda.lastUpdateInstant;
     this.type = lambda.type;
   }
 
@@ -65,16 +68,18 @@ public class Lambda extends Enableable implements Buildable<Lambda> {
       return false;
     }
     Lambda lambda = (Lambda) o;
-    return Objects.equals(body, lambda.body) &&
-        Objects.equals(debug, lambda.debug) &&
-        Objects.equals(name, lambda.name) &&
-        Objects.equals(insertInstant, lambda.insertInstant) &&
-        type == lambda.type;
+    return debug == lambda.debug &&
+           Objects.equals(body, lambda.body) &&
+           Objects.equals(id, lambda.id) &&
+           Objects.equals(insertInstant, lambda.insertInstant) &&
+           Objects.equals(lastUpdateInstant, lambda.lastUpdateInstant) &&
+           Objects.equals(name, lambda.name) &&
+           type == lambda.type;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), body, debug, name, insertInstant, type);
+    return Objects.hash(super.hashCode(), body, debug, id, insertInstant, lastUpdateInstant, name, type);
   }
 
   public String toString() {
