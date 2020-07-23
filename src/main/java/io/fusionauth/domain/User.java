@@ -32,6 +32,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
@@ -48,6 +50,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  */
 public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn, Tenantable {
   @InternalJSONColumn
+  @JsonSetter(nulls = Nulls.AS_EMPTY)
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   private final List<GroupMember> memberships = new ArrayList<>();
@@ -310,7 +313,10 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
-    preferredLanguages.removeIf(Objects::isNull);
+    if(preferredLanguages != null) {
+      preferredLanguages.removeIf(Objects::isNull);
+    }
+
     username = trim(username);
     if (username != null && username.length() == 0) {
       username = null;
