@@ -27,6 +27,7 @@ import com.inversoft.json.JacksonConstructor;
 /**
  * @author Daniel DeGroff
  */
+@SuppressWarnings("unused")
 public class SendRequest {
   public List<String> bccAddresses;
 
@@ -50,6 +51,10 @@ public class SendRequest {
   public SendRequest(List<UUID> userIds, Map<String, Object> requestData) {
     this.userIds = userIds;
     this.requestData = requestData;
+  }
+
+  public SendRequest(List<UUID> userIds) {
+    this.userIds = userIds;
   }
 
   public SendRequest normalize() {
