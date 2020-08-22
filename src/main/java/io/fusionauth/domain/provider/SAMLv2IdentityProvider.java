@@ -38,9 +38,6 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public final Set<String> domains = new HashSet<>();
 
   @InternalJSONColumn
-  public boolean allowResponseReplay;
-
-  @InternalJSONColumn
   public URI buttonImageURL;
 
   @InternalJSONColumn
@@ -83,8 +80,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
       return false;
     }
     SAMLv2IdentityProvider that = (SAMLv2IdentityProvider) o;
-    return allowResponseReplay == that.allowResponseReplay &&
-           useNameIdForEmail == that.useNameIdForEmail &&
+    return useNameIdForEmail == that.useNameIdForEmail &&
            Objects.equals(domains, that.domains) &&
            Objects.equals(buttonImageURL, that.buttonImageURL) &&
            Objects.equals(buttonText, that.buttonText) &&
@@ -106,7 +102,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, allowResponseReplay, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, useNameIdForEmail);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, useNameIdForEmail);
   }
 
   public URI lookupButtonImageURL(String clientId) {
