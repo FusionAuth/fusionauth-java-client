@@ -33,13 +33,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
 
   /**
-   * Base64 encoded Initialization Vector for prime-mvc. This is currently only used to encrypt and de-crypt saved
-   * request cookies.
-   */
-  @InternalJSONColumn
-  public String cookieEncryptionIV;
-
-  /**
    * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
    * cookies.
    */
@@ -71,18 +64,17 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SystemConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     SystemConfiguration that = (SystemConfiguration) o;
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
-           Objects.equals(cookieEncryptionIV, that.cookieEncryptionIV) &&
            Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
-           Objects.equals(insertInstant, that.insertInstant) &&
-           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(corsConfiguration, that.corsConfiguration) &&
            Objects.equals(data, that.data) &&
            Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration);
@@ -90,7 +82,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionIV, cookieEncryptionKey, insertInstant, lastUpdateInstant, corsConfiguration, data, eventLogConfiguration, loginRecordConfiguration, reportTimezone, uiConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {
@@ -103,7 +95,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   }
 
   public SystemConfiguration secure() {
-    cookieEncryptionIV = null;
     cookieEncryptionKey = null;
     return this;
   }

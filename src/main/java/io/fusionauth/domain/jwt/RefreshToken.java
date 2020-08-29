@@ -15,7 +15,10 @@
  */
 package io.fusionauth.domain.jwt;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -24,17 +27,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.JWTConfiguration;
+import io.fusionauth.domain.Tenant;
+import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
  * Models a JWT Refresh Token.
  *
  * @author Daniel DeGroff
  */
-public class RefreshToken implements Buildable<RefreshToken> {
+public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColumn {
   @JsonIgnore
   public Application application;
 
   public UUID applicationId;
+
+  public Map<String, Object> data = new LinkedHashMap<>();
+
+  public UUID id;
 
   /**
    * The time this token was created. The start time of this token may be prior to the insert instant when generating
@@ -42,6 +53,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
    */
   public ZonedDateTime insertInstant;
 
+  @InternalJSONColumn
   public MetaData metaData = new MetaData();
 
   /**
@@ -64,6 +76,8 @@ public class RefreshToken implements Buildable<RefreshToken> {
     }
     RefreshToken that = (RefreshToken) o;
     return Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(data, that.data) &&
+           Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(metaData, that.metaData) &&
            Objects.equals(startInstant, that.startInstant) &&
@@ -73,7 +87,14 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, insertInstant, metaData, startInstant, token, userId);
+    return Objects.hash(applicationId, data, id, insertInstant, metaData, startInstant, token, userId);
+  }
+
+  @JsonIgnore
+  public boolean isExpired(Tenant tenant, Application application) {
+    ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+    JWTConfiguration jwtConfiguration = tenant.lookupJWTConfiguration(application);
+    return startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now);
   }
 
   @Override

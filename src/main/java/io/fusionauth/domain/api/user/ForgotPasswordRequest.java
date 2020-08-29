@@ -16,6 +16,7 @@
 package io.fusionauth.domain.api.user;
 
 import java.util.Map;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 
@@ -25,6 +26,8 @@ import com.inversoft.json.JacksonConstructor;
  * @author Brian Pontarelli
  */
 public class ForgotPasswordRequest {
+  public UUID applicationId;
+
   public String changePasswordId;
 
   public String loginId;

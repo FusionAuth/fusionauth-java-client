@@ -48,6 +48,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
+  public ApplicationEmailConfiguration emailConfiguration = new ApplicationEmailConfiguration();
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
@@ -203,6 +205,41 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  public static class ApplicationEmailConfiguration implements Buildable<ApplicationEmailConfiguration> {
+    public UUID emailVerificationEmailTemplateId;
+
+    public UUID forgotPasswordEmailTemplateId;
+
+    public UUID passwordlessEmailTemplateId;
+
+    public UUID setPasswordEmailTemplateId;
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      ApplicationEmailConfiguration that = (ApplicationEmailConfiguration) o;
+      return Objects.equals(emailVerificationEmailTemplateId, that.emailVerificationEmailTemplateId) &&
+             Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
+             Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
+             Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(emailVerificationEmailTemplateId, forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 
   public static class AuthenticationTokenConfiguration extends Enableable {

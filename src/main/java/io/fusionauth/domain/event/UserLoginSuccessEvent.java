@@ -35,6 +35,7 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
 
   public String authenticationType;
 
+  // Generally this will be equal to user.connectorId, except during a login where the action is set to migrate.
   public UUID connectorId;
 
   public UUID identityProviderId;
@@ -85,13 +86,13 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, user);
+  public EventType getType() {
+    return EventType.UserLoginSuccess;
   }
 
   @Override
-  public EventType getType() {
-    return EventType.UserLoginSuccess;
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, user);
   }
 
   @Override
