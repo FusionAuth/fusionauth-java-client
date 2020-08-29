@@ -336,7 +336,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public Requirable mobilePhone = new Requirable();
 
-    public RegistrationType type;
+    public RegistrationType type = RegistrationType.basic;
 
     @Override
     public boolean equals(Object o) {
