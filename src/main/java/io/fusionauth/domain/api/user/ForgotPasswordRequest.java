@@ -49,6 +49,11 @@ public class ForgotPasswordRequest {
     this.loginId = loginId;
   }
 
+  public ForgotPasswordRequest(UUID applicationId, String loginId) {
+    this.applicationId = applicationId;
+    this.loginId = loginId;
+  }
+
   public ForgotPasswordRequest(String loginId, boolean sendForgotPasswordEmail) {
     this.loginId = loginId;
     this.sendForgotPasswordEmail = sendForgotPasswordEmail;
