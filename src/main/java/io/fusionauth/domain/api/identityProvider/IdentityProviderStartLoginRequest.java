@@ -26,6 +26,8 @@ import io.fusionauth.domain.api.BaseLoginRequest;
  * @author Daniel DeGroff
  */
 public class IdentityProviderStartLoginRequest extends BaseLoginRequest implements Buildable<IdentityProviderStartLoginRequest> {
+  public Map<String, String> data;
+
   public UUID identityProviderId;
 
   public String loginId;
@@ -34,6 +36,12 @@ public class IdentityProviderStartLoginRequest extends BaseLoginRequest implemen
 
   @JacksonConstructor
   public IdentityProviderStartLoginRequest() {
+  }
+
+  public IdentityProviderStartLoginRequest(UUID applicationId, Map<String, String> data, UUID identityProviderId) {
+    this.applicationId = applicationId;
+    this.data = data;
+    this.identityProviderId = identityProviderId;
   }
 
   public IdentityProviderStartLoginRequest(UUID applicationId, UUID identityProviderId, String loginId, String ipAddress) {

@@ -28,30 +28,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public SecureGeneratorConfiguration changePasswordIdGenerator;
 
-  @JacksonConstructor
-  public ExternalIdentifierConfiguration() {
-  }
-
-  public ExternalIdentifierConfiguration(ExternalIdentifierConfiguration other) {
-    this.authorizationGrantIdTimeToLiveInSeconds = other.authorizationGrantIdTimeToLiveInSeconds;
-    this.changePasswordIdGenerator = other.changePasswordIdGenerator;
-    this.changePasswordIdTimeToLiveInSeconds = other.changePasswordIdTimeToLiveInSeconds;
-    this.deviceCodeTimeToLiveInSeconds = other.deviceCodeTimeToLiveInSeconds;
-    this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
-    this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
-    this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
-    this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
-    this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
-    this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
-    this.passwordlessLoginGenerator = other.passwordlessLoginGenerator;
-    this.registrationVerificationIdGenerator = other.registrationVerificationIdGenerator;
-    this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
-    this.setupPasswordIdGenerator = other.setupPasswordIdGenerator;
-    this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
-    this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
-    this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
-  }
-
   public int changePasswordIdTimeToLiveInSeconds;
 
   public int deviceCodeTimeToLiveInSeconds;
@@ -74,6 +50,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int registrationVerificationIdTimeToLiveInSeconds;
 
+  public int samlv2AuthNRequestIdTimeToLiveInSeconds;
+
   public SecureGeneratorConfiguration setupPasswordIdGenerator;
 
   public int setupPasswordIdTimeToLiveInSeconds;
@@ -81,6 +59,31 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
   public int twoFactorIdTimeToLiveInSeconds;
 
   public int twoFactorTrustIdTimeToLiveInSeconds;
+
+  @JacksonConstructor
+  public ExternalIdentifierConfiguration() {
+  }
+
+  public ExternalIdentifierConfiguration(ExternalIdentifierConfiguration other) {
+    this.authorizationGrantIdTimeToLiveInSeconds = other.authorizationGrantIdTimeToLiveInSeconds;
+    this.changePasswordIdGenerator = other.changePasswordIdGenerator;
+    this.changePasswordIdTimeToLiveInSeconds = other.changePasswordIdTimeToLiveInSeconds;
+    this.deviceCodeTimeToLiveInSeconds = other.deviceCodeTimeToLiveInSeconds;
+    this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
+    this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
+    this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
+    this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
+    this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
+    this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
+    this.passwordlessLoginGenerator = other.passwordlessLoginGenerator;
+    this.registrationVerificationIdGenerator = other.registrationVerificationIdGenerator;
+    this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
+    this.samlv2AuthNRequestIdTimeToLiveInSeconds = other.samlv2AuthNRequestIdTimeToLiveInSeconds;
+    this.setupPasswordIdGenerator = other.setupPasswordIdGenerator;
+    this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
+    this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
+    this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -92,22 +95,23 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     }
     ExternalIdentifierConfiguration that = (ExternalIdentifierConfiguration) o;
     return authorizationGrantIdTimeToLiveInSeconds == that.authorizationGrantIdTimeToLiveInSeconds &&
-        changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
-        deviceCodeTimeToLiveInSeconds == that.deviceCodeTimeToLiveInSeconds &&
-        emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
-        externalAuthenticationIdTimeToLiveInSeconds == that.externalAuthenticationIdTimeToLiveInSeconds &&
-        oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
-        passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
-        registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
-        setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
-        twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
-        twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
-        Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
-        Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
-        Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
-        Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
-        Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
-        Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator);
+           changePasswordIdTimeToLiveInSeconds == that.changePasswordIdTimeToLiveInSeconds &&
+           deviceCodeTimeToLiveInSeconds == that.deviceCodeTimeToLiveInSeconds &&
+           emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
+           externalAuthenticationIdTimeToLiveInSeconds == that.externalAuthenticationIdTimeToLiveInSeconds &&
+           oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
+           passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
+           registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
+           samlv2AuthNRequestIdTimeToLiveInSeconds == that.samlv2AuthNRequestIdTimeToLiveInSeconds &&
+           setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
+           twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
+           twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
+           Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
+           Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
+           Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
+           Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
+           Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
+           Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator);
   }
 
   @Override
@@ -125,6 +129,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         passwordlessLoginTimeToLiveInSeconds,
                         registrationVerificationIdGenerator,
                         registrationVerificationIdTimeToLiveInSeconds,
+                        samlv2AuthNRequestIdTimeToLiveInSeconds,
                         setupPasswordIdGenerator,
                         setupPasswordIdTimeToLiveInSeconds,
                         twoFactorIdTimeToLiveInSeconds,
