@@ -15,12 +15,10 @@
  */
 package io.fusionauth.domain.search;
 
-import java.io.Serializable;
-
 /**
  * @author Brian Pontarelli
  */
-public abstract class BaseSearchCriteria implements Serializable {
+public abstract class BaseSearchCriteria {
   public int numberOfResults = 25;
 
   public String orderBy;
