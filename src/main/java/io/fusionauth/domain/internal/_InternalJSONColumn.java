@@ -36,7 +36,9 @@ public interface _InternalJSONColumn {
    * </p>
    *
    * @return The Map to set into SQL.
-   * @throws IllegalAccessException If a field could not be retrieve for some reason.
+   * @throws IllegalAccessException  If a field could not be retrieve for some reason.
+   * @throws NoSuchFieldException    You know the field does not exist, so why are you even trying?
+   * @throws JsonProcessingException When Jackson explodes.
    */
   @JsonIgnore
   @SuppressWarnings("unchecked")
@@ -59,6 +61,11 @@ public interface _InternalJSONColumn {
    * <p>
    * Setter for use in the MyBatis SQL. Do not call this manually.
    * </p>
+   *
+   * @param source the string source from the database to set into this object.
+   * @throws NoSuchFieldException   I think you know what you did.
+   * @throws IllegalAccessException You know better than to access that.
+   * @throws IOException            I "O" you know better than to ask about this one.
    */
   @JsonIgnore
   @SuppressWarnings("unchecked")

@@ -329,6 +329,8 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   /**
    * Clear out sensitive data. Password, salt, etc.
+   *
+   * @return this
    */
   public User secure() {
     encryptionScheme = null;

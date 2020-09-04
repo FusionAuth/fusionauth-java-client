@@ -50,7 +50,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public URI idpEndpoint;
 
   /**
-   * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to <code${public_url}/samlv2/sp/${identityProviderId}</code>
+   * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to ${public_url}/samlv2/sp/${identityProviderId}.
    */
   @Deprecated
   @InternalJSONColumn

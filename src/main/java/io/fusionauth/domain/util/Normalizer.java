@@ -48,6 +48,7 @@ public final class Normalizer {
    * Cleans the map by trimming all of the values.
    *
    * @param map The map to clean.
+   * @param <T> the type of map key
    */
   public static <T> void lineReturnsMap(Map<T, String> map) {
     map.forEach((key, value) -> {
@@ -58,26 +59,10 @@ public final class Normalizer {
   }
 
   /**
-   * Lowercase the string values of the collection using the provided collection reference.
-   *
-   * @param collection the collection
-   * @param supplier   a collections supplier
-   * @param <T>        the type of collection
-   */
-  public static <T extends Collection<String>> void toLowerCase(Collection<String> collection, Supplier<T> supplier) {
-    if (collection.isEmpty()) {
-      return;
-    }
-
-    Collection<String> lc = collection.stream().map(String::toLowerCase).collect(Collectors.toCollection(supplier));
-    collection.clear();
-    collection.addAll(lc);
-  }
-
-  /**
    * Removes empty values from the list.
    *
    * @param list The list.
+   * @param <T>  the type of list.
    */
   public static <T> void removeEmpty(List<T> list) {
     list.removeIf(Objects::isNull);
@@ -87,6 +72,8 @@ public final class Normalizer {
    * Removes keys whose value are null.
    *
    * @param map The map.
+   * @param <T> the type of map key
+   * @param <U> the type of map value
    */
   public static <T, U> void removeEmpty(Map<T, U> map) {
     if (map == null) {
@@ -108,6 +95,23 @@ public final class Normalizer {
     }
 
     return str.replaceAll("\\r\\n|\\r|\\n", "");
+  }
+
+  /**
+   * Lowercase the string values of the collection using the provided collection reference.
+   *
+   * @param collection the collection
+   * @param supplier   a collections supplier
+   * @param <T>        the type of collection
+   */
+  public static <T extends Collection<String>> void toLowerCase(Collection<String> collection, Supplier<T> supplier) {
+    if (collection.isEmpty()) {
+      return;
+    }
+
+    Collection<String> lc = collection.stream().map(String::toLowerCase).collect(Collectors.toCollection(supplier));
+    collection.clear();
+    collection.addAll(lc);
   }
 
   /**
@@ -142,6 +146,7 @@ public final class Normalizer {
    * Cleans the map by trimming all of the values.
    *
    * @param map The map to clean.
+   * @param <T> the type of map key
    */
   public static <T> void trimMap(Map<T, String> map) {
     map.forEach((key, value) -> {
