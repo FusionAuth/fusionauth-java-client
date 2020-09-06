@@ -30,7 +30,7 @@ public interface DomainBasedIdentityProvider {
   Set<String> getDomains();
 
   /**
-   * Normalizes this IDP's domains by lower-casing them all.
+   * Normalizes this IdP's domains by lower-casing them all.
    */
   default void normalizeDomains() {
     Normalizer.toLowerCase(getDomains(), HashSet::new);

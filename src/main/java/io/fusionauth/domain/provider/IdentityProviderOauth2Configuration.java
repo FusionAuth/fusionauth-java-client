@@ -80,11 +80,6 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
     return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, issuer, scope, token_endpoint, userinfo_endpoint);
   }
 
-  public IdentityProviderOauth2Configuration secure() {
-    client_secret = null;
-    return this;
-  }
-
   @Override
   public String toString() {
     return ToString.toString(this);

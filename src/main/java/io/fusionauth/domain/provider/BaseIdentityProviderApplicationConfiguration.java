@@ -46,7 +46,7 @@ public abstract class BaseIdentityProviderApplicationConfiguration extends Enabl
     }
     BaseIdentityProviderApplicationConfiguration that = (BaseIdentityProviderApplicationConfiguration) o;
     return createRegistration == that.createRegistration &&
-        Objects.equals(data, that.data);
+           Objects.equals(data, that.data);
   }
 
   @Override

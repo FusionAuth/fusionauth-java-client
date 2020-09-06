@@ -99,15 +99,6 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
   public void normalize() {
   }
 
-  /**
-   * Secure the object before serialization
-   *
-   * @return this
-   */
-  public BaseIdentityProvider<D> secure() {
-    return this;
-  }
-
   protected <R> R app(UUID applicationId, Function<D, R> app) {
     D config = applicationConfiguration.get(applicationId);
     return config == null ? null : app.apply(config);

@@ -50,10 +50,14 @@ public class LookupResponse {
 
     if (identityProvider instanceof ExternalJWTIdentityProvider) {
       this.identityProvider.oauth2 = ((ExternalJWTIdentityProvider) identityProvider).oauth2;
+      if (this.identityProvider.oauth2 != null) {
+        this.identityProvider.oauth2.client_secret = null;
+      }
     }
 
     if (identityProvider instanceof OpenIdConnectIdentityProvider) {
       this.identityProvider.oauth2 = ((OpenIdConnectIdentityProvider) identityProvider).oauth2;
+      this.identityProvider.oauth2.client_secret = null;
       this.identityProvider.oauth2.emailClaim = null;
     }
 

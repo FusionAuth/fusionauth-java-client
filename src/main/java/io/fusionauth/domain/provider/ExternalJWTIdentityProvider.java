@@ -90,19 +90,6 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
     Normalizer.toLowerCase(domains, HashSet::new);
   }
 
-  public ExternalJWTIdentityProvider secure() {
-    if (oauth2 != null) {
-      oauth2.secure();
-    }
-
-    claimMap.clear();
-    defaultKeyId = null;
-    headerKeyParameter = null;
-    uniqueIdentityClaim = null;
-    domains.clear();
-    return this;
-  }
-
   @Override
   public String toString() {
     return ToString.toString(this);

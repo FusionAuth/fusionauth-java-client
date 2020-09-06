@@ -138,11 +138,6 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   }
 
   @Override
-  public AppleIdentityProvider secure() {
-    return this;
-  }
-
-  @Override
   public String toString() {
     return ToString.toString(this);
   }

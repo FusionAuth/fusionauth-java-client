@@ -24,7 +24,6 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
-import io.fusionauth.domain.util.Normalizer;
 
 /**
  * @author Daniel DeGroff
@@ -115,16 +114,6 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   public void normalize() {
     super.normalize();
     normalizeDomains();
-  }
-
-  @Override
-  public OpenIdConnectIdentityProvider secure() {
-    if (oauth2 != null) {
-      oauth2.secure();
-    }
-
-    domains.clear();
-    return this;
   }
 
   @Override
