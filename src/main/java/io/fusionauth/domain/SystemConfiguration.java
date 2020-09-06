@@ -24,6 +24,7 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalUse;
 
 /**
  * @author Brian Pontarelli
@@ -36,6 +37,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
    * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
    * cookies.
    */
+  @InternalUse
   @InternalJSONColumn
   public String cookieEncryptionKey;
 
