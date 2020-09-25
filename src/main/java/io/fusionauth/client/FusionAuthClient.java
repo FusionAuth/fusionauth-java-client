@@ -138,6 +138,7 @@ import io.fusionauth.domain.api.user.SearchResponse;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
+import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
 
@@ -1430,6 +1431,24 @@ public class FusionAuthClient {
         .urlSegment(actionId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
+        .go();
+  }
+
+  /**
+   * Inspect an access token issued by FusionAuth.
+   *
+   * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application for which this token was generated.
+   * @param token The access token returned by this OAuth provider as the result of a successful authentication.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IntrospectResponse, OAuthError> oauth2Introspect(String client_id, String token) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("client_id", client_id);
+    parameters.put("token", token);
+    return startAnonymous(IntrospectResponse.class, OAuthError.class)
+        .uri("/oauth2/introspect")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
         .go();
   }
 
