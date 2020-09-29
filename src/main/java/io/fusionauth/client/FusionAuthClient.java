@@ -2860,6 +2860,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
+   *
+   * @param encodedJWT The encoded JWT (access token).
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT) {
+    return startAnonymous(UserResponse.class, OAuthError.class)
+        .uri("/oauth2/userinfo")
+        .authorization("Bearer " + encodedJWT)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the login report between the two instants for a particular user by Id. If you specify an application id, it will only return the
    * login counts for that application.
    *
@@ -3545,20 +3559,6 @@ public class FusionAuthClient {
         .urlSegment(webhookId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
-        .go();
-  }
-
-  /**
-   * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
-   *
-   * @param encodedJWT The encoded JWT (access token).
-   * @return The ClientResponse object.
-   */
-  public ClientResponse<UserResponse, OAuthError> userInfo(String encodedJWT) {
-    return startAnonymous(UserResponse.class, OAuthError.class)
-        .uri("/oauth2/userinfo")
-        .authorization("Bearer " + encodedJWT)
-        .post()
         .go();
   }
 
