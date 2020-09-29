@@ -1239,9 +1239,9 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<SecretResponse, Void> generateTwoFactorSecretUsingJWT(String encodedJWT) {
-    return start(SecretResponse.class, Void.TYPE)
+    return startAnonymous(SecretResponse.class, Void.TYPE)
         .uri("/api/two-factor/secret")
-        .authorization("JWT " + encodedJWT)
+        .authorization("Bearer " + encodedJWT)
         .get()
         .go();
   }
@@ -1353,9 +1353,9 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IssueResponse, Errors> issueJWT(UUID applicationId, String encodedJWT, String refreshToken) {
-    return start(IssueResponse.class, Errors.class)
+    return startAnonymous(IssueResponse.class, Errors.class)
         .uri("/api/jwt/issue")
-        .authorization("JWT " + encodedJWT)
+        .authorization("Bearer " + encodedJWT)
         .urlParameter("applicationId", applicationId)
         .urlParameter("refreshToken", refreshToken)
         .get()
@@ -2928,7 +2928,7 @@ public class FusionAuthClient {
   public ClientResponse<UserResponse, Errors> retrieveUserUsingJWT(String encodedJWT) {
     return startAnonymous(UserResponse.class, Errors.class)
         .uri("/api/user")
-        .authorization("JWT " + encodedJWT)
+        .authorization("Bearer " + encodedJWT)
         .get()
         .go();
   }
@@ -3549,6 +3549,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
+   *
+   * @param encodedJWT The encoded JWT (access token).
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, OAuthError> userInfo(String encodedJWT) {
+    return startAnonymous(UserResponse.class, OAuthError.class)
+        .uri("/oauth2/userinfo")
+        .authorization("Bearer " + encodedJWT)
+        .post()
+        .go();
+  }
+
+  /**
    * Validates the end-user provided user_code from the user-interaction of the Device Authorization Grant.
    * If you build your own activation form you should validate the user provided code prior to beginning the Authorization grant.
    *
@@ -3577,7 +3591,7 @@ public class FusionAuthClient {
   public ClientResponse<ValidateResponse, Void> validateJWT(String encodedJWT) {
     return startAnonymous(ValidateResponse.class, Void.TYPE)
         .uri("/api/jwt/validate")
-        .authorization("JWT " + encodedJWT)
+        .authorization("Bearer " + encodedJWT)
         .get()
         .go();
   }
