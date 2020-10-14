@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
+import io.fusionauth.domain.CanonicalizationMethod;
 import io.fusionauth.domain.RequiresCORSConfiguration;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.util.HTTPMethod;
@@ -34,7 +35,8 @@ import io.fusionauth.domain.util.HTTPMethod;
  *
  * @author Brian Pontarelli
  */
-public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration> implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration {
+public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration>
+    implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public final Set<String> domains = new HashSet<>();
 
   @InternalJSONColumn
@@ -56,10 +58,24 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   @InternalJSONColumn
   public String issuer;
 
+  /**
+   * The default key used for SAML Response Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML response.
+   */
   public UUID keyId;
 
   @InternalJSONColumn
+  public boolean postRequest;
+
+  public UUID requestSigningKeyId;
+
+  @InternalJSONColumn
+  public boolean signRequest;
+
+  @InternalJSONColumn
   public boolean useNameIdForEmail;
+
+  @InternalJSONColumn
+  public CanonicalizationMethod xmlSignatureC14nMethod;
 
   @Override
   @JsonIgnore
@@ -80,14 +96,18 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
       return false;
     }
     SAMLv2IdentityProvider that = (SAMLv2IdentityProvider) o;
-    return useNameIdForEmail == that.useNameIdForEmail &&
+    return postRequest == that.postRequest &&
+           signRequest == that.signRequest &&
+           useNameIdForEmail == that.useNameIdForEmail &&
            Objects.equals(domains, that.domains) &&
            Objects.equals(buttonImageURL, that.buttonImageURL) &&
            Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(emailClaim, that.emailClaim) &&
            Objects.equals(idpEndpoint, that.idpEndpoint) &&
            Objects.equals(issuer, that.issuer) &&
-           Objects.equals(keyId, that.keyId);
+           Objects.equals(keyId, that.keyId) &&
+           Objects.equals(requestSigningKeyId, that.requestSigningKeyId) &&
+           Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
   }
 
   @Override
@@ -102,7 +122,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, useNameIdForEmail);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, postRequest, requestSigningKeyId, signRequest, useNameIdForEmail, xmlSignatureC14nMethod);
   }
 
   public URI lookupButtonImageURL(String clientId) {
@@ -125,6 +145,11 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public void normalize() {
     super.normalize();
     normalizeDomains();
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return postRequest;
   }
 
   public SAMLv2IdentityProvider secure() {

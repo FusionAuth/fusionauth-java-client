@@ -126,7 +126,7 @@ public class Key implements Buildable<Key> {
 
   @JsonIgnore
   public boolean hasPrivateKey() {
-    return hasPrivateKey != null && hasPrivateKey;
+    return privateKey != null || (hasPrivateKey != null && hasPrivateKey);
   }
 
   @Override

@@ -25,9 +25,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
 import static io.fusionauth.domain.util.Normalizer.trim;
@@ -422,15 +425,24 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   public static class SAMLv2Configuration extends Enableable implements Buildable<SAMLv2Configuration> {
     public String audience;
 
-    public URI callbackURL;
+    @JsonMerge(OptBoolean.FALSE)
+    public List<URI> authorizedRedirectURLs = new ArrayList<>();
 
     public boolean debug;
 
+    // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
+    @ExcludeFromDatabaseDataColumn
+    public UUID defaultVerificationKeyId;
+
     public String issuer;
 
+    // Key pair used to sign w/
+    @ExcludeFromDatabaseDataColumn
     public UUID keyId;
 
     public URI logoutURL;
+
+    public boolean requireSignedRequests;
 
     public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
 
@@ -447,37 +459,44 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       SAMLv2Configuration that = (SAMLv2Configuration) o;
       return Objects.equals(audience, that.audience) &&
-             Objects.equals(callbackURL, that.callbackURL) &&
+             Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
              Objects.equals(debug, that.debug) &&
+             Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) &&
              Objects.equals(issuer, that.issuer) &&
              Objects.equals(keyId, that.keyId) &&
              Objects.equals(logoutURL, that.logoutURL) &&
+             Objects.equals(requireSignedRequests, that.requireSignedRequests) &&
              Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
+    }
+
+    /**
+     * @return the configured callback URL or null if not defined.
+     * @deprecated Prefer the use of {{@link #authorizedRedirectURLs}}
+     */
+    @Deprecated
+    public URI getCallbackURL() {
+      if (authorizedRedirectURLs.isEmpty()) {
+        return null;
+      }
+
+      return authorizedRedirectURLs.get(0);
+    }
+
+    /**
+     * @param callbackURL the callback URL
+     * @deprecated Prefer the use of {{@link #authorizedRedirectURLs}}
+     */
+    @Deprecated
+    public void setCallbackURL(URI callbackURL) {
+      if (!authorizedRedirectURLs.contains(callbackURL)) {
+        authorizedRedirectURLs.add(callbackURL);
+      }
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), audience, callbackURL, debug, issuer, keyId, logoutURL, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureC14nMethod);
     }
 
-    public enum CanonicalizationMethod {
-      exclusive(javax.xml.crypto.dsig.CanonicalizationMethod.EXCLUSIVE),
-
-      exclusive_with_comments(javax.xml.crypto.dsig.CanonicalizationMethod.EXCLUSIVE_WITH_COMMENTS),
-
-      inclusive(javax.xml.crypto.dsig.CanonicalizationMethod.INCLUSIVE),
-
-      inclusive_with_comments(javax.xml.crypto.dsig.CanonicalizationMethod.INCLUSIVE_WITH_COMMENTS);
-
-      private final String uri;
-
-      CanonicalizationMethod(String uri) {
-        this.uri = uri;
-      }
-
-      public String getURI() {
-        return uri;
-      }
-    }
   }
 }

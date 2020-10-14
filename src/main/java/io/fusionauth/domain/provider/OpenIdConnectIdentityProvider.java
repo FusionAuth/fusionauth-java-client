@@ -28,7 +28,8 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 /**
  * @author Daniel DeGroff
  */
-public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdConnectApplicationConfiguration> implements Buildable<OpenIdConnectIdentityProvider>, DomainBasedIdentityProvider {
+public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdConnectApplicationConfiguration>
+    implements Buildable<OpenIdConnectIdentityProvider>, DomainBasedIdentityProvider, SupportsPostBindings {
   public final Set<String> domains = new HashSet<>();
 
   @InternalJSONColumn
@@ -39,6 +40,9 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
 
   @InternalJSONColumn
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
+
+  @InternalJSONColumn
+  public boolean postRequest;
 
   @Override
   public boolean equals(Object o) {
@@ -52,7 +56,8 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
       return false;
     }
     OpenIdConnectIdentityProvider that = (OpenIdConnectIdentityProvider) o;
-    return Objects.equals(domains, that.domains) &&
+    return postRequest == that.postRequest &&
+           Objects.equals(domains, that.domains) &&
            Objects.equals(buttonImageURL, that.buttonImageURL) &&
            Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
@@ -71,7 +76,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, oauth2);
+    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, oauth2, postRequest);
   }
 
   public URI lookupButtonImageURL(String clientId) {
@@ -114,6 +119,11 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   public void normalize() {
     super.normalize();
     normalizeDomains();
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return postRequest;
   }
 
   @Override
