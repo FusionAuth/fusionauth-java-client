@@ -88,6 +88,16 @@ public class Key implements Buildable<Key> {
     this.type = key.type;
   }
 
+  @JsonIgnore
+  public boolean canSign() {
+    return use() != KeyUse.VerifyOnly;
+  }
+
+  @JsonIgnore
+  public boolean canVerify() {
+    return use() != KeyUse.SignOnly;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -177,6 +187,22 @@ public class Key implements Buildable<Key> {
 
   public String toString() {
     return ToString.toString(this);
+  }
+
+  @JsonIgnore
+  public boolean use(KeyUse use) {
+    return use().equals(use);
+  }
+
+  public KeyUse use() {
+    // If we have an algorithm and it is either HMAC or a key pair, then we can sign and verify.
+    if (algorithm != null && (isPair() || type == KeyType.HMAC)) {
+      return KeyUse.SignAndVerify;
+    } else if (hasPrivateKey()) {
+      return KeyUse.SignOnly;
+    } else {
+      return KeyUse.VerifyOnly;
+    }
   }
 
   public enum KeyAlgorithm {
