@@ -19,5 +19,7 @@ package io.fusionauth.domain.form;
  * @author Daniel DeGroff
  */
 public enum FormType {
-  registration
+  registration,
+  adminRegistration,
+  adminUser
 }

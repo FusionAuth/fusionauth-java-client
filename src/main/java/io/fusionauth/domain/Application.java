@@ -53,6 +53,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public ApplicationEmailConfiguration emailConfiguration = new ApplicationEmailConfiguration();
 
+  @InternalJSONColumn
+  public ApplicationFormConfiguration formConfiguration = new ApplicationFormConfiguration();
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
@@ -134,6 +137,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
            Objects.equals(data, that.data) &&
+           Objects.equals(formConfiguration, that.formConfiguration) &&
            Objects.equals(id, that.id) &&
            Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
@@ -172,7 +176,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {

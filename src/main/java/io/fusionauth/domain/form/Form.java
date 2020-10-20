@@ -44,7 +44,7 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
 
   public List<FormStep> steps = new ArrayList<>();
 
-  public FormType type = FormType.registration;
+  public FormType type;
 
   @Override
   public boolean equals(Object o) {
@@ -71,8 +71,10 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
 
   public void normalize() {
     Normalizer.removeEmpty(data);
+    // Remove any null steps, steps w/out fields, and any null fields in steps
     Normalizer.removeEmpty(steps);
     steps.removeIf(step -> step.fields.isEmpty());
+    steps.stream().map(step -> step.fields).forEach(Normalizer::removeEmpty);
   }
 
   @Override

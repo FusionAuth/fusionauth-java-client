@@ -62,6 +62,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @InternalJSONColumn
   public FamilyConfiguration familyConfiguration = new FamilyConfiguration();
 
+  @InternalJSONColumn
+  public TenantFormConfiguration formConfiguration = new TenantFormConfiguration();
+
   /**
    * Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth
    * OAuth frontend.
@@ -122,6 +125,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
     this.failedAuthenticationConfiguration = new FailedAuthenticationConfiguration(other.failedAuthenticationConfiguration);
     this.familyConfiguration = new FamilyConfiguration(other.familyConfiguration);
+    this.formConfiguration = new TenantFormConfiguration(other.formConfiguration);
     this.httpSessionMaxInactiveInterval = other.httpSessionMaxInactiveInterval;
     this.id = other.id;
     this.insertInstant = other.insertInstant;
@@ -156,6 +160,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
            Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
            Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
+           Objects.equals(formConfiguration, tenant.formConfiguration) &&
            Objects.equals(id, tenant.id) &&
            Objects.equals(issuer, tenant.issuer) &&
            Objects.equals(insertInstant, tenant.insertInstant) &&
@@ -178,7 +183,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
+    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, themeId, userDeletePolicy);
   }
 
   @JsonIgnore
