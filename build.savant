@@ -44,7 +44,9 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.20.0
       dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.10.3")
     }
     group(name: "test-compile") {
-      dependency(id: "org.testng:testng:6.14.3")
+      dependency(id: "org.testng:testng:7.3.0")
+      // Required for testng-7.3.0
+      dependency(id: "com.google.guava:guava:27.1.0-jre", skipCompatibilityCheck: true)
     }
   }
 
@@ -56,7 +58,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.20.0
 // Plugins
 dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:1.0.2")
 java = loadPlugin(id: "org.savantbuild.plugin:java:1.2.0")
-javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:1.0.7")
+javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:1.0.8")
 file = loadPlugin(id: "org.savantbuild.plugin:file:1.0.2")
 idea = loadPlugin(id: "org.savantbuild.plugin:idea:1.0.1")
 release = loadPlugin(id: "org.savantbuild.plugin:release-git:${savantVersion}")
