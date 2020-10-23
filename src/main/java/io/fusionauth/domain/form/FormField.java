@@ -17,6 +17,7 @@ package io.fusionauth.domain.form;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
  * @author Daniel DeGroff
@@ -96,6 +98,15 @@ public class FormField implements Buildable<FormField>, _InternalJSONColumn {
   @Override
   public int hashCode() {
     return Objects.hash(confirm, consentId, control, data, description, id, insertInstant, lastUpdateInstant, key, name, options, required, type, validator);
+  }
+
+  public void normalize() {
+    Normalizer.removeEmpty(options);
+    // We want checkbox of type bool to always have 'true' as the first option.
+    if (control == FormControl.checkbox && type == FormDataType.bool) {
+      Normalizer.toLowerCase(options, ArrayList::new);
+      Collections.reverse(options);
+    }
   }
 
   @Override
