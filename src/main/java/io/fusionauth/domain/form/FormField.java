@@ -105,7 +105,7 @@ public class FormField implements Buildable<FormField>, _InternalJSONColumn {
     // We want checkbox of type bool to always have 'true' as the first option.
     if (control == FormControl.checkbox && type == FormDataType.bool) {
       Normalizer.toLowerCase(options, ArrayList::new);
-      Collections.reverse(options);
+      options.sort(Collections.reverseOrder());
     }
   }
 
