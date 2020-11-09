@@ -1062,7 +1062,7 @@ public class FusionAuthClient {
 
   /**
    * Exchanges an OAuth authorization code for an access token.
-   * If you will be using the Authorization Code grant, you will make a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
+   * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
    *
    * @param code The authorization code returned on the /oauth2/authorize response.
    * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate.
@@ -1077,6 +1077,32 @@ public class FusionAuthClient {
     parameters.put("client_secret", client_secret);
     parameters.put("grant_type", "authorization_code");
     parameters.put("redirect_uri", redirect_uri);
+    return startAnonymous(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
+  /**
+   * Exchanges an OAuth authorization code and code_verifier for an access token.
+   * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint and a code_verifier for an access token.
+   *
+   * @param code The authorization code returned on the /oauth2/authorize response.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
+   * @param redirect_uri The URI to redirect to upon a successful request.
+   * @param code_verifier The random string generated previously. Will be compared with the code_challenge sent previously, which allows the OAuth provider to authenticate your app.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenUsingPKCE(String code, String client_id, String client_secret, String redirect_uri, String code_verifier) {
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("code", code);
+    parameters.put("client_id", client_id);
+    parameters.put("client_secret", client_secret);
+    parameters.put("grant_type", "authorization_code");
+    parameters.put("redirect_uri", redirect_uri);
+    parameters.put("code_verifier", code_verifier);
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))

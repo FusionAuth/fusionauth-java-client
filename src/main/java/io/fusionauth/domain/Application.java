@@ -540,7 +540,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
 
-    public SignatureLocation xmlSignatureLocation = SignatureLocation.Assertion;
+    public XMLSignatureLocation xmlSignatureLocation = XMLSignatureLocation.Assertion;
 
     @JacksonConstructor
     public SAMLv2Configuration() {
@@ -613,7 +613,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
-    public enum SignatureLocation {
+    public enum XMLSignatureLocation {
       Assertion,
       Response
     }
