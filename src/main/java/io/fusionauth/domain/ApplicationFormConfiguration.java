@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 
@@ -27,6 +28,14 @@ import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
 public class ApplicationFormConfiguration implements Buildable<ApplicationFormConfiguration> {
   @ExcludeFromDatabaseDataColumn
   public UUID adminRegistrationFormId;
+
+  @JacksonConstructor
+  public ApplicationFormConfiguration() {
+  }
+
+  public ApplicationFormConfiguration(ApplicationFormConfiguration other) {
+    this.adminRegistrationFormId = other.adminRegistrationFormId;
+  }
 
   @Override
   public boolean equals(Object o) {

@@ -5,6 +5,8 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
+
 /**
  * Something that can be required and thus also optional. This currently extends Enableable because anything that is
  * require/optional is almost always enableable as well.
@@ -13,6 +15,15 @@ import java.util.Objects;
  */
 public class Requirable extends Enableable {
   public boolean required;
+
+  @JacksonConstructor
+  public Requirable() {
+  }
+
+  public Requirable(Requirable other) {
+    this.enabled = other.enabled;
+    this.required = other.required;
+  }
 
   @Override
   public boolean equals(Object o) {

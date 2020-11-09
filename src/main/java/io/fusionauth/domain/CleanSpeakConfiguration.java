@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -59,7 +60,16 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
    */
   public UsernameModeration usernameModeration = new UsernameModeration();
 
+  @JacksonConstructor
   public CleanSpeakConfiguration() {
+  }
+
+  public CleanSpeakConfiguration(CleanSpeakConfiguration other) {
+    this.apiKey = other.apiKey;
+    this.applicationIds.addAll(other.applicationIds);
+    this.enabled = other.enabled;
+    this.url = other.url;
+    this.usernameModeration = new UsernameModeration(other.usernameModeration);
   }
 
   public CleanSpeakConfiguration(String apiKey, URI url, UsernameModeration usernameModeration,
@@ -102,7 +112,13 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
   public static class UsernameModeration extends Enableable implements Buildable<UsernameModeration> {
     public UUID applicationId;
 
+    @JacksonConstructor
     public UsernameModeration() {
+    }
+
+    public UsernameModeration(UsernameModeration other) {
+      this.applicationId = other.applicationId;
+      this.enabled = other.enabled;
     }
 
     public UsernameModeration(UUID applicationId, boolean enabled) {

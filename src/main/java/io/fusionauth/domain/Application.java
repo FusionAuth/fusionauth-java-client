@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
@@ -98,6 +99,31 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @JacksonConstructor
   public Application() {
+  }
+
+  public Application(Application other) {
+    this.active = other.active;
+    this.authenticationTokenConfiguration = new AuthenticationTokenConfiguration(other.authenticationTokenConfiguration);
+    this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
+    this.data.putAll(other.data);
+    this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
+    this.formConfiguration = new ApplicationFormConfiguration(other.formConfiguration);
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
+    this.lambdaConfiguration = new LambdaConfiguration(other.lambdaConfiguration);
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.loginConfiguration = new LoginConfiguration(other.loginConfiguration);
+    this.name = other.name;
+    this.oauthConfiguration = new OAuth2Configuration(other.oauthConfiguration);
+    this.passwordlessConfiguration = new PasswordlessConfiguration(other.passwordlessConfiguration);
+    this.registrationConfiguration = new RegistrationConfiguration(other.registrationConfiguration);
+    this.registrationDeletePolicy = new ApplicationRegistrationDeletePolicy(other.registrationDeletePolicy);
+    this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
+    this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
+    this.tenantId = other.tenantId;
+    this.verificationEmailTemplateId = other.verificationEmailTemplateId;
+    this.verifyRegistration = other.verifyRegistration;
   }
 
   public Application(String name) {
@@ -223,6 +249,17 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public UUID setPasswordEmailTemplateId;
 
+    @JacksonConstructor
+    public ApplicationEmailConfiguration() {
+    }
+
+    public ApplicationEmailConfiguration(ApplicationEmailConfiguration other) {
+      this.emailVerificationEmailTemplateId = other.emailVerificationEmailTemplateId;
+      this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
+      this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
+      this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
+    }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) {
@@ -250,6 +287,14 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   }
 
   public static class AuthenticationTokenConfiguration extends Enableable {
+
+    @JacksonConstructor
+    public AuthenticationTokenConfiguration() {
+    }
+
+    public AuthenticationTokenConfiguration(AuthenticationTokenConfiguration other) {
+      this.enabled = other.enabled;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -279,6 +324,16 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     public UUID idTokenPopulateId;
 
     public UUID samlv2PopulateId;
+
+    @JacksonConstructor
+    public LambdaConfiguration() {
+    }
+
+    public LambdaConfiguration(LambdaConfiguration other) {
+      this.accessTokenPopulateId = other.accessTokenPopulateId;
+      this.idTokenPopulateId = other.idTokenPopulateId;
+      this.samlv2PopulateId = other.samlv2PopulateId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -312,6 +367,16 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public boolean requireAuthentication = true;
 
+    @JacksonConstructor
+    public LoginConfiguration() {
+    }
+
+    public LoginConfiguration(LoginConfiguration other) {
+      this.allowTokenRefresh = other.allowTokenRefresh;
+      this.generateRefreshTokens = other.generateRefreshTokens;
+      this.requireAuthentication = other.requireAuthentication;
+    }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) {
@@ -338,6 +403,13 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   }
 
   public static class PasswordlessConfiguration extends Enableable {
+    @JacksonConstructor
+    public PasswordlessConfiguration() {
+    }
+
+    public PasswordlessConfiguration(PasswordlessConfiguration other) {
+      this.enabled = other.enabled;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -381,6 +453,24 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     public Requirable mobilePhone = new Requirable();
 
     public RegistrationType type;
+
+    @JacksonConstructor
+    public RegistrationConfiguration() {
+    }
+
+    public RegistrationConfiguration(RegistrationConfiguration other) {
+      this.birthDate = new Requirable(other.birthDate);
+      this.confirmPassword = other.confirmPassword;
+      this.enabled = other.enabled;
+      this.firstName = new Requirable(other.firstName);
+      this.formId = other.formId;
+      this.fullName = new Requirable(other.fullName);
+      this.lastName = new Requirable(other.lastName);
+      this.loginIdType = other.loginIdType;
+      this.middleName = new Requirable(other.middleName);
+      this.mobilePhone = new Requirable(other.mobilePhone);
+      this.type = other.type;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -449,6 +539,23 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     public boolean requireSignedRequests;
 
     public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
+
+    @JacksonConstructor
+    public SAMLv2Configuration() {
+    }
+
+    public SAMLv2Configuration(SAMLv2Configuration other) {
+      this.audience = other.audience;
+      this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
+      this.debug = other.debug;
+      this.defaultVerificationKeyId = other.defaultVerificationKeyId;
+      this.enabled = other.enabled;
+      this.issuer = other.issuer;
+      this.keyId = other.keyId;
+      this.logoutURL = other.logoutURL;
+      this.requireSignedRequests = other.requireSignedRequests;
+      this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
+    }
 
     @Override
     public boolean equals(Object o) {

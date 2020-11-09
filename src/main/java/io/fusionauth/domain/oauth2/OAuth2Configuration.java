@@ -66,6 +66,19 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public OAuth2Configuration() {
   }
 
+  public OAuth2Configuration(OAuth2Configuration other) {
+    this.authorizedOriginURLs.addAll(other.authorizedOriginURLs);
+    this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
+    this.clientId = other.clientId;
+    this.clientSecret = other.clientSecret;
+    this.deviceVerificationURL = other.deviceVerificationURL;
+    this.enabledGrants.addAll(other.enabledGrants);
+    this.generateRefreshTokens = other.generateRefreshTokens;
+    this.logoutBehavior = other.logoutBehavior;
+    this.logoutURL = other.logoutURL;
+    this.requireClientAuthentication = other.requireClientAuthentication;
+  }
+
   public OAuth2Configuration(String clientId, String clientSecret) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
