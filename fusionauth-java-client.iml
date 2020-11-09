@@ -323,6 +323,16 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-samlv2/0.5.0-{integration}/fusionauth-samlv2-0.5.0-{integration}.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.savant/cache/io/fusionauth/fusionauth-samlv2/0.5.0-{integration}/fusionauth-samlv2-0.5.0-{integration}-src.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
-

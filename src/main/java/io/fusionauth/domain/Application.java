@@ -540,6 +540,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
 
+    public SignatureLocation xmlSignatureLocation = SignatureLocation.Assertion;
+
     @JacksonConstructor
     public SAMLv2Configuration() {
     }
@@ -554,6 +556,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       this.keyId = other.keyId;
       this.logoutURL = other.logoutURL;
       this.requireSignedRequests = other.requireSignedRequests;
+      this.xmlSignatureLocation = other.xmlSignatureLocation;
       this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
     }
 
@@ -577,6 +580,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
              Objects.equals(keyId, that.keyId) &&
              Objects.equals(logoutURL, that.logoutURL) &&
              Objects.equals(requireSignedRequests, that.requireSignedRequests) &&
+             Objects.equals(xmlSignatureLocation, that.xmlSignatureLocation) &&
              Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
     }
 
@@ -606,8 +610,12 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
+    public enum SignatureLocation {
+      Assertion,
+      Response
+    }
   }
 }
