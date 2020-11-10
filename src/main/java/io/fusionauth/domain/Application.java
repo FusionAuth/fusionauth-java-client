@@ -104,7 +104,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   public Application(Application other) {
     this.active = other.active;
     this.authenticationTokenConfiguration = new AuthenticationTokenConfiguration(other.authenticationTokenConfiguration);
-    this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
+    if (other.cleanSpeakConfiguration != null) {
+      this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
+    }
     this.data.putAll(other.data);
     this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
     this.formConfiguration = new ApplicationFormConfiguration(other.formConfiguration);
