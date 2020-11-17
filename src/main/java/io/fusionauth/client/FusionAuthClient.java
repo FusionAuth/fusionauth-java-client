@@ -74,6 +74,8 @@ import io.fusionauth.domain.api.LoginResponse;
 import io.fusionauth.domain.api.MemberDeleteRequest;
 import io.fusionauth.domain.api.MemberRequest;
 import io.fusionauth.domain.api.MemberResponse;
+import io.fusionauth.domain.api.MessageTemplateRequest;
+import io.fusionauth.domain.api.MessageTemplateResponse;
 import io.fusionauth.domain.api.OAuthConfigurationResponse;
 import io.fusionauth.domain.api.PasswordValidationRulesResponse;
 import io.fusionauth.domain.api.PendingResponse;
@@ -521,6 +523,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates an message template. You can optionally specify an Id for the template, if not provided one will be generated.
+   *
+   * @param messageTemplateId (Optional) The Id for the template. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the message template.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> createMessageTemplate(UUID messageTemplateId, MessageTemplateRequest request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated.
    *
    * @param tenantId (Optional) The Id for the tenant. If not provided a secure random UUID will be generated.
@@ -882,6 +900,20 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/lambda")
         .urlSegment(lambdaId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the message template for the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteMessageTemplate(UUID messageTemplateId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
         .delete()
         .go();
   }
@@ -1632,6 +1664,22 @@ public class FusionAuthClient {
     return start(LambdaResponse.class, Errors.class)
         .uri("/api/lambda")
         .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the message template with the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to update.
+   * @param request The request that contains just the new message template information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> patchMessageTemplate(UUID messageTemplateId, Map<String, Object> request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .patch()
         .go();
@@ -2466,6 +2514,32 @@ public class FusionAuthClient {
         .urlParameter("applicationId", applicationId)
         .urlParameter("start", start)
         .urlParameter("end", end)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the message template for the given Id. If you don't specify the id, this will return all of the message templates.
+   *
+   * @param messageTemplateId (Optional) The Id of the message template.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Void> retrieveMessageTemplate(UUID messageTemplateId) {
+    return start(MessageTemplateResponse.class, Void.TYPE)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the message templates.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Void> retrieveMessageTemplates() {
+    return start(MessageTemplateResponse.class, Void.TYPE)
+        .uri("/api/message/template")
         .get()
         .go();
   }
@@ -3441,6 +3515,22 @@ public class FusionAuthClient {
     return start(LambdaResponse.class, Errors.class)
         .uri("/api/lambda")
         .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the message template with the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to update.
+   * @param request The request that contains all of the new message template information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> updateMessageTemplate(UUID messageTemplateId, MessageTemplateRequest request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
         .go();
