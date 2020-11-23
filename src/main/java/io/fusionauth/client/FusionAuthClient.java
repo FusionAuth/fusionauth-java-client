@@ -79,6 +79,8 @@ import io.fusionauth.domain.api.MessageTemplateResponse;
 import io.fusionauth.domain.api.OAuthConfigurationResponse;
 import io.fusionauth.domain.api.PasswordValidationRulesResponse;
 import io.fusionauth.domain.api.PendingResponse;
+import io.fusionauth.domain.api.PreviewMessageTemplateRequest;
+import io.fusionauth.domain.api.PreviewMessageTemplateResponse;
 import io.fusionauth.domain.api.PreviewRequest;
 import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
@@ -2529,6 +2531,20 @@ public class FusionAuthClient {
         .uri("/api/message/template")
         .urlSegment(messageTemplateId)
         .get()
+        .go();
+  }
+
+  /**
+   * Creates a preview of the message template provided in the request, normalized to a given locale.
+   *
+   * @param request The request that contains the email template and optionally a locale to render it in.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PreviewMessageTemplateResponse, Errors> retrieveMessageTemplatePreview(PreviewMessageTemplateRequest request) {
+    return start(PreviewMessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template/preview")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
         .go();
   }
 
