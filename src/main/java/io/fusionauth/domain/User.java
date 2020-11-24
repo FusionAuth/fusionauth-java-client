@@ -311,6 +311,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
     preferredLanguages.removeIf(Objects::isNull);
+    Normalizer.deDuplicate(preferredLanguages);
     username = trim(username);
     if (username != null && username.length() == 0) {
       username = null;

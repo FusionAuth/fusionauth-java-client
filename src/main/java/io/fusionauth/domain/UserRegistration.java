@@ -151,6 +151,7 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   public void normalize() {
     authenticationToken = trimToNull(authenticationToken);
     preferredLanguages.removeIf(Objects::isNull);
+    Normalizer.deDuplicate(preferredLanguages);
     username = trim(username);
     Normalizer.removeEmpty(data);
   }

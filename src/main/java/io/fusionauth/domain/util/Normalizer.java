@@ -18,9 +18,11 @@ package io.fusionauth.domain.util;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,17 @@ import java.util.stream.Collectors;
  * @author Brian Pontarelli
  */
 public final class Normalizer {
+  /**
+   * De-duplicate an array list.
+   *
+   * @param list the list to de-duplicate
+   * @param <T>  the type of the list.
+   */
+  public static <T> void deDuplicate(List<T> list) {
+    Set<T> set = new HashSet<>();
+    list.removeIf(o -> !set.add(o));
+  }
+
   /**
    * Normalize line returns
    *
