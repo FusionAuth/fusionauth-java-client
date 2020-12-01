@@ -107,6 +107,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @InternalJSONColumn
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
+  @InternalJSONColumn
   public ObjectState state;
 
   public UUID themeId;
