@@ -16,7 +16,6 @@
 package io.fusionauth.domain.event;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,8 +36,7 @@ import io.fusionauth.domain.User;
 public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<JWTRefreshTokenRevokeEvent>, ApplicationEvent {
   public UUID applicationId;
 
-  // Allow nulls which will occur for SSO tokens
-  public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>(Comparator.nullsFirst(Comparator.naturalOrder()));
+  public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>();
 
   public User user;
 
