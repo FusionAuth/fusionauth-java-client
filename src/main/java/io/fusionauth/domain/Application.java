@@ -42,6 +42,10 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Application implements Buildable<Application>, _InternalJSONColumn, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
+  /**
+   * @deprecated prefer the use of {@link #state}.
+   */
+  @Deprecated
   public boolean active;
 
   @InternalJSONColumn
@@ -90,6 +94,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
+  @InternalJSONColumn
+  public ObjectState state;
+
   public UUID tenantId;
 
   public UUID verificationEmailTemplateId;
@@ -123,6 +130,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     this.registrationDeletePolicy = new ApplicationRegistrationDeletePolicy(other.registrationDeletePolicy);
     this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
     this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
+    this.state = other.state;
     this.tenantId = other.tenantId;
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verifyRegistration = other.verifyRegistration;
@@ -160,8 +168,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       return false;
     }
     Application that = (Application) o;
-    return active == that.active &&
-           verifyRegistration == that.verifyRegistration &&
+    return verifyRegistration == that.verifyRegistration &&
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
            Objects.equals(data, that.data) &&
@@ -177,10 +184,20 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
+           Objects.equals(state, that.state) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
+  }
+
+  public boolean getActive() {
+    return state == ObjectState.Active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+    state = active ? ObjectState.Active : ObjectState.Inactive;
   }
 
   public ApplicationRole getRole(String name) {
@@ -204,7 +221,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {
