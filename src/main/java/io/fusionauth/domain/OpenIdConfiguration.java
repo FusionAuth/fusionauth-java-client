@@ -32,6 +32,7 @@ import com.inversoft.json.ToString;
 public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   public String authorization_endpoint = "%s/oauth2/authorize";
 
+  @SuppressWarnings("SpellCheckingInspection")
   public boolean backchannel_logout_supported = false;
 
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "picture", "preferred_username", "roles", "sub"));
@@ -40,6 +41,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String end_session_endpoint = "%s/oauth2/logout";
 
+  @SuppressWarnings("SpellCheckingInspection")
   public boolean frontchannel_logout_supported = true;
 
   public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code"));
@@ -76,23 +78,23 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
     }
     OpenIdConfiguration that = (OpenIdConfiguration) o;
     return backchannel_logout_supported == that.backchannel_logout_supported &&
-        frontchannel_logout_supported == that.frontchannel_logout_supported &&
-        Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
-        Objects.equals(claims_supported, that.claims_supported) &&
-        Objects.equals(device_authorization_endpoint, that.device_authorization_endpoint) &&
-        Objects.equals(end_session_endpoint, that.end_session_endpoint) &&
-        Objects.equals(grant_types_supported, that.grant_types_supported) &&
-        Objects.equals(id_token_signing_alg_values_supported, that.id_token_signing_alg_values_supported) &&
-        Objects.equals(issuer, that.issuer) &&
-        Objects.equals(jwks_uri, that.jwks_uri) &&
-        Objects.equals(response_modes_supported, that.response_modes_supported) &&
-        Objects.equals(response_types_supported, that.response_types_supported) &&
-        Objects.equals(scopes_supported, that.scopes_supported) &&
-        Objects.equals(subject_types_supported, that.subject_types_supported) &&
-        Objects.equals(token_endpoint, that.token_endpoint) &&
-        Objects.equals(token_endpoint_auth_methods_supported, that.token_endpoint_auth_methods_supported) &&
-        Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
-        Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported);
+           frontchannel_logout_supported == that.frontchannel_logout_supported &&
+           Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
+           Objects.equals(claims_supported, that.claims_supported) &&
+           Objects.equals(device_authorization_endpoint, that.device_authorization_endpoint) &&
+           Objects.equals(end_session_endpoint, that.end_session_endpoint) &&
+           Objects.equals(grant_types_supported, that.grant_types_supported) &&
+           Objects.equals(id_token_signing_alg_values_supported, that.id_token_signing_alg_values_supported) &&
+           Objects.equals(issuer, that.issuer) &&
+           Objects.equals(jwks_uri, that.jwks_uri) &&
+           Objects.equals(response_modes_supported, that.response_modes_supported) &&
+           Objects.equals(response_types_supported, that.response_types_supported) &&
+           Objects.equals(scopes_supported, that.scopes_supported) &&
+           Objects.equals(subject_types_supported, that.subject_types_supported) &&
+           Objects.equals(token_endpoint, that.token_endpoint) &&
+           Objects.equals(token_endpoint_auth_methods_supported, that.token_endpoint_auth_methods_supported) &&
+           Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
+           Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported);
   }
 
   @Override
