@@ -183,7 +183,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @JsonIgnore
   public ConnectorPolicy getPolicyByConnectorId(UUID connectorId) {
-    return connectorPolicies.stream().filter(reg -> reg.connectorId.equals(connectorId)).findFirst().orElse(null);
+    return connectorPolicies.stream().filter(policy -> policy.connectorId.equals(connectorId)).findFirst().orElse(null);
   }
 
   @Override
