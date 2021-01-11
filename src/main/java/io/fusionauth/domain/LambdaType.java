@@ -208,6 +208,23 @@ public enum LambdaType {
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +
+      "}\n"),
+
+  LinkedInReconcile("reconcile", "" +
+      "// Using the response returned from LinkedIn Me API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, linkedInUser) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
       "}\n");
   // @formatter:on
 

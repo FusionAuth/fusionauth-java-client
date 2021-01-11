@@ -32,7 +32,9 @@ public enum IdentityProviderType {
 
   HYPR(UUID.fromString("778985b7-6fd8-414d-acf2-94f18fb7c7e0")),
 
-  Apple(UUID.fromString("13d2a5db-7ef9-4d62-b909-0df58612e775"));
+  Apple(UUID.fromString("13d2a5db-7ef9-4d62-b909-0df58612e775")),
+
+  LinkedIn(UUID.fromString("6177c09d-3f0e-4d53-9504-3600b1b23f46"));
 
   public final UUID id;
 

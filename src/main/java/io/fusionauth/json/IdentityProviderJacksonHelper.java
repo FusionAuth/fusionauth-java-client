@@ -17,6 +17,7 @@ package io.fusionauth.json;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -28,6 +29,7 @@ import io.fusionauth.domain.provider.FacebookIdentityProvider;
 import io.fusionauth.domain.provider.GoogleIdentityProvider;
 import io.fusionauth.domain.provider.HYPRIdentityProvider;
 import io.fusionauth.domain.provider.IdentityProviderType;
+import io.fusionauth.domain.provider.LinkedInIdentityProvider;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
 import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
@@ -37,7 +39,6 @@ import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
  * @author Daniel DeGroff
  */
 public class IdentityProviderJacksonHelper {
-
   public static IdentityProviderType extractType(DeserializationContext ctxt, JsonParser p, JsonNode idpNode)
       throws IOException {
     JsonNode node = idpNode.at("/type");
@@ -46,10 +47,9 @@ public class IdentityProviderJacksonHelper {
     IdentityProviderType identityProviderType = IdentityProviderType.safeValueOf(type);
     if (identityProviderType == null) {
       // This does actually throw an exception, but this is how Jackson rolls.
+      String sorted = Arrays.stream(IdentityProviderType.values()).map(Enum::name).sorted().collect(Collectors.joining(", "));
       return (IdentityProviderType) ctxt.handleUnexpectedToken(BaseIdentityProvider.class, node.asToken(), p,
-                                                               "Expected the type field to be one of " +
-                                                                   String.join(",", Arrays.toString(IdentityProviderType.values()) + ", but found [" +
-                                                                       node.asText() + "]"));
+                                                               "Expected the type field to be one of [" + sorted + "], but found [" + node.asText() + "]");
     }
 
     return identityProviderType;
@@ -67,6 +67,8 @@ public class IdentityProviderJacksonHelper {
         return new GoogleIdentityProvider();
       case HYPR:
         return new HYPRIdentityProvider();
+      case LinkedIn:
+        return new LinkedInIdentityProvider();
       case OpenIDConnect:
         return new OpenIdConnectIdentityProvider();
       case SAMLv2:

@@ -16,18 +16,15 @@
 package io.fusionauth.domain.provider;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
- * Google social login provider.
- *
  * @author Daniel DeGroff
  */
-public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider> {
+public class LinkedInApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<LinkedInApplicationConfiguration> {
   @InternalJSONColumn
   public String buttonText;
 
@@ -45,13 +42,13 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     if (this == o) {
       return true;
     }
-    if (!(o instanceof GoogleIdentityProvider)) {
+    if (!(o instanceof LinkedInApplicationConfiguration)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
-    GoogleIdentityProvider that = (GoogleIdentityProvider) o;
+    LinkedInApplicationConfiguration that = (LinkedInApplicationConfiguration) o;
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
@@ -59,33 +56,8 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   }
 
   @Override
-  public IdentityProviderType getType() {
-    return IdentityProviderType.Google;
-  }
-
-  @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
-  }
-
-  public String lookupButtonText(String clientId) {
-    return lookup(() -> buttonText, () -> app(clientId, app -> app.buttonText));
-  }
-
-  public String lookupClientId(UUID applicationId) {
-    return lookup(() -> client_id, () -> app(applicationId, app -> app.client_id));
-  }
-
-  public String lookupClientId(String clientId) {
-    return lookup(() -> client_id, () -> app(clientId, app -> app.client_id));
-  }
-
-  public String lookupClientSecret(UUID applicationId) {
-    return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
-  }
-
-  public String lookupScope(String clientId) {
-    return lookup(() -> scope, () -> app(clientId, app -> app.scope));
   }
 
   @Override

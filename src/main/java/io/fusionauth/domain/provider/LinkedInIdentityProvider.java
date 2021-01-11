@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,9 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
- * Google social login provider.
- *
  * @author Daniel DeGroff
  */
-public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider> {
+public class LinkedInIdentityProvider extends BaseIdentityProvider<LinkedInApplicationConfiguration> implements Buildable<LinkedInIdentityProvider> {
   @InternalJSONColumn
   public String buttonText;
 
@@ -45,13 +43,13 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     if (this == o) {
       return true;
     }
-    if (!(o instanceof GoogleIdentityProvider)) {
+    if (!(o instanceof LinkedInIdentityProvider)) {
       return false;
     }
     if (!super.equals(o)) {
       return false;
     }
-    GoogleIdentityProvider that = (GoogleIdentityProvider) o;
+    LinkedInIdentityProvider that = (LinkedInIdentityProvider) o;
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
@@ -60,7 +58,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   @Override
   public IdentityProviderType getType() {
-    return IdentityProviderType.Google;
+    return IdentityProviderType.LinkedIn;
   }
 
   @Override
@@ -72,12 +70,16 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return lookup(() -> buttonText, () -> app(clientId, app -> app.buttonText));
   }
 
-  public String lookupClientId(UUID applicationId) {
-    return lookup(() -> client_id, () -> app(applicationId, app -> app.client_id));
+  public String lookupButtonText(UUID applicationId) {
+    return lookup(() -> buttonText, () -> app(applicationId, app -> app.buttonText));
   }
 
   public String lookupClientId(String clientId) {
     return lookup(() -> client_id, () -> app(clientId, app -> app.client_id));
+  }
+
+  public String lookupClientId(UUID applicationId) {
+    return lookup(() -> client_id, () -> app(applicationId, app -> app.client_id));
   }
 
   public String lookupClientSecret(UUID applicationId) {
@@ -86,6 +88,15 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   public String lookupScope(String clientId) {
     return lookup(() -> scope, () -> app(clientId, app -> app.scope));
+  }
+
+  public String lookupScope(UUID applicationId) {
+    return lookup(() -> scope, () -> app(applicationId, app -> app.scope));
+  }
+
+  @Override
+  public void normalize() {
+    super.normalize();
   }
 
   @Override

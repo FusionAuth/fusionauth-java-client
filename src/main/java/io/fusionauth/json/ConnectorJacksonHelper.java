@@ -17,6 +17,7 @@ package io.fusionauth.json;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -31,7 +32,6 @@ import io.fusionauth.domain.connector.LDAPConnectorConfiguration;
  * @author Trevor Smith
  */
 public class ConnectorJacksonHelper {
-
   public static ConnectorType extractType(DeserializationContext ctxt, JsonParser p, JsonNode connectorNode)
       throws IOException {
     JsonNode node = connectorNode.at("/type");
@@ -40,10 +40,9 @@ public class ConnectorJacksonHelper {
     ConnectorType connectorType = ConnectorType.safeValueOf(type);
     if (connectorType == null) {
       // This does actually throw an exception, but this is how Jackson rolls.
+      String sorted = Arrays.stream(ConnectorType.values()).map(Enum::name).sorted().collect(Collectors.joining(", "));
       return (ConnectorType) ctxt.handleUnexpectedToken(BaseConnectorConfiguration.class, node.asToken(), p,
-                                                        "Expected the type field to be one of " +
-                                                        String.join(",", Arrays.toString(ConnectorType.values()) + ", but found [" +
-                                                                         node.asText() + "]"));
+                                                        "Expected the type field to be one of [" + sorted + "], but found [" + node.asText() + "]");
     }
 
     return connectorType;
