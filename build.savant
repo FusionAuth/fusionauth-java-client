@@ -39,9 +39,9 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.23.1
       dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
       dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
-      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.10.3")
-      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.10.3")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.10.3")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.12.1")
+      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.12.1")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.12.1")
     }
     group(name: "test-compile") {
       dependency(id: "org.testng:testng:7.3.0")
