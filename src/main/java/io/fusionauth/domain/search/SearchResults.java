@@ -27,6 +27,8 @@ public class SearchResults<T> {
 
   public long total;
 
+  public boolean totalEqualToActual;
+
   public SearchResults() {
   }
 

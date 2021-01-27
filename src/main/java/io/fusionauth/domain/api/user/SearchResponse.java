@@ -18,6 +18,7 @@ package io.fusionauth.domain.api.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.search.SearchResults;
@@ -29,6 +30,13 @@ import io.fusionauth.domain.search.SearchResults;
  */
 public class SearchResponse {
   public long total;
+
+  // When this is 'true', it indicates the total returned may not be the actual number of users matching the query.
+  // - The search index will cap the total hit count to limit query performance, once this limit is reached the count no longer increments.
+  // - To request an accurate total, see 'accurateTotal' on the API request.
+  // Not returning this on the API for now, Elasticsearch does not seem to provide a reliable answer, it is simply and indicator.
+  @JsonIgnore
+  public boolean totalEqualToActual;
 
   public List<User> users = new ArrayList<>();
 

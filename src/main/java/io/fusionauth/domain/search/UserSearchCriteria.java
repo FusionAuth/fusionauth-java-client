@@ -27,6 +27,8 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class UserSearchCriteria extends BaseSearchCriteria implements Buildable<UserSearchCriteria> {
+  public boolean accurateTotal;
+
   public List<UUID> ids = new ArrayList<>();
 
   public String query;
