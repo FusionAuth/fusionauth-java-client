@@ -68,6 +68,7 @@ public class OAuthError implements OAuthResponse {
     access_token_failed_processing,
 
     refresh_token_not_found,
+    refresh_token_type_not_supported,
 
     // Invalid request parameters
     invalid_client_id,
@@ -143,6 +144,11 @@ public class OAuthError implements OAuthResponse {
 
     // RFC 8628 Device Authorization
     authorization_pending,
-    expired_token
+    expired_token,
+
+    // Used in Introspect validation. See section 2.1 of RFC 7662 https://tools.ietf.org/html/rfc7662
+    // - Values for 'token_type_hint' are defined by RFC 7009 "OAuth Token Type Hints". https://tools.ietf.org/html/rfc7009
+    // - Validation for this field is described in section 4.1.1 of RFC 7009.
+    unsupported_token_type
   }
 }
