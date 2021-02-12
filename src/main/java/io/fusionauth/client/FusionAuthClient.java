@@ -107,8 +107,9 @@ import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginReque
 import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginResponse;
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
 import io.fusionauth.domain.api.jwt.IssueResponse;
+import io.fusionauth.domain.api.jwt.JWTRefreshResponse;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
-import io.fusionauth.domain.api.jwt.RefreshResponse;
+import io.fusionauth.domain.api.jwt.RefreshTokenResponse;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
 import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
@@ -1158,8 +1159,8 @@ public class FusionAuthClient {
    * @param request The refresh request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<RefreshResponse, Errors> exchangeRefreshTokenForJWT(RefreshRequest request) {
-    return startAnonymous(RefreshResponse.class, Errors.class)
+  public ClientResponse<JWTRefreshResponse, Errors> exchangeRefreshTokenForJWT(RefreshRequest request) {
+    return startAnonymous(JWTRefreshResponse.class, Errors.class)
         .uri("/api/jwt/refresh")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -2594,13 +2595,27 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves a single refresh token by unique Id. This is not the same thing as the string value of the refresh token, if you have that, you already have what you need..
+   *
+   * @param userId The Id of the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<RefreshTokenResponse, Errors> retrieveRefreshTokenById(UUID userId) {
+    return start(RefreshTokenResponse.class, Errors.class)
+        .uri("/api/jwt/refresh")
+        .urlSegment(userId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the refresh tokens that belong to the user with the given Id.
    *
    * @param userId The Id of the user.
    * @return The ClientResponse object.
    */
-  public ClientResponse<RefreshResponse, Errors> retrieveRefreshTokens(UUID userId) {
-    return start(RefreshResponse.class, Errors.class)
+  public ClientResponse<RefreshTokenResponse, Errors> retrieveRefreshTokens(UUID userId) {
+    return start(RefreshTokenResponse.class, Errors.class)
         .uri("/api/jwt/refresh")
         .urlParameter("userId", userId)
         .get()

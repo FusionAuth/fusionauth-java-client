@@ -15,8 +15,30 @@
  */
 package io.fusionauth.domain.api.jwt;
 
+import java.util.List;
+
+import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.jwt.RefreshToken;
+
 /**
+ * API response for retrieving Refresh Tokens
+ *
  * @author Daniel DeGroff
  */
-public interface RefreshResponse {
+public class RefreshTokenResponse implements RefreshResponse {
+  public RefreshToken refreshToken;
+
+  public List<RefreshToken> refreshTokens;
+
+  @JacksonConstructor
+  public RefreshTokenResponse() {
+  }
+
+  public RefreshTokenResponse(RefreshToken refreshToken) {
+    this.refreshToken = refreshToken;
+  }
+
+  public RefreshTokenResponse(List<RefreshToken> refreshTokens) {
+    this.refreshTokens = refreshTokens;
+  }
 }
