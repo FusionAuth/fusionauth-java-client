@@ -45,6 +45,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public String clientSecret;
 
+  public boolean debug;
+
   public URI deviceVerificationURL;
 
   @JsonMerge(OptBoolean.FALSE)
@@ -71,6 +73,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
     this.clientId = other.clientId;
     this.clientSecret = other.clientSecret;
+    this.debug = other.debug;
     this.deviceVerificationURL = other.deviceVerificationURL;
     this.enabledGrants.addAll(other.enabledGrants);
     this.generateRefreshTokens = other.generateRefreshTokens;
@@ -93,7 +96,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
       return false;
     }
     OAuth2Configuration that = (OAuth2Configuration) o;
-    return generateRefreshTokens == that.generateRefreshTokens &&
+    return debug == that.debug &&
+           generateRefreshTokens == that.generateRefreshTokens &&
            requireClientAuthentication == that.requireClientAuthentication &&
            Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
            Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
@@ -107,7 +111,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication);
   }
 
   public void normalize() {
