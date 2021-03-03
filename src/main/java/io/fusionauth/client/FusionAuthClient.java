@@ -142,6 +142,7 @@ import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
+import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
  * Client that connects to a FusionAuth server and provides access to the full set of FusionAuth APIs.
@@ -2273,13 +2274,29 @@ public class FusionAuthClient {
   /**
    * Retrieves the identity provider for the given id or all of the identity providers if the id is null.
    *
-   * @param identityProviderId (Optional) The identity provider id.
+   * @param identityProviderId The identity provider Id.
    * @return The ClientResponse object.
    */
-  public ClientResponse<IdentityProviderResponse, Void> retrieveIdentityProvider(UUID identityProviderId) {
-    return start(IdentityProviderResponse.class, Void.TYPE)
+  public ClientResponse<IdentityProviderResponse, Errors> retrieveIdentityProvider(UUID identityProviderId) {
+    return start(IdentityProviderResponse.class, Errors.class)
         .uri("/api/identity-provider")
         .urlSegment(identityProviderId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves one or more identity provider for the given type. For types such as Google, Facebook, Twitter and LinkedIn, only a single 
+   * identity provider can exist. For types such as OpenID Connect and SAMLv2 more than one identity provider can be configured so this request 
+   * may return multiple identity providers.
+   *
+   * @param type The type of the identity provider.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderResponse, Errors> retrieveIdentityProviderByType(IdentityProviderType type) {
+    return start(IdentityProviderResponse.class, Errors.class)
+        .uri("/api/identity-provider")
+        .urlParameter("type", type)
         .get()
         .go();
   }
