@@ -17,7 +17,6 @@ package io.fusionauth.domain;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +37,8 @@ public class CORSConfiguration extends Enableable implements Buildable<CORSConfi
 
   public List<URI> allowedOrigins = new ArrayList<>();
 
+  public boolean debug;
+
   public List<String> exposedHeaders = new ArrayList<>();
 
   public int preflightMaxAgeInSeconds;
@@ -54,25 +55,12 @@ public class CORSConfiguration extends Enableable implements Buildable<CORSConfi
       return false;
     }
     CORSConfiguration that = (CORSConfiguration) o;
-    Collections.sort(allowedHeaders);
-    Collections.sort(that.allowedHeaders);
-    Collections.sort(allowedMethods);
-    Collections.sort(that.allowedMethods);
-    Collections.sort(allowedOrigins);
-    Collections.sort(that.allowedOrigins);
-    Collections.sort(exposedHeaders);
-    Collections.sort(that.exposedHeaders);
-    return preflightMaxAgeInSeconds == that.preflightMaxAgeInSeconds &&
-           allowCredentials == that.allowCredentials &&
-           Objects.equals(allowedHeaders, that.allowedHeaders) &&
-           Objects.equals(allowedMethods, that.allowedMethods) &&
-           Objects.equals(allowedOrigins, that.allowedOrigins) &&
-           Objects.equals(exposedHeaders, that.exposedHeaders);
+    return allowCredentials == that.allowCredentials && debug == that.debug && preflightMaxAgeInSeconds == that.preflightMaxAgeInSeconds && Objects.equals(allowedHeaders, that.allowedHeaders) && Objects.equals(allowedMethods, that.allowedMethods) && Objects.equals(allowedOrigins, that.allowedOrigins) && Objects.equals(exposedHeaders, that.exposedHeaders);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), allowedHeaders, allowedMethods, allowedOrigins, exposedHeaders, preflightMaxAgeInSeconds, allowCredentials);
+    return Objects.hash(super.hashCode(), allowCredentials, allowedHeaders, allowedMethods, allowedOrigins, debug, exposedHeaders, preflightMaxAgeInSeconds);
   }
 
   public void normalize() {
