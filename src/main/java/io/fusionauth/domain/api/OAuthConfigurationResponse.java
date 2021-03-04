@@ -17,6 +17,7 @@ package io.fusionauth.domain.api;
 
 import java.net.URI;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
 
@@ -34,6 +35,7 @@ public class OAuthConfigurationResponse {
    */
   public URI logoutURL;
 
+  @JsonIgnoreProperties(value = {"debug"})
   public OAuth2Configuration oauthConfiguration;
 
   public OAuthConfigurationResponse(int httpSessionMaxInactiveInterval, URI logoutURL, OAuth2Configuration oauthConfiguration) {
