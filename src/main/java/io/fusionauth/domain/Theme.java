@@ -153,7 +153,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.passwordSent,
                      templates.registrationComplete,
                      templates.registrationSend,
-                     templates.registrationVerify)
+                     templates.registrationVerify,
+                     templates.samlv2Logout)
                  .anyMatch(Objects::isNull);
   }
 
@@ -206,7 +207,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout",
         "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
-        "registrationComplete", "registrationSend", "registrationVerify"
+        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout"
     )));
 
     public String emailComplete;
@@ -255,6 +256,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String registrationVerify;
 
+    public String samlv2Logout;
+
     public Templates() {
     }
 
@@ -282,6 +285,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.registrationComplete = other.registrationComplete;
       this.registrationSend = other.registrationSend;
       this.registrationVerify = other.registrationVerify;
+      this.samlv2Logout = other.samlv2Logout;
     }
 
     @Override
@@ -315,7 +319,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(passwordSent, that.passwordSent) &&
              Objects.equals(registrationComplete, that.registrationComplete) &&
              Objects.equals(registrationSend, that.registrationSend) &&
-             Objects.equals(registrationVerify, that.registrationVerify);
+             Objects.equals(registrationVerify, that.registrationVerify) &&
+             Objects.equals(samlv2Logout, that.samlv2Logout);
     }
 
     @Override
@@ -342,7 +347,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                           passwordSent,
                           registrationComplete,
                           registrationSend,
-                          registrationVerify);
+                          registrationVerify,
+                          samlv2Logout);
     }
 
     @SuppressWarnings("DuplicatedCode")
@@ -370,6 +376,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       registrationComplete = lineReturns(trimToNull(registrationComplete));
       registrationSend = lineReturns(trimToNull(registrationSend));
       registrationVerify = lineReturns(trimToNull(registrationVerify));
+      samlv2Logout = lineReturns(trimToNull(samlv2Logout));
     }
 
     @Override
