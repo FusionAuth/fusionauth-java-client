@@ -33,8 +33,6 @@ public class IdentityProviderLoginRequest extends BaseLoginRequest implements Bu
 
   public UUID identityProviderId;
 
-  public boolean bypassAuthTokenRequest;
-
   @JacksonConstructor
   public IdentityProviderLoginRequest() {
   }
