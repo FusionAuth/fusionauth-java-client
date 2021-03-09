@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.oauth2.LoginMethod;
 
 /**
  * Google social login provider.
@@ -38,7 +39,13 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   public String client_secret;
 
   @InternalJSONColumn
+  public String popup;
+
+  @InternalJSONColumn
   public String scope;
+
+  @InternalJSONColumn
+  public LoginMethod login_method;
 
   @Override
   public boolean equals(Object o) {
@@ -55,6 +62,8 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
+           login_method == that.login_method &&
+           Objects.equals(popup, that.popup) &&
            Objects.equals(scope, that.scope);
   }
 
@@ -65,7 +74,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, login_method, popup, scope);
   }
 
   public String lookupButtonText(String clientId) {
@@ -82,6 +91,14 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   public String lookupClientSecret(UUID applicationId) {
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
+  }
+
+  public String lookupPopup(String clientId) {
+    return lookup(() -> popup, () -> app(clientId, app -> app.popup));
+  }
+
+  public LoginMethod lookupLoginMethod(String clientId) {
+    return lookup(() -> login_method, () -> app(clientId, app -> app.login_method));
   }
 
   public String lookupScope(String clientId) {

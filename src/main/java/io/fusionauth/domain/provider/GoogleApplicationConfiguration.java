@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.oauth2.LoginMethod;
 
 /**
  * @author Daniel DeGroff
@@ -33,6 +34,12 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
 
   @InternalJSONColumn
   public String client_secret;
+
+  @InternalJSONColumn
+  public LoginMethod login_method;
+
+  @InternalJSONColumn
+  public String popup;
 
   @InternalJSONColumn
   public String scope;
@@ -50,14 +57,16 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
     }
     GoogleApplicationConfiguration that = (GoogleApplicationConfiguration) o;
     return Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(client_id, that.client_id) &&
-        Objects.equals(client_secret, that.client_secret) &&
-        Objects.equals(scope, that.scope);
+           Objects.equals(client_id, that.client_id) &&
+           Objects.equals(client_secret, that.client_secret) &&
+           login_method == that.login_method &&
+           Objects.equals(popup, that.popup) &&
+           Objects.equals(scope, that.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, login_method, popup, scope);
   }
 
   @Override
