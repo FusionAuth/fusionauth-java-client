@@ -39,9 +39,6 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   public String client_secret;
 
   @InternalJSONColumn
-  public String popup;
-
-  @InternalJSONColumn
   public String scope;
 
   @InternalJSONColumn
@@ -63,7 +60,6 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
            login_method == that.login_method &&
-           Objects.equals(popup, that.popup) &&
            Objects.equals(scope, that.scope);
   }
 
@@ -74,7 +70,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, login_method, popup, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, login_method, scope);
   }
 
   public String lookupButtonText(String clientId) {
@@ -91,10 +87,6 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   public String lookupClientSecret(UUID applicationId) {
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
-  }
-
-  public String lookupPopup(String clientId) {
-    return lookup(() -> popup, () -> app(clientId, app -> app.popup));
   }
 
   public LoginMethod lookupLoginMethod(String clientId) {
