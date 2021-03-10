@@ -67,6 +67,6 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
 
   @Override
   protected String defaultOrderBy() {
-    return "insert_instant DESC";
+    return "insert_instant DESC, id DESC";
   }
 }

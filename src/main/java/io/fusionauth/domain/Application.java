@@ -553,6 +553,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     @ExcludeFromDatabaseDataColumn
     public UUID keyId;
 
+    public SAMLv2Logout logout = new SAMLv2Logout();
+
     public URI logoutURL;
 
     public boolean requireSignedRequests;
@@ -574,6 +576,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       this.issuer = other.issuer;
       this.keyId = other.keyId;
       this.logoutURL = other.logoutURL;
+      this.logout = new SAMLv2Logout(other.logout);
       this.requireSignedRequests = other.requireSignedRequests;
       this.xmlSignatureLocation = other.xmlSignatureLocation;
       this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
@@ -632,9 +635,92 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
+    public enum SAMLLogoutBehavior {
+      AllParticipants,
+      OnlyOriginator
+    }
+
     public enum XMLSignatureLocation {
       Assertion,
       Response
+    }
+
+    public static class SAMLv2Logout {
+      public SAMLLogoutBehavior behavior;
+
+      // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
+      @ExcludeFromDatabaseDataColumn
+      public UUID defaultVerificationKeyId;
+
+      @ExcludeFromDatabaseDataColumn
+      public UUID keyId;
+
+      public boolean requireSignedRequests;
+
+      public SAMLv2SingleLogout singleLogout = new SAMLv2SingleLogout();
+
+      public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
+
+      public SAMLv2Logout(SAMLv2Logout other) {
+        this.defaultVerificationKeyId = other.defaultVerificationKeyId;
+        this.keyId = other.keyId;
+        this.behavior = other.behavior;
+        this.requireSignedRequests = other.requireSignedRequests;
+        this.singleLogout = new SAMLv2SingleLogout(other.singleLogout);
+        this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
+      }
+
+      @JacksonConstructor
+      public SAMLv2Logout() {
+      }
+
+      @Override
+      public boolean equals(Object o) {
+        if (this == o) {
+          return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+          return false;
+        }
+        SAMLv2Logout that = (SAMLv2Logout) o;
+        return requireSignedRequests == that.requireSignedRequests && Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) && Objects.equals(keyId, that.keyId) && behavior == that.behavior && Objects.equals(singleLogout, that.singleLogout) && xmlSignatureC14nMethod == that.xmlSignatureC14nMethod;
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(defaultVerificationKeyId, keyId, behavior, requireSignedRequests, singleLogout, xmlSignatureC14nMethod);
+      }
+
+      @Override
+      public String toString() {
+        return ToString.toString(this);
+      }
+    }
+
+    public static class SAMLv2SingleLogout extends Enableable {
+      // Key pair used to sign w/
+      @ExcludeFromDatabaseDataColumn
+      public UUID keyId;
+
+      public URI url;
+
+      public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
+
+      public SAMLv2SingleLogout(SAMLv2SingleLogout other) {
+        this.enabled = other.enabled;
+        this.keyId = other.keyId;
+        this.url = other.url;
+        this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
+      }
+
+      @JacksonConstructor
+      public SAMLv2SingleLogout() {
+      }
+
+      @Override
+      public String toString() {
+        return ToString.toString(this);
+      }
     }
   }
 }
