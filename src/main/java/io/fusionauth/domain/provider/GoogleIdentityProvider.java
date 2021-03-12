@@ -39,10 +39,10 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   public String client_secret;
 
   @InternalJSONColumn
-  public String scope;
+  public LoginMethod login_method;
 
   @InternalJSONColumn
-  public LoginMethod login_method;
+  public String scope;
 
   @Override
   public boolean equals(Object o) {
