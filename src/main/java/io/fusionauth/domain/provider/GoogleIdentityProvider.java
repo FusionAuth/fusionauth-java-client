@@ -90,7 +90,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   }
 
   public LoginMethod lookupLoginMethod(String clientId) {
-    return lookup(() -> loginMethod, () -> app(clientId, app -> app.login_method));
+    return lookup(() -> loginMethod, () -> app(clientId, app -> app.loginMethod));
   }
 
   public String lookupScope(String clientId) {

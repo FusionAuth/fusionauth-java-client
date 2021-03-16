@@ -36,7 +36,7 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
   public String client_secret;
 
   @InternalJSONColumn
-  public LoginMethod login_method;
+  public LoginMethod loginMethod;
 
   @InternalJSONColumn
   public String scope;
@@ -56,13 +56,13 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
-           login_method == that.login_method &&
+           loginMethod == that.loginMethod &&
            Objects.equals(scope, that.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, login_method, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, loginMethod, scope);
   }
 
   @Override
