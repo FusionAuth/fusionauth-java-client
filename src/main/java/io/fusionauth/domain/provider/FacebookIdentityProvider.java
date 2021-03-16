@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.oauth2.LoginMethod;
 
 /**
  * Facebook social login provider.
@@ -41,6 +42,9 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
   public String fields;
 
   @InternalJSONColumn
+  public LoginMethod login_method;
+
+  @InternalJSONColumn
   public String permissions;
 
   @Override
@@ -59,6 +63,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
            Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_secret, that.client_secret) &&
            Objects.equals(fields, that.fields) &&
+           login_method == that.login_method &&
            Objects.equals(permissions, that.permissions);
   }
 
@@ -69,7 +74,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, permissions);
+    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, login_method, permissions);
   }
 
   public String lookupAppId(UUID applicationId) {
@@ -94,6 +99,10 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
 
   public String lookupFields(UUID applicationId) {
     return lookup(() -> fields, () -> app(applicationId, app -> app.fields));
+  }
+
+  public LoginMethod lookupLoginMethod(String clientId) {
+    return lookup(() -> login_method, () -> app(clientId, app -> app.login_method));
   }
 
   public String lookupPermissions(UUID applicationId) {
