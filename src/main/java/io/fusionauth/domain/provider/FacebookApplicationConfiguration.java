@@ -39,7 +39,7 @@ public class FacebookApplicationConfiguration extends BaseIdentityProviderApplic
   public String fields;
 
   @InternalJSONColumn
-  public LoginMethod login_method;
+  public LoginMethod loginMethod;
 
   @InternalJSONColumn
   public String permissions;
@@ -60,13 +60,13 @@ public class FacebookApplicationConfiguration extends BaseIdentityProviderApplic
            Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_secret, that.client_secret) &&
            Objects.equals(fields, that.fields) &&
-           login_method == that.login_method &&
+           loginMethod == that.loginMethod &&
            Objects.equals(permissions, that.permissions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, login_method, permissions);
+    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, loginMethod, permissions);
   }
 
   @Override
