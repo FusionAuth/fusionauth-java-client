@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+import io.fusionauth.domain.oauth2.LoginMethod;
 
 /**
  * @author Daniel DeGroff
@@ -38,6 +39,9 @@ public class FacebookApplicationConfiguration extends BaseIdentityProviderApplic
   public String fields;
 
   @InternalJSONColumn
+  public LoginMethod loginMethod;
+
+  @InternalJSONColumn
   public String permissions;
 
   @Override
@@ -53,15 +57,16 @@ public class FacebookApplicationConfiguration extends BaseIdentityProviderApplic
     }
     FacebookApplicationConfiguration that = (FacebookApplicationConfiguration) o;
     return Objects.equals(appId, that.appId) &&
-        Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(client_secret, that.client_secret) &&
-        Objects.equals(fields, that.fields) &&
-        Objects.equals(permissions, that.permissions);
+           Objects.equals(buttonText, that.buttonText) &&
+           Objects.equals(client_secret, that.client_secret) &&
+           Objects.equals(fields, that.fields) &&
+           loginMethod == that.loginMethod &&
+           Objects.equals(permissions, that.permissions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, permissions);
+    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, loginMethod, permissions);
   }
 
   @Override
