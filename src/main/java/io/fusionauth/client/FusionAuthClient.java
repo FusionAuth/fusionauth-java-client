@@ -312,6 +312,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated.
+   *
+   * @param tenantId (Optional) The Id for the tenant. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the tenant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantResponse, Errors> createAPIKey(UUID tenantId, TenantRequest request) {
+    return start(TenantResponse.class, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates an application. You can optionally specify an Id for the application, if not provided one will be generated.
    *
    * @param applicationId (Optional) The Id to use for the application. If not provided a secure random UUID will be generated.
