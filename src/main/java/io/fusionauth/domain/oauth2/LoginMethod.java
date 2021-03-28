@@ -15,6 +15,12 @@
  */
 package io.fusionauth.domain.oauth2;
 
+// TODO : Code Review :
+//    1. Thinking this should be in the provider package instead of oauth2.
+//    2. Maybe rename enum to IdentityProviderLoginMethod, this is more verbose but we are beginning to realize
+//       that because other client libraries we build such as Go and .NET core use either a global namespace or functionally have a
+//       global namespace that naming objects more specifically helps us not have downstream name collisions in our clients.
+
 /**
  * @author Brett Pontarelli
  */
