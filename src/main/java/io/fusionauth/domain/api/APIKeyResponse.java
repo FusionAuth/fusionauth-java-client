@@ -26,7 +26,7 @@ import io.fusionauth.domain.AuthenticationAPIKey;
 public class APIKeyResponse {
   public String authenticationKeyId;
 
-  public AuthenticationAPIKey authenticationKey;
+  public AuthenticationAPIKey apiKey;
 
   @JacksonConstructor
   public APIKeyResponse() {
@@ -37,7 +37,7 @@ public class APIKeyResponse {
   }
 
   public APIKeyResponse(AuthenticationAPIKey authenticationKey) {
-    this.authenticationKey = authenticationKey;
+    this.apiKey = authenticationKey;
   }
 
 

@@ -34,7 +34,7 @@ import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
-import io.fusionauth.domain.api.ApplicationRequest;
+import io.fusionauth.domain.api.APIKeyRequest;import io.fusionauth.domain.api.APIKeyResponse;import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
@@ -306,6 +306,22 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an authenticatio API key. You can optionally specify an Id for the application, if not provided one will be generated.
+   *
+   * @param authenticationKeyId (Optional) The Id of the authentication key. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> createAPIKey(String authenticationKeyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/apikey/key/")
+        .urlSegment(authenticationKeyId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
