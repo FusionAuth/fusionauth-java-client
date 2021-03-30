@@ -15,10 +15,8 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.UUID;
-
-import com.inversoft.authentication.api.domain.AuthenticationKey;
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.AuthenticationAPIKey;
 
 /**
  * Authentication key response object.
@@ -28,7 +26,7 @@ import com.inversoft.json.JacksonConstructor;
 public class APIKeyRequest {
   public String sourceKeyId;
 
-  public AuthenticationKey authenticationKey;
+  public AuthenticationAPIKey apiKey;
 
   @JacksonConstructor
   public APIKeyRequest() {

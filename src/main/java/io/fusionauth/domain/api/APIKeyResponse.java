@@ -15,8 +15,8 @@
  */
 package io.fusionauth.domain.api;
 
-import com.inversoft.authentication.api.domain.AuthenticationKey;
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.AuthenticationAPIKey;
 
 /**
  * Authentication key response object.
@@ -26,7 +26,7 @@ import com.inversoft.json.JacksonConstructor;
 public class APIKeyResponse {
   public String authenticationKeyId;
 
-  public AuthenticationKey authenticationKey;
+  public AuthenticationAPIKey authenticationKey;
 
   @JacksonConstructor
   public APIKeyResponse() {
@@ -36,7 +36,7 @@ public class APIKeyResponse {
     this.authenticationKeyId = authenticationKeyId;
   }
 
-  public APIKeyResponse(AuthenticationKey authenticationKey) {
+  public APIKeyResponse(AuthenticationAPIKey authenticationKey) {
     this.authenticationKey = authenticationKey;
   }
 
