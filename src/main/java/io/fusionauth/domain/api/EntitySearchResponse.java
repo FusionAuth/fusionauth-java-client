@@ -15,12 +15,12 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Entity;
-import io.fusionauth.domain.search.SearchResults;
 
 /**
  * Search request for entities
@@ -28,7 +28,9 @@ import io.fusionauth.domain.search.SearchResults;
  * @author Brett Guy
  */
 public class EntitySearchResponse {
-  public List<Entity> entities;
+  public List<Entity> entities = new ArrayList<>();
+
+  public long total;
 
   // When this is 'true', it indicates the total returned may not be the actual number of entities matching the query.
   // - The search index will cap the total hit count to limit query performance, once this limit is reached the count no longer increments.
@@ -37,14 +39,7 @@ public class EntitySearchResponse {
   @JsonIgnore
   public boolean totalEqualToActual;
 
-  public long total;
-
   @JacksonConstructor
   public EntitySearchResponse() {
-  }
-
-  public EntitySearchResponse(SearchResults<Entity> searchResults) {
-    this.entities = searchResults.results;
-    this.total = searchResults.total;
   }
 }
