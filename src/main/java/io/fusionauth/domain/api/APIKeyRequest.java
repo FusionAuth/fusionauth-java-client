@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  */
 package io.fusionauth.domain.api;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.AuthenticationAPIKey;
 
 /**
- * Authentication key response object.
+ * Authentication key request object.
  *
  * @author Sanjay
  */
@@ -28,7 +27,6 @@ public class APIKeyRequest {
 
   public AuthenticationAPIKey apiKey;
 
-  @JacksonConstructor
   public APIKeyRequest() {
   }
 }

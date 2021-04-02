@@ -34,8 +34,10 @@ import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
-import io.fusionauth.domain.api.APIKeyRequest;import io.fusionauth.domain.api.APIKeyResponse;import io.fusionauth.domain.api.ApplicationRequest;
+import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
+import io.fusionauth.domain.api.APIKeyRequest;
+import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
@@ -313,14 +315,18 @@ public class FusionAuthClient {
 
   /**
    * Creates an authenticatio API key. You can optionally specify an Id for the application, if not provided one will be generated.
+   * an API key can only be created with equal or lesser authority. An API key cannot create another API key unless it is granted 
+   * to that API key.
+   * 
+   * If an API key is locked to a tenant, it can only create API Keys for that same tenant.
    *
-   * @param authenticationKeyId (Optional) The Id of the authentication key. If not provided a secure random UUID will be generated.
+   * @param authenticationKeyId (Optional) The Id of the authentication key. If not provided a secure random api key will be generated.
    * @param request The request object that contains all of the information used to create the APIKey.
    * @return The ClientResponse object.
    */
   public ClientResponse<APIKeyResponse, Errors> createAPIKey(String authenticationKeyId, APIKeyRequest request) {
     return start(APIKeyResponse.class, Errors.class)
-        .uri("/api/apikey/key/")
+        .uri("/api/apikey/key")
         .urlSegment(authenticationKeyId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
