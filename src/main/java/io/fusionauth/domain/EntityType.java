@@ -42,23 +42,13 @@ public class EntityType implements Buildable<EntityType>, _InternalJSONColumn {
   public ZonedDateTime insertInstant;
 
   @InternalJSONColumn
-  public JWTConfiguration jwtConfiguration = new JWTConfiguration();
+  public EntityJWTConfiguration jwtConfiguration = new EntityJWTConfiguration();
 
   public ZonedDateTime lastUpdateInstant;
 
   public String name;
 
   public List<EntityTypePermission> permissions = new ArrayList<>();
-
-  public EntityTypePermission getPermission(String name) {
-    for (EntityTypePermission permission : permissions) {
-      if (permission.name.equals(name)) {
-        return permission;
-      }
-    }
-
-    return null;
-  }
 
   @JacksonConstructor
   public EntityType() {
@@ -90,6 +80,16 @@ public class EntityType implements Buildable<EntityType>, _InternalJSONColumn {
            Objects.equals(permissions, group.permissions);
   }
 
+  public EntityTypePermission getPermission(String name) {
+    for (EntityTypePermission permission : permissions) {
+      if (permission.name.equals(name)) {
+        return permission;
+      }
+    }
+
+    return null;
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(data, id, insertInstant, lastUpdateInstant, name, permissions);
@@ -103,7 +103,7 @@ public class EntityType implements Buildable<EntityType>, _InternalJSONColumn {
   /**
    * JWT Configuration for entities.
    */
-  public static class JWTConfiguration extends Enableable implements Buildable<JWTConfiguration> {
+  public static class EntityJWTConfiguration extends Enableable implements Buildable<EntityJWTConfiguration> {
     /**
      * The signing key used to sign the access token
      */
