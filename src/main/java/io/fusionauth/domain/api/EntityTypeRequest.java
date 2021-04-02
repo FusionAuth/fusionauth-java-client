@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,28 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import io.fusionauth.domain.EntityType;
+import io.fusionauth.domain.EntityTypePermission;
 
 /**
- * @author Daniel DeGroff
+ * Entity Type API request object.
+ *
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
+public class EntityTypeRequest {
+  public EntityType entityType;
 
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
+  public EntityTypePermission permission;
 
   @JacksonConstructor
-  public LoginRecordSearchRequest() {
+  public EntityTypeRequest() {
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  public EntityTypeRequest(EntityType entityType) {
+    this.entityType = entityType;
+  }
+
+  public EntityTypeRequest(EntityTypePermission permission) {
+    this.permission = permission;
   }
 }

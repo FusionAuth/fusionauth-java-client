@@ -22,7 +22,7 @@ import io.fusionauth.domain.search.EventLogSearchCriteria;
  * @author Brian Pontarelli
  */
 public class EventLogSearchRequest {
-  public EventLogSearchCriteria search;
+  public EventLogSearchCriteria search = new EventLogSearchCriteria();
 
   @JacksonConstructor
   public EventLogSearchRequest() {

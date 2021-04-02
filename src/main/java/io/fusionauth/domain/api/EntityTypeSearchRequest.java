@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,21 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import io.fusionauth.domain.search.EntityTypeSearchCriteria;
 
 /**
- * @author Daniel DeGroff
+ * Search request for entity types.
+ *
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
-
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
+public class EntityTypeSearchRequest {
+  public EntityTypeSearchCriteria search = new EntityTypeSearchCriteria();
 
   @JacksonConstructor
-  public LoginRecordSearchRequest() {
+  public EntityTypeSearchRequest() {
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
+  public EntityTypeSearchRequest(EntityTypeSearchCriteria search) {
     this.search = search;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,30 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.Comparator;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import io.fusionauth.domain.EntityType;
+import io.fusionauth.domain.search.SearchResults;
 
 /**
- * @author Daniel DeGroff
+ * Search request for entity types.
+ *
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
+public class EntityTypeSearchResponse {
+  public List<EntityType> entityTypes;
 
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
+  public long total;
 
   @JacksonConstructor
-  public LoginRecordSearchRequest() {
+  public EntityTypeSearchResponse() {
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  public EntityTypeSearchResponse(SearchResults<EntityType> searchResults) {
+    this.entityTypes = searchResults.results;
+    this.entityTypes.forEach(et -> et.permissions.sort(Comparator.comparing(etp -> etp.name)));
+    this.total = searchResults.total;
   }
 }

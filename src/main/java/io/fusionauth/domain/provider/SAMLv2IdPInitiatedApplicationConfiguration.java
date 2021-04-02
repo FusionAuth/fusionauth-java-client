@@ -13,24 +13,27 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.provider;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
-
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
-
-  @JacksonConstructor
-  public LoginRecordSearchRequest() {
+public class SAMLv2IdPInitiatedApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SAMLv2IdPInitiatedApplicationConfiguration> {
+  @Override
+  public boolean equals(Object o) {
+    return super.equals(o);
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

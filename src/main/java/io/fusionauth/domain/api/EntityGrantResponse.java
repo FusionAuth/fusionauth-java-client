@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,31 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import io.fusionauth.domain.EntityGrant;
 
 /**
- * @author Daniel DeGroff
+ * Entity grant API response object.
+ *
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
+public class EntityGrantResponse {
+  public final List<EntityGrant> grants = new ArrayList<>();
 
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
+  public EntityGrant grant;
 
   @JacksonConstructor
-  public LoginRecordSearchRequest() {
+  public EntityGrantResponse() {
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  public EntityGrantResponse(EntityGrant grant) {
+    this.grant = grant;
+  }
+
+  public EntityGrantResponse(List<EntityGrant> grants) {
+    this.grants.addAll(grants);
   }
 }

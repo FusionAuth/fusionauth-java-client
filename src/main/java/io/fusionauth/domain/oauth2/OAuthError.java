@@ -87,12 +87,15 @@ public class OAuthError implements OAuthResponse {
     invalid_device_code,
     invalid_user_code,
     invalid_additional_client_id,
+    invalid_target_entity_scope,
+    invalid_entity_permission_scope,
 
     // Grant disabled
     grant_type_disabled,
 
     // Missing request parameters
     missing_client_id,
+    missing_client_secret,
     missing_code,
     missing_device_code,
     missing_grant_type,
@@ -104,6 +107,7 @@ public class OAuthError implements OAuthResponse {
     missing_verification_uri,
 
     login_prevented,
+    not_licensed,
     user_code_expired,
     user_expired,
     user_locked,
@@ -140,6 +144,7 @@ public class OAuthError implements OAuthResponse {
 
     // RFC 6749 does not account for these states, so we invented them.
     change_password_required,
+    not_licensed,
     two_factor_required,
 
     // RFC 8628 Device Authorization
