@@ -15,8 +15,6 @@
  */
 package io.fusionauth.domain.search;
 
-import java.util.UUID;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -25,8 +23,6 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class EntitySearchCriteria extends BaseElasticSearchCriteria implements Buildable<EntitySearchCriteria> {
-  public UUID tenantId;
-
   @Override
   public void prepare() {
     secure();
@@ -37,27 +33,10 @@ public class EntitySearchCriteria extends BaseElasticSearchCriteria implements B
 
     orderBy = orderBy.replace("insertInstant", "insert_instant")
                      .replace("lastUpdateInstant", "last_update_instant");
-
-    buildQuery();
   }
 
   @Override
   protected String defaultOrderBy() {
     return "name ASC";
-  }
-
-  private void buildQuery() {
-    if (queryString == null || queryString.equals("")) {
-      queryString = "*";
-    }
-
-    // We send in the tenantId via an HTTP header, but it should show up in the displayed query string
-    if (tenantId != null) {
-      if (queryString.equals("*")) {
-        queryString = "tenantId:" + tenantId.toString();
-      } else {
-        queryString = "(" + queryString + ") AND tenantId:" + tenantId.toString();
-      }
-    }
   }
 }

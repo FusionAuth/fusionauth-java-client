@@ -2001,8 +2001,8 @@ public class FusionAuthClient {
    *
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> refreshEntitySearchIndex() {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<Void, Void> refreshEntitySearchIndex() {
+    return start(Void.TYPE, Void.TYPE)
         .uri("/api/entity/search")
         .put()
         .go();
@@ -2016,8 +2016,8 @@ public class FusionAuthClient {
    *
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> refreshUserSearchIndex() {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<Void, Void> refreshUserSearchIndex() {
+    return start(Void.TYPE, Void.TYPE)
         .uri("/api/user/search")
         .put()
         .go();
@@ -3426,8 +3426,8 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<EntitySearchResponse, Void> searchEntities(EntitySearchRequest request) {
-    return start(EntitySearchResponse.class, Void.TYPE)
+  public ClientResponse<EntitySearchResponse, Errors> searchEntities(EntitySearchRequest request) {
+    return start(EntitySearchResponse.class, Errors.class)
         .uri("/api/entity/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
