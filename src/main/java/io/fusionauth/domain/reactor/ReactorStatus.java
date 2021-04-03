@@ -23,6 +23,8 @@ import java.util.UUID;
  * @author Daniel DeGroff
  */
 public class ReactorStatus {
+  public ReactorFeatureStatus advancedIdentityProviders = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus advancedRegistrationForms = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
