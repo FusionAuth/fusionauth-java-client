@@ -386,6 +386,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public boolean requireAuthentication = true;
 
+    // [brettp]TODO: Should this be false by default for backwards compatibility?
+    public boolean requireRegistration = true;
+
     @JacksonConstructor
     public LoginConfiguration() {
     }
@@ -394,6 +397,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       this.allowTokenRefresh = other.allowTokenRefresh;
       this.generateRefreshTokens = other.generateRefreshTokens;
       this.requireAuthentication = other.requireAuthentication;
+      this.requireRegistration = other.requireRegistration;
     }
 
     @Override
@@ -406,13 +410,14 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       }
       LoginConfiguration that = (LoginConfiguration) o;
       return requireAuthentication == that.requireAuthentication &&
+             requireRegistration == that.requireRegistration &&
              allowTokenRefresh == that.allowTokenRefresh &&
              generateRefreshTokens == that.generateRefreshTokens;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(requireAuthentication, allowTokenRefresh, generateRefreshTokens);
+      return Objects.hash(requireAuthentication, requireRegistration, allowTokenRefresh, generateRefreshTokens);
     }
 
     @Override
