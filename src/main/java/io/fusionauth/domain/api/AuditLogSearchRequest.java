@@ -22,7 +22,7 @@ import io.fusionauth.domain.search.AuditLogSearchCriteria;
  * @author Brian Pontarelli
  */
 public class AuditLogSearchRequest {
-  public AuditLogSearchCriteria search;
+  public AuditLogSearchCriteria search = new AuditLogSearchCriteria();
 
   @JacksonConstructor
   public AuditLogSearchRequest() {

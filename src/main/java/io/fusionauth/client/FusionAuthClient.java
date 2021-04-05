@@ -44,13 +44,21 @@ import io.fusionauth.domain.api.FormFieldRequest;
 import io.fusionauth.domain.api.FormFieldResponse;
 import io.fusionauth.domain.api.FormRequest;
 import io.fusionauth.domain.api.FormResponse;
-import io.fusionauth.domain.api.UserDeleteResponse;
 import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.api.ConnectorResponse;
 import io.fusionauth.domain.api.ConsentRequest;
 import io.fusionauth.domain.api.ConsentResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EntityRequest;
+import io.fusionauth.domain.api.EntityResponse;
+import io.fusionauth.domain.api.EntitySearchRequest;
+import io.fusionauth.domain.api.EntitySearchResponse;
+import io.fusionauth.domain.api.FormFieldRequest;
+import io.fusionauth.domain.api.EntityTypeRequest;
+import io.fusionauth.domain.api.EntityTypeResponse;
+import io.fusionauth.domain.api.EntityTypeSearchRequest;
+import io.fusionauth.domain.api.EntityTypeSearchResponse;
 import io.fusionauth.domain.api.EventLogResponse;
 import io.fusionauth.domain.api.EventLogSearchRequest;
 import io.fusionauth.domain.api.EventLogSearchResponse;
@@ -80,6 +88,7 @@ import io.fusionauth.domain.api.PendingResponse;
 import io.fusionauth.domain.api.PreviewRequest;
 import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
+import io.fusionauth.domain.api.ReactorRequest;
 import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantRequest;
@@ -96,6 +105,7 @@ import io.fusionauth.domain.api.UserCommentResponse;
 import io.fusionauth.domain.api.UserConsentRequest;
 import io.fusionauth.domain.api.UserConsentResponse;
 import io.fusionauth.domain.api.UserDeleteRequest;
+import io.fusionauth.domain.api.UserDeleteResponse;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
 import io.fusionauth.domain.api.WebhookRequest;
@@ -142,6 +152,7 @@ import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
+import io.fusionauth.domain.reactor.ReactorStatus;
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -175,9 +186,9 @@ public class FusionAuthClient {
 
   private final String tenantId;
 
-  public int connectTimeout = 2000;
+  public int connectTimeout;
 
-  public int readTimeout = 2000;
+  public int readTimeout;
 
   public FusionAuthClient(String apiKey, String baseURL) {
     this(apiKey, baseURL, null);
@@ -227,6 +238,22 @@ public class FusionAuthClient {
   public ClientResponse<ActionResponse, Errors> actionUser(ActionRequest request) {
     return start(ActionResponse.class, Errors.class)
         .uri("/api/user/action")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Activates the FusionAuth Reactor using a license id and optionally a license text (for air-gapped deployments)
+   *
+   * @param licenseId The license id
+   * @param request An optional request that contains the license text to activate Reactor (useful for air-gap deployments of FusionAuth).
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> activateReactor(String licenseId, ReactorRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/reactor")
+        .urlSegment(licenseId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -406,6 +433,58 @@ public class FusionAuthClient {
     return start(EmailTemplateResponse.class, Errors.class)
         .uri("/api/email/template")
         .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an Entity. You can optionally specify an Id for the Entity. If not provided one will be generated.
+   *
+   * @param entityId (Optional) The Id for the Entity. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the Entity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityResponse, Errors> createEntity(UUID entityId, EntityRequest request) {
+    return start(EntityResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a Entity Type. You can optionally specify an Id for the Entity Type, if not provided one will be generated.
+   *
+   * @param entityTypeId (Optional) The Id for the Entity Type. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the Entity Type.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> createEntityType(UUID entityTypeId, EntityTypeRequest request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a new permission for an entity type. You must specify the id of the entity type you are creating the permission for.
+   * You can optionally specify an Id for the permission inside the EntityTypePermission object itself, if not provided one will be generated.
+   *
+   * @param entityTypeId The Id of the entity type to create the permission on.
+   * @param permissionId (Optional) The Id of the permission. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the permission.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> createEntityTypePermission(UUID entityTypeId, UUID permissionId, EntityTypeRequest request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .urlSegment("permission")
+        .urlSegment(permissionId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -651,6 +730,18 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deactivates the FusionAuth Reactor.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> deactivateReactor() {
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/reactor")
+        .delete()
+        .go();
+  }
+
+  /**
    * Deactivates the user with the given Id.
    *
    * @param userId The Id of the user to deactivate.
@@ -786,6 +877,52 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/email/template")
         .urlSegment(emailTemplateId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the Entity for the given Id.
+   *
+   * @param entityId The Id of the Entity to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteEntity(UUID entityId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the Entity Type for the given Id.
+   *
+   * @param entityTypeId The Id of the Entity Type to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteEntityType(UUID entityTypeId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Hard deletes a permission. This is a dangerous operation and should not be used in most circumstances. This
+   * permanently removes the given permission from all grants that had it.
+   *
+   * @param entityTypeId The Id of the entityType the the permission belongs to.
+   * @param permissionId The Id of the permission to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteEntityTypePermission(UUID entityTypeId, UUID permissionId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .urlSegment("permission")
+        .urlSegment(permissionId)
         .delete()
         .go();
   }
@@ -1594,6 +1731,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates, via PATCH, the Entity Type with the given Id.
+   *
+   * @param entityTypeId The Id of the Entity Type to update.
+   * @param request The request that contains just the new Entity Type information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> patchEntityType(UUID entityTypeId, Map<String, Object> request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the group with the given Id.
    *
    * @param groupId The Id of the group to update.
@@ -1841,6 +1994,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Request a refresh of the Entity search index. This API is not generally necessary and the search index will become consistent in a
+   * reasonable amount of time. There may be scenarios where you may wish to manually request an index refresh. One example may be 
+   * if you are using the Search API or Delete Tenant API immediately following a Entity Create etc, you may wish to request a refresh to
+   *  ensure the index immediately current before making a query request to the search index.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> refreshEntitySearchIndex() {
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/entity/search")
+        .put()
+        .go();
+  }
+
+  /**
    * Request a refresh of the User search index. This API is not generally necessary and the search index will become consistent in a
    * reasonable amount of time. There may be scenarios where you may wish to manually request an index refresh. One example may be 
    * if you are using the Search API or Delete Tenant API immediately following a User Create etc, you may wish to request a refresh to
@@ -1848,9 +2016,21 @@ public class FusionAuthClient {
    *
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> refreshUserSearchIndex() {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<Void, Void> refreshUserSearchIndex() {
+    return start(Void.TYPE, Void.TYPE)
         .uri("/api/user/search")
+        .put()
+        .go();
+  }
+
+  /**
+   * Regenerates any keys that are used by the FusionAuth Reactor.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> regenerateReactorKeys() {
+    return start(Void.TYPE, Void.TYPE)
+        .uri("/api/reactor")
         .put()
         .go();
   }
@@ -2147,6 +2327,46 @@ public class FusionAuthClient {
   public ClientResponse<EmailTemplateResponse, Void> retrieveEmailTemplates() {
     return start(EmailTemplateResponse.class, Void.TYPE)
         .uri("/api/email/template")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the Entity for the given Id.
+   *
+   * @param entityId The Id of the Entity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityResponse, Errors> retrieveEntity(UUID entityId) {
+    return start(EntityResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the Entity Type for the given Id.
+   *
+   * @param entityTypeId The Id of the Entity Type.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> retrieveEntityType(UUID entityTypeId) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the Entity Types.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> retrieveEntityTypes() {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
         .get()
         .go();
   }
@@ -2591,6 +2811,18 @@ public class FusionAuthClient {
     return start(PendingResponse.class, Errors.class)
         .uri("/api/user/family/pending")
         .urlParameter("parentEmail", parentEmail)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the FusionAuth Reactor status.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ReactorStatus, Void> retrieveReactorStatus() {
+    return start(ReactorStatus.class, Void.TYPE)
+        .uri("/api/reactor")
         .get()
         .go();
   }
@@ -3189,6 +3421,48 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches entities with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntitySearchResponse, Errors> searchEntities(EntitySearchRequest request) {
+    return start(EntitySearchResponse.class, Errors.class)
+        .uri("/api/entity/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Retrieves the entities for the given ids. If any id is invalid, it is ignored.
+   *
+   * @param ids The entity ids to search for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntitySearchResponse, Errors> searchEntitiesByIds(Collection<UUID> ids) {
+    return start(EntitySearchResponse.class, Errors.class)
+        .uri("/api/entity/search")
+        .urlParameter("ids", ids)
+        .get()
+        .go();
+  }
+
+  /**
+   * Searches the entity types with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeSearchResponse, Void> searchEntityTypes(EntityTypeSearchRequest request) {
+    return start(EntityTypeSearchResponse.class, Void.TYPE)
+        .uri("/api/entity/type/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches the event logs with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -3473,6 +3747,57 @@ public class FusionAuthClient {
     return start(EmailTemplateResponse.class, Errors.class)
         .uri("/api/email/template")
         .urlSegment(emailTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the Entity with the given Id.
+   *
+   * @param entityId The Id of the Entity to update.
+   * @param request The request that contains all of the new Entity information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityResponse, Errors> updateEntity(UUID entityId, EntityRequest request) {
+    return start(EntityResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the Entity Type with the given Id.
+   *
+   * @param entityTypeId The Id of the Entity Type to update.
+   * @param request The request that contains all of the new Entity Type information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> updateEntityType(UUID entityTypeId, EntityTypeRequest request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the permission with the given id for the entity type.
+   *
+   * @param entityTypeId The Id of the entityType that the permission belongs to.
+   * @param permissionId The Id of the permission to update.
+   * @param request The request that contains all of the new permission information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> updateEntityTypePermission(UUID entityTypeId, UUID permissionId, EntityTypeRequest request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .urlSegment("permission")
+        .urlSegment(permissionId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
         .go();

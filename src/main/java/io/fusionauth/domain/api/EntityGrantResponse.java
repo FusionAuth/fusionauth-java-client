@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,31 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.EntityGrant;
 
 /**
- * User API request object.
+ * Entity grant API response object.
  *
  * @author Brian Pontarelli
  */
-public class UserRequest {
-  public boolean sendSetPasswordEmail;
+public class EntityGrantResponse {
+  public final List<EntityGrant> grants = new ArrayList<>();
 
-  public boolean skipVerification;
-
-  public User user;
+  public EntityGrant grant;
 
   @JacksonConstructor
-  public UserRequest() {
+  public EntityGrantResponse() {
   }
 
-  public UserRequest(User user) {
-    this.sendSetPasswordEmail = false;
-    this.skipVerification = true;
-    this.user = user;
+  public EntityGrantResponse(EntityGrant grant) {
+    this.grant = grant;
   }
 
-  public UserRequest(boolean sendSetPasswordEmail, boolean skipVerification, User user) {
-    this.sendSetPasswordEmail = sendSetPasswordEmail;
-    this.skipVerification = skipVerification;
-    this.user = user;
+  public EntityGrantResponse(List<EntityGrant> grants) {
+    this.grants.addAll(grants);
   }
 }

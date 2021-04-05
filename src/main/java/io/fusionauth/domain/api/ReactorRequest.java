@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,18 @@
  */
 package io.fusionauth.domain.api;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
-
 /**
- * @author Daniel DeGroff
+ * Request for managing FusionAuth Reactor and licenses.
+ *
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
+public class ReactorRequest {
+  public String license;
 
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
-
-  @JacksonConstructor
-  public LoginRecordSearchRequest() {
+  public ReactorRequest() {
   }
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  public ReactorRequest(String license) {
+    this.license = license;
   }
 }

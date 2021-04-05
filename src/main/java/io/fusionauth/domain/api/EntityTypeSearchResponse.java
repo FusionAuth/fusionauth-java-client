@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,30 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.Comparator;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.EntityType;
+import io.fusionauth.domain.search.SearchResults;
 
 /**
- * User API request object.
+ * Search request for entity types.
  *
  * @author Brian Pontarelli
  */
-public class UserRequest {
-  public boolean sendSetPasswordEmail;
+public class EntityTypeSearchResponse {
+  public List<EntityType> entityTypes;
 
-  public boolean skipVerification;
-
-  public User user;
+  public long total;
 
   @JacksonConstructor
-  public UserRequest() {
+  public EntityTypeSearchResponse() {
   }
 
-  public UserRequest(User user) {
-    this.sendSetPasswordEmail = false;
-    this.skipVerification = true;
-    this.user = user;
-  }
-
-  public UserRequest(boolean sendSetPasswordEmail, boolean skipVerification, User user) {
-    this.sendSetPasswordEmail = sendSetPasswordEmail;
-    this.skipVerification = skipVerification;
-    this.user = user;
+  public EntityTypeSearchResponse(SearchResults<EntityType> searchResults) {
+    this.entityTypes = searchResults.results;
+    this.entityTypes.forEach(et -> et.permissions.sort(Comparator.comparing(etp -> etp.name)));
+    this.total = searchResults.total;
   }
 }
