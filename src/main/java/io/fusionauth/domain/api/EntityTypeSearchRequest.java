@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,33 +16,21 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.search.EntityTypeSearchCriteria;
 
 /**
- * User API request object.
+ * Search request for entity types.
  *
  * @author Brian Pontarelli
  */
-public class UserRequest {
-  public boolean sendSetPasswordEmail;
-
-  public boolean skipVerification;
-
-  public User user;
+public class EntityTypeSearchRequest {
+  public EntityTypeSearchCriteria search = new EntityTypeSearchCriteria();
 
   @JacksonConstructor
-  public UserRequest() {
+  public EntityTypeSearchRequest() {
   }
 
-  public UserRequest(User user) {
-    this.sendSetPasswordEmail = false;
-    this.skipVerification = true;
-    this.user = user;
-  }
-
-  public UserRequest(boolean sendSetPasswordEmail, boolean skipVerification, User user) {
-    this.sendSetPasswordEmail = sendSetPasswordEmail;
-    this.skipVerification = skipVerification;
-    this.user = user;
+  public EntityTypeSearchRequest(EntityTypeSearchCriteria search) {
+    this.search = search;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,27 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.search;
 
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.search.LoginRecordSearchCriteria;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
- * @author Daniel DeGroff
+ * @author Brian Pontarelli
  */
-public class LoginRecordSearchRequest {
-  public boolean retrieveTotal;
+public abstract class BaseElasticSearchCriteria extends BaseSearchCriteria {
+  public boolean accurateTotal;
 
-  public LoginRecordSearchCriteria search = new LoginRecordSearchCriteria();
+  public List<UUID> ids = new ArrayList<>();
 
-  @JacksonConstructor
-  public LoginRecordSearchRequest() {
-  }
+  public String query;
 
-  public LoginRecordSearchRequest(LoginRecordSearchCriteria search) {
-    this.search = search;
+  public String queryString;
+
+  public List<SortField> sortFields = new ArrayList<>();
+
+  @Override
+  public void prepare() {
   }
 }

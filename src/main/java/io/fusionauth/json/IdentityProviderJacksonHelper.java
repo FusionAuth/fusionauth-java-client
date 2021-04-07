@@ -31,6 +31,7 @@ import io.fusionauth.domain.provider.HYPRIdentityProvider;
 import io.fusionauth.domain.provider.IdentityProviderType;
 import io.fusionauth.domain.provider.LinkedInIdentityProvider;
 import io.fusionauth.domain.provider.OpenIdConnectIdentityProvider;
+import io.fusionauth.domain.provider.SAMLv2IdPInitiatedIdentityProvider;
 import io.fusionauth.domain.provider.SAMLv2IdentityProvider;
 import io.fusionauth.domain.provider.TwitterIdentityProvider;
 import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
@@ -73,6 +74,8 @@ public class IdentityProviderJacksonHelper {
         return new OpenIdConnectIdentityProvider();
       case SAMLv2:
         return new SAMLv2IdentityProvider();
+      case SAMLv2IdPInitiated:
+        return new SAMLv2IdPInitiatedIdentityProvider();
       case Twitter:
         return new TwitterIdentityProvider();
       default:

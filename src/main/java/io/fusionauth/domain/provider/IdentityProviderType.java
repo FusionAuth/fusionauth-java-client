@@ -34,7 +34,9 @@ public enum IdentityProviderType {
 
   Apple(UUID.fromString("13d2a5db-7ef9-4d62-b909-0df58612e775")),
 
-  LinkedIn(UUID.fromString("6177c09d-3f0e-4d53-9504-3600b1b23f46"));
+  LinkedIn(UUID.fromString("6177c09d-3f0e-4d53-9504-3600b1b23f46")),
+
+  SAMLv2IdPInitiated(null);
 
   public final UUID id;
 

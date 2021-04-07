@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,30 @@
  */
 package io.fusionauth.domain.search;
 
-import io.fusionauth.domain.Buildable;
-
 /**
- * This class is the user query. It provides a build pattern as well as public fields for use on forms and in actions.
+ * Search criteria for entity types.
  *
  * @author Brian Pontarelli
  */
-public class UserSearchCriteria extends BaseElasticSearchCriteria implements Buildable<UserSearchCriteria> {
+public class EntityTypeSearchCriteria extends BaseSearchCriteria {
+  public String name;
+
+  @Override
+  public void prepare() {
+    secure();
+
+    if (orderBy == null) {
+      orderBy = defaultOrderBy();
+    }
+
+    orderBy = orderBy.replace("insertInstant", "insert_instant")
+                     .replace("lastUpdateInstant", "last_update_instant");
+
+    name = toSearchString(name);
+  }
+
+  @Override
+  protected String defaultOrderBy() {
+    return "name ASC";
+  }
 }

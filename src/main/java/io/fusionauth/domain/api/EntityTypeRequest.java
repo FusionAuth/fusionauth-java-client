@@ -16,33 +16,28 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.EntityType;
+import io.fusionauth.domain.EntityTypePermission;
 
 /**
- * User API request object.
+ * Entity Type API request object.
  *
  * @author Brian Pontarelli
  */
-public class UserRequest {
-  public boolean sendSetPasswordEmail;
+public class EntityTypeRequest {
+  public EntityType entityType;
 
-  public boolean skipVerification;
-
-  public User user;
+  public EntityTypePermission permission;
 
   @JacksonConstructor
-  public UserRequest() {
+  public EntityTypeRequest() {
   }
 
-  public UserRequest(User user) {
-    this.sendSetPasswordEmail = false;
-    this.skipVerification = true;
-    this.user = user;
+  public EntityTypeRequest(EntityType entityType) {
+    this.entityType = entityType;
   }
 
-  public UserRequest(boolean sendSetPasswordEmail, boolean skipVerification, User user) {
-    this.sendSetPasswordEmail = sendSetPasswordEmail;
-    this.skipVerification = skipVerification;
-    this.user = user;
+  public EntityTypeRequest(EntityTypePermission permission) {
+    this.permission = permission;
   }
 }

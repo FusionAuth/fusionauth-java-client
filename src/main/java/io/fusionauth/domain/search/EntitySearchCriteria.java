@@ -18,9 +18,25 @@ package io.fusionauth.domain.search;
 import io.fusionauth.domain.Buildable;
 
 /**
- * This class is the user query. It provides a build pattern as well as public fields for use on forms and in actions.
+ * This class is the entity query. It provides a build pattern as well as public fields for use on forms and in actions.
  *
  * @author Brian Pontarelli
  */
-public class UserSearchCriteria extends BaseElasticSearchCriteria implements Buildable<UserSearchCriteria> {
+public class EntitySearchCriteria extends BaseElasticSearchCriteria implements Buildable<EntitySearchCriteria> {
+  @Override
+  public void prepare() {
+    secure();
+
+    if (orderBy == null) {
+      orderBy = defaultOrderBy();
+    }
+
+    orderBy = orderBy.replace("insertInstant", "insert_instant")
+                     .replace("lastUpdateInstant", "last_update_instant");
+  }
+
+  @Override
+  protected String defaultOrderBy() {
+    return "name ASC";
+  }
 }

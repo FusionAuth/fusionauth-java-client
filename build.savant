@@ -15,12 +15,16 @@
  */
 savantVersion = "1.0.0"
 
-jackson5Version = "2.4.7"
-javaErrorVersion = "2.2.2"
 fusionauthJWTVersion = "3.6.0"
-restifyVersion = "3.4.1"
+guavaVersion = "27.1.0-jre"
+guiceVersion = "4.2.3"
+jacksonVersion = "2.12.1"
+jackson5Version = "2.4.8"
+javaErrorVersion = "2.2.2"
+restifyVersion = "3.5.2"
+testngVersion = "7.3.0"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.25.1", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.26.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -32,21 +36,20 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.25.1
   dependencies {
     group(name: "provided") {
       dependency(id: "javax.servlet:servlet-api:3.1.0", skipCompatibilityCheck: true)
-      dependency(id: "com.google.inject:guice:4.2.3")
+      dependency(id: "com.google.inject:guice:${guiceVersion}")
     }
     group(name: "compile") {
-      dependency(id: "com.inversoft:restify:${restifyVersion}")
-      dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
-      dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
-      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:2.12.1")
-      dependency(id: "com.fasterxml.jackson.core:jackson-core:2.12.1")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:2.12.1")
+      dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
+      dependency(id: "com.inversoft:restify:${restifyVersion}")
+      dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
     }
     group(name: "test-compile") {
-      dependency(id: "org.testng:testng:7.3.0")
-      // Required for testng-7.3.0
-      dependency(id: "com.google.guava:guava:27.1.0-jre", skipCompatibilityCheck: true)
+      dependency(id: "com.google.guava:guava:${guavaVersion}", skipCompatibilityCheck: true)
+      dependency(id: "org.testng:testng:${testngVersion}")
     }
   }
 
