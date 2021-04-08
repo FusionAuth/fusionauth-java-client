@@ -33,6 +33,9 @@ public class EntitySearchCriteria extends BaseElasticSearchCriteria implements B
 
     orderBy = orderBy.replace("insertInstant", "insert_instant")
                      .replace("lastUpdateInstant", "last_update_instant");
+
+    // When sorting by 'name' in elasticsearch, we will want to use the raw/keyword mapping as opposed to the tokenized 'text' field
+    sortFields.stream().filter(sf -> sf.name.equals("name")).findFirst().ifPresent(sf -> sf.name = "name.raw");
   }
 
   @Override
