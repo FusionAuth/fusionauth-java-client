@@ -29,4 +29,8 @@ public class APIKeyRequest {
 
   public APIKeyRequest() {
   }
+
+  public APIKeyRequest(AuthenticationAPIKey apiKey) {
+    this.apiKey = apiKey;
+  }
 }

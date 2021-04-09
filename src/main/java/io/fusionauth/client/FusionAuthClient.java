@@ -219,6 +219,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates an authentication API key by given id
+   *
+   * @param authenticationKeyId The Id of the authentication key. If not provided a secure random api key will be generated.
+   * @param request The request object that contains all of the information needed to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> patchAPIKey(String authenticationKeyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/apikey/key")
+        .urlSegment(authenticationKeyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Takes an action on a user. The user being actioned is called the "actionee" and the user taking the action is called the
    * "actioner". Both user ids are required in the request object.
    *
@@ -321,7 +337,7 @@ public class FusionAuthClient {
    * If an API key is locked to a tenant, it can only create API Keys for that same tenant.
    *
    * @param authenticationKeyId (Optional) The Id of the authentication key. If not provided a secure random api key will be generated.
-   * @param request The request object that contains all of the information used to create the APIKey.
+   * @param request The request object that contains all of the information needed to create the APIKey.
    * @return The ClientResponse object.
    */
   public ClientResponse<APIKeyResponse, Errors> createAPIKey(String authenticationKeyId, APIKeyRequest request) {
@@ -730,6 +746,20 @@ public class FusionAuthClient {
         .urlParameter("userId", userIds)
         .urlParameter("dryRun", false)
         .urlParameter("hardDelete", false)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the API key for the given Id.
+   *
+   * @param authenticationKeyId The Id of the authentication API key to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteAPIKey(String authenticationKeyId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/apikey/key")
+        .urlSegment(authenticationKeyId)
         .delete()
         .go();
   }
@@ -1957,6 +1987,32 @@ public class FusionAuthClient {
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
         .put()
+        .go();
+  }
+
+  /**
+   * Retrieves an authentication API key for the given id
+   *
+   * @param authenticationKeyId The Id of the API key to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> retrieveAPIKey(String authenticationKeyId) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/apikey/key")
+        .urlSegment(authenticationKeyId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all authentication API keys
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Void> retrieveAPIKeys() {
+    return start(APIKeyResponse.class, Void.TYPE)
+        .uri("/api/apikey/key")
+        .get()
         .go();
   }
 
@@ -3414,6 +3470,22 @@ public class FusionAuthClient {
         .uri("/api/two-factor/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
+        .go();
+  }
+
+  /**
+   * Updates an authentication API key by given id
+   *
+   * @param authenticationKeyId The Id of the authentication key. If not provided a secure random api key will be generated.
+   * @param request The request object that contains all of the information used to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> updateAPIKey(String authenticationKeyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/apikey/key")
+        .urlSegment(authenticationKeyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
         .go();
   }
 
