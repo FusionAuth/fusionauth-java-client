@@ -38,7 +38,7 @@ public class FacebookApplicationConfiguration extends BaseIdentityProviderApplic
   public String fields;
 
   @InternalJSONColumn
-  public LoginMethod loginMethod;
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String permissions;

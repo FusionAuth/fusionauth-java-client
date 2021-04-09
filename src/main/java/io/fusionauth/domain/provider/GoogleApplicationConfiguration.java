@@ -35,7 +35,7 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
   public String client_secret;
 
   @InternalJSONColumn
-  public LoginMethod loginMethod;
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String scope;

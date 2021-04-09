@@ -41,7 +41,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
   public String fields;
 
   @InternalJSONColumn
-  public LoginMethod loginMethod;
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String permissions;
@@ -100,7 +100,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
     return lookup(() -> fields, () -> app(applicationId, app -> app.fields));
   }
 
-  public LoginMethod lookupLoginMethod(String clientId) {
+  public IdentityProviderLoginMethod lookupLoginMethod(String clientId) {
     return lookup(() -> loginMethod, () -> app(clientId, app -> app.loginMethod));
   }
 

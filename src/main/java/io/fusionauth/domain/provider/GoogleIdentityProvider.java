@@ -38,7 +38,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
   public String client_secret;
 
   @InternalJSONColumn
-  public LoginMethod loginMethod;
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String scope;
@@ -88,7 +88,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
   }
 
-  public LoginMethod lookupLoginMethod(String clientId) {
+  public IdentityProviderLoginMethod lookupLoginMethod(String clientId) {
     return lookup(() -> loginMethod, () -> app(clientId, app -> app.loginMethod));
   }
 
