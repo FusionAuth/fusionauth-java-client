@@ -64,6 +64,9 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public boolean requireClientAuthentication = true;
 
+  // [brettp]TODO: Should this be false by default for backwards compatibility?
+  public boolean requireRegistration = true;
+
   @JacksonConstructor
   public OAuth2Configuration() {
   }
@@ -80,6 +83,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     this.logoutBehavior = other.logoutBehavior;
     this.logoutURL = other.logoutURL;
     this.requireClientAuthentication = other.requireClientAuthentication;
+    this.requireRegistration = other.requireRegistration;
   }
 
   public OAuth2Configuration(String clientId, String clientSecret) {
@@ -99,6 +103,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     return debug == that.debug &&
            generateRefreshTokens == that.generateRefreshTokens &&
            requireClientAuthentication == that.requireClientAuthentication &&
+           requireRegistration == that.requireRegistration &&
            Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
            Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
            Objects.equals(clientId, that.clientId) &&
@@ -111,7 +116,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication, requireRegistration);
   }
 
   public void normalize() {

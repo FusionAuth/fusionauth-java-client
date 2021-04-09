@@ -207,7 +207,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout",
         "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
-        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout"
+        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout", "oath2AuthorizedNotRegistered"
     )));
 
     public String emailComplete;
@@ -217,6 +217,9 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String emailVerify;
 
     public String helpers;
+
+    // [brettp]TODO: Continue setup in rest of this class
+    public String oath2AuthorizedNotRegistered;
 
     public String oauth2Authorize;
 
