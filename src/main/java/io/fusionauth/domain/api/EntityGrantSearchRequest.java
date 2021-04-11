@@ -15,34 +15,22 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.EntityGrant;
+import io.fusionauth.domain.search.EntityGrantSearchCriteria;
 
 /**
- * Entity grant API response object.
+ * Search request for entity grants.
  *
  * @author Brian Pontarelli
  */
-public class EntityGrantResponse {
-  public final List<EntityGrant> grants = new ArrayList<>();
-
-  public EntityGrant grant;
+public class EntityGrantSearchRequest {
+  public EntityGrantSearchCriteria search = new EntityGrantSearchCriteria();
 
   @JacksonConstructor
-  public EntityGrantResponse() {
+  public EntityGrantSearchRequest() {
   }
 
-  public EntityGrantResponse(EntityGrant grant) {
-    this.grant = grant;
-    this.grant.entity.type.permissions.sort(Comparator.comparing(p -> p.name));
-  }
-
-  public EntityGrantResponse(List<EntityGrant> grants) {
-    this.grants.addAll(grants);
-    this.grants.forEach(g -> g.entity.type.permissions.sort(Comparator.comparing(p -> p.name)));
+  public EntityGrantSearchRequest(EntityGrantSearchCriteria search) {
+    this.search = search;
   }
 }
