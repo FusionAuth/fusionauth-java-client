@@ -33,6 +33,8 @@ import io.fusionauth.domain.internal._InternalJSONColumn;
 public class EntityGrant implements Buildable<EntityGrant>, _InternalJSONColumn {
   public Map<String, Object> data = new LinkedHashMap<>();
 
+  public Entity entity;
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
