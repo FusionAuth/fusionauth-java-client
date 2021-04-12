@@ -26,9 +26,9 @@ import io.fusionauth.domain.AuthenticationAPIKey;
  * @author Sanjay
  */
 public class APIKeyResponse {
-  public String authenticationKeyId;
-
   public AuthenticationAPIKey authenticationKey;
+
+  public String authenticationKeyId;
 
   public List<AuthenticationAPIKey> authenticationKeys;
 

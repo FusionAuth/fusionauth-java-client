@@ -23,9 +23,9 @@ import io.fusionauth.domain.AuthenticationAPIKey;
  * @author Sanjay
  */
 public class APIKeyRequest {
-  public String sourceKeyId;
-
   public AuthenticationAPIKey apiKey;
+
+  public String sourceKeyId;
 
   public APIKeyRequest() {
   }
