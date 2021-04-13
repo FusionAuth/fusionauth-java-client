@@ -136,6 +136,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.emailVerify,
                      templates.helpers,
                      templates.oauth2Authorize,
+                     templates.oath2AuthorizedNotRegistered,
                      templates.oauth2ChildRegistrationNotAllowed,
                      templates.oauth2ChildRegistrationNotAllowedComplete,
                      templates.oauth2CompleteRegistration,
@@ -204,10 +205,10 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   public static class Templates implements Buildable<Templates> {
     public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-        "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed",
+        "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oath2AuthorizedNotRegistered", "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout",
         "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
-        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout", "oath2AuthorizedNotRegistered"
+        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout"
     )));
 
     public String emailComplete;
@@ -218,10 +219,10 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String helpers;
 
+    public String oauth2Authorize;
+
     // [brettp]TODO: Continue setup in rest of this class
     public String oath2AuthorizedNotRegistered;
-
-    public String oauth2Authorize;
 
     public String oauth2ChildRegistrationNotAllowed;
 
@@ -270,6 +271,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.emailVerify = other.emailVerify;
       this.helpers = other.helpers;
       this.oauth2Authorize = other.oauth2Authorize;
+      this.oath2AuthorizedNotRegistered = other.oath2AuthorizedNotRegistered;
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
@@ -305,6 +307,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(emailVerify, that.emailVerify) &&
              Objects.equals(helpers, that.helpers) &&
              Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+             Objects.equals(oath2AuthorizedNotRegistered, that.oath2AuthorizedNotRegistered) &&
              Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
              Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
              Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
@@ -333,6 +336,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                           emailVerify,
                           helpers,
                           oauth2Authorize,
+                          oath2AuthorizedNotRegistered,
                           oauth2ChildRegistrationNotAllowed,
                           oauth2ChildRegistrationNotAllowedComplete,
                           oauth2CompleteRegistration,
@@ -361,6 +365,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       emailVerify = lineReturns(trimToNull(emailVerify));
       helpers = lineReturns(trimToNull(helpers));
       oauth2Authorize = lineReturns(trimToNull(oauth2Authorize));
+      oath2AuthorizedNotRegistered = lineReturns(trimToNull(oath2AuthorizedNotRegistered));
       oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
       oauth2ChildRegistrationNotAllowedComplete = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowedComplete));
       oauth2CompleteRegistration = lineReturns(trimToNull(oauth2CompleteRegistration));
