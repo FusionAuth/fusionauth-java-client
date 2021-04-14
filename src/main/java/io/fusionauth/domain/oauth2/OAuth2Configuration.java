@@ -65,7 +65,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public boolean requireClientAuthentication = true;
 
   // [brettp]TODO: Should this be false by default for backwards compatibility?
-  public boolean requireRegistration = true;
+  public boolean requireRegistration = false;
 
   @JacksonConstructor
   public OAuth2Configuration() {
