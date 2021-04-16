@@ -50,11 +50,14 @@ import io.fusionauth.domain.api.ConsentRequest;
 import io.fusionauth.domain.api.ConsentResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EntityGrantRequest;
+import io.fusionauth.domain.api.EntityGrantResponse;
+import io.fusionauth.domain.api.EntityGrantSearchRequest;
+import io.fusionauth.domain.api.EntityGrantSearchResponse;
 import io.fusionauth.domain.api.EntityRequest;
 import io.fusionauth.domain.api.EntityResponse;
 import io.fusionauth.domain.api.EntitySearchRequest;
 import io.fusionauth.domain.api.EntitySearchResponse;
-import io.fusionauth.domain.api.FormFieldRequest;
 import io.fusionauth.domain.api.EntityTypeRequest;
 import io.fusionauth.domain.api.EntityTypeResponse;
 import io.fusionauth.domain.api.EntityTypeSearchRequest;
@@ -933,6 +936,25 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/entity")
         .urlSegment(entityId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes an Entity Grant for the given User or Entity.
+   *
+   * @param entityId The Id of the Entity that the Entity Grant is being deleted for.
+   * @param recipientEntityId (Optional) The Id of the Entity that the Entity Grant is for.
+   * @param userId (Optional) The Id of the User that the Entity Grant is for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteEntityGrant(UUID entityId, UUID recipientEntityId, UUID userId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .urlParameter("recipientEntityId", recipientEntityId)
+        .urlParameter("userId", userId)
         .delete()
         .go();
   }
@@ -2464,6 +2486,25 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves an Entity Grant for the given Entity and User/Entity.
+   *
+   * @param entityId The Id of the Entity.
+   * @param recipientEntityId (Optional) The Id of the Entity that the Entity Grant is for.
+   * @param userId (Optional) The Id of the User that the Entity Grant is for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityGrantResponse, Errors> retrieveEntityGrant(UUID entityId, UUID recipientEntityId, UUID userId) {
+    return start(EntityGrantResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .urlParameter("recipientEntityId", recipientEntityId)
+        .urlParameter("userId", userId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the Entity Type for the given Id.
    *
    * @param entityTypeId The Id of the Entity Type.
@@ -3647,6 +3688,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches Entity Grants with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityGrantSearchResponse, Errors> searchEntityGrants(EntityGrantSearchRequest request) {
+    return start(EntityGrantSearchResponse.class, Errors.class)
+        .uri("/api/entity/grant/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches the entity types with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -4335,6 +4390,23 @@ public class FusionAuthClient {
         .urlSegment(webhookId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
+        .go();
+  }
+
+  /**
+   * Creates or updates an Entity Grant. This is when a User/Entity is granted permissions to an Entity.
+   *
+   * @param entityId The Id of the Entity that the User/Entity is being granted access to.
+   * @param request The request object that contains all of the information used to create the Entity Grant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> upsertEntityGrant(UUID entityId, EntityGrantRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
         .go();
   }
 

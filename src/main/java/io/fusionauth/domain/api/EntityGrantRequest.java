@@ -24,4 +24,11 @@ import io.fusionauth.domain.EntityGrant;
  */
 public class EntityGrantRequest {
   public EntityGrant grant;
+
+  public EntityGrantRequest() {
+  }
+
+  public EntityGrantRequest(EntityGrant grant) {
+    this.grant = grant;
+  }
 }

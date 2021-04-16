@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Entity;
 
 /**
@@ -39,7 +38,11 @@ public class EntitySearchResponse {
   @JsonIgnore
   public boolean totalEqualToActual;
 
-  @JacksonConstructor
   public EntitySearchResponse() {
+  }
+
+  public EntitySearchResponse(List<Entity> entities, long total) {
+    this.entities = entities;
+    this.total = total;
   }
 }
