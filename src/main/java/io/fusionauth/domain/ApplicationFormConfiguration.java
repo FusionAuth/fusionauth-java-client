@@ -30,7 +30,7 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
   public UUID adminRegistrationFormId;
 
   @ExcludeFromDatabaseDataColumn
-  public UUID selfServiceUserFormId;
+  public UUID selfServiceFormId;
 
   @JacksonConstructor
   public ApplicationFormConfiguration() {
@@ -38,7 +38,7 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
 
   public ApplicationFormConfiguration(ApplicationFormConfiguration other) {
     this.adminRegistrationFormId = other.adminRegistrationFormId;
-    this.selfServiceUserFormId = other.selfServiceUserFormId;
+    this.selfServiceFormId = other.selfServiceFormId;
   }
 
   @Override
@@ -51,12 +51,12 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
     }
     ApplicationFormConfiguration that = (ApplicationFormConfiguration) o;
     return Objects.equals(adminRegistrationFormId, that.adminRegistrationFormId)
-           && Objects.equals(selfServiceUserFormId, that.selfServiceUserFormId);
+           && Objects.equals(selfServiceFormId, that.selfServiceFormId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(adminRegistrationFormId, selfServiceUserFormId);
+    return Objects.hash(adminRegistrationFormId, selfServiceFormId);
   }
 
   @Override
