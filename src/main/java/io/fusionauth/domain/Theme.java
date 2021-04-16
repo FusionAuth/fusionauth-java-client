@@ -285,7 +285,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public Templates(Templates other) {
       this.accountEdit = other.accountEdit;
       this.accountIndex = other.accountIndex;
-      this.accountTwoFactorDisable = other.accountTwoFactorEnable;
+      this.accountTwoFactorDisable = other.accountTwoFactorDisable;
       this.accountTwoFactorEnable = other.accountTwoFactorEnable;
       this.accountTwoFactorIndex = other.accountTwoFactorIndex;
       this.emailComplete = other.emailComplete;
