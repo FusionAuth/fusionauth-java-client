@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,21 @@
  */
 package io.fusionauth.domain.api;
 
-import com.inversoft.error.Errors;
-import io.fusionauth.domain.email.Email;
+import java.util.List;
+
+import com.inversoft.json.JacksonConstructor;
 
 /**
- * @author Seth Musselman
+ * @author Daniel DeGroff
  */
-public class PreviewResponse {
-  public Email email;
+public class TwoFactorRecoveryCodeResponse {
+  public List<String> recoveryCodes;
 
-  public Errors errors;
+  @JacksonConstructor
+  public TwoFactorRecoveryCodeResponse() {
+  }
+
+  public TwoFactorRecoveryCodeResponse(List<String> recoveryCodes) {
+    this.recoveryCodes = recoveryCodes;
+  }
 }

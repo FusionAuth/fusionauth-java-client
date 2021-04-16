@@ -42,26 +42,30 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
 
   public String identityProviderName;
 
+  public String ipAddress;
+
   public User user;
 
   @JacksonConstructor
   public UserLoginSuccessEvent() {
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
+  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, String ipAddress, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     // Identity provider login always takes the FusionAuth connector Id
     this.connectorId = FUSIONAUTH_CONNECTOR_ID;
     this.identityProviderId = identityProvider.id;
     this.identityProviderName = identityProvider.name;
+    this.ipAddress = ipAddress;
     this.user = user;
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, UUID connectorId, String authenticationType, User user) {
+  public UserLoginSuccessEvent(UUID applicationId, UUID connectorId, String authenticationType, String ipAddress, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     this.connectorId = connectorId;
+    this.ipAddress = ipAddress;
     this.user = user;
   }
 
@@ -82,6 +86,7 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
            Objects.equals(connectorId, that.connectorId) &&
            Objects.equals(identityProviderId, that.identityProviderId) &&
            Objects.equals(identityProviderName, that.identityProviderName) &&
+           Objects.equals(ipAddress, that.ipAddress) &&
            Objects.equals(user, that.user);
   }
 
@@ -92,7 +97,7 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, user);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, ipAddress, user);
   }
 
   @Override

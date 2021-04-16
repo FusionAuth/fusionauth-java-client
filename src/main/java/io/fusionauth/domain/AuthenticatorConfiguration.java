@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,23 +23,21 @@ import com.inversoft.json.ToString;
 /**
  * @author Daniel DeGroff
  */
-public class SecureGeneratorConfiguration {
-  public int length;
+public class AuthenticatorConfiguration implements Buildable<AuthenticatorConfiguration> {
+  public TOTPAlgorithm algorithm;
 
-  public SecureGeneratorType type;
+  public int codeLength;
+
+  public int timeStep;
 
   @JacksonConstructor
-  public SecureGeneratorConfiguration() {
+  public AuthenticatorConfiguration() {
   }
 
-  public SecureGeneratorConfiguration(SecureGeneratorConfiguration other) {
-    this.length = other.length;
-    this.type = other.type;
-  }
-
-  public SecureGeneratorConfiguration(int length, SecureGeneratorType type) {
-    this.length = length;
-    this.type = type;
+  public AuthenticatorConfiguration(AuthenticatorConfiguration other) {
+    this.algorithm = other.algorithm;
+    this.codeLength = other.codeLength;
+    this.timeStep = other.timeStep;
   }
 
   @Override
@@ -47,21 +45,26 @@ public class SecureGeneratorConfiguration {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SecureGeneratorConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SecureGeneratorConfiguration that = (SecureGeneratorConfiguration) o;
-    return length == that.length &&
-           type == that.type;
+    AuthenticatorConfiguration that = (AuthenticatorConfiguration) o;
+    return codeLength == that.codeLength && timeStep == that.timeStep && algorithm == that.algorithm;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(length, type);
+    return Objects.hash(algorithm, codeLength, timeStep);
   }
 
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  public enum TOTPAlgorithm {
+    HmacSHA1,
+    HmacSHA256,
+    HmacSHA512
   }
 }

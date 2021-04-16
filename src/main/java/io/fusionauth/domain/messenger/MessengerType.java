@@ -13,15 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.form;
+package io.fusionauth.domain.messenger;
 
 /**
- * @author Daniel DeGroff
+ * @author Brett Guy
  */
-public enum FormType {
-  registration,
-  adminRegistration,
-  adminUser,
-  // TODO : MFA : Should we just name this "user" - since we have "registration" - this is more/less the edit version of that one?
-  selfServiceUser
+public enum MessengerType {
+  Generic,
+  Kafka,
+  Twilio;
+
+  /**
+   * Return the messenger type from a a string name returning null if the value is unknown.
+   *
+   * @param value the string name of the messenger type
+   * @return the messenger type or null if it is not one of the possible values.
+   */
+  public static MessengerType safeValueOf(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    try {
+      return MessengerType.valueOf(value);
+    } catch (Exception e) {
+      return null;
+    }
+  }
 }

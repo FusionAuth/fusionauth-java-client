@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.api.twoFactor;
+
+import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.TwoFactorMethod;
 
 /**
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String authenticatorId;
-
+public class TwoFactorStartResponse implements Buildable<TwoFactorStartResponse> {
   public String code;
 
-  public String email;
+  public List<TwoFactorMethod> methods;
 
-  public String method;
-
-  public String mobilePhone;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+  public String twoFactorId;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public TwoFactorStartResponse() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
+  public TwoFactorStartResponse(String code, List<TwoFactorMethod> methods, String twoFactorId) {
     this.code = code;
-    this.secret = secret;
-  }
-
-  public TwoFactorRequest(String code, String method, String secret) {
-    this.code = code;
-    this.method = method;
-    this.secret = secret;
+    this.methods = methods;
+    this.twoFactorId = twoFactorId;
   }
 }

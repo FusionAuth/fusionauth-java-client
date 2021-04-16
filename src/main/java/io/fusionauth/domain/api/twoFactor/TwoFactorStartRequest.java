@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,34 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
+package io.fusionauth.domain.api.twoFactor;
+
+import java.util.Map;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
- * @author Brian Pontarelli
+ * @author Brett Guy
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String authenticatorId;
+public class TwoFactorStartRequest implements Buildable<TwoFactorStartRequest> {
+  public UUID applicationId;
 
   public String code;
 
-  public String email;
+  public String loginId;
 
-  public String method;
-
-  public String mobilePhone;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+  public Map<String, Object> state;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public TwoFactorStartRequest() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
+  @SuppressWarnings("unused")
+  public TwoFactorStartRequest(UUID applicationId, String code, String loginId) {
+    this.applicationId = applicationId;
     this.code = code;
-    this.secret = secret;
-  }
-
-  public TwoFactorRequest(String code, String method, String secret) {
-    this.code = code;
-    this.method = method;
-    this.secret = secret;
+    this.loginId = loginId;
   }
 }

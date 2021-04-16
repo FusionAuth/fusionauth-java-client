@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,23 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import com.inversoft.error.Errors;
-import io.fusionauth.domain.email.Email;
+package io.fusionauth.domain.message;
 
 /**
- * @author Seth Musselman
+ * @author Mikey Sleevi
  */
-public class PreviewResponse {
-  public Email email;
+public enum MessageType {
+  SMS;
 
-  public Errors errors;
+  public static MessageType safeValueOf(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    try {
+      return MessageType.valueOf(value);
+    } catch (Exception e) {
+      return null;
+    }
+  }
 }

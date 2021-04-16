@@ -75,6 +75,9 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @InternalJSONColumn
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
 
+  @InternalJSONColumn
+  public ApplicationMultiFactorConfiguration multiFactorConfiguration = new ApplicationMultiFactorConfiguration();
+
   public String name;
 
   @InternalJSONColumn
@@ -111,6 +114,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   public Application(Application other) {
     this.active = other.active;
     this.authenticationTokenConfiguration = new AuthenticationTokenConfiguration(other.authenticationTokenConfiguration);
+    // TODO : MFA Review : Wonder why did not not hit this previously, did something else change perhaps?
+    //        This is ok, just curious.
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
     }
@@ -123,6 +128,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     this.lambdaConfiguration = new LambdaConfiguration(other.lambdaConfiguration);
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginConfiguration = new LoginConfiguration(other.loginConfiguration);
+    this.multiFactorConfiguration = new ApplicationMultiFactorConfiguration(other.multiFactorConfiguration);
     this.name = other.name;
     this.oauthConfiguration = new OAuth2Configuration(other.oauthConfiguration);
     this.passwordlessConfiguration = new PasswordlessConfiguration(other.passwordlessConfiguration);
@@ -177,6 +183,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
            Objects.equals(loginConfiguration, that.loginConfiguration) &&
+           Objects.equals(multiFactorConfiguration, that.multiFactorConfiguration) &&
            Objects.equals(name, that.name) &&
            Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
            Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
@@ -221,7 +228,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, multiFactorConfiguration, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
   }
 
   public void normalize() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,26 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.message.sms;
 
-import java.net.URI;
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.message.Message;
+import io.fusionauth.domain.message.MessageType;
 
 /**
- * Twilio Service Configuration.
- *
- * @author Daniel DeGroff
+ * @author Michael Sleevi
  */
-public class TwilioConfiguration extends Enableable implements Buildable<TwilioConfiguration>, Integration {
-  public String accountSID;
+public class SMSMessage implements Message {
+  public String phoneNumber;
 
-  public String authToken;
+  public String textMessage;
 
-  public String fromPhoneNumber;
-
-  public String messagingServiceSid;
-
-  public URI url = URI.create("https://api.twilio.com");
+  @JacksonConstructor
+  public SMSMessage() {
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -44,19 +42,19 @@ public class TwilioConfiguration extends Enableable implements Buildable<TwilioC
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TwilioConfiguration that = (TwilioConfiguration) o;
-    return super.equals(o) &&
-        Objects.equals(accountSID, that.accountSID) &&
-        Objects.equals(authToken, that.authToken) &&
-        Objects.equals(fromPhoneNumber, that.fromPhoneNumber) &&
-        Objects.equals(messagingServiceSid, that.messagingServiceSid) &&
-        Objects.equals(url, that.url);
+    SMSMessage that = (SMSMessage) o;
+    return textMessage.equals(that.textMessage) &&
+           phoneNumber.equals(that.phoneNumber);
+  }
 
+  @Override
+  public MessageType getType() {
+    return MessageType.SMS;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), accountSID, authToken, fromPhoneNumber, messagingServiceSid, url);
+    return Objects.hash(textMessage, phoneNumber);
   }
 
   @Override

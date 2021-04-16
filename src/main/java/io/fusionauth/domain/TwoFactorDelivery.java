@@ -17,7 +17,9 @@ package io.fusionauth.domain;
 
 /**
  * @author Daniel DeGroff
+ * @deprecated Use <code>User.twoFactor.methods</code>
  */
+@Deprecated
 public enum TwoFactorDelivery {
   /**
    * No delivery mechanism provided by FusionAUth. Code must be entered manually from a code generator such as Google Authenticator.

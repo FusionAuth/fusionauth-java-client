@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,39 +15,25 @@
  */
 package io.fusionauth.domain.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.message.MessageTemplate;
+import io.fusionauth.json.MessageTemplateRequestDeserializer;
 
 /**
- * @author Brian Pontarelli
+ * A Message Template Request to the API
+ *
+ * @author Michael Sleevi
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
-  public String authenticatorId;
-
-  public String code;
-
-  public String email;
-
-  public String method;
-
-  public String mobilePhone;
-
-  public String secret;
-
-  public String secretBase32Encoded;
+@JsonDeserialize(using = MessageTemplateRequestDeserializer.class)
+public class MessageTemplateRequest {
+  public MessageTemplate messageTemplate;
 
   @JacksonConstructor
-  public TwoFactorRequest() {
+  public MessageTemplateRequest() {
   }
 
-  public TwoFactorRequest(String code, String secret) {
-    this.code = code;
-    this.secret = secret;
-  }
-
-  public TwoFactorRequest(String code, String method, String secret) {
-    this.code = code;
-    this.method = method;
-    this.secret = secret;
+  public MessageTemplateRequest(MessageTemplate messageTemplate) {
+    this.messageTemplate = messageTemplate;
   }
 }

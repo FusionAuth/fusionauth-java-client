@@ -99,6 +99,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @InternalJSONColumn
   public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
 
+  @InternalJSONColumn
+  public TenantMultiFactorConfiguration multiFactorConfiguration = new TenantMultiFactorConfiguration();
+
   public String name;
 
   @InternalJSONColumn
@@ -138,6 +141,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.logoutURL = other.logoutURL;
     this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
     this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
+    this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
     this.name = other.name;
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
@@ -173,6 +177,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(logoutURL, tenant.logoutURL) &&
            Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
            Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
+           Objects.equals(multiFactorConfiguration, tenant.multiFactorConfiguration) &&
            Objects.equals(name, tenant.name) &&
            Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
