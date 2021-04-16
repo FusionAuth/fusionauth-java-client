@@ -29,9 +29,9 @@ import com.inversoft.json.ToString;
  */
 @JsonIgnoreProperties(value = "enabled", allowGetters = true, allowSetters = false)
 public class UserTwoFactorConfiguration implements Buildable<UserTwoFactorConfiguration> {
-  public List<TwoFactorMethod> methods = new ArrayList<>();
+  public final List<TwoFactorMethod> methods = new ArrayList<>();
 
-  public List<String> recoveryCodes = new ArrayList<>();
+  public final List<String> recoveryCodes = new ArrayList<>();
 
   @JacksonConstructor
   public UserTwoFactorConfiguration() {
