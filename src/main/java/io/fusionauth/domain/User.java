@@ -90,43 +90,6 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   @InternalJSONColumn
   public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
-  //
-  // [
-  //   { type: "authenticator", "secret": "abc" },                   // 1st attempt
-  //   { type: "authenticator", "secret": "def" },                   // 2nd attempt
-  //   { type: "authenticator", "secret": "yzx" },                   // 3rd attempt
-  //   { type: "sms", "mobilePhone": "720-443-3159" },               // Phone number ending in *3169
-  //   { type: "sms", "mobilePhone": "720-872-1245" },               // Phone number ending in *1245
-  //   { type: "email", "email": "daniel@fusionauth.io" },           // Email like this dan**@*auth.io
-  //   { type: "email", "email": "djdmisc@gmail.com" }               // Email like this djd**@gmail.com
-  // ]
-  //
-  // 1. For Authenticator, just try them all.
-  // 2. For phone, when we send the message, validate it ok, does not matter which phone.
-  // 3. For email, when we send the message, validate it ok, does not matter which email.
-  // 4. For authenticator, to disable an authenticator, we can know which one to disable because the code will only match one. If matches more than one fail.
-  //
-  // Questions:
-  // 1. More than one authenticator app?
-  //    a) Someone walks by your desk and adds an authenticator?
-  //    b) This is different than email and phone because any authenticator will work.
-  //       With email and phone, at least you'd have to select to send the code there?
-  // 2. Probably need notifications, "you just bought hot pockets!" (or you added an authenticator, sms or mobile phone)
-  //    a) You added something
-  //    b) You removed something
-  //
-  // TODO : Secure will remove the secret from the twoFactorMethod object.
-  // TODO : If the "code" matches more than one on a disable / delete, fail and try again.
-  // TODO : Add Auth App parameters to this when enabled
-
-  // Scratch codes:
-  // 1. Use them for login, I lost my device.
-  // 2. Use them for login, I have my device, but not with me. Same as #1?
-  // 3. Use them to remove 2FA methods/devices - Turn off the world.
-  //    - Remove everything, you have to rebuild your configuration.
-  //    - Causes your scratch to be cleared.
-  //    - Rebuild from scratch, and get new recovery codes.
-
 
   @JacksonConstructor
   public User() {
