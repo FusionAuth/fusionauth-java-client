@@ -36,6 +36,8 @@ import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
+import io.fusionauth.domain.api.APIKeyRequest;
+import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
@@ -347,6 +349,26 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an API key. You can optionally specify a unique Id for the key, if not provided one will be generated.
+   * an API key can only be created with equal or lesser authority. An API key cannot create another API key unless it is granted 
+   * to that API key.
+   * 
+   * If an API key is locked to a tenant, it can only create API Keys for that same tenant.
+   *
+   * @param keyId (Optional) The unique Id of the API key. If not provided a secure random Id will be generated.
+   * @param request The request object that contains all of the information needed to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> createAPIKey(UUID keyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -845,6 +867,20 @@ public class FusionAuthClient {
         .urlParameter("userId", userIds)
         .urlParameter("dryRun", false)
         .urlParameter("hardDelete", false)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the API key for the given Id.
+   *
+   * @param keyId The Id of the authentication API key to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteAPIKey(UUID keyId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
         .delete()
         .go();
   }
@@ -1757,6 +1793,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates an authentication API key by given id
+   *
+   * @param keyId The Id of the authentication key. If not provided a secure random api key will be generated.
+   * @param request The request object that contains all of the information needed to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> patchAPIKey(UUID keyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the application with the given Id.
    *
    * @param applicationId The Id of the application to update.
@@ -2256,6 +2308,20 @@ public class FusionAuthClient {
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
         .put()
+        .go();
+  }
+
+  /**
+   * Retrieves an authentication API key for the given id
+   *
+   * @param keyId The Id of the API key to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> retrieveAPIKey(UUID keyId) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
+        .get()
         .go();
   }
 
@@ -3973,6 +4039,22 @@ public class FusionAuthClient {
         .uri("/api/two-factor/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
+        .go();
+  }
+
+  /**
+   * Updates an API key by given id
+   *
+   * @param apiKeyId The Id of the API key to update.
+   * @param request The request object that contains all of the information used to create the API Key.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> updateAPIKey(UUID apiKeyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(apiKeyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
         .go();
   }
 
