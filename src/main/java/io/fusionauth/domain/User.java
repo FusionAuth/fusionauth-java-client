@@ -88,6 +88,9 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public ZoneId timezone;
 
+  @InternalJSONColumn
+  public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
+
   @JacksonConstructor
   public User() {
   }
@@ -124,9 +127,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.salt = other.salt;
     this.tenantId = other.tenantId;
     this.timezone = other.timezone;
-    this.twoFactorDelivery = other.twoFactorDelivery;
-    this.twoFactorEnabled = other.twoFactorEnabled;
-    this.twoFactorSecret = other.twoFactorSecret;
+    this.twoFactor = new UserTwoFactorConfiguration(other.twoFactor);
     this.username = other.username;
     this.usernameStatus = other.usernameStatus;
     this.verified = other.verified;
@@ -178,6 +179,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
            Objects.equals(middleName, user.middleName) &&
            Objects.equals(mobilePhone, user.mobilePhone) &&
            Objects.equals(parentEmail, user.parentEmail) &&
+           Objects.equals(twoFactor, user.twoFactor) &&
            Objects.equals(tenantId, user.tenantId) &&
            Objects.equals(timezone, user.timezone);
   }
@@ -264,7 +266,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone);
+    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone, twoFactor);
   }
 
   /**
@@ -338,7 +340,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     factor = null;
     password = null;
     salt = null;
-    twoFactorSecret = null;
+    twoFactor.secure();
     return this;
   }
 
@@ -350,5 +352,10 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  // Synthetic method and used for backwards compatibility for the API response.
+  public boolean twoFactorEnabled() {
+    return twoFactor.methods.size() > 0;
   }
 }

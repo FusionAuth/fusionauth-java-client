@@ -29,8 +29,6 @@ public class Integrations implements Buildable<Integrations> {
 
   public KafkaConfiguration kafka = new KafkaConfiguration();
 
-  public TwilioConfiguration twilio = new TwilioConfiguration();
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -41,13 +39,12 @@ public class Integrations implements Buildable<Integrations> {
     }
     Integrations that = (Integrations) o;
     return Objects.equals(cleanspeak, that.cleanspeak) &&
-        Objects.equals(kafka, that.kafka) &&
-        Objects.equals(twilio, that.twilio);
+           Objects.equals(kafka, that.kafka);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cleanspeak, kafka, twilio);
+    return Objects.hash(cleanspeak, kafka);
   }
 
   @Override

@@ -58,6 +58,10 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int twoFactorIdTimeToLiveInSeconds;
 
+  public SecureGeneratorConfiguration twoFactorOneTimeCodeIdGenerator;
+
+  public int twoFactorOneTimeCodeIdTimeToLiveInSeconds;
+
   public int twoFactorTrustIdTimeToLiveInSeconds;
 
   @JacksonConstructor
@@ -66,22 +70,24 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public ExternalIdentifierConfiguration(ExternalIdentifierConfiguration other) {
     this.authorizationGrantIdTimeToLiveInSeconds = other.authorizationGrantIdTimeToLiveInSeconds;
-    this.changePasswordIdGenerator = other.changePasswordIdGenerator;
+    this.changePasswordIdGenerator = new SecureGeneratorConfiguration(other.changePasswordIdGenerator);
     this.changePasswordIdTimeToLiveInSeconds = other.changePasswordIdTimeToLiveInSeconds;
     this.deviceCodeTimeToLiveInSeconds = other.deviceCodeTimeToLiveInSeconds;
-    this.deviceUserCodeIdGenerator = other.deviceUserCodeIdGenerator;
-    this.emailVerificationIdGenerator = other.emailVerificationIdGenerator;
+    this.deviceUserCodeIdGenerator = new SecureGeneratorConfiguration(other.deviceUserCodeIdGenerator);
+    this.emailVerificationIdGenerator = new SecureGeneratorConfiguration(other.emailVerificationIdGenerator);
     this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
     this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
-    this.passwordlessLoginGenerator = other.passwordlessLoginGenerator;
-    this.registrationVerificationIdGenerator = other.registrationVerificationIdGenerator;
+    this.passwordlessLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginGenerator);
+    this.registrationVerificationIdGenerator = new SecureGeneratorConfiguration(other.registrationVerificationIdGenerator);
     this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
     this.samlv2AuthNRequestIdTimeToLiveInSeconds = other.samlv2AuthNRequestIdTimeToLiveInSeconds;
-    this.setupPasswordIdGenerator = other.setupPasswordIdGenerator;
+    this.setupPasswordIdGenerator = new SecureGeneratorConfiguration(other.setupPasswordIdGenerator);
     this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
     this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
+    this.twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(other.twoFactorOneTimeCodeIdGenerator);
+    this.twoFactorOneTimeCodeIdTimeToLiveInSeconds = other.twoFactorOneTimeCodeIdTimeToLiveInSeconds;
     this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
   }
 
@@ -105,13 +111,15 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            samlv2AuthNRequestIdTimeToLiveInSeconds == that.samlv2AuthNRequestIdTimeToLiveInSeconds &&
            setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
            twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
+           twoFactorOneTimeCodeIdTimeToLiveInSeconds == that.twoFactorOneTimeCodeIdTimeToLiveInSeconds &&
            twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
            Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
            Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
            Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
            Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
            Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
-           Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator);
+           Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator) &&
+           Objects.equals(twoFactorOneTimeCodeIdGenerator, that.twoFactorOneTimeCodeIdGenerator);
   }
 
   @Override
@@ -133,6 +141,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         setupPasswordIdGenerator,
                         setupPasswordIdTimeToLiveInSeconds,
                         twoFactorIdTimeToLiveInSeconds,
+                        twoFactorOneTimeCodeIdGenerator,
+                        twoFactorOneTimeCodeIdTimeToLiveInSeconds,
                         twoFactorTrustIdTimeToLiveInSeconds);
   }
 

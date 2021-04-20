@@ -15,7 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.List;
+import java.util.Comparator;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Entity;
@@ -28,17 +28,12 @@ import io.fusionauth.domain.Entity;
 public class EntityResponse {
   public Entity entity;
 
-  List<Entity> entities;
-
   @JacksonConstructor
   public EntityResponse() {
   }
 
   public EntityResponse(Entity entity) {
     this.entity = entity;
-  }
-
-  public EntityResponse(List<Entity> entities) {
-    this.entities = entities;
+    this.entity.type.permissions.sort(Comparator.comparing(p -> p.name));
   }
 }

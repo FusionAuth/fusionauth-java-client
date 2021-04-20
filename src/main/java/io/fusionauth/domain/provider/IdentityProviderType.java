@@ -17,6 +17,9 @@ package io.fusionauth.domain.provider;
 
 import java.util.UUID;
 
+/**
+ * @author Daniel DeGroff
+ */
 public enum IdentityProviderType {
   ExternalJWT(null),
 

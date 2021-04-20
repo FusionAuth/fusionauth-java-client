@@ -32,6 +32,11 @@ public class SecureGeneratorConfiguration {
   public SecureGeneratorConfiguration() {
   }
 
+  public SecureGeneratorConfiguration(SecureGeneratorConfiguration other) {
+    this.length = other.length;
+    this.type = other.type;
+  }
+
   public SecureGeneratorConfiguration(int length, SecureGeneratorType type) {
     this.length = length;
     this.type = type;
@@ -47,7 +52,7 @@ public class SecureGeneratorConfiguration {
     }
     SecureGeneratorConfiguration that = (SecureGeneratorConfiguration) o;
     return length == that.length &&
-        type == that.type;
+           type == that.type;
   }
 
   @Override

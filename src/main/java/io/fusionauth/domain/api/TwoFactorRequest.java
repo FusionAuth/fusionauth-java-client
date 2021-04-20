@@ -17,15 +17,20 @@ package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.TwoFactorDelivery;
 
 /**
  * @author Brian Pontarelli
  */
 public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
+  public String authenticatorId;
+
   public String code;
 
-  public TwoFactorDelivery delivery;
+  public String email;
+
+  public String method;
+
+  public String mobilePhone;
 
   public String secret;
 
@@ -40,9 +45,9 @@ public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
     this.secret = secret;
   }
 
-  public TwoFactorRequest(String code, String secret, TwoFactorDelivery delivery) {
+  public TwoFactorRequest(String code, String method, String secret) {
     this.code = code;
-    this.delivery = delivery;
+    this.method = method;
     this.secret = secret;
   }
 }

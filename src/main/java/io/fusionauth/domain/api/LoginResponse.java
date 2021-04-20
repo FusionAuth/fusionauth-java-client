@@ -21,6 +21,7 @@ import java.util.Map;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.ChangePasswordReason;
+import io.fusionauth.domain.TwoFactorMethod;
 import io.fusionauth.domain.User;
 
 /**
@@ -32,6 +33,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
   public String changePasswordId;
 
   public ChangePasswordReason changePasswordReason;
+
+  public List<TwoFactorMethod> methods;
 
   public String refreshToken;
 

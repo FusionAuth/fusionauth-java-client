@@ -17,6 +17,7 @@ package io.fusionauth.domain.api;
 
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Theme;
 
 /**
@@ -29,6 +30,7 @@ public class ThemeRequest {
 
   public Theme theme;
 
+  @JacksonConstructor
   public ThemeRequest() {
   }
 

@@ -37,8 +37,8 @@ public class EntityGrantSearchCriteria extends BaseSearchCriteria {
       orderBy = defaultOrderBy();
     }
 
-    orderBy = orderBy.replace("insertInstant", "insert_instant")
-                     .replace("lastUpdateInstant", "last_update_instant");
+    orderBy = orderBy.replace("insertInstant", "eg.insert_instant")
+                     .replace("lastUpdateInstant", "eg.last_update_instant");
 
     name = toSearchString(name);
   }

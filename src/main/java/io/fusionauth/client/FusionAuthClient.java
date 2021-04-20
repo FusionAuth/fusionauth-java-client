@@ -36,6 +36,8 @@ import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
+import io.fusionauth.domain.api.APIKeyRequest;
+import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
@@ -50,11 +52,14 @@ import io.fusionauth.domain.api.ConsentRequest;
 import io.fusionauth.domain.api.ConsentResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EntityGrantRequest;
+import io.fusionauth.domain.api.EntityGrantResponse;
+import io.fusionauth.domain.api.EntityGrantSearchRequest;
+import io.fusionauth.domain.api.EntityGrantSearchResponse;
 import io.fusionauth.domain.api.EntityRequest;
 import io.fusionauth.domain.api.EntityResponse;
 import io.fusionauth.domain.api.EntitySearchRequest;
 import io.fusionauth.domain.api.EntitySearchResponse;
-import io.fusionauth.domain.api.FormFieldRequest;
 import io.fusionauth.domain.api.EntityTypeRequest;
 import io.fusionauth.domain.api.EntityTypeResponse;
 import io.fusionauth.domain.api.EntityTypeSearchRequest;
@@ -82,20 +87,29 @@ import io.fusionauth.domain.api.LoginResponse;
 import io.fusionauth.domain.api.MemberDeleteRequest;
 import io.fusionauth.domain.api.MemberRequest;
 import io.fusionauth.domain.api.MemberResponse;
+import io.fusionauth.domain.api.MessageTemplateRequest;
+import io.fusionauth.domain.api.MessageTemplateResponse;
+import io.fusionauth.domain.api.MessengerRequest;
+import io.fusionauth.domain.api.MessengerResponse;
 import io.fusionauth.domain.api.OAuthConfigurationResponse;
 import io.fusionauth.domain.api.PasswordValidationRulesResponse;
 import io.fusionauth.domain.api.PendingResponse;
+import io.fusionauth.domain.api.PreviewMessageTemplateRequest;
+import io.fusionauth.domain.api.PreviewMessageTemplateResponse;
 import io.fusionauth.domain.api.PreviewRequest;
 import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
 import io.fusionauth.domain.api.ReactorRequest;
+import io.fusionauth.domain.api.ReactorResponse;
 import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantRequest;
 import io.fusionauth.domain.api.TenantResponse;
 import io.fusionauth.domain.api.ThemeRequest;
 import io.fusionauth.domain.api.ThemeResponse;
+import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
+import io.fusionauth.domain.api.TwoFactorResponse;
 import io.fusionauth.domain.api.UserActionReasonRequest;
 import io.fusionauth.domain.api.UserActionReasonResponse;
 import io.fusionauth.domain.api.UserActionRequest;
@@ -133,6 +147,8 @@ import io.fusionauth.domain.api.report.TotalsReportResponse;
 import io.fusionauth.domain.api.twoFactor.SecretResponse;
 import io.fusionauth.domain.api.twoFactor.TwoFactorLoginRequest;
 import io.fusionauth.domain.api.twoFactor.TwoFactorSendRequest;
+import io.fusionauth.domain.api.twoFactor.TwoFactorStartRequest;
+import io.fusionauth.domain.api.twoFactor.TwoFactorStartResponse;
 import io.fusionauth.domain.api.user.ActionRequest;
 import io.fusionauth.domain.api.user.ActionResponse;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
@@ -333,6 +349,26 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an API key. You can optionally specify a unique Id for the key, if not provided one will be generated.
+   * an API key can only be created with equal or lesser authority. An API key cannot create another API key unless it is granted 
+   * to that API key.
+   * 
+   * If an API key is locked to a tenant, it can only create API Keys for that same tenant.
+   *
+   * @param keyId (Optional) The unique Id of the API key. If not provided a secure random Id will be generated.
+   * @param request The request object that contains all of the information needed to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> createAPIKey(UUID keyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -602,6 +638,38 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates an message template. You can optionally specify an Id for the template, if not provided one will be generated.
+   *
+   * @param messageTemplateId (Optional) The Id for the template. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the message template.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> createMessageTemplate(UUID messageTemplateId, MessageTemplateRequest request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a messenger.  You can optionally specify an Id for the messenger, if not provided one will be generated.
+   *
+   * @param messengerId (Optional) The Id for the messenger. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the messenger.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessengerResponse, Errors> createMessenger(UUID messengerId, MessengerRequest request) {
+    return start(MessengerResponse.class, Errors.class)
+        .uri("/api/messenger")
+        .urlSegment(messengerId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated.
    *
    * @param tenantId (Optional) The Id for the tenant. If not provided a secure random UUID will be generated.
@@ -804,6 +872,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the API key for the given Id.
+   *
+   * @param keyId The Id of the authentication API key to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteAPIKey(UUID keyId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
+        .delete()
+        .go();
+  }
+
+  /**
    * Hard deletes an application. This is a dangerous operation and should not be used in most circumstances. This will
    * delete the application, any registrations for that application, metrics and reports for the application, all the
    * roles for the application, and any other data associated with the application. This operation could take a very
@@ -891,6 +973,25 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/entity")
         .urlSegment(entityId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes an Entity Grant for the given User or Entity.
+   *
+   * @param entityId The Id of the Entity that the Entity Grant is being deleted for.
+   * @param recipientEntityId (Optional) The Id of the Entity that the Entity Grant is for.
+   * @param userId (Optional) The Id of the User that the Entity Grant is for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteEntityGrant(UUID entityId, UUID recipientEntityId, UUID userId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .urlParameter("recipientEntityId", recipientEntityId)
+        .urlParameter("userId", userId)
         .delete()
         .go();
   }
@@ -1021,6 +1122,34 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/lambda")
         .urlSegment(lambdaId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the message template for the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteMessageTemplate(UUID messageTemplateId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the messenger for the given Id.
+   *
+   * @param messengerId The Id of the messenger to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteMessenger(UUID messengerId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/messenger")
+        .urlSegment(messengerId)
         .delete()
         .go();
   }
@@ -1187,13 +1316,15 @@ public class FusionAuthClient {
    * Disable Two Factor authentication for a user.
    *
    * @param userId The Id of the User for which you're disabling Two Factor authentication.
+   * @param methodId The two-factor method identifier you wish to disable
    * @param code The Two Factor code used verify the the caller knows the Two Factor secret.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> disableTwoFactor(UUID userId, String code) {
+  public ClientResponse<Void, Errors> disableTwoFactor(UUID userId, String methodId, String code) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/two-factor")
         .urlParameter("userId", userId)
+        .urlParameter("methodId", methodId)
         .urlParameter("code", code)
         .delete()
         .go();
@@ -1206,8 +1337,8 @@ public class FusionAuthClient {
    * @param request The two factor enable request information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> enableTwoFactor(UUID userId, TwoFactorRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<TwoFactorResponse, Errors> enableTwoFactor(UUID userId, TwoFactorRequest request) {
+    return start(TwoFactorResponse.class, Errors.class)
         .uri("/api/user/two-factor")
         .urlSegment(userId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
@@ -1394,6 +1525,20 @@ public class FusionAuthClient {
         .urlParameter("sendVerifyPasswordEmail", false)
         .urlParameter("applicationId", applicationId)
         .put()
+        .go();
+  }
+
+  /**
+   * Generate two-factor recovery codes for a user. Generating two-factor recovery codes will invalidate any existing recovery codes. 
+   *
+   * @param userId The Id of the user to generate new Two Factor recovery codes.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TwoFactorRecoveryCodeResponse, Errors> generateTwoFactorRecoveryCodes(UUID userId) {
+    return start(TwoFactorRecoveryCodeResponse.class, Errors.class)
+        .uri("/api/user/two-factor/recovery-code")
+        .urlSegment(userId)
+        .post()
         .go();
   }
 
@@ -1648,6 +1793,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates an authentication API key by given id
+   *
+   * @param keyId The Id of the authentication key. If not provided a secure random api key will be generated.
+   * @param request The request object that contains all of the information needed to create the APIKey.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> patchAPIKey(UUID keyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the application with the given Id.
    *
    * @param applicationId The Id of the application to update.
@@ -1803,6 +1964,38 @@ public class FusionAuthClient {
     return start(LambdaResponse.class, Errors.class)
         .uri("/api/lambda")
         .urlSegment(lambdaId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the message template with the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to update.
+   * @param request The request that contains just the new message template information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> patchMessageTemplate(UUID messageTemplateId, Map<String, Object> request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the messenger with the given Id.
+   *
+   * @param messengerId The Id of the messenger to update.
+   * @param request The request that contains just the new messenger information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessengerResponse, Errors> patchMessenger(UUID messengerId, Map<String, Object> request) {
+    return start(MessengerResponse.class, Errors.class)
+        .uri("/api/messenger")
+        .urlSegment(messengerId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .patch()
         .go();
@@ -2119,6 +2312,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves an authentication API key for the given id
+   *
+   * @param keyId The Id of the API key to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> retrieveAPIKey(UUID keyId) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(keyId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves a single action log (the log of a user action that was taken on a user previously) for the given Id.
    *
    * @param actionId The Id of the action to retrieve.
@@ -2341,6 +2548,25 @@ public class FusionAuthClient {
     return start(EntityResponse.class, Errors.class)
         .uri("/api/entity")
         .urlSegment(entityId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves an Entity Grant for the given Entity and User/Entity.
+   *
+   * @param entityId The Id of the Entity.
+   * @param recipientEntityId (Optional) The Id of the Entity that the Entity Grant is for.
+   * @param userId (Optional) The Id of the User that the Entity Grant is for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityGrantResponse, Errors> retrieveEntityGrant(UUID entityId, UUID recipientEntityId, UUID userId) {
+    return start(EntityGrantResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .urlParameter("recipientEntityId", recipientEntityId)
+        .urlParameter("userId", userId)
         .get()
         .go();
   }
@@ -2725,6 +2951,72 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the message template for the given Id. If you don't specify the id, this will return all of the message templates.
+   *
+   * @param messageTemplateId (Optional) The Id of the message template.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Void> retrieveMessageTemplate(UUID messageTemplateId) {
+    return start(MessageTemplateResponse.class, Void.TYPE)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Creates a preview of the message template provided in the request, normalized to a given locale.
+   *
+   * @param request The request that contains the email template and optionally a locale to render it in.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PreviewMessageTemplateResponse, Errors> retrieveMessageTemplatePreview(PreviewMessageTemplateRequest request) {
+    return start(PreviewMessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template/preview")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the message templates.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Void> retrieveMessageTemplates() {
+    return start(MessageTemplateResponse.class, Void.TYPE)
+        .uri("/api/message/template")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the messenger with the given Id.
+   *
+   * @param messengerId The Id of the messenger.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessengerResponse, Void> retrieveMessenger(UUID messengerId) {
+    return start(MessengerResponse.class, Void.TYPE)
+        .uri("/api/messenger")
+        .urlSegment(messengerId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all of the messengers.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessengerResponse, Void> retrieveMessengers() {
+    return start(MessengerResponse.class, Void.TYPE)
+        .uri("/api/messenger")
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the monthly active user report between the two instants. If you specify an application id, it will only
    * return the monthly active counts for that application.
    *
@@ -2820,8 +3112,8 @@ public class FusionAuthClient {
    *
    * @return The ClientResponse object.
    */
-  public ClientResponse<ReactorStatus, Void> retrieveReactorStatus() {
-    return start(ReactorStatus.class, Void.TYPE)
+  public ClientResponse<ReactorResponse, Void> retrieveReactorStatus() {
+    return start(ReactorResponse.class, Void.TYPE)
         .uri("/api/reactor")
         .get()
         .go();
@@ -2979,6 +3271,20 @@ public class FusionAuthClient {
   public ClientResponse<TotalsReportResponse, Void> retrieveTotalReport() {
     return start(TotalsReportResponse.class, Void.TYPE)
         .uri("/api/report/totals")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieve two-factor recovery codes for a user.
+   *
+   * @param userId The Id of the user to retrieve Two Factor recovery codes.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TwoFactorRecoveryCodeResponse, Errors> retrieveTwoFactorRecoveryCodes(UUID userId) {
+    return start(TwoFactorRecoveryCodeResponse.class, Errors.class)
+        .uri("/api/user/two-factor/recovery-code")
+        .urlSegment(userId)
         .get()
         .go();
   }
@@ -3449,6 +3755,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches Entity Grants with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityGrantSearchResponse, Errors> searchEntityGrants(EntityGrantSearchRequest request) {
+    return start(EntityGrantSearchResponse.class, Errors.class)
+        .uri("/api/entity/grant/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches the entity types with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -3602,8 +3922,24 @@ public class FusionAuthClient {
    *
    * @param request The request object that contains all of the information used to send the code.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to sendTwoFactorCodeForEnableDisable, use that method instead.
    */
+  @Deprecated
   public ClientResponse<Void, Errors> sendTwoFactorCode(TwoFactorSendRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/two-factor/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling.
+   *
+   * @param request The request object that contains all of the information used to send the code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendTwoFactorCodeForEnableDisable(TwoFactorSendRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/two-factor/send")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
@@ -3616,11 +3952,29 @@ public class FusionAuthClient {
    *
    * @param twoFactorId The Id returned by the Login API necessary to complete Two Factor authentication.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to sendTwoFactorCodeForLoginUsingMethod, use that method instead.
    */
+  @Deprecated
   public ClientResponse<Void, Errors> sendTwoFactorCodeForLogin(String twoFactorId) {
     return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/two-factor/send")
         .urlSegment(twoFactorId)
+        .post()
+        .go();
+  }
+
+  /**
+   * Send a Two Factor authentication code to allow the completion of Two Factor authentication.
+   *
+   * @param twoFactorId The Id returned by the Login API necessary to complete Two Factor authentication.
+   * @param request The Two Factor send request that contains all of the information used to send the Two Factor code to the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendTwoFactorCodeForLoginUsingMethod(String twoFactorId, TwoFactorSendRequest request) {
+    return startAnonymous(Void.TYPE, Errors.class)
+        .uri("/api/two-factor/send")
+        .urlSegment(twoFactorId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
   }
@@ -3656,6 +4010,25 @@ public class FusionAuthClient {
   }
 
   /**
+   * Start a Two-Factor login request by generating a two-factor identifier. This code can then be sent to the Two Factor Send 
+   * API (/api/two-factor/send)in order to send a one-time use code to a user. You can also use one-time use code returned 
+   * to send the code out-of-band. The Two-Factor login is completed by making a request to the Two-Factor Login 
+   * API (/api/two-factor/login). with the two-factor identifier and the one-time use code.
+   * 
+   * This API is intended to allow you to begin a Two-Factor login outside of a normal login that originated from the Login API (/api/login).
+   *
+   * @param request The Two-Factor start request that contains all of the information used to begin the Two-Factor login request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
+    return start(TwoFactorStartResponse.class, Errors.class)
+        .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Complete login using a 2FA challenge
    *
    * @param request The login request that contains the user credentials used to log them in.
@@ -3666,6 +4039,22 @@ public class FusionAuthClient {
         .uri("/api/two-factor/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
+        .go();
+  }
+
+  /**
+   * Updates an API key by given id
+   *
+   * @param apiKeyId The Id of the API key to update.
+   * @param request The request object that contains all of the information used to create the API Key.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<APIKeyResponse, Errors> updateAPIKey(UUID apiKeyId, APIKeyRequest request) {
+    return start(APIKeyResponse.class, Errors.class)
+        .uri("/api/api-key")
+        .urlSegment(apiKeyId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
         .go();
   }
 
@@ -3914,6 +4303,38 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates the message template with the given Id.
+   *
+   * @param messageTemplateId The Id of the message template to update.
+   * @param request The request that contains all of the new message template information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessageTemplateResponse, Errors> updateMessageTemplate(UUID messageTemplateId, MessageTemplateRequest request) {
+    return start(MessageTemplateResponse.class, Errors.class)
+        .uri("/api/message/template")
+        .urlSegment(messageTemplateId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the messenger with the given Id.
+   *
+   * @param messengerId The Id of the messenger to update.
+   * @param request The request object that contains all of the new messenger information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MessengerResponse, Errors> updateMessenger(UUID messengerId, MessengerRequest request) {
+    return start(MessengerResponse.class, Errors.class)
+        .uri("/api/messenger")
+        .urlSegment(messengerId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
    * Updates the registration for the user with the given id and the application defined in the request.
    *
    * @param userId The Id of the user whose registration is going to be updated.
@@ -4052,6 +4473,23 @@ public class FusionAuthClient {
         .urlSegment(webhookId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
+        .go();
+  }
+
+  /**
+   * Creates or updates an Entity Grant. This is when a User/Entity is granted permissions to an Entity.
+   *
+   * @param entityId The Id of the Entity that the User/Entity is being granted access to.
+   * @param request The request object that contains all of the information used to create the Entity Grant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> upsertEntityGrant(UUID entityId, EntityGrantRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .urlSegment("grant")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
         .go();
   }
 
