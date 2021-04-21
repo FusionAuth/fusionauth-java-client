@@ -33,15 +33,18 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
 
   public String authenticationType;
 
+  public String ipAddress;
+
   public User user;
 
   @JacksonConstructor
   public UserLoginFailedEvent() {
   }
 
-  public UserLoginFailedEvent(UUID applicationId, String authenticationType, User user) {
+  public UserLoginFailedEvent(UUID applicationId, String authenticationType, String ipAddress, User user) {
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
+    this.ipAddress = ipAddress;
     this.user = user;
   }
 
@@ -55,9 +58,10 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
     }
     UserLoginFailedEvent that = (UserLoginFailedEvent) o;
     return super.equals(o) &&
-        Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(authenticationType, that.authenticationType) &&
-        Objects.equals(user, that.user);
+           Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(authenticationType, that.authenticationType) &&
+           Objects.equals(ipAddress, that.ipAddress) &&
+           Objects.equals(user, that.user);
   }
 
   @Override
@@ -67,7 +71,7 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, user);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, ipAddress, user);
   }
 
   @Override

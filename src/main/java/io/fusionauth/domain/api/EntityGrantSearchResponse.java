@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.Comparator;
 import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
@@ -38,5 +39,6 @@ public class EntityGrantSearchResponse {
   public EntityGrantSearchResponse(SearchResults<EntityGrant> searchResults) {
     this.grants = searchResults.results;
     this.total = searchResults.total;
+    this.grants.forEach(g -> g.entity.type.permissions.sort(Comparator.comparing(p -> p.name)));
   }
 }

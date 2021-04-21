@@ -35,12 +35,6 @@ public class SecureIdentity {
 
   public String salt;
 
-  public TwoFactorDelivery twoFactorDelivery;
-
-  public boolean twoFactorEnabled;
-
-  public String twoFactorSecret;
-
   public String username;
 
   public ContentStatus usernameStatus;
@@ -57,7 +51,6 @@ public class SecureIdentity {
     }
     SecureIdentity that = (SecureIdentity) o;
     return passwordChangeRequired == that.passwordChangeRequired &&
-           twoFactorEnabled == that.twoFactorEnabled &&
            verified == that.verified &&
            Objects.equals(breachedPasswordLastCheckedInstant, that.breachedPasswordLastCheckedInstant) &&
            breachedPasswordStatus == that.breachedPasswordStatus &&
@@ -70,8 +63,6 @@ public class SecureIdentity {
            passwordChangeReason == that.passwordChangeReason &&
            Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
            Objects.equals(salt, that.salt) &&
-           twoFactorDelivery == that.twoFactorDelivery &&
-           Objects.equals(twoFactorSecret, that.twoFactorSecret) &&
            Objects.equals(username, that.username) &&
            usernameStatus == that.usernameStatus;
   }
@@ -79,7 +70,6 @@ public class SecureIdentity {
   @Override
   public int hashCode() {
     return Objects.hash(breachedPasswordLastCheckedInstant, breachedPasswordStatus, connectorId, encryptionScheme, factor, id, lastLoginInstant,
-                        password, passwordChangeReason, passwordChangeRequired, passwordLastUpdateInstant, salt, twoFactorDelivery,
-                        twoFactorEnabled, twoFactorSecret, username, usernameStatus, verified);
+                        password, passwordChangeReason, passwordChangeRequired, passwordLastUpdateInstant, salt, username, usernameStatus, verified);
   }
 }

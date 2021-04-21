@@ -31,6 +31,8 @@ public class TwoFactorLoginRequest extends BaseLoginRequest implements Buildable
 
   public String twoFactorId;
 
+  public UUID userId;
+
   @JacksonConstructor
   public TwoFactorLoginRequest() {
   }

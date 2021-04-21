@@ -131,10 +131,16 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       return true;
     }
 
-    return Stream.of(templates.emailComplete,
+    return Stream.of(templates.accountEdit,
+                     templates.accountIndex,
+                     templates.accountTwoFactorDisable,
+                     templates.accountTwoFactorEnable,
+                     templates.accountTwoFactorIndex,
+                     templates.emailComplete,
                      templates.emailSend,
                      templates.emailVerify,
                      templates.helpers,
+                     templates.index,
                      templates.oauth2Authorize,
                      templates.oauth2AuthorizedNotRegistered,
                      templates.oauth2ChildRegistrationNotAllowed,
@@ -147,6 +153,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.oauth2Passwordless,
                      templates.oauth2Register,
                      templates.oauth2TwoFactor,
+                     templates.oauth2TwoFactorMethods,
                      templates.oauth2Wait,
                      templates.passwordChange,
                      templates.passwordComplete,
@@ -205,11 +212,22 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   public static class Templates implements Buildable<Templates> {
     public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-        "emailComplete", "emailSend", "emailVerify", "helpers", "oauth2Authorize", "oauth2AuthorizedNotRegistered", "oauth2ChildRegistrationNotAllowed",
-        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout",
-        "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
-        "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout"
+        "accountEdit", "accountIndex", "accountTwoFactorDisable", "accountTwoFactorEnable", "accountTwoFactorIndex", "emailComplete", "emailSend",
+        "emailVerify", "helpers", "index", "oauth2Authorize", "oauth2AuthorizedNotRegistered", "oauth2ChildRegistrationNotAllowed",
+        "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device", "oauth2DeviceComplete", "oauth2Error",
+        "oauth2Logout", "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "oauth2TwoFactorMethods", "oauth2Wait", "passwordChange",
+        "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete", "registrationSend", "registrationVerify", "samlv2Logout"
     )));
+
+    public String accountEdit;
+
+    public String accountIndex;
+
+    public String accountTwoFactorDisable;
+
+    public String accountTwoFactorEnable;
+
+    public String accountTwoFactorIndex;
 
     public String emailComplete;
 
@@ -218,6 +236,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String emailVerify;
 
     public String helpers;
+
+    public String index;
 
     public String oauth2Authorize;
 
@@ -244,6 +264,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String oauth2TwoFactor;
 
+    public String oauth2TwoFactorMethods;
+
     public String oauth2Wait;
 
     public String passwordChange;
@@ -266,10 +288,16 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     }
 
     public Templates(Templates other) {
+      this.accountEdit = other.accountEdit;
+      this.accountIndex = other.accountIndex;
+      this.accountTwoFactorDisable = other.accountTwoFactorDisable;
+      this.accountTwoFactorEnable = other.accountTwoFactorEnable;
+      this.accountTwoFactorIndex = other.accountTwoFactorIndex;
       this.emailComplete = other.emailComplete;
       this.emailSend = other.emailSend;
       this.emailVerify = other.emailVerify;
       this.helpers = other.helpers;
+      this.index = other.index;
       this.oauth2Authorize = other.oauth2Authorize;
       this.oauth2AuthorizedNotRegistered = other.oauth2AuthorizedNotRegistered;
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
@@ -282,6 +310,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2Passwordless = other.oauth2Passwordless;
       this.oauth2Register = other.oauth2Register;
       this.oauth2TwoFactor = other.oauth2TwoFactor;
+      this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
@@ -302,10 +331,16 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         return false;
       }
       Templates that = (Templates) o;
-      return Objects.equals(emailComplete, that.emailComplete) &&
+      return Objects.equals(accountEdit, that.accountEdit) &&
+             Objects.equals(accountIndex, that.accountIndex) &&
+             Objects.equals(accountTwoFactorDisable, that.accountTwoFactorDisable) &&
+             Objects.equals(accountTwoFactorEnable, that.accountTwoFactorEnable) &&
+             Objects.equals(accountTwoFactorIndex, that.accountTwoFactorIndex) &&
+             Objects.equals(emailComplete, that.emailComplete) &&
              Objects.equals(emailSend, that.emailSend) &&
              Objects.equals(emailVerify, that.emailVerify) &&
              Objects.equals(helpers, that.helpers) &&
+             Objects.equals(index, that.index) &&
              Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
              Objects.equals(oauth2AuthorizedNotRegistered, that.oauth2AuthorizedNotRegistered) &&
              Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
@@ -318,6 +353,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
              Objects.equals(oauth2Register, that.oauth2Register) &&
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
+             Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
              Objects.equals(passwordChange, that.passwordChange) &&
              Objects.equals(passwordComplete, that.passwordComplete) &&
@@ -331,39 +367,53 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     @Override
     public int hashCode() {
-      return Objects.hash(emailComplete,
-                          emailSend,
-                          emailVerify,
-                          helpers,
-                          oauth2Authorize,
-                          oauth2AuthorizedNotRegistered,
-                          oauth2ChildRegistrationNotAllowed,
-                          oauth2ChildRegistrationNotAllowedComplete,
-                          oauth2CompleteRegistration,
-                          oauth2Device,
-                          oauth2DeviceComplete,
-                          oauth2Error,
-                          oauth2Logout,
-                          oauth2Passwordless,
-                          oauth2Register,
-                          oauth2TwoFactor,
-                          oauth2Wait,
-                          passwordChange,
-                          passwordComplete,
-                          passwordForgot,
-                          passwordSent,
-                          registrationComplete,
-                          registrationSend,
-                          registrationVerify,
-                          samlv2Logout);
+      return Objects.hash(
+          accountEdit,
+          accountIndex,
+          accountTwoFactorDisable,
+          accountTwoFactorEnable,
+          accountTwoFactorIndex,
+          emailComplete,
+          emailSend,
+          emailVerify,
+          helpers,
+          index,
+          oauth2Authorize,
+          oauth2AuthorizedNotRegistered,
+          oauth2ChildRegistrationNotAllowed,
+          oauth2ChildRegistrationNotAllowedComplete,
+          oauth2CompleteRegistration,
+          oauth2Device,
+          oauth2DeviceComplete,
+          oauth2Error,
+          oauth2Logout,
+          oauth2Passwordless,
+          oauth2Register,
+          oauth2TwoFactor,
+          oauth2TwoFactorMethods,
+          oauth2Wait,
+          passwordChange,
+          passwordComplete,
+          passwordForgot,
+          passwordSent,
+          registrationComplete,
+          registrationSend,
+          registrationVerify,
+          samlv2Logout);
     }
 
     @SuppressWarnings("DuplicatedCode")
     public void normalize() {
+      accountEdit = lineReturns(trimToNull(accountEdit));
+      accountIndex = lineReturns(trimToNull(accountIndex));
+      accountTwoFactorDisable = lineReturns(trimToNull(accountTwoFactorDisable));
+      accountTwoFactorEnable = lineReturns(trimToNull(accountTwoFactorEnable));
+      accountTwoFactorIndex = lineReturns(trimToNull(accountTwoFactorIndex));
       emailComplete = lineReturns(trimToNull(emailComplete));
       emailSend = lineReturns(trimToNull(emailSend));
       emailVerify = lineReturns(trimToNull(emailVerify));
       helpers = lineReturns(trimToNull(helpers));
+      index = lineReturns(trimToNull(index));
       oauth2Authorize = lineReturns(trimToNull(oauth2Authorize));
       oauth2AuthorizedNotRegistered = lineReturns(trimToNull(oauth2AuthorizedNotRegistered));
       oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
@@ -376,6 +426,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       oauth2Passwordless = lineReturns(trimToNull(oauth2Passwordless));
       oauth2Register = lineReturns(trimToNull(oauth2Register));
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
+      oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
       passwordChange = lineReturns(trimToNull(passwordChange));
       passwordComplete = lineReturns(trimToNull(passwordComplete));

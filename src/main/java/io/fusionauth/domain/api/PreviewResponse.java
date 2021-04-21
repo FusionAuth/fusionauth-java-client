@@ -16,7 +16,6 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.error.Errors;
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.email.Email;
 
 /**
@@ -26,13 +25,4 @@ public class PreviewResponse {
   public Email email;
 
   public Errors errors;
-
-  @JacksonConstructor
-  public PreviewResponse() {
-  }
-
-  public PreviewResponse(Email email, Errors errors) {
-    this.email = email;
-    this.errors = errors;
-  }
 }

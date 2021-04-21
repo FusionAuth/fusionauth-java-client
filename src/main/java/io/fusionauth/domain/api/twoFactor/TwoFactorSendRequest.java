@@ -24,9 +24,13 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class TwoFactorSendRequest implements Buildable<TwoFactorSendRequest> {
-  public String mobilePhone;
+  public String email;
 
-  public String secret;
+  public String method;
+
+  public String methodId;
+
+  public String mobilePhone;
 
   public UUID userId;
 
@@ -34,12 +38,16 @@ public class TwoFactorSendRequest implements Buildable<TwoFactorSendRequest> {
   public TwoFactorSendRequest() {
   }
 
-  public TwoFactorSendRequest(UUID userId) {
+  public TwoFactorSendRequest(String methodId) {
+    this.methodId = methodId;
+  }
+
+  public TwoFactorSendRequest(String method, UUID userId) {
+    this.method = method;
     this.userId = userId;
   }
 
-  public TwoFactorSendRequest(String mobilePhone, String secret) {
-    this.mobilePhone = mobilePhone;
-    this.secret = secret;
+  public TwoFactorSendRequest(UUID userId) {
+    this.userId = userId;
   }
 }

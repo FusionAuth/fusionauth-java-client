@@ -86,6 +86,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public ZonedDateTime lastUpdateInstant;
 
+  @InternalJSONColumn
+  public TenantLoginConfiguration loginConfiguration = new TenantLoginConfiguration();
+
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
    * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
@@ -98,6 +101,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @InternalJSONColumn
   public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
+
+  @InternalJSONColumn
+  public TenantMultiFactorConfiguration multiFactorConfiguration = new TenantMultiFactorConfiguration();
 
   public String name;
 
@@ -135,9 +141,11 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.issuer = other.issuer;
     this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
     this.lastUpdateInstant = other.lastUpdateInstant;
+    this.loginConfiguration = new TenantLoginConfiguration(other.loginConfiguration);
     this.logoutURL = other.logoutURL;
     this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
     this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
+    this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
     this.name = other.name;
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
@@ -170,9 +178,11 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(insertInstant, tenant.insertInstant) &&
            Objects.equals(lastUpdateInstant, tenant.lastUpdateInstant) &&
            Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
+           Objects.equals(loginConfiguration, tenant.loginConfiguration) &&
            Objects.equals(logoutURL, tenant.logoutURL) &&
            Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
            Objects.equals(minimumPasswordAge, tenant.minimumPasswordAge) &&
+           Objects.equals(multiFactorConfiguration, tenant.multiFactorConfiguration) &&
            Objects.equals(name, tenant.name) &&
            Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
@@ -188,7 +198,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, state, themeId, userDeletePolicy);
+    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, loginConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, state, themeId, userDeletePolicy);
   }
 
   @JsonIgnore

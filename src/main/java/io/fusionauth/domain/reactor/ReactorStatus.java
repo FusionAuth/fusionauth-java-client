@@ -15,9 +15,9 @@
  */
 package io.fusionauth.domain.reactor;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Objects;
+
+import com.inversoft.json.ToString;
 
 /**
  * @author Daniel DeGroff
@@ -25,11 +25,11 @@ import java.util.UUID;
 public class ReactorStatus {
   public ReactorFeatureStatus advancedIdentityProviders = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus advancedMultiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus advancedRegistrationForms = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
-
-  public Map<UUID, BreachedPasswordTenantMetric> breachedPasswordMetrics = new HashMap<>();
 
   public ReactorFeatureStatus connectors = ReactorFeatureStatus.UNKNOWN;
 
@@ -37,24 +37,37 @@ public class ReactorStatus {
 
   public boolean licensed;
 
-  public ReactorFeatureStatus multiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
-
-  public int totalActionRequired() {
-    return breachedPasswordMetrics.values().stream().mapToInt(m -> m.actionRequired).sum();
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ReactorStatus that = (ReactorStatus) o;
+    return licensed == that.licensed &&
+           advancedIdentityProviders == that.advancedIdentityProviders &&
+           advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
+           advancedRegistrationForms == that.advancedRegistrationForms &&
+           breachedPasswordDetection == that.breachedPasswordDetection &&
+           connectors == that.connectors &&
+           entityManagement == that.entityManagement;
   }
 
-  public int totalPasswordsBreached() {
-    return breachedPasswordMetrics.values().stream().mapToInt(BreachedPasswordTenantMetric::totalBreached).sum();
+  @Override
+  public int hashCode() {
+    return Objects.hash(advancedIdentityProviders,
+                        advancedMultiFactorAuthentication,
+                        advancedRegistrationForms,
+                        breachedPasswordDetection,
+                        connectors,
+                        entityManagement,
+                        licensed);
   }
 
-  public int totalPasswordsChecked() {
-    return breachedPasswordMetrics.values().stream().mapToInt(m -> m.passwordsCheckedCount).sum();
-  }
-
-  public enum ReactorFeatureStatus {
-    ACTIVE,
-    DISCONNECTED,
-    PENDING,
-    UNKNOWN
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

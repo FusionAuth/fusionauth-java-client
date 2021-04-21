@@ -46,16 +46,21 @@ public class BreachedPasswordTenantMetric implements Buildable<BreachedPasswordT
     }
     BreachedPasswordTenantMetric that = (BreachedPasswordTenantMetric) o;
     return actionRequired == that.actionRequired &&
-        matchedCommonPasswordCount == that.matchedCommonPasswordCount &&
-        matchedExactCount == that.matchedExactCount &&
-        matchedPasswordCount == that.matchedPasswordCount &&
-        matchedSubAddressCount == that.matchedSubAddressCount &&
-        passwordsCheckedCount == that.passwordsCheckedCount;
+           matchedCommonPasswordCount == that.matchedCommonPasswordCount &&
+           matchedExactCount == that.matchedExactCount &&
+           matchedPasswordCount == that.matchedPasswordCount &&
+           matchedSubAddressCount == that.matchedSubAddressCount &&
+           passwordsCheckedCount == that.passwordsCheckedCount;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionRequired, matchedCommonPasswordCount, matchedExactCount, matchedPasswordCount, matchedSubAddressCount, passwordsCheckedCount);
+    return Objects.hash(actionRequired,
+                        matchedCommonPasswordCount,
+                        matchedExactCount,
+                        matchedPasswordCount,
+                        matchedSubAddressCount,
+                        passwordsCheckedCount);
   }
 
   @Override
