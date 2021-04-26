@@ -241,7 +241,6 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String oauth2Authorize;
 
-    // [brettp]TODO: Continue setup in rest of this class
     public String oauth2AuthorizedNotRegistered;
 
     public String oauth2ChildRegistrationNotAllowed;
