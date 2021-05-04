@@ -66,6 +66,7 @@ public class TenantUsernameConfiguration implements Buildable<TenantUsernameConf
     }
 
     public UniqueUsernameConfiguration(UniqueUsernameConfiguration other) {
+      this.enabled = other.enabled;
       this.numberOfDigits = other.numberOfDigits;
     }
 
