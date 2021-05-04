@@ -21,6 +21,7 @@ import com.inversoft.json.JacksonConstructor;
  * @author Daniel DeGroff
  */
 public class VerifyRegistrationResponse {
+  public String oneTimeCode;
 
   public String verificationId;
 
@@ -29,6 +30,11 @@ public class VerifyRegistrationResponse {
   }
 
   public VerifyRegistrationResponse(String verificationId) {
+    this.verificationId = verificationId;
+  }
+
+  public VerifyRegistrationResponse(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
     this.verificationId = verificationId;
   }
 }

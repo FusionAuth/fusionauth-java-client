@@ -128,6 +128,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
     this.tenantId = other.tenantId;
     this.timezone = other.timezone;
     this.twoFactor = new UserTwoFactorConfiguration(other.twoFactor);
+    this.uniqueUsername = other.uniqueUsername;
     this.username = other.username;
     this.usernameStatus = other.usernameStatus;
     this.verified = other.verified;

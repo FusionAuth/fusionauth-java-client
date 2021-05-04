@@ -21,11 +21,17 @@ import com.inversoft.json.JacksonConstructor;
  * @author Daniel DeGroff
  */
 public class VerifyEmailResponse {
+  public String oneTimeCode;
 
   public String verificationId;
 
   @JacksonConstructor
   public VerifyEmailResponse() {
+  }
+
+  public VerifyEmailResponse(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
+    this.verificationId = verificationId;
   }
 
   public VerifyEmailResponse(String verificationId) {

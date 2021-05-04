@@ -122,6 +122,7 @@ import io.fusionauth.domain.api.UserDeleteRequest;
 import io.fusionauth.domain.api.UserDeleteResponse;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
+import io.fusionauth.domain.api.VersionResponse;
 import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
@@ -162,13 +163,14 @@ import io.fusionauth.domain.api.user.RegistrationRequest;
 import io.fusionauth.domain.api.user.RegistrationResponse;
 import io.fusionauth.domain.api.user.SearchRequest;
 import io.fusionauth.domain.api.user.SearchResponse;
+import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
+import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
-import io.fusionauth.domain.reactor.ReactorStatus;
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -1716,8 +1718,8 @@ public class FusionAuthClient {
    *     the IP address will be that of the client or last proxy that sent the request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> loginPing(UUID userId, UUID applicationId, String callerIPAddress) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<LoginResponse, Errors> loginPing(UUID userId, UUID applicationId, String callerIPAddress) {
+    return start(LoginResponse.class, Errors.class)
         .uri("/api/login")
         .urlSegment(userId)
         .urlSegment(applicationId)
@@ -3560,6 +3562,18 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the FusionAuth version string.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<VersionResponse, Errors> retrieveVersion() {
+    return start(VersionResponse.class, Errors.class)
+        .uri("/api/system/version")
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the webhook for the given Id. If you pass in null for the id, this will return all the webhooks.
    *
    * @param webhookId (Optional) The Id of the webhook.
@@ -4532,7 +4546,9 @@ public class FusionAuthClient {
    *
    * @param verificationId The email verification id sent to the user.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to verifyEmailAddress and changed to take a JSON request body, use that method instead.
    */
+  @Deprecated
   public ClientResponse<Void, Errors> verifyEmail(String verificationId) {
     return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
@@ -4542,15 +4558,55 @@ public class FusionAuthClient {
   }
 
   /**
+   * Confirms a user's email address. 
+   * 
+   * The request body will contain the verificationId. You may also be required to send a one-time use code based upon your configuration. When 
+   * the tenant is configured to gate a user until their email address is verified, this procedures requires two values instead of one. 
+   * The verificationId is a high entropy value and the one-time use code is a low entropy value that is easily entered in a user interactive form. The 
+   * two values together are able to confirm a user's email address and mark the user's email address as verified.
+   *
+   * @param request The request that contains the verificationId and optional one-time use code paired with the verificationId.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> verifyEmailAddress(VerifyEmailRequest request) {
+    return startAnonymous(Void.TYPE, Errors.class)
+        .uri("/api/user/verify-email")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Confirms an application registration. The Id given is usually from an email sent to the user.
    *
    * @param verificationId The registration verification Id sent to the user.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to verifyUserRegistration and changed to take a JSON request body, use that method instead.
    */
+  @Deprecated
   public ClientResponse<Void, Errors> verifyRegistration(String verificationId) {
     return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/user/verify-registration")
         .urlSegment(verificationId)
+        .post()
+        .go();
+  }
+
+  /**
+   * Confirms a user's registration. 
+   * 
+   * The request body will contain the verificationId. You may also be required to send a one-time use code based upon your configuration. When 
+   * the application is configured to gate a user until their registration is verified, this procedures requires two values instead of one. 
+   * The verificationId is a high entropy value and the one-time use code is a low entropy value that is easily entered in a user interactive form. The 
+   * two values together are able to confirm a user's registration and mark the user's registration as verified.
+   *
+   * @param request The request that contains the verificationId and optional one-time use code paired with the verificationId.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> verifyUserRegistration(VerifyRegistrationRequest request) {
+    return startAnonymous(Void.TYPE, Errors.class)
+        .uri("/api/user/verify-registration")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
   }

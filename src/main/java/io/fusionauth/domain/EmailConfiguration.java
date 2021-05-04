@@ -50,10 +50,14 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   @ExcludeFromDatabaseDataColumn
   public UUID setPasswordEmailTemplateId;
 
+  public EmailUnverifiedOptions unverified = new EmailUnverifiedOptions();
+
   public String username;
 
   @ExcludeFromDatabaseDataColumn
   public UUID verificationEmailTemplateId;
+
+  public VerificationStrategy verificationStrategy;
 
   public boolean verifyEmail;
 
@@ -74,8 +78,10 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
     this.properties = other.properties;
     this.security = other.security;
     this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
+    this.unverified = new EmailUnverifiedOptions(other.unverified);
     this.username = other.username;
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
+    this.verificationStrategy = other.verificationStrategy;
     this.verifyEmail = other.verifyEmail;
     this.verifyEmailWhenChanged = other.verifyEmailWhenChanged;
   }
@@ -90,24 +96,26 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
     }
     EmailConfiguration that = (EmailConfiguration) o;
     return verifyEmail == that.verifyEmail &&
-        verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
-        Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
-        Objects.equals(defaultFromName, that.defaultFromName) &&
-        Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
-        Objects.equals(host, that.host) &&
-        Objects.equals(password, that.password) &&
-        Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
-        Objects.equals(port, that.port) &&
-        Objects.equals(properties, that.properties) &&
-        security == that.security &&
-        Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
-        Objects.equals(username, that.username) &&
-        Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
+           verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
+           Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
+           Objects.equals(defaultFromName, that.defaultFromName) &&
+           Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
+           Objects.equals(host, that.host) &&
+           Objects.equals(password, that.password) &&
+           Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
+           Objects.equals(port, that.port) &&
+           Objects.equals(properties, that.properties) &&
+           security == that.security &&
+           Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId) &&
+           Objects.equals(unverified, that.unverified) &&
+           Objects.equals(username, that.username) &&
+           Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
+           verificationStrategy == that.verificationStrategy;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(defaultFromEmail, defaultFromName, forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, username, verificationEmailTemplateId, verifyEmail, verifyEmailWhenChanged);
+    return Objects.hash(defaultFromEmail, defaultFromName, forgotPasswordEmailTemplateId, host, password, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
   }
 
   public void normalize() {

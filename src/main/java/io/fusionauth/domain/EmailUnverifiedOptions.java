@@ -23,15 +23,18 @@ import com.inversoft.json.ToString;
 /**
  * @author Daniel DeGroff
  */
-public class TenantLoginConfiguration implements Buildable<TenantLoginConfiguration> {
-  public boolean requireAuthentication = true;
+public class EmailUnverifiedOptions implements Buildable<EmailUnverifiedOptions> {
+  public boolean allowEmailChangeWhenGated;
 
-  public TenantLoginConfiguration(TenantLoginConfiguration other) {
-    this.requireAuthentication = other.requireAuthentication;
-  }
+  public UnverifiedBehavior behavior;
 
   @JacksonConstructor
-  public TenantLoginConfiguration() {
+  public EmailUnverifiedOptions() {
+  }
+
+  public EmailUnverifiedOptions(EmailUnverifiedOptions other) {
+    this.allowEmailChangeWhenGated = other.allowEmailChangeWhenGated;
+    this.behavior = other.behavior;
   }
 
   @Override
@@ -42,13 +45,13 @@ public class TenantLoginConfiguration implements Buildable<TenantLoginConfigurat
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TenantLoginConfiguration that = (TenantLoginConfiguration) o;
-    return requireAuthentication == that.requireAuthentication;
+    EmailUnverifiedOptions that = (EmailUnverifiedOptions) o;
+    return allowEmailChangeWhenGated == that.allowEmailChangeWhenGated && behavior == that.behavior;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requireAuthentication);
+    return Objects.hash(allowEmailChangeWhenGated, behavior);
   }
 
   @Override

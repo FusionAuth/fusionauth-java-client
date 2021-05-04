@@ -19,15 +19,28 @@ package io.fusionauth.domain.oauth2;
  * @author Daniel DeGroff
  */
 public enum UserState {
+  // TODO : Email Gate : Review : We could optionally combine 212 and 213 into "AuthenticatedNotVerified"
+  // - The AuthenticatedNotVerified is a new state for this release
   Authenticated,
-  AuthenticatedNotRegistered;
+  AuthenticatedNotRegistered,
+  AuthenticatedNotVerified,
+  AuthenticatedRegistrationNotVerified;
 
   public static UserState fromStatus(int status) {
-    if (status == 200 || status == 212) {
+    if (status == 200) {
       return Authenticated;
     }
+
     if (status == 202) {
       return AuthenticatedNotRegistered;
+    }
+
+    if (status == 212) {
+      return AuthenticatedNotVerified;
+    }
+
+    if (status == 213) {
+      return AuthenticatedRegistrationNotVerified;
     }
 
     throw new IllegalArgumentException("Invalid status code for UserState [" + status + "]");

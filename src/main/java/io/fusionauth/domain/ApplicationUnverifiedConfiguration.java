@@ -23,15 +23,20 @@ import com.inversoft.json.ToString;
 /**
  * @author Daniel DeGroff
  */
-public class TenantLoginConfiguration implements Buildable<TenantLoginConfiguration> {
-  public boolean requireAuthentication = true;
+public class ApplicationUnverifiedConfiguration implements Buildable<ApplicationUnverifiedConfiguration> {
+  public UnverifiedBehavior registration;
 
-  public TenantLoginConfiguration(TenantLoginConfiguration other) {
-    this.requireAuthentication = other.requireAuthentication;
-  }
+  public VerificationStrategy verificationStrategy;
+
+  public RegistrationUnverifiedOptions whenGated = new RegistrationUnverifiedOptions();
 
   @JacksonConstructor
-  public TenantLoginConfiguration() {
+  public ApplicationUnverifiedConfiguration() {
+  }
+
+  public ApplicationUnverifiedConfiguration(ApplicationUnverifiedConfiguration other) {
+    this.whenGated = new RegistrationUnverifiedOptions(other.whenGated);
+    this.registration = other.registration;
   }
 
   @Override
@@ -42,13 +47,14 @@ public class TenantLoginConfiguration implements Buildable<TenantLoginConfigurat
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TenantLoginConfiguration that = (TenantLoginConfiguration) o;
-    return requireAuthentication == that.requireAuthentication;
+    ApplicationUnverifiedConfiguration that = (ApplicationUnverifiedConfiguration) o;
+    return registration == that.registration &&
+           Objects.equals(whenGated, that.whenGated);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requireAuthentication);
+    return Objects.hash(registration, whenGated);
   }
 
   @Override
