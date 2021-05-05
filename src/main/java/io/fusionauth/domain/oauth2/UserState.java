@@ -15,12 +15,13 @@
  */
 package io.fusionauth.domain.oauth2;
 
+import io.fusionauth.domain.User;
+import io.fusionauth.domain.UserRegistration;
+
 /**
  * @author Daniel DeGroff
  */
 public enum UserState {
-  // TODO : Email Gate : Review : We could optionally combine 212 and 213 into "AuthenticatedNotVerified"
-  // - The AuthenticatedNotVerified is a new state for this release
   Authenticated,
   AuthenticatedNotRegistered,
   AuthenticatedNotVerified,
@@ -44,5 +45,17 @@ public enum UserState {
     }
 
     throw new IllegalArgumentException("Invalid status code for UserState [" + status + "]");
+  }
+
+  public static UserState fromUserAndRegistration(User user, UserRegistration registration) {
+    if (registration == null) {
+      return AuthenticatedNotRegistered;
+    }
+
+    if (!registration.verified) {
+      return AuthenticatedRegistrationNotVerified;
+    }
+
+    return user.verified ? Authenticated : AuthenticatedNotVerified;
   }
 }
