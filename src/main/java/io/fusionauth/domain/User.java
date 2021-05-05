@@ -206,7 +206,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
    */
   @JsonIgnore
   public String getLogin() {
-    return email == null ? username : email;
+    return email == null ? uniqueUsername : email;
   }
 
   public List<GroupMember> getMemberships() {
