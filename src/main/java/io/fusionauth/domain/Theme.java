@@ -319,7 +319,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.passwordSent = other.passwordSent;
       this.registrationComplete = other.registrationComplete;
       this.registrationSent = other.registrationSent;
-      this.registrationVerificationRequired = other.registrationVerify;
+      this.registrationVerificationRequired = other.registrationVerificationRequired;
       this.registrationVerify = other.registrationVerify;
       this.samlv2Logout = other.samlv2Logout;
     }
