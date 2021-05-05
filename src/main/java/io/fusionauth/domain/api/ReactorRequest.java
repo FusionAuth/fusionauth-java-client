@@ -23,10 +23,13 @@ package io.fusionauth.domain.api;
 public class ReactorRequest {
   public String license;
 
+  public String licenseId;
+
   public ReactorRequest() {
   }
 
-  public ReactorRequest(String license) {
+  public ReactorRequest(String licenseId, String license) {
+    this.licenseId = licenseId;
     this.license = license;
   }
 }

@@ -264,14 +264,12 @@ public class FusionAuthClient {
   /**
    * Activates the FusionAuth Reactor using a license id and optionally a license text (for air-gapped deployments)
    *
-   * @param licenseId The license id
    * @param request An optional request that contains the license text to activate Reactor (useful for air-gap deployments of FusionAuth).
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> activateReactor(String licenseId, ReactorRequest request) {
+  public ClientResponse<Void, Errors> activateReactor(ReactorRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/reactor")
-        .urlSegment(licenseId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
