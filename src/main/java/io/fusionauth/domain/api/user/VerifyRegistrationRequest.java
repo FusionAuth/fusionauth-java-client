@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,28 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.api.user;
+
+import com.inversoft.json.JacksonConstructor;
 
 /**
  * @author Daniel DeGroff
- * @deprecated Use <code>User.twoFactor.methods</code>
  */
-@Deprecated
-public enum TwoFactorDelivery {
-  /**
-   * No delivery mechanism provided by FusionAUth. Code must be entered manually from a code generator such as Google Authenticator.
-   */
-  None,
-  /**
-   * SMS Push is utilized if available.
-   */
-  TextMessage
+public class VerifyRegistrationRequest {
+  public String oneTimeCode;
+
+  public String verificationId;
+
+  @JacksonConstructor
+  public VerifyRegistrationRequest() {
+  }
+
+  public VerifyRegistrationRequest(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
+    this.verificationId = verificationId;
+  }
+
+  public VerifyRegistrationRequest(String verificationId) {
+    this.verificationId = verificationId;
+  }
 }

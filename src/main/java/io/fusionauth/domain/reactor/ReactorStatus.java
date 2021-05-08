@@ -27,7 +27,9 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus advancedMultiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
 
-  public ReactorFeatureStatus advancedRegistrationForms = ReactorFeatureStatus.UNKNOWN;
+  public ReactorFeatureStatus advancedRegistration = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus applicationThemes = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
 
@@ -49,7 +51,7 @@ public class ReactorStatus {
     return licensed == that.licensed &&
            advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
-           advancedRegistrationForms == that.advancedRegistrationForms &&
+           advancedRegistration == that.advancedRegistration &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
            entityManagement == that.entityManagement;
@@ -59,7 +61,7 @@ public class ReactorStatus {
   public int hashCode() {
     return Objects.hash(advancedIdentityProviders,
                         advancedMultiFactorAuthentication,
-                        advancedRegistrationForms,
+                        advancedRegistration,
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,

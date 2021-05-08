@@ -162,11 +162,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.5.2/restify-3.5.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.7.1/restify-3.7.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.5.2/restify-3.5.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.7.1/restify-3.7.1-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -314,11 +314,11 @@
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

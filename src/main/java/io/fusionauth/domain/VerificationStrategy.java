@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,33 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import java.util.Map;
-import java.util.UUID;
-
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
+package io.fusionauth.domain;
 
 /**
- * User API response object.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class UserResponse {
-  public String emailVerificationId;
-
-  public Map<UUID, String> registrationVerificationIds;
-
-  public String token;
-
-  public User user;
-
-  @JacksonConstructor
-  public UserResponse() {
-  }
-
-  public UserResponse(User user) {
-    this.user = user;
-  }
+public enum VerificationStrategy {
+  ClickableLink,
+  FormField
 }

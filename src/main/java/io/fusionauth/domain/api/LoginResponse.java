@@ -34,9 +34,13 @@ public class LoginResponse implements Buildable<LoginResponse> {
 
   public ChangePasswordReason changePasswordReason;
 
+  public String emailVerificationId;
+
   public List<TwoFactorMethod> methods;
 
   public String refreshToken;
+
+  public String registrationVerificationId;
 
   public Map<String, Object> state;
 
