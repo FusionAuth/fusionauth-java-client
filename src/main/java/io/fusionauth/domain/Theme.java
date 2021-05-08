@@ -213,12 +213,13 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   }
 
   public static class Templates implements Buildable<Templates> {
-    // [brettp]TODO: Fix order of these strings!!!
     public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
-        "oauth2AuthorizedNotRegistered", "accountEdit", "accountIndex", "accountTwoFactorDisable", "accountTwoFactorEnable", "accountTwoFactorIndex", "emailComplete", "emailSent", "emailVerificationRequired", "emailVerify",
-        "helpers", "index", "oauth2Authorize", "oauth2ChildRegistrationNotAllowed", "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration",
-        "oauth2Device", "oauth2DeviceComplete", "oauth2Error", "oauth2Logout", "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor", "oauth2TwoFactorMethods",
-        "oauth2Wait", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent", "registrationComplete", "registrationSent", "registrationVerificationRequired", "registrationVerify", "samlv2Logout"
+        "accountEdit", "accountIndex", "accountTwoFactorDisable", "accountTwoFactorEnable", "accountTwoFactorIndex", "emailComplete",
+        "emailSent", "emailVerificationRequired", "emailVerify", "helpers", "index", "oauth2Authorize", "oauth2AuthorizedNotRegistered",
+        "oauth2ChildRegistrationNotAllowed", "oauth2ChildRegistrationNotAllowedComplete", "oauth2CompleteRegistration", "oauth2Device",
+        "oauth2DeviceComplete", "oauth2Error", "oauth2Logout", "oauth2Passwordless", "oauth2Register", "oauth2TwoFactor",
+        "oauth2TwoFactorMethods", "oauth2Wait", "passwordChange", "passwordComplete", "passwordForgot", "passwordSent",
+        "registrationComplete", "registrationSent", "registrationVerificationRequired", "registrationVerify", "samlv2Logout"
     )));
 
     public String accountEdit;
