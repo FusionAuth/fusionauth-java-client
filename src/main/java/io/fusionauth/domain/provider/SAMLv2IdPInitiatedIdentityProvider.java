@@ -15,17 +15,12 @@
  */
 package io.fusionauth.domain.provider;
 
-import java.net.URI;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.CORSConfiguration;
-import io.fusionauth.domain.RequiresCORSConfiguration;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
-import io.fusionauth.domain.util.HTTPMethod;
 
 /**
  * SAML v2 IdP Initiated identity provider configuration.
@@ -33,12 +28,12 @@ import io.fusionauth.domain.util.HTTPMethod;
  * @author Daniel DeGroff
  */
 public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAMLv2IdPInitiatedApplicationConfiguration>
-    implements Buildable<SAMLv2IdPInitiatedIdentityProvider>, RequiresCORSConfiguration {
+    implements Buildable<SAMLv2IdPInitiatedIdentityProvider> {
   @InternalJSONColumn
   public String emailClaim;
 
   @InternalJSONColumn
-  public URI issuer;
+  public String issuer;
 
   /**
    * The default key used for SAML Request Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML response.
@@ -47,13 +42,6 @@ public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAM
 
   @InternalJSONColumn
   public boolean useNameIdForEmail;
-
-  @Override
-  @JsonIgnore
-  public CORSConfiguration corsConfiguration() {
-    return new CORSConfiguration().with(override -> override.allowedMethods.add(HTTPMethod.POST))
-                                  .with(override -> override.allowedOrigins.add(URI.create(issuer.getScheme() + "://" + issuer.getHost() + (issuer.getPort() == -1 ? "" : ":" + issuer.getPort()))));
-  }
 
   @Override
   public boolean equals(Object o) {

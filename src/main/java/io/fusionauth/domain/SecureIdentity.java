@@ -35,6 +35,10 @@ public class SecureIdentity {
 
   public String salt;
 
+  // When unique usernames are enabled, this will represent the unique username. This value may be used to login.
+  public String uniqueUsername;
+
+  // When unique usernames are enabled, this value may be different than 'uniqueUsername' and in that case will represent the base username the user selected.
   public String username;
 
   public ContentStatus usernameStatus;
@@ -63,6 +67,7 @@ public class SecureIdentity {
            passwordChangeReason == that.passwordChangeReason &&
            Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
            Objects.equals(salt, that.salt) &&
+           Objects.equals(uniqueUsername, that.uniqueUsername) &&
            Objects.equals(username, that.username) &&
            usernameStatus == that.usernameStatus;
   }
@@ -70,6 +75,6 @@ public class SecureIdentity {
   @Override
   public int hashCode() {
     return Objects.hash(breachedPasswordLastCheckedInstant, breachedPasswordStatus, connectorId, encryptionScheme, factor, id, lastLoginInstant,
-                        password, passwordChangeReason, passwordChangeRequired, passwordLastUpdateInstant, salt, username, usernameStatus, verified);
+                        password, passwordChangeReason, passwordChangeRequired, passwordLastUpdateInstant, salt, uniqueUsername, username, usernameStatus, verified);
   }
 }

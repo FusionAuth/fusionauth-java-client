@@ -102,7 +102,15 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public UUID tenantId;
 
+  public UUID themeId;
+
+  @InternalJSONColumn
+  public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
+
   public UUID verificationEmailTemplateId;
+
+  @InternalJSONColumn
+  public VerificationStrategy verificationStrategy;
 
   @InternalJSONColumn
   public boolean verifyRegistration;
@@ -114,8 +122,6 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   public Application(Application other) {
     this.active = other.active;
     this.authenticationTokenConfiguration = new AuthenticationTokenConfiguration(other.authenticationTokenConfiguration);
-    // TODO : MFA Review : Wonder why did not not hit this previously, did something else change perhaps?
-    //        This is ok, just curious.
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
     }
@@ -138,7 +144,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
     this.state = other.state;
     this.tenantId = other.tenantId;
+    this.themeId = other.themeId;
+    this.unverified = new RegistrationUnverifiedOptions(other.unverified);
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
+    this.verificationStrategy = other.verificationStrategy;
     this.verifyRegistration = other.verifyRegistration;
   }
 
@@ -195,7 +204,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(tenantId, that.tenantId) &&
-           Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId);
+           Objects.equals(themeId, that.themeId) &&
+           Objects.equals(unverified, that.unverified) &&
+           Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
+           Objects.equals(verificationStrategy, that.verificationStrategy);
   }
 
   public boolean getActive() {
@@ -228,7 +240,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration, loginConfiguration, name, multiFactorConfiguration, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, verificationEmailTemplateId, verifyRegistration);
+    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration,
+                        loginConfiguration, name, multiFactorConfiguration, oauthConfiguration, passwordlessConfiguration, registrationConfiguration,
+                        registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, themeId, unverified,
+                        verificationEmailTemplateId, verificationStrategy, verifyRegistration);
   }
 
   public void normalize() {
@@ -408,18 +423,18 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       if (this == o) {
         return true;
       }
-      if (!(o instanceof LoginConfiguration)) {
+      if (o == null || getClass() != o.getClass()) {
         return false;
       }
       LoginConfiguration that = (LoginConfiguration) o;
-      return requireAuthentication == that.requireAuthentication &&
-             allowTokenRefresh == that.allowTokenRefresh &&
-             generateRefreshTokens == that.generateRefreshTokens;
+      return allowTokenRefresh == that.allowTokenRefresh &&
+             generateRefreshTokens == that.generateRefreshTokens &&
+             requireAuthentication == that.requireAuthentication;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(requireAuthentication, allowTokenRefresh, generateRefreshTokens);
+      return Objects.hash(allowTokenRefresh, generateRefreshTokens, requireAuthentication);
     }
 
     @Override

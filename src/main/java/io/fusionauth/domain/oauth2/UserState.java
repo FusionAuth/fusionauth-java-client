@@ -15,21 +15,47 @@
  */
 package io.fusionauth.domain.oauth2;
 
+import io.fusionauth.domain.User;
+import io.fusionauth.domain.UserRegistration;
+
 /**
  * @author Daniel DeGroff
  */
 public enum UserState {
   Authenticated,
-  AuthenticatedNotRegistered;
+  AuthenticatedNotRegistered,
+  AuthenticatedNotVerified,
+  AuthenticatedRegistrationNotVerified;
 
   public static UserState fromStatus(int status) {
-    if (status == 200 || status == 212) {
+    if (status == 200) {
       return Authenticated;
     }
+
     if (status == 202) {
       return AuthenticatedNotRegistered;
     }
 
+    if (status == 212) {
+      return AuthenticatedNotVerified;
+    }
+
+    if (status == 213) {
+      return AuthenticatedRegistrationNotVerified;
+    }
+
     throw new IllegalArgumentException("Invalid status code for UserState [" + status + "]");
+  }
+
+  public static UserState fromUserAndRegistration(User user, UserRegistration registration) {
+    if (registration == null) {
+      return AuthenticatedNotRegistered;
+    }
+
+    if (!registration.verified) {
+      return AuthenticatedRegistrationNotVerified;
+    }
+
+    return user.verified ? Authenticated : AuthenticatedNotVerified;
   }
 }

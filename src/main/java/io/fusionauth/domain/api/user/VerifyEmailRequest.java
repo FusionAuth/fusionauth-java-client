@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,31 +16,25 @@
 package io.fusionauth.domain.api.user;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
-import io.fusionauth.domain.UserRegistration;
 
 /**
- * Registration API request object.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class RegistrationResponse {
-  public String refreshToken;
+public class VerifyEmailRequest {
+  public String oneTimeCode;
 
-  public UserRegistration registration;
-
-  public String registrationVerificationId;
-
-  public String token;
-
-  public User user;
+  public String verificationId;
 
   @JacksonConstructor
-  public RegistrationResponse() {
+  public VerifyEmailRequest() {
   }
 
-  public RegistrationResponse(User user, UserRegistration registration) {
-    this.user = user;
-    this.registration = registration;
+  public VerifyEmailRequest(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
+    this.verificationId = verificationId;
+  }
+
+  public VerifyEmailRequest(String verificationId) {
+    this.verificationId = verificationId;
   }
 }

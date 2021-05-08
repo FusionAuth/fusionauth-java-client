@@ -13,34 +13,21 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user;
+package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
-import io.fusionauth.domain.UserRegistration;
 
 /**
- * Registration API request object.
- *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class RegistrationResponse {
-  public String refreshToken;
+public class VersionResponse {
+  public String version;
 
-  public UserRegistration registration;
-
-  public String registrationVerificationId;
-
-  public String token;
-
-  public User user;
-
-  @JacksonConstructor
-  public RegistrationResponse() {
+  public VersionResponse(String version) {
+    this.version = version;
   }
 
-  public RegistrationResponse(User user, UserRegistration registration) {
-    this.user = user;
-    this.registration = registration;
+  @JacksonConstructor
+  public VersionResponse() {
   }
 }
