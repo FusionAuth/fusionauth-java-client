@@ -316,7 +316,7 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<ChangePasswordResponse, Errors> changePassword(String changePasswordId, ChangePasswordRequest request) {
-    return start(ChangePasswordResponse.class, Errors.class)
+    return startAnonymous(ChangePasswordResponse.class, Errors.class)
         .uri("/api/user/change-password")
         .urlSegment(changePasswordId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
