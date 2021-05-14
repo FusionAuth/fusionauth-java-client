@@ -19,6 +19,7 @@ package io.fusionauth.domain;
  * The types of lambdas that indicate how they are invoked by FusionAuth.
  *
  * @author Brian Pontarelli
+ * @author Brett Pontarelli
  */
 public enum LambdaType {
   // [brettp]TODO: HYPRReconcile and LDAPConnectorReconcile have slightly different text, but
