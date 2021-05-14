@@ -21,227 +21,99 @@ package io.fusionauth.domain;
  * @author Brian Pontarelli
  */
 public enum LambdaType {
-  // @formatter:off
-  JWTPopulate("populate", "" +
-      "// Using the user and registration parameters add additional values to the jwt object.\n" +
-      "function populate(jwt, user, registration) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Populate your JWT here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  // [brettp]TODO: HYPRReconcile and LDAPConnectorReconcile have slightly different text, but
+  //               I am wondering if their text is really accurate still.  Can they not use
+  //               the "reconcile" text like the others?
+  AppleReconcile("reconcile", "idToken returned from Apple", "idToken"),
 
+//  EpicReconcile("reconcile", "Epic API", "epicUser"),
 
-  OpenIDReconcile("reconcile", "" +
-      "// Using the JWT returned from UserInfo, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, jwt) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  ExternalJWTReconcile("reconcile", "JWT provided by an external IdP", "jwt"),
 
-  SAMLv2Reconcile("reconcile", "" +
-      "// Using the samlResponse, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, samlResponse) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  FacebookReconcile("reconcile", "Facebook Me API", "facebookUser"),
 
-  SAMLv2Populate("populate", "" +
-      "// Using the user and registration parameters add additional values to the SAML response.\n" +
-      "function populate(samlResponse, user, registration) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(samlResponse)); \n" +
-      "\n" +
-      "  // Happy coding! Populate the SAML response here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  GoogleReconcile("reconcile", "Google Token info API", "idToken"),
 
-  AppleReconcile("reconcile", "" +
-      "// Using the idToken returned from Apple, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  HYPRReconcile("reconcile", "Reconcile the User and User Registration", ""),
 
-  ExternalJWTReconcile("reconcile", "" +
-      "// Using the JWT provided by an external IdP, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, jwt) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  JWTPopulate("populate", "jwt object", "jwt"),
 
-  FacebookReconcile("reconcile", "" +
-      "// Using the response from Facebook Me API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, facebookUser) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  LDAPConnectorReconcile("reconcile", "Using the response from an LDAP connector, reconcile the User", ""),
 
-  GoogleReconcile("reconcile", "" +
-      "// Using the response from the Google Token info API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  LinkedInReconcile("reconcile", "LinkedIn Me API", "linkedInUser"),
 
-  HYPRReconcile("reconcile", "" +
-      "// Reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  NintendoReconcile("reconcile", "Nintendo API", "nintendoUser"),
 
-  TwitterReconcile("reconcile", "" +
-      "// Using the response from the Twitter verify_credentials API, reconcile the User and User Registration.\n" +
-       "function reconcile(user, registration, twitterUser) {\n" +
-       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-       "  //  \n" +
-       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-       "  //  console.info(JSON.stringify(user)); \n" +
-       "\n" +
-       "  // Happy coding! Reconcile the User here.\n" +
-       "\n" +
-       "  console.info('Hello World!');" +
-       "\n" +
-      "}\n"),
+  OpenIDReconcile("reconcile", "JWT returned from UserInfo", "jwt"),
 
-  LDAPConnectorReconcile("reconcile", "" +
-      "// Using the response from an LDAP connector, reconcile the User.\n" +
-      "function reconcile(user, userAttributes) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
+  SAMLv2Populate("populate", "SAML response", "samlResponse"),
 
-  LinkedInReconcile("reconcile", "" +
-      "// Using the response returned from LinkedIn Me API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, linkedInUser) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n");
-  // @formatter:on
+  SAMLv2Reconcile("reconcile", "samlResponse", "samlResponse"),
 
-  private final String example;
+//  SonyPSNReconcile("reconcile", "SonyPSN API", "sonyPSNUser"),
+
+//  SteamReconcile("reconcile", "Steam API", "steamUser"),
+
+//  TwitchReconcile("reconcile", "Twitch API", "twitchUser"),
+
+  TwitterReconcile("reconcile", "Twitter verify_credentials API", "twitterUser"),
+
+//  XBOXReconcile("reconcile", "XBOX API", "xboxUser");
 
   private final String functionName;
 
-  LambdaType(String functionName, String example) {
+  private final String message;
+
+  private final String variableName;
+
+  LambdaType(String functionName, String message, String variableName) {
     this.functionName = functionName;
-    this.example = example;
+    this.message = message;
+    this.variableName = variableName;
   }
 
   public String getExample() {
+    String example = "";
+    final String helpersText = "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+                               "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+                               "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+                               "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+                               "  //\n" +
+                               "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example:\n" +
+                               "  //  console.info(JSON.stringify(user));\n" +
+                               "\n";
+
+    if (functionName.equals("populate")) {
+      example = "// Using the user and registration parameters add additional values to the " + message + ".\n" +
+                "function populate(" + variableName + ", user, registration) {\n" +
+                helpersText +
+                "  // Happy coding! Reconcile the User here.\n" +
+                "\n" +
+                "  console.info('Hello World!');" +
+                "}\n";
+    }
+
+    if (functionName.equals("reconcile")) {
+      if (variableName.equals("")) {
+        example = "// " + message + ".\n" +
+                  "function reconcile(user, registration) {\n" +
+                  helpersText;
+      } else {
+        example = "// Using the response from the " + message + ", reconcile the User and User Registration.\n" +
+                  "function reconcile(user, registration, " + variableName + ") {\n" +
+                  helpersText;
+      }
+
+      example += "  // Happy coding! Reconcile the User here.\n" +
+                 "\n" +
+                 "  console.info('Hello World!');" +
+                 "}\n";
+    }
+
     return example;
   }
 
   public String getFunctionName() {
     return functionName;
   }
-}
+  }
