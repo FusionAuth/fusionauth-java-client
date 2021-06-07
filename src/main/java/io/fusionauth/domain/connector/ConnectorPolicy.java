@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.connector;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,12 +33,12 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Trevor Smith
  */
 public class ConnectorPolicy implements Buildable<ConnectorPolicy>, _InternalJSONColumn {
-  public UUID connectorId;
+  public UUID connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
   @InternalJSONColumn
-  public Set<String> domains = new HashSet<>();
+  public Set<String> domains = new HashSet<>(Collections.singletonList("*"));
 
   @InternalJSONColumn
   public boolean migrate;

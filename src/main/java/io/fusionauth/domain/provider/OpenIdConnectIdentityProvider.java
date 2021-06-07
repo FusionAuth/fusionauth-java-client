@@ -36,7 +36,7 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
   public URI buttonImageURL;
 
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Login with OpenID Connect";
 
   @InternalJSONColumn
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();

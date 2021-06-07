@@ -45,6 +45,10 @@ public class UserRegistration implements Buildable<UserRegistration>, _InternalJ
   @InternalJSONColumn
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
+  /**
+   * @deprecated tokens are now stored in the Identity Provider Link. See the /api/identity-provider/link API.
+   */
+  @Deprecated
   @InternalJSONColumn
   public final Map<String, String> tokens;
 

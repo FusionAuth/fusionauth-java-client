@@ -26,7 +26,7 @@ import com.inversoft.json.ToString;
 public class EmailUnverifiedOptions implements Buildable<EmailUnverifiedOptions> {
   public boolean allowEmailChangeWhenGated;
 
-  public UnverifiedBehavior behavior;
+  public UnverifiedBehavior behavior = UnverifiedBehavior.Allow;
 
   @JacksonConstructor
   public EmailUnverifiedOptions() {

@@ -52,8 +52,8 @@ public class PasswordEncryptionConfiguration implements Buildable<PasswordEncryp
     }
     PasswordEncryptionConfiguration that = (PasswordEncryptionConfiguration) o;
     return modifyEncryptionSchemeOnLogin == that.modifyEncryptionSchemeOnLogin &&
-        Objects.equals(encryptionScheme, that.encryptionScheme) &&
-        Objects.equals(encryptionSchemeFactor, that.encryptionSchemeFactor);
+           Objects.equals(encryptionScheme, that.encryptionScheme) &&
+           Objects.equals(encryptionSchemeFactor, that.encryptionSchemeFactor);
   }
 
   @Override

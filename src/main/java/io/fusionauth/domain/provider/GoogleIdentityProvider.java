@@ -27,15 +27,18 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  *
  * @author Daniel DeGroff
  */
-public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider> {
+public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider>, SupportsPostBindings {
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Login with Google";
 
   @InternalJSONColumn
   public String client_id;
 
   @InternalJSONColumn
   public String client_secret;
+
+  @InternalJSONColumn
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String scope;
@@ -55,6 +58,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
+           loginMethod == that.loginMethod &&
            Objects.equals(scope, that.scope);
   }
 
@@ -65,7 +69,7 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, loginMethod, scope);
   }
 
   public String lookupButtonText(String clientId) {
@@ -84,8 +88,21 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
   }
 
+  public IdentityProviderLoginMethod lookupLoginMethod(String clientId) {
+    return lookup(() -> loginMethod, () -> app(clientId, app -> app.loginMethod));
+  }
+
+  public IdentityProviderLoginMethod lookupLoginMethod(UUID applicationId) {
+    return lookup(() -> loginMethod, () -> app(applicationId, app -> app.loginMethod));
+  }
+
   public String lookupScope(String clientId) {
     return lookup(() -> scope, () -> app(clientId, app -> app.scope));
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return false;
   }
 
   @Override

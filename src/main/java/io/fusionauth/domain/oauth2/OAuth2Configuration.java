@@ -41,6 +41,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   @JsonMerge(OptBoolean.FALSE)
   public List<URI> authorizedRedirectURLs = new ArrayList<>();
 
+  public ClientAuthenticationPolicy clientAuthenticationPolicy;
+
   public String clientId;
 
   public String clientSecret;
@@ -62,7 +64,15 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
    */
   public URI logoutURL;
 
+  public ProofKeyForCodeExchangePolicy proofKeyForCodeExchangePolicy = ProofKeyForCodeExchangePolicy.NotRequired;
+
+  /**
+   * @deprecated use {@link #clientAuthenticationPolicy} instead.
+   */
+  @Deprecated
   public boolean requireClientAuthentication = true;
+
+  public boolean requireRegistration;
 
   @JacksonConstructor
   public OAuth2Configuration() {
@@ -71,6 +81,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public OAuth2Configuration(OAuth2Configuration other) {
     this.authorizedOriginURLs.addAll(other.authorizedOriginURLs);
     this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
+    this.clientAuthenticationPolicy = other.clientAuthenticationPolicy;
     this.clientId = other.clientId;
     this.clientSecret = other.clientSecret;
     this.debug = other.debug;
@@ -79,7 +90,9 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     this.generateRefreshTokens = other.generateRefreshTokens;
     this.logoutBehavior = other.logoutBehavior;
     this.logoutURL = other.logoutURL;
+    this.proofKeyForCodeExchangePolicy = other.proofKeyForCodeExchangePolicy;
     this.requireClientAuthentication = other.requireClientAuthentication;
+    this.requireRegistration = other.requireRegistration;
   }
 
   public OAuth2Configuration(String clientId, String clientSecret) {
@@ -99,19 +112,22 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     return debug == that.debug &&
            generateRefreshTokens == that.generateRefreshTokens &&
            requireClientAuthentication == that.requireClientAuthentication &&
+           requireRegistration == that.requireRegistration &&
            Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
            Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
+           Objects.equals(clientAuthenticationPolicy, that.clientAuthenticationPolicy) &&
            Objects.equals(clientId, that.clientId) &&
            Objects.equals(clientSecret, that.clientSecret) &&
            Objects.equals(deviceVerificationURL, that.deviceVerificationURL) &&
            Objects.equals(enabledGrants, that.enabledGrants) &&
            Objects.equals(logoutBehavior, that.logoutBehavior) &&
-           Objects.equals(logoutURL, that.logoutURL);
+           Objects.equals(logoutURL, that.logoutURL) &&
+           Objects.equals(proofKeyForCodeExchangePolicy, that.proofKeyForCodeExchangePolicy);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, requireClientAuthentication);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientAuthenticationPolicy, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, proofKeyForCodeExchangePolicy, requireClientAuthentication, requireRegistration);
   }
 
   public void normalize() {

@@ -109,6 +109,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public String name;
 
+  public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
+
   @InternalJSONColumn
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
@@ -151,6 +153,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
     this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
     this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
+    this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
     this.name = other.name;
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
@@ -252,5 +255,37 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @Override
   public String toString() {
     return ToString.toString(this);
+  }
+
+  public static class TenantOAuth2Configuration {
+    public UUID clientCredentialsAccessTokenPopulateLambdaId;
+
+    public TenantOAuth2Configuration() {
+    }
+
+    public TenantOAuth2Configuration(TenantOAuth2Configuration other) {
+      this.clientCredentialsAccessTokenPopulateLambdaId = other.clientCredentialsAccessTokenPopulateLambdaId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof TenantOAuth2Configuration)) {
+        return false;
+      }
+      TenantOAuth2Configuration that = (TenantOAuth2Configuration) o;
+      return Objects.equals(clientCredentialsAccessTokenPopulateLambdaId, that.clientCredentialsAccessTokenPopulateLambdaId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(clientCredentialsAccessTokenPopulateLambdaId);
+    }
+
+    public String toString() {
+      return ToString.toString(this);
+    }
   }
 }

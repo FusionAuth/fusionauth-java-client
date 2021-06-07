@@ -57,9 +57,9 @@ public class TenantUsernameConfiguration implements Buildable<TenantUsernameConf
   }
 
   public static class UniqueUsernameConfiguration extends Enableable implements Buildable<UniqueUsernameConfiguration> {
-    public int numberOfDigits;
+    public int numberOfDigits = 5;
 
-    public Character separator;
+    public Character separator = '#';
 
     @JacksonConstructor
     public UniqueUsernameConfiguration() {

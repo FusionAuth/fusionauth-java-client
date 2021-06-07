@@ -41,7 +41,13 @@ public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAM
   public UUID keyId;
 
   @InternalJSONColumn
+  public String uniqueIdClaim;
+
+  @InternalJSONColumn
   public boolean useNameIdForEmail;
+
+  @InternalJSONColumn
+  public String usernameClaim;
 
   @Override
   public boolean equals(Object o) {
@@ -55,7 +61,12 @@ public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAM
       return false;
     }
     SAMLv2IdPInitiatedIdentityProvider that = (SAMLv2IdPInitiatedIdentityProvider) o;
-    return useNameIdForEmail == that.useNameIdForEmail && Objects.equals(emailClaim, that.emailClaim) && Objects.equals(issuer, that.issuer) && Objects.equals(keyId, that.keyId);
+    return useNameIdForEmail == that.useNameIdForEmail &&
+           Objects.equals(emailClaim, that.emailClaim) &&
+           Objects.equals(issuer, that.issuer) &&
+           Objects.equals(keyId, that.keyId) &&
+           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
+           Objects.equals(usernameClaim, that.usernameClaim);
   }
 
   @Override
@@ -65,7 +76,13 @@ public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAM
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), emailClaim, issuer, keyId, useNameIdForEmail);
+    return Objects.hash(super.hashCode(),
+                        emailClaim,
+                        issuer,
+                        keyId,
+                        uniqueIdClaim,
+                        useNameIdForEmail,
+                        usernameClaim);
   }
 
   @Override

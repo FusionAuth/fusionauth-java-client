@@ -38,6 +38,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
 
   public List<TwoFactorMethod> methods;
 
+  public String pendingIdPLinkId;
+
   public String refreshToken;
 
   public String registrationVerificationId;

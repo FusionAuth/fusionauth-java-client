@@ -18,22 +18,30 @@ package io.fusionauth.domain.api.email;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.email.EmailAddress;
 
 /**
  * @author Daniel DeGroff
  */
 @SuppressWarnings("unused")
 public class SendRequest {
+  public UUID applicationId;
+
   public List<String> bccAddresses;
 
   public List<String> ccAddresses;
 
+  public List<Locale> preferredLanguages = new ArrayList<>();
+
   public Map<String, Object> requestData;
+
+  public List<EmailAddress> toAddresses;
 
   public List<UUID> userIds;
 
@@ -60,6 +68,7 @@ public class SendRequest {
   public SendRequest normalize() {
     requestData = Optional.ofNullable(requestData).orElseGet(HashMap::new);
     userIds = Optional.ofNullable(userIds).orElseGet(ArrayList::new);
+    toAddresses = Optional.ofNullable(toAddresses).orElseGet(ArrayList::new);
     ccAddresses = Optional.ofNullable(ccAddresses).orElseGet(ArrayList::new);
     bccAddresses = Optional.ofNullable(bccAddresses).orElseGet(ArrayList::new);
     return this;

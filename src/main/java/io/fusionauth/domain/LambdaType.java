@@ -225,6 +225,125 @@ public enum LambdaType {
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +
+      "}\n"),
+
+  EpicGamesReconcile("reconcile", "" +
+      "// Using the response from the Epic API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  NintendoReconcile("reconcile", "" +
+      "// Using the response from the Nintendo API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  SonyPSNReconcile("reconcile", "" +
+      "// Using the response from the SonyPSN API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  SteamReconcile("reconcile", "" +
+      "// Using the response from the Steam API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  TwitchReconcile("reconcile", "" +
+      "// Using the response from the Twitch API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  XboxReconcile("reconcile", "" +
+      "// Using the response from the Xbox Token info API, reconcile the User and User Registration.\n" +
+      "function reconcile(user, registration, idToken) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Reconcile the User here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  ClientCredentialsJWTPopulate("populate", "" +
+      "// Using the two Entity and permission parameters you can populate a client credentials grant JWT.\n" +
+      "function populate(jwt, recipientEntity, targetEntities, permissions) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "   //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Populate your JWT here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
       "}\n");
   // @formatter:on
 

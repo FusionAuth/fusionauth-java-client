@@ -18,6 +18,7 @@ package io.fusionauth.domain.provider;
 import java.net.URI;
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
@@ -36,13 +37,13 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
    * see https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
    */
   @InternalJSONColumn
-  public ClientAuthenticationMethod clientAuthenticationMethod;
+  public ClientAuthenticationMethod clientAuthenticationMethod = ClientAuthenticationMethod.client_secret_basic;
 
   public String client_id;
 
   public String client_secret;
 
-  public String emailClaim;
+  public String emailClaim = "email";
 
   public URI issuer;
 
@@ -53,7 +54,29 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
    */
   public URI token_endpoint;
 
+  public String uniqueIdClaim = "sub";
+
   public URI userinfo_endpoint;
+
+  public String usernameClaim = "preferred_username";
+
+  @JacksonConstructor
+  public IdentityProviderOauth2Configuration() {
+  }
+
+  public IdentityProviderOauth2Configuration(IdentityProviderOauth2Configuration other) {
+    authorization_endpoint = other.authorization_endpoint;
+    clientAuthenticationMethod = other.clientAuthenticationMethod;
+    client_id = other.client_id;
+    client_secret = other.client_secret;
+    emailClaim = other.emailClaim;
+    issuer = other.issuer;
+    scope = other.scope;
+    token_endpoint = other.token_endpoint;
+    uniqueIdClaim = other.uniqueIdClaim;
+    userinfo_endpoint = other.userinfo_endpoint;
+    usernameClaim = other.usernameClaim;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -72,12 +95,13 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
            Objects.equals(issuer, that.issuer) &&
            Objects.equals(scope, that.scope) &&
            Objects.equals(token_endpoint, that.token_endpoint) &&
-           Objects.equals(userinfo_endpoint, that.userinfo_endpoint);
+           Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
+           Objects.equals(usernameClaim, that.usernameClaim);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, issuer, scope, token_endpoint, userinfo_endpoint);
+    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, issuer, scope, token_endpoint, userinfo_endpoint, usernameClaim);
   }
 
   @Override

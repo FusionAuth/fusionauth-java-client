@@ -101,6 +101,7 @@ import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
 import io.fusionauth.domain.api.ReactorRequest;
 import io.fusionauth.domain.api.ReactorResponse;
+import io.fusionauth.domain.api.ReindexRequest;
 import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantRequest;
@@ -127,6 +128,8 @@ import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginResponse;
@@ -768,6 +771,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Link an external user from a 3rd party identity provider to a FusionAuth user.
+   *
+   * @param request The request object that contains all of the information used to link the FusionAuth user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderLinkResponse, Errors> createUserLink(IdentityProviderLinkRequest request) {
+    return start(IdentityProviderLinkResponse.class, Errors.class)
+        .uri("/api/identity-provider/link")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a webhook. You can optionally specify an Id for the webhook, if not provided one will be generated.
    *
    * @param webhookId (Optional) The Id for the webhook. If not provided a secure random UUID will be generated.
@@ -1256,6 +1273,24 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user-action-reason")
         .urlSegment(userActionReasonId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Remove an existing link that has been made from a 3rd party identity provider to a FusionAuth user.
+   *
+   * @param identityProviderId The unique Id of the identity provider.
+   * @param identityProviderUserId The unique Id of the user in the 3rd party identity provider to unlink.
+   * @param userId The unique Id of the FusionAuth user to unlink.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderLinkResponse, Errors> deleteUserLink(UUID identityProviderId, String identityProviderUserId, UUID userId) {
+    return start(IdentityProviderLinkResponse.class, Errors.class)
+        .uri("/api/identity-provider/link")
+        .urlParameter("identityProviderId", identityProviderId)
+        .urlParameter("identityProviderUserId", identityProviderUserId)
+        .urlParameter("userId", userId)
         .delete()
         .go();
   }
@@ -2249,6 +2284,24 @@ public class FusionAuthClient {
   }
 
   /**
+   * Requests Elasticsearch to delete and rebuild the index for FusionAuth users or entities. Be very careful when running this request as it will 
+   * increase the CPU and I/O load on your database until the operation completes. Generally speaking you do not ever need to run this operation unless 
+   * instructed by FusionAuth support, or if you are migrating a database another system and you are not brining along the Elasticsearch index. 
+   * 
+   * You have been warned.
+   *
+   * @param request The request that contains the index name.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> reindex(ReindexRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/system/reindex")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Removes a user from the family with the given id.
    *
    * @param familyId The id of the family to remove the user from.
@@ -3199,6 +3252,19 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieve the status of a re-index process. A status code of 200 indicates the re-index is in progress, a status code of  
+   * 404 indicates no re-index is in progress.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> retrieveReindexStatus() {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/system/reindex")
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the system configuration.
    *
    * @return The ClientResponse object.
@@ -3481,6 +3547,40 @@ public class FusionAuthClient {
     return startAnonymous(UserResponse.class, OAuthError.class)
         .uri("/oauth2/userinfo")
         .authorization("Bearer " + encodedJWT)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieve a single Identity Provider user (link).
+   *
+   * @param identityProviderId The unique Id of the identity provider.
+   * @param identityProviderUserId The unique Id of the user in the 3rd party identity provider.
+   * @param userId The unique Id of the FusionAuth user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderLinkResponse, Errors> retrieveUserLink(UUID identityProviderId, String identityProviderUserId, UUID userId) {
+    return start(IdentityProviderLinkResponse.class, Errors.class)
+        .uri("/api/identity-provider/link")
+        .urlParameter("identityProviderId", identityProviderId)
+        .urlParameter("identityProviderUserId", identityProviderUserId)
+        .urlParameter("userId", userId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieve all Identity Provider users (links) for the user. Specify the optional identityProviderId to retrieve links for a particular IdP.
+   *
+   * @param identityProviderId (Optional) The unique Id of the identity provider. Specify this value to reduce the links returned to those for a particular IdP.
+   * @param userId The unique Id of the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderLinkResponse, Errors> retrieveUserLinksByUserId(UUID identityProviderId, UUID userId) {
+    return start(IdentityProviderLinkResponse.class, Errors.class)
+        .uri("/api/identity-provider/link")
+        .urlParameter("identityProviderId", identityProviderId)
+        .urlParameter("userId", userId)
         .get()
         .go();
   }

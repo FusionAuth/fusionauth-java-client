@@ -24,49 +24,51 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class ExternalIdentifierConfiguration implements Buildable<ExternalIdentifierConfiguration> {
-  public int authorizationGrantIdTimeToLiveInSeconds;
+  public int authorizationGrantIdTimeToLiveInSeconds = 30;
 
-  public SecureGeneratorConfiguration changePasswordIdGenerator;
+  public SecureGeneratorConfiguration changePasswordIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
-  public int changePasswordIdTimeToLiveInSeconds;
+  public int changePasswordIdTimeToLiveInSeconds = 600;
 
-  public int deviceCodeTimeToLiveInSeconds;
+  public int deviceCodeTimeToLiveInSeconds = 300;
 
-  public SecureGeneratorConfiguration deviceUserCodeIdGenerator;
+  public SecureGeneratorConfiguration deviceUserCodeIdGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomAlphaNumeric);
 
-  public SecureGeneratorConfiguration emailVerificationIdGenerator;
+  public SecureGeneratorConfiguration emailVerificationIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
-  public int emailVerificationIdTimeToLiveInSeconds;
+  public int emailVerificationIdTimeToLiveInSeconds = 86400;
 
-  public SecureGeneratorConfiguration emailVerificationOneTimeCodeGenerator;
+  public SecureGeneratorConfiguration emailVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomAlphaNumeric);
 
-  public int externalAuthenticationIdTimeToLiveInSeconds;
+  public int externalAuthenticationIdTimeToLiveInSeconds = 300;
 
-  public int oneTimePasswordTimeToLiveInSeconds;
+  public int oneTimePasswordTimeToLiveInSeconds = 60;
 
-  public SecureGeneratorConfiguration passwordlessLoginGenerator;
+  public SecureGeneratorConfiguration passwordlessLoginGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
-  public int passwordlessLoginTimeToLiveInSeconds;
+  public int passwordlessLoginTimeToLiveInSeconds = 180;
 
-  public SecureGeneratorConfiguration registrationVerificationIdGenerator;
+  public int pendingAccountLinkTimeToLiveInSeconds = 60 * 60;
 
-  public int registrationVerificationIdTimeToLiveInSeconds;
+  public SecureGeneratorConfiguration registrationVerificationIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
-  public SecureGeneratorConfiguration registrationVerificationOneTimeCodeGenerator;
+  public int registrationVerificationIdTimeToLiveInSeconds = 86400;
 
-  public int samlv2AuthNRequestIdTimeToLiveInSeconds;
+  public SecureGeneratorConfiguration registrationVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomAlphaNumeric);
 
-  public SecureGeneratorConfiguration setupPasswordIdGenerator;
+  public int samlv2AuthNRequestIdTimeToLiveInSeconds = 300;
 
-  public int setupPasswordIdTimeToLiveInSeconds;
+  public SecureGeneratorConfiguration setupPasswordIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
-  public int twoFactorIdTimeToLiveInSeconds;
+  public int setupPasswordIdTimeToLiveInSeconds = 86400;
 
-  public SecureGeneratorConfiguration twoFactorOneTimeCodeIdGenerator;
+  public int twoFactorIdTimeToLiveInSeconds = 300;
 
-  public int twoFactorOneTimeCodeIdTimeToLiveInSeconds;
+  public SecureGeneratorConfiguration twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
 
-  public int twoFactorTrustIdTimeToLiveInSeconds;
+  public int twoFactorOneTimeCodeIdTimeToLiveInSeconds = 60;
+
+  public int twoFactorTrustIdTimeToLiveInSeconds = 2592000;
 
   @JacksonConstructor
   public ExternalIdentifierConfiguration() {
@@ -85,6 +87,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
     this.passwordlessLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginGenerator);
+    this.pendingAccountLinkTimeToLiveInSeconds = other.pendingAccountLinkTimeToLiveInSeconds;
     this.registrationVerificationIdGenerator = new SecureGeneratorConfiguration(other.registrationVerificationIdGenerator);
     this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
     this.registrationVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(other.registrationVerificationOneTimeCodeGenerator);
@@ -113,6 +116,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            externalAuthenticationIdTimeToLiveInSeconds == that.externalAuthenticationIdTimeToLiveInSeconds &&
            oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
            passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
+           pendingAccountLinkTimeToLiveInSeconds == that.pendingAccountLinkTimeToLiveInSeconds &&
            registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
            samlv2AuthNRequestIdTimeToLiveInSeconds == that.samlv2AuthNRequestIdTimeToLiveInSeconds &&
            setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
@@ -144,6 +148,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         oneTimePasswordTimeToLiveInSeconds,
                         passwordlessLoginGenerator,
                         passwordlessLoginTimeToLiveInSeconds,
+                        pendingAccountLinkTimeToLiveInSeconds,
                         registrationVerificationIdGenerator,
                         registrationVerificationIdTimeToLiveInSeconds,
                         registrationVerificationOneTimeCodeGenerator,

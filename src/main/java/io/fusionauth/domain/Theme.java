@@ -18,11 +18,12 @@ package io.fusionauth.domain;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -143,6 +144,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.helpers,
                      templates.index,
                      templates.oauth2Authorize,
+                     templates.oauth2AuthorizedNotRegistered,
                      templates.oauth2ChildRegistrationNotAllowed,
                      templates.oauth2ChildRegistrationNotAllowedComplete,
                      templates.oauth2CompleteRegistration,
@@ -151,6 +153,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.oauth2Error,
                      templates.oauth2Logout,
                      templates.oauth2Passwordless,
+                     templates.oauth2StartIdPLink,
                      templates.oauth2Register,
                      templates.oauth2TwoFactor,
                      templates.oauth2TwoFactorMethods,
@@ -212,7 +215,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   }
 
   public static class Templates implements Buildable<Templates> {
-    public static final Set<String> suppliers = Collections.unmodifiableSet(new HashSet<>(asList(
+    public static final SortedSet<String> Names = Collections.unmodifiableSortedSet(new TreeSet<>(asList(
         "accountEdit",
         "accountIndex",
         "accountTwoFactorDisable",
@@ -225,7 +228,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "helpers",
         "index",
         "oauth2Authorize",
-        "oauth2ChildRegistrationNotAllowed",
+       "oauth2AuthorizedNotRegistered", "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete",
         "oauth2CompleteRegistration",
         "oauth2Device",
@@ -234,7 +237,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "oauth2Logout",
         "oauth2Passwordless",
         "oauth2Register",
-        "oauth2TwoFactor",
+       "oauth2StartIdPLink", "oauth2TwoFactor",
         "oauth2TwoFactorMethods",
         "oauth2Wait",
         "passwordChange",
@@ -272,6 +275,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String oauth2Authorize;
 
+    public String oauth2AuthorizedNotRegistered;
+
     public String oauth2ChildRegistrationNotAllowed;
 
     public String oauth2ChildRegistrationNotAllowedComplete;
@@ -289,6 +294,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
     public String oauth2Passwordless;
 
     public String oauth2Register;
+
+    public String oauth2StartIdPLink;
 
     public String oauth2TwoFactor;
 
@@ -330,6 +337,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.helpers = other.helpers;
       this.index = other.index;
       this.oauth2Authorize = other.oauth2Authorize;
+      this.oauth2AuthorizedNotRegistered = other.oauth2AuthorizedNotRegistered;
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
@@ -339,6 +347,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2Logout = other.oauth2Logout;
       this.oauth2Passwordless = other.oauth2Passwordless;
       this.oauth2Register = other.oauth2Register;
+      this.oauth2StartIdPLink = other.oauth2StartIdPLink;
       this.oauth2TwoFactor = other.oauth2TwoFactor;
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
@@ -374,6 +383,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(helpers, that.helpers) &&
              Objects.equals(index, that.index) &&
              Objects.equals(oauth2Authorize, that.oauth2Authorize) &&
+             Objects.equals(oauth2AuthorizedNotRegistered, that.oauth2AuthorizedNotRegistered) &&
              Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
              Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
              Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
@@ -383,6 +393,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(oauth2Logout, that.oauth2Logout) &&
              Objects.equals(oauth2Passwordless, that.oauth2Passwordless) &&
              Objects.equals(oauth2Register, that.oauth2Register) &&
+             Objects.equals(oauth2StartIdPLink, that.oauth2StartIdPLink) &&
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
@@ -432,6 +443,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           helpers,
           index,
           oauth2Authorize,
+          oauth2AuthorizedNotRegistered,
           oauth2ChildRegistrationNotAllowed,
           oauth2ChildRegistrationNotAllowedComplete,
           oauth2CompleteRegistration,
@@ -441,6 +453,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           oauth2Logout,
           oauth2Passwordless,
           oauth2Register,
+          oauth2StartIdPLink,
           oauth2TwoFactor,
           oauth2TwoFactorMethods,
           oauth2Wait,
@@ -469,6 +482,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       helpers = lineReturns(trimToNull(helpers));
       index = lineReturns(trimToNull(index));
       oauth2Authorize = lineReturns(trimToNull(oauth2Authorize));
+      oauth2AuthorizedNotRegistered = lineReturns(trimToNull(oauth2AuthorizedNotRegistered));
       oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
       oauth2ChildRegistrationNotAllowedComplete = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowedComplete));
       oauth2CompleteRegistration = lineReturns(trimToNull(oauth2CompleteRegistration));
@@ -478,6 +492,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       oauth2Logout = lineReturns(trimToNull(oauth2Logout));
       oauth2Passwordless = lineReturns(trimToNull(oauth2Passwordless));
       oauth2Register = lineReturns(trimToNull(oauth2Register));
+      oauth2StartIdPLink = lineReturns(trimToNull(oauth2StartIdPLink));
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));

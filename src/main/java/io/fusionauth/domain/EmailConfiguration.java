@@ -27,21 +27,21 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Brian Pontarelli
  */
 public class EmailConfiguration implements Buildable<EmailConfiguration> {
-  public String defaultFromEmail;
+  public String defaultFromEmail = "change-me@example.com";
 
   public String defaultFromName;
 
   @ExcludeFromDatabaseDataColumn
   public UUID forgotPasswordEmailTemplateId;
 
-  public String host;
+  public String host = "localhost";
 
   public String password;
 
   @ExcludeFromDatabaseDataColumn
   public UUID passwordlessEmailTemplateId;
 
-  public Integer port;
+  public Integer port = 25;
 
   public String properties;
 

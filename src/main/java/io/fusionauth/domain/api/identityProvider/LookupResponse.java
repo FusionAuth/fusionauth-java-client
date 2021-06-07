@@ -49,16 +49,19 @@ public class LookupResponse {
                                              .forEach(entry -> this.identityProvider.applicationIds.add(entry.getKey()));
 
     if (identityProvider instanceof ExternalJWTIdentityProvider) {
-      this.identityProvider.oauth2 = ((ExternalJWTIdentityProvider) identityProvider).oauth2;
-      if (this.identityProvider.oauth2 != null) {
-        this.identityProvider.oauth2.client_secret = null;
-      }
+      this.identityProvider.oauth2 = new IdentityProviderOauth2Configuration(((ExternalJWTIdentityProvider) identityProvider).oauth2);
+      this.identityProvider.oauth2.clientAuthenticationMethod = null;
     }
 
     if (identityProvider instanceof OpenIdConnectIdentityProvider) {
-      this.identityProvider.oauth2 = ((OpenIdConnectIdentityProvider) identityProvider).oauth2;
+      this.identityProvider.oauth2 = new IdentityProviderOauth2Configuration(((OpenIdConnectIdentityProvider) identityProvider).oauth2);
+    }
+
+    if (this.identityProvider.oauth2 != null) {
       this.identityProvider.oauth2.client_secret = null;
       this.identityProvider.oauth2.emailClaim = null;
+      this.identityProvider.oauth2.uniqueIdClaim = null;
+      this.identityProvider.oauth2.usernameClaim = null;
     }
 
     if (identityProvider instanceof SAMLv2IdentityProvider) {
@@ -78,6 +81,5 @@ public class LookupResponse {
     public IdentityProviderOauth2Configuration oauth2;
 
     public IdentityProviderType type;
-
   }
 }

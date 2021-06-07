@@ -37,7 +37,7 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
 
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Sign in with Apple";
 
   public UUID keyId;
 
