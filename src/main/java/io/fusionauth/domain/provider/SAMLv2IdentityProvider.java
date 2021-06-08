@@ -43,7 +43,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public URI buttonImageURL;
 
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Login with SAML";
 
   @InternalJSONColumn
   public String emailClaim;
@@ -64,6 +64,9 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public UUID keyId;
 
   @InternalJSONColumn
+  public String nameIdFormat = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
+
+  @InternalJSONColumn
   public boolean postRequest;
 
   public UUID requestSigningKeyId;
@@ -72,7 +75,13 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public boolean signRequest;
 
   @InternalJSONColumn
+  public String uniqueIdClaim;
+
+  @InternalJSONColumn
   public boolean useNameIdForEmail;
+
+  @InternalJSONColumn
+  public String usernameClaim;
 
   @InternalJSONColumn
   public CanonicalizationMethod xmlSignatureC14nMethod;
@@ -106,8 +115,11 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
            Objects.equals(idpEndpoint, that.idpEndpoint) &&
            Objects.equals(issuer, that.issuer) &&
            Objects.equals(keyId, that.keyId) &&
+           Objects.equals(nameIdFormat, that.nameIdFormat) &&
            Objects.equals(requestSigningKeyId, that.requestSigningKeyId) &&
-           Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
+           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
+           Objects.equals(usernameClaim, that.usernameClaim) &&
+           xmlSignatureC14nMethod == that.xmlSignatureC14nMethod;
   }
 
   @Override
@@ -122,7 +134,22 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), domains, buttonImageURL, buttonText, emailClaim, idpEndpoint, issuer, keyId, postRequest, requestSigningKeyId, signRequest, useNameIdForEmail, xmlSignatureC14nMethod);
+    return Objects.hash(super.hashCode(),
+                        domains,
+                        buttonImageURL,
+                        buttonText,
+                        emailClaim,
+                        idpEndpoint,
+                        issuer,
+                        keyId,
+                        nameIdFormat,
+                        postRequest,
+                        requestSigningKeyId,
+                        signRequest,
+                        uniqueIdClaim,
+                        useNameIdForEmail,
+                        usernameClaim,
+                        xmlSignatureC14nMethod);
   }
 
   public URI lookupButtonImageURL(String clientId) {
@@ -155,6 +182,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public SAMLv2IdentityProvider secure() {
     domains.clear();
     emailClaim = null;
+    usernameClaim = null;
     return this;
   }
 

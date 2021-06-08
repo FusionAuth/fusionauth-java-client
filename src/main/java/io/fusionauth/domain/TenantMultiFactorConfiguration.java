@@ -27,7 +27,7 @@ import io.fusionauth.domain.AuthenticatorConfiguration.TOTPAlgorithm;
  * @author Mikey Sleevi
  */
 public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFactorConfiguration> {
-  public MultiFactorAuthenticatorMethod authenticator = new MultiFactorAuthenticatorMethod();
+  public MultiFactorAuthenticatorMethod authenticator = new MultiFactorAuthenticatorMethod().with(mfa -> mfa.enabled = true);
 
   public MultiFactorEmailMethod email = new MultiFactorEmailMethod();
 
@@ -76,11 +76,11 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
   }
 
   public static class MultiFactorAuthenticatorMethod extends Enableable implements Buildable<MultiFactorAuthenticatorMethod> {
-    public TOTPAlgorithm algorithm;
+    public TOTPAlgorithm algorithm = TOTPAlgorithm.HmacSHA1;
 
-    public int codeLength;
+    public int codeLength = 6;
 
-    public int timeStep;
+    public int timeStep = 30;
 
     @JacksonConstructor
     public MultiFactorAuthenticatorMethod() {

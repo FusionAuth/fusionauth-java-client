@@ -29,7 +29,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider> {
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Login with Twitter";
 
   @InternalJSONColumn
   public String consumerKey;

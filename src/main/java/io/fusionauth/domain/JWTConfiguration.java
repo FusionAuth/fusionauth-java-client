@@ -41,24 +41,24 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   @ExcludeFromDatabaseDataColumn
   public UUID idTokenKeyId;
 
-  public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy;
+  public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy = RefreshTokenExpirationPolicy.Fixed;
 
   /**
    * This can only be set at the tenant level.
    */
-  public RefreshTokenRevocationPolicy refreshTokenRevocationPolicy;
+  public RefreshTokenRevocationPolicy refreshTokenRevocationPolicy = new RefreshTokenRevocationPolicy(true, true);
 
   /**
    * The length of time in minutes a Refresh Token is valid from the time it was issued. This should be a non-zero value.
    */
-  public int refreshTokenTimeToLiveInMinutes;
+  public int refreshTokenTimeToLiveInMinutes = 43200;
 
-  public RefreshTokenUsagePolicy refreshTokenUsagePolicy;
+  public RefreshTokenUsagePolicy refreshTokenUsagePolicy = RefreshTokenUsagePolicy.Reusable;
 
   /**
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
    */
-  public int timeToLiveInSeconds;
+  public int timeToLiveInSeconds = 3600;
 
   @JacksonConstructor
   public JWTConfiguration() {

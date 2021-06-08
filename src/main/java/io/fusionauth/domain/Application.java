@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
@@ -66,6 +67,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   public ZonedDateTime insertInstant;
 
   @InternalJSONColumn
+  @JsonIgnoreProperties("refreshTokenRevocationPolicy")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
@@ -493,7 +495,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public Requirable mobilePhone = new Requirable();
 
-    public RegistrationType type;
+    public RegistrationType type = RegistrationType.basic;
 
     @JacksonConstructor
     public RegistrationConfiguration() {
@@ -668,7 +670,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     }
 
     public static class SAMLv2Logout {
-      public SAMLLogoutBehavior behavior;
+      public SAMLLogoutBehavior behavior = SAMLLogoutBehavior.AllParticipants;
 
       // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
       @ExcludeFromDatabaseDataColumn

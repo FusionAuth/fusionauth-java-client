@@ -27,18 +27,21 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  *
  * @author Brian Pontarelli
  */
-public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookApplicationConfiguration> implements Buildable<FacebookIdentityProvider> {
+public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookApplicationConfiguration> implements Buildable<FacebookIdentityProvider>, SupportsPostBindings {
   @InternalJSONColumn
   public String appId;
 
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Login with Facebook";
 
   @InternalJSONColumn
   public String client_secret;
 
   @InternalJSONColumn
   public String fields;
+
+  @InternalJSONColumn
+  public IdentityProviderLoginMethod loginMethod;
 
   @InternalJSONColumn
   public String permissions;
@@ -59,6 +62,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
            Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_secret, that.client_secret) &&
            Objects.equals(fields, that.fields) &&
+           loginMethod == that.loginMethod &&
            Objects.equals(permissions, that.permissions);
   }
 
@@ -69,7 +73,7 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, permissions);
+    return Objects.hash(super.hashCode(), appId, buttonText, client_secret, fields, loginMethod, permissions);
   }
 
   public String lookupAppId(UUID applicationId) {
@@ -96,12 +100,21 @@ public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookAppli
     return lookup(() -> fields, () -> app(applicationId, app -> app.fields));
   }
 
+  public IdentityProviderLoginMethod lookupLoginMethod(String clientId) {
+    return lookup(() -> loginMethod, () -> app(clientId, app -> app.loginMethod));
+  }
+
   public String lookupPermissions(UUID applicationId) {
     return lookup(() -> permissions, () -> app(applicationId, app -> app.permissions));
   }
 
   public String lookupPermissions(String clientId) {
     return lookup(() -> permissions, () -> app(clientId, app -> app.permissions));
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return false;
   }
 
   @Override

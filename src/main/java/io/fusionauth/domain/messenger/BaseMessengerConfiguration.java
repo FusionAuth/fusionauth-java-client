@@ -46,7 +46,7 @@ public abstract class BaseMessengerConfiguration implements _InternalJSONColumn 
   public String name;
 
   @InternalJSONColumn
-  public String transport;
+  public String transport = MessengerTransport.SMS;
 
   @Override
   public boolean equals(Object o) {

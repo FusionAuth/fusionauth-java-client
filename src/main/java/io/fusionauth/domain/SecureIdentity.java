@@ -7,6 +7,8 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import io.fusionauth.domain.connector.BaseConnectorConfiguration;
+
 /**
  * @author Daniel DeGroff
  */
@@ -15,7 +17,7 @@ public class SecureIdentity {
 
   public BreachedPasswordStatus breachedPasswordStatus;
 
-  public UUID connectorId;
+  public UUID connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
   public String encryptionScheme;
 
@@ -41,7 +43,7 @@ public class SecureIdentity {
   // When unique usernames are enabled, this value may be different than 'uniqueUsername' and in that case will represent the base username the user selected.
   public String username;
 
-  public ContentStatus usernameStatus;
+  public ContentStatus usernameStatus = ContentStatus.ACTIVE;
 
   public boolean verified;
 

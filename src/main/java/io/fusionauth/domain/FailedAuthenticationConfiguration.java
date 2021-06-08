@@ -77,10 +77,10 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
     }
     FailedAuthenticationConfiguration that = (FailedAuthenticationConfiguration) o;
     return actionDuration == that.actionDuration &&
-        actionDurationUnit == that.actionDurationUnit &&
-        tooManyAttempts == that.tooManyAttempts &&
-        resetCountInSeconds == that.resetCountInSeconds &&
-        Objects.equals(userActionId, that.userActionId);
+           actionDurationUnit == that.actionDurationUnit &&
+           tooManyAttempts == that.tooManyAttempts &&
+           resetCountInSeconds == that.resetCountInSeconds &&
+           Objects.equals(userActionId, that.userActionId);
   }
 
   @Override

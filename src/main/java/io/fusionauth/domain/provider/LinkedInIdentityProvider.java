@@ -25,9 +25,9 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 /**
  * @author Daniel DeGroff
  */
-public class LinkedInIdentityProvider extends BaseIdentityProvider<LinkedInApplicationConfiguration> implements Buildable<LinkedInIdentityProvider> {
+public class LinkedInIdentityProvider extends BaseIdentityProvider<LinkedInApplicationConfiguration> implements Buildable<LinkedInIdentityProvider>, SupportsPostBindings {
   @InternalJSONColumn
-  public String buttonText;
+  public String buttonText = "Sign in with LinkedIn";
 
   @InternalJSONColumn
   public String client_id;
@@ -97,6 +97,11 @@ public class LinkedInIdentityProvider extends BaseIdentityProvider<LinkedInAppli
   @Override
   public void normalize() {
     super.normalize();
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return false;
   }
 
   @Override

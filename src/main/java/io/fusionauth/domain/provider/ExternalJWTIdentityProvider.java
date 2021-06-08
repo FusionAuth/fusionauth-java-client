@@ -41,11 +41,17 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   public UUID defaultKeyId;
 
   @InternalJSONColumn
-  public String headerKeyParameter;
+  public String headerKeyParameter = "kid";
 
   @InternalJSONColumn
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
+  /**
+   * If this value is defined, it will take precedence.
+   *
+   * @deprecated use oauth2.uniqueIdClaim, oauth2.usernameClaim and oauth2.emailClaim instead.
+   */
+  @Deprecated
   @InternalJSONColumn
   public String uniqueIdentityClaim;
 
@@ -62,11 +68,11 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
     }
     ExternalJWTIdentityProvider that = (ExternalJWTIdentityProvider) o;
     return Objects.equals(claimMap, that.claimMap) &&
-        Objects.equals(defaultKeyId, that.defaultKeyId) &&
-        Objects.equals(headerKeyParameter, that.headerKeyParameter) &&
-        Objects.equals(oauth2, that.oauth2) &&
-        Objects.equals(uniqueIdentityClaim, that.uniqueIdentityClaim) &&
-        Objects.equals(domains, that.domains);
+           Objects.equals(defaultKeyId, that.defaultKeyId) &&
+           Objects.equals(headerKeyParameter, that.headerKeyParameter) &&
+           Objects.equals(oauth2, that.oauth2) &&
+           Objects.equals(uniqueIdentityClaim, that.uniqueIdentityClaim) &&
+           Objects.equals(domains, that.domains);
   }
 
   @Override

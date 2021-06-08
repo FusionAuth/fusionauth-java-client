@@ -44,7 +44,7 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
 
   public List<FormStep> steps = new ArrayList<>();
 
-  public FormType type;
+  public FormType type = FormType.registration;
 
   @Override
   public boolean equals(Object o) {

@@ -65,7 +65,7 @@ public class FormField implements Buildable<FormField>, _InternalJSONColumn {
   public boolean required;
 
   @InternalJSONColumn
-  public FormDataType type;
+  public FormDataType type = FormDataType.string;
 
   @InternalJSONColumn
   public FormFieldValidator validator = new FormFieldValidator();
@@ -102,10 +102,51 @@ public class FormField implements Buildable<FormField>, _InternalJSONColumn {
 
   public void normalize() {
     Normalizer.removeEmpty(options);
+
     // We want checkbox of type bool to always have 'true' as the first option.
     if (control == FormControl.checkbox && type == FormDataType.bool) {
       Normalizer.toLowerCase(options, ArrayList::new);
       options.sort(Collections.reverseOrder());
+    }
+
+    // WARNING : Gnarls code ahead... (this normalizes all the fields based on type and if they are managed or not)
+    FormField managedField = ManagedFields.Values.get(key);
+
+    // Control is optional, set the default, it is text for most managed fields, and default for all custom fields.
+    //  - Key may be null when building a consent, it is set later.
+    if (control == null && key != null) {
+      control = managedField == null ? FormControl.text : managedField.control;
+    }
+
+    // Set defaults for all managed fields
+    if (managedField != null) {
+      // IJ warns about null, but we don't have any nulls in our ManagedFields set, so we are ok.
+      //noinspection ConstantConditions
+      if (key.equals("user.password")) {
+        // The shipped field for use in self service registration is not set to 'confirm', but the admin field will be.
+        // - If the user creates another field for this key, we will default it to 'confirm' true.
+        control = FormControl.password;
+        required = true;
+      }
+
+      // Set default field type
+      type = managedField.type;
+    }
+
+    // Validation is currently only allowed for number, text or textarea.
+    if (control != FormControl.number && control != FormControl.text && control != FormControl.textarea) {
+      validator.enabled = false;
+      validator.expression = null;
+    }
+
+    // Email data type must be text form field
+    if (type == FormDataType.email) {
+      control = FormControl.text;
+    } else if (type == FormDataType.consent) {
+      // You cannot confirm a consent, and the key is generated. See setSyntheticConsentFields.
+      confirm = false;
+      control = null;
+      key = "consents['" + consentId + "']";
     }
   }
 

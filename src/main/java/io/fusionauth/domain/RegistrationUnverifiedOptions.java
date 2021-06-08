@@ -24,7 +24,7 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class RegistrationUnverifiedOptions implements Buildable<RegistrationUnverifiedOptions> {
-  public UnverifiedBehavior behavior;
+  public UnverifiedBehavior behavior = UnverifiedBehavior.Allow;
 
   @JacksonConstructor
   public RegistrationUnverifiedOptions() {

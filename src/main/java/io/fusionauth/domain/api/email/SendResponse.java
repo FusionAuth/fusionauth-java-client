@@ -25,6 +25,8 @@ import com.inversoft.json.JacksonConstructor;
  * @author Daniel DeGroff
  */
 public class SendResponse {
+  public Map<String, EmailTemplateErrors> anonymousResults;
+
   public Map<UUID, EmailTemplateErrors> results;
 
   @JacksonConstructor

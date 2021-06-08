@@ -51,11 +51,13 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public ZonedDateTime lastUpdateInstant;
 
+  @InternalJSONColumn
+  public IdentityProviderLinkingStrategy linkingStrategy = IdentityProviderLinkingStrategy.LinkByEmail;
+
   public String name;
 
   @Override
   public boolean equals(Object o) {
-
     if (this == o) {
       return true;
     }
@@ -73,6 +75,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           linkingStrategy == that.linkingStrategy &&
            Objects.equals(name, that.name);
   }
 
@@ -80,7 +83,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, name);
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name);
   }
 
   @JsonIgnore
