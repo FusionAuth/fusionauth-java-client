@@ -26,7 +26,7 @@ public enum LambdaType {
   //               the "reconcile" text like the others?
   AppleReconcile("reconcile", "idToken returned from Apple", "idToken"),
 
-//  EpicReconcile("reconcile", "Epic API", "epicUser"),
+  EpicReconcile("reconcile", "Epic API", "epicUser"),
 
   ExternalJWTReconcile("reconcile", "JWT provided by an external IdP", "jwt"),
 
@@ -50,15 +50,15 @@ public enum LambdaType {
 
   SAMLv2Reconcile("reconcile", "samlResponse", "samlResponse"),
 
-//  SonyPSNReconcile("reconcile", "SonyPSN API", "sonyPSNUser"),
+  SonyPSNReconcile("reconcile", "SonyPSN API", "sonyPSNUser"),
 
-//  SteamReconcile("reconcile", "Steam API", "steamUser"),
+  SteamReconcile("reconcile", "Steam API", "steamUser"),
 
-//  TwitchReconcile("reconcile", "Twitch API", "twitchUser"),
+  TwitchReconcile("reconcile", "Twitch API", "twitchUser"),
 
   TwitterReconcile("reconcile", "Twitter verify_credentials API", "twitterUser"),
 
-//  XBOXReconcile("reconcile", "XBOX API", "xboxUser");
+  XBOXReconcile("reconcile", "XBOX API", "xboxUser");
 
   private final String functionName;
 
@@ -104,72 +104,16 @@ public enum LambdaType {
                   helpersText;
       }
 
-  TwitterReconcile("reconcile", "" +
-      "// Using the response from the Twitter verify_credentials API, reconcile the User and User Registration.\n" +
-       "function reconcile(user, registration, twitterUser) {\n" +
-       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-       "  //  \n" +
-       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-       "  //  console.info(JSON.stringify(user)); \n" +
-       "\n" +
-       "  // Happy coding! Reconcile the User here.\n" +
-       "\n" +
-       "  console.info('Hello World!');" +
-       "\n" +
-      "}\n"),
+      example += "  // Happy coding! Reconcile the User here.\n" +
+                 "\n" +
+                 "  console.info('Hello World!');" +
+                 "}\n";
+    }
 
-  LDAPConnectorReconcile("reconcile", "" +
-      "// Using the response from an LDAP connector, reconcile the User.\n" +
-      "function reconcile(user, userAttributes) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n"),
-
-  LinkedInReconcile("reconcile", "" +
-      "// Using the response returned from LinkedIn Me API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, linkedInUser) {\n" +
-      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
-      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
-      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
-      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
-      "  //  \n" +
-      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
-      "  //  console.info(JSON.stringify(user)); \n" +
-      "\n" +
-      "  // Happy coding! Reconcile the User here.\n" +
-      "\n" +
-      "  console.info('Hello World!');" +
-      "\n" +
-      "}\n");
-  // @formatter:on
-
-  private final String example;
-
-  private final String functionName;
-
-  LambdaType(String functionName, String example) {
-    this.functionName = functionName;
-    this.example = example;
-  }
-
-  public String getExample() {
     return example;
   }
 
   public String getFunctionName() {
     return functionName;
   }
-  }
+}
