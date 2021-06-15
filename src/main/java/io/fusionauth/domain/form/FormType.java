@@ -22,6 +22,5 @@ public enum FormType {
   registration,
   adminRegistration,
   adminUser,
-  // TODO : MFA : Should we just name this "user" - since we have "registration" - this is more/less the edit version of that one?
   selfServiceUser
 }
