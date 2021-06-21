@@ -34,7 +34,7 @@ public class PendingIdPLink implements Buildable<PendingIdPLink> {
 
   public String identityProviderName;
 
-  public String identityProviderType;
+  public IdentityProviderType identityProviderType;
 
   public String identityProviderUserId;
 
