@@ -37,6 +37,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus ipLocation = ReactorFeatureStatus.UNKNOWN;
+
   public boolean licensed;
 
   @Override
@@ -48,13 +50,14 @@ public class ReactorStatus {
       return false;
     }
     ReactorStatus that = (ReactorStatus) o;
-    return licensed == that.licensed &&
-           advancedIdentityProviders == that.advancedIdentityProviders &&
+    return advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
            advancedRegistration == that.advancedRegistration &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
-           entityManagement == that.entityManagement;
+           entityManagement == that.entityManagement &&
+           ipLocation == that.ipLocation &&
+           licensed == that.licensed;
   }
 
   @Override
@@ -65,6 +68,7 @@ public class ReactorStatus {
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,
+                        ipLocation,
                         licensed);
   }
 
