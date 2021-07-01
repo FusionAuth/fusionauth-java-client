@@ -19,11 +19,15 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.ToString;
+
 /**
  * @author Brett Guy
  */
-public class AddressRange implements Buildable<AddressRange> {
-  public String endIP;
+public class IpAddressRange implements Buildable<IpAddressRange> {
+  public String endIpAddress;
+
+  // TODO description field
 
   public UUID id;
 
@@ -33,14 +37,14 @@ public class AddressRange implements Buildable<AddressRange> {
 
   public AddressRangeMode mode;
 
-  public String startIP;
+  public String startIpAddress;
 
-  public AddressRange() {
+  public IpAddressRange() {
   }
 
-  public AddressRange(String startIP, String endIP, AddressRangeMode mode) {
-    this.startIP = startIP;
-    this.endIP = endIP;
+  public IpAddressRange(String startIpAddress, String endIP, AddressRangeMode mode) {
+    this.startIpAddress = startIpAddress;
+    this.endIpAddress = endIP;
     this.mode = mode;
   }
 
@@ -52,17 +56,22 @@ public class AddressRange implements Buildable<AddressRange> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AddressRange that = (AddressRange) o;
-    return Objects.equals(endIP, that.endIP) &&
+    IpAddressRange that = (IpAddressRange) o;
+    return Objects.equals(endIpAddress, that.endIpAddress) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(mode, that.mode) &&
-           Objects.equals(startIP, that.startIP);
+           Objects.equals(startIpAddress, that.startIpAddress);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endIP, id, insertInstant, lastUpdateInstant, mode, startIP);
+    return Objects.hash(endIpAddress, id, insertInstant, lastUpdateInstant, mode, startIpAddress);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }
