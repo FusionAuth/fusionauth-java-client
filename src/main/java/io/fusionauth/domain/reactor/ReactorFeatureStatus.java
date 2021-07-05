@@ -22,5 +22,6 @@ public enum ReactorFeatureStatus {
   ACTIVE,
   DISCONNECTED,
   PENDING,
+  DISABLED,
   UNKNOWN
 }

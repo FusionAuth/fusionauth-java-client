@@ -22,9 +22,13 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 
 /**
+ * TODO : ip-allow-block : Fix names so they are all the same. I prefer `IP`.
+ *
  * @author Brett Guy
  */
 public class IpAddressRange implements Buildable<IpAddressRange> {
+  // TODO : ip-allow-block : Should we use InetAddress and convert it for MyBatis and Jackson?
+  // TODO : ip-allow-block : Fix names so they are all consistent. I prefer `IP`
   public String endIpAddress;
 
   // TODO description field
@@ -37,6 +41,8 @@ public class IpAddressRange implements Buildable<IpAddressRange> {
 
   public AddressRangeMode mode;
 
+  // TODO : ip-allow-block : Should we use InetAddress and convert it for MyBatis and Jackson?
+  // TODO : ip-allow-block : Fix names so they are all consistent. I prefer `IP`
   public String startIpAddress;
 
   public IpAddressRange() {
