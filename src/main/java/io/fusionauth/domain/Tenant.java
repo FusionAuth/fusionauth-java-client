@@ -123,6 +123,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public UUID themeId;
 
   @InternalJSONColumn
+  public ThreatDetectionConfiguration threatDetectionConfiguration = new ThreatDetectionConfiguration();
+
+  @InternalJSONColumn
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
 
   @InternalJSONColumn
@@ -153,12 +156,13 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.maximumPasswordAge = new MaximumPasswordAge(other.maximumPasswordAge);
     this.minimumPasswordAge = new MinimumPasswordAge(other.minimumPasswordAge);
     this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
-    this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
     this.name = other.name;
+    this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.state = other.state;
     this.themeId = other.themeId;
+    this.threatDetectionConfiguration = new ThreatDetectionConfiguration(other.threatDetectionConfiguration);
     this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
     this.usernameConfiguration = new TenantUsernameConfiguration(other.usernameConfiguration);
   }
@@ -174,8 +178,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
-           Objects.equals(data, tenant.data) &&
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
+           Objects.equals(data, tenant.data) &&
            Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
            Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
            Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
@@ -183,10 +187,10 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
            Objects.equals(formConfiguration, tenant.formConfiguration) &&
            Objects.equals(id, tenant.id) &&
-           Objects.equals(issuer, tenant.issuer) &&
            Objects.equals(insertInstant, tenant.insertInstant) &&
-           Objects.equals(lastUpdateInstant, tenant.lastUpdateInstant) &&
+           Objects.equals(issuer, tenant.issuer) &&
            Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
+           Objects.equals(lastUpdateInstant, tenant.lastUpdateInstant) &&
            Objects.equals(loginConfiguration, tenant.loginConfiguration) &&
            Objects.equals(logoutURL, tenant.logoutURL) &&
            Objects.equals(maximumPasswordAge, tenant.maximumPasswordAge) &&
@@ -197,6 +201,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
            Objects.equals(state, tenant.state) &&
            Objects.equals(themeId, tenant.themeId) &&
+           Objects.equals(threatDetectionConfiguration, tenant.threatDetectionConfiguration) &&
            Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&
            Objects.equals(usernameConfiguration, tenant.usernameConfiguration);
   }
@@ -208,7 +213,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, configured, connectorPolicies, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, issuer, insertInstant, lastUpdateInstant, jwtConfiguration, loginConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, state, themeId, userDeletePolicy, usernameConfiguration);
+    return Objects.hash(configured, connectorPolicies, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, insertInstant, issuer, jwtConfiguration, lastUpdateInstant, loginConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, state, themeId, threatDetectionConfiguration, userDeletePolicy, usernameConfiguration);
   }
 
   @JsonIgnore
