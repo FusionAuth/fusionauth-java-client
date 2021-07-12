@@ -70,6 +70,7 @@ public class ThreatDetectionConfiguration implements Buildable<ThreatDetectionCo
     }
 
     public CaptchaConfiguration(CaptchaConfiguration other) {
+      this.enabled = other.enabled;
       captchaMethod = other.captchaMethod;
       secretKey = other.secretKey;
       siteKey = other.siteKey;
@@ -99,6 +100,12 @@ public class ThreatDetectionConfiguration implements Buildable<ThreatDetectionCo
     @Override
     public String toString() {
       return ToString.toString(this);
+    }
+
+    public enum CaptchaMethod {
+      GoogleRecaptchaV3,
+      HCaptcha,
+      HCaptchaEnterprise
     }
   }
 }
