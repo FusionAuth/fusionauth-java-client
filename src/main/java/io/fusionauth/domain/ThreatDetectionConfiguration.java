@@ -103,6 +103,7 @@ public class ThreatDetectionConfiguration implements Buildable<ThreatDetectionCo
     }
 
     public enum CaptchaMethod {
+      GoogleRecaptchaV2,
       GoogleRecaptchaV3,
       HCaptcha,
       HCaptchaEnterprise
