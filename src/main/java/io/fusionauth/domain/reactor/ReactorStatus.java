@@ -37,7 +37,7 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
-  public ReactorFeatureStatus ipLocation = ReactorFeatureStatus.UNKNOWN;
+  public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
   public boolean licensed;
 
@@ -56,7 +56,7 @@ public class ReactorStatus {
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
            entityManagement == that.entityManagement &&
-           ipLocation == that.ipLocation &&
+           threatDetection == that.threatDetection &&
            licensed == that.licensed;
   }
 
@@ -68,7 +68,7 @@ public class ReactorStatus {
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,
-                        ipLocation,
+                        threatDetection,
                         licensed);
   }
 

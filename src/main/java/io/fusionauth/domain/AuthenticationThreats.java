@@ -13,25 +13,14 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.ip;
-
-import java.util.List;
+package io.fusionauth.domain;
 
 /**
- * @author Brett Guy
+ * @author Brett Pontarelli
  */
-public class IPAddressRangeRule {
-  private IPAddressRangeTree ipRanges = new IPAddressRangeTree();
-
-  public void add(IPAddressRangeNode range) {
-    ipRanges.insert(range);
-  }
-
-  public void addAll(List<IPAddressRangeNode> ranges) {
-    ipRanges.insertAll(ranges);
-  }
-
-  public boolean containsAddress(long address) {
-    return ipRanges.contains(address);
-  }
+public enum AuthenticationThreats {
+  ImpossibleTravel,
+  UnusualTravel,
+  BadCaptcha,
+  NewDeviceLogin
 }

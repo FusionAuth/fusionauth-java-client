@@ -13,22 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.IpAddressRange;
+package io.fusionauth.domain;
 
 /**
  * @author Brett Guy
  */
-public class IPAddressRangeRequest {
-  public IpAddressRange ipAddressRange;
-
-  @JacksonConstructor
-  public IPAddressRangeRequest() {
-  }
-
-  public IPAddressRangeRequest(IpAddressRange ipAddressRange) {
-    this.ipAddressRange = ipAddressRange;
-  }
+public enum IPAccessControlListMode {
+  Allow,
+  Block
 }

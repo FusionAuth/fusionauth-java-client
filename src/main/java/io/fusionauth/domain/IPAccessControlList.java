@@ -16,22 +16,29 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.internal._InternalJSONColumn;
+import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
 
 /**
- * TODO : ip-allow-block : Fix names so they are all the same. I prefer `IP`.
- *
  * @author Brett Guy
  */
-public class IpAddressRange implements Buildable<IpAddressRange> {
-  // TODO : ip-allow-block : Should we use InetAddress and convert it for MyBatis and Jackson?
-  // TODO : ip-allow-block : Fix names so they are all consistent. I prefer `IP`
-  public String endIpAddress;
+public class IPAccessControlList implements Buildable<IPAccessControlList>, _InternalJSONColumn {
+  public final Map<String, Object> data = new LinkedHashMap<>();
 
-  // TODO description field
+  // TODO : Brett G : With Brian's new push towards defaults, can we default this value, and if so, we could do it here.
+  @InternalJSONColumn
+  public IPAccessControlListMode defaultAction = IPAccessControlListMode.Allow;
+
+  @InternalJSONColumn
+  public List<IPAccessControlListException> exceptions = new ArrayList<>();
 
   public UUID id;
 
@@ -39,20 +46,7 @@ public class IpAddressRange implements Buildable<IpAddressRange> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  public AddressRangeMode mode;
-
-  // TODO : ip-allow-block : Should we use InetAddress and convert it for MyBatis and Jackson?
-  // TODO : ip-allow-block : Fix names so they are all consistent. I prefer `IP`
-  public String startIpAddress;
-
-  public IpAddressRange() {
-  }
-
-  public IpAddressRange(String startIpAddress, String endIP, AddressRangeMode mode) {
-    this.startIpAddress = startIpAddress;
-    this.endIpAddress = endIP;
-    this.mode = mode;
-  }
+  public String name;
 
   @Override
   public boolean equals(Object o) {
@@ -62,18 +56,19 @@ public class IpAddressRange implements Buildable<IpAddressRange> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    IpAddressRange that = (IpAddressRange) o;
-    return Objects.equals(endIpAddress, that.endIpAddress) &&
+    IPAccessControlList that = (IPAccessControlList) o;
+    return Objects.equals(data, that.data) &&
            Objects.equals(id, that.id) &&
+           Objects.equals(defaultAction, that.defaultAction) &&
            Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(exceptions, that.exceptions) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
-           Objects.equals(mode, that.mode) &&
-           Objects.equals(startIpAddress, that.startIpAddress);
+           Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endIpAddress, id, insertInstant, lastUpdateInstant, mode, startIpAddress);
+    return Objects.hash(data, id, defaultAction, insertInstant, exceptions, lastUpdateInstant, name);
   }
 
   @Override

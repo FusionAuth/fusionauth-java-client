@@ -23,6 +23,8 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class IdentityProviderLinkRequest implements Buildable<IdentityProviderLinkRequest> {
+  public String displayName;
+
   public UUID identityProviderId;
 
   public String identityProviderUserId;

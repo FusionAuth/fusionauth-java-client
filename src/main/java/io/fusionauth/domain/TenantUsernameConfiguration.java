@@ -56,10 +56,17 @@ public class TenantUsernameConfiguration implements Buildable<TenantUsernameConf
     return ToString.toString(this);
   }
 
+  public enum UniqueUsernameStrategy {
+    Always,
+    OnCollision
+  }
+
   public static class UniqueUsernameConfiguration extends Enableable implements Buildable<UniqueUsernameConfiguration> {
     public int numberOfDigits = 5;
 
     public Character separator = '#';
+
+    public UniqueUsernameStrategy strategy = UniqueUsernameStrategy.OnCollision;
 
     @JacksonConstructor
     public UniqueUsernameConfiguration() {
@@ -67,6 +74,7 @@ public class TenantUsernameConfiguration implements Buildable<TenantUsernameConf
 
     public UniqueUsernameConfiguration(UniqueUsernameConfiguration other) {
       this.enabled = other.enabled;
+      this.strategy = other.strategy;
       this.numberOfDigits = other.numberOfDigits;
       this.separator = other.separator;
     }

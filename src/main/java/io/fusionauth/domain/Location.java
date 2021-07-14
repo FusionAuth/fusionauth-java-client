@@ -15,7 +15,10 @@
  */
 package io.fusionauth.domain;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Location information. Useful for IP addresses and other displayable data objects.
@@ -55,5 +58,12 @@ public class Location implements Buildable<Location> {
   @Override
   public int hashCode() {
     return Objects.hash(city, country, latitude, longitude, region, zipcode);
+  }
+
+  public String toDisplayableString() {
+    List<String> parts = Stream.of(city, region, country)
+                               .filter(Objects::nonNull)
+                               .collect(Collectors.toList());
+    return String.join(", ", parts);
   }
 }

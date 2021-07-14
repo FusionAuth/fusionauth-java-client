@@ -76,6 +76,8 @@ import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.api.IdentityProviderResponse;
 import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
+import io.fusionauth.domain.api.IPAccessControlListRequest;
+import io.fusionauth.domain.api.IPAccessControlListResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
@@ -352,6 +354,22 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an ACL. You can optionally specify an Id for the ACL. If not provided one will be generated.
+   *
+   * @param accessControlListId (Optional) The Id for the ACL. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the IP ACL.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Errors> createACL(UUID accessControlListId, IPAccessControlListRequest request) {
+    return start(IPAccessControlListResponse.class, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(accessControlListId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -884,6 +902,20 @@ public class FusionAuthClient {
         .urlParameter("userId", userIds)
         .urlParameter("dryRun", false)
         .urlParameter("hardDelete", false)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the ACL for the given Id.
+   *
+   * @param ipAccessControlListId The Id of the ACL to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteACL(UUID ipAccessControlListId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(ipAccessControlListId)
         .delete()
         .go();
   }
@@ -2361,6 +2393,32 @@ public class FusionAuthClient {
         .urlParameter("email", email)
         .urlParameter("applicationId", applicationId)
         .put()
+        .go();
+  }
+
+  /**
+   * Retrieves the ACL with the given Id.
+   *
+   * @param formId The Id of the ACL.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Void> retrieveACL(UUID formId) {
+    return start(IPAccessControlListResponse.class, Void.TYPE)
+        .uri("/api/ip-acl")
+        .urlSegment(formId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all ACLs.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Void> retrieveACLs() {
+    return start(IPAccessControlListResponse.class, Void.TYPE)
+        .uri("/api/ip-acl")
+        .get()
         .go();
   }
 
@@ -4151,6 +4209,22 @@ public class FusionAuthClient {
         .uri("/api/two-factor/login")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
+        .go();
+  }
+
+  /**
+   * Updates the ACL with the given Id.
+   *
+   * @param accessControlListId The Id of the ACL to update.
+   * @param request The request that contains all of the new ACL information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Errors> updateACL(UUID accessControlListId, IPAccessControlListRequest request) {
+    return start(IPAccessControlListResponse.class, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(accessControlListId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
         .go();
   }
 
