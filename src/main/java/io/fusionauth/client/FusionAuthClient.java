@@ -78,6 +78,8 @@ import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.IPAccessControlListRequest;
 import io.fusionauth.domain.api.IPAccessControlListResponse;
+import io.fusionauth.domain.api.IPAccessControlListSearchRequest;
+import io.fusionauth.domain.api.IPAccessControlListSearchResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
@@ -3879,6 +3881,20 @@ public class FusionAuthClient {
         .uri("/api/user/consent")
         .urlSegment(userConsentId)
         .delete()
+        .go();
+  }
+
+  /**
+   * Searches the ACLs with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListSearchResponse, Void> searchACLs(IPAccessControlListSearchRequest request) {
+    return start(IPAccessControlListSearchResponse.class, Void.TYPE)
+        .uri("/api/ip-acl/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
         .go();
   }
 
