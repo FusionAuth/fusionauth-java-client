@@ -229,7 +229,7 @@ public enum LambdaType {
 
   EpicGamesReconcile("reconcile", "" +
       "// Using the response from the Epic API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -246,7 +246,7 @@ public enum LambdaType {
 
   NintendoReconcile("reconcile", "" +
       "// Using the response from the Nintendo API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -263,7 +263,7 @@ public enum LambdaType {
 
   SonyPSNReconcile("reconcile", "" +
       "// Using the response from the SonyPSN API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -280,7 +280,7 @@ public enum LambdaType {
 
   SteamReconcile("reconcile", "" +
       "// Using the response from the Steam API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -297,7 +297,7 @@ public enum LambdaType {
 
   TwitchReconcile("reconcile", "" +
       "// Using the response from the Twitch API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -314,7 +314,7 @@ public enum LambdaType {
 
   XboxReconcile("reconcile", "" +
       "// Using the response from the Xbox Token info API, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, idToken) {\n" +
+      "function reconcile(user, registration, userInfo) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
