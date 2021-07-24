@@ -62,6 +62,8 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
    */
   public ZonedDateTime startInstant;
 
+  public UUID tenantId;
+
   public String token;
 
   public UUID userId;
@@ -81,13 +83,14 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(metaData, that.metaData) &&
            Objects.equals(startInstant, that.startInstant) &&
+           Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(token, that.token) &&
            Objects.equals(userId, that.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, data, id, insertInstant, metaData, startInstant, token, userId);
+    return Objects.hash(applicationId, data, id, insertInstant, metaData, startInstant, tenantId, token, userId);
   }
 
   @JsonIgnore
