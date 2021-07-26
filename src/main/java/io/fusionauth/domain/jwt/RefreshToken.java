@@ -62,6 +62,7 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
    */
   public ZonedDateTime startInstant;
 
+  // Only used for SSO tokens
   public UUID tenantId;
 
   public String token;
