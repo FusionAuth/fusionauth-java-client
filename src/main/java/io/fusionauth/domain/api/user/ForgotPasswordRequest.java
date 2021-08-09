@@ -19,13 +19,16 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * Forgot password request object.
  *
  * @author Brian Pontarelli
  */
-public class ForgotPasswordRequest {
+@SuppressWarnings("unused")
+public class ForgotPasswordRequest extends BaseEventRequest {
   public UUID applicationId;
 
   public String changePasswordId;
@@ -40,13 +43,13 @@ public class ForgotPasswordRequest {
   public ForgotPasswordRequest() {
   }
 
+  public ForgotPasswordRequest(String loginId) {
+    this.loginId = loginId;
+  }
+
   public ForgotPasswordRequest(String loginId, Map<String, Object> state) {
     this.loginId = loginId;
     this.state = state;
-  }
-
-  public ForgotPasswordRequest(String loginId) {
-    this.loginId = loginId;
   }
 
   public ForgotPasswordRequest(UUID applicationId, String loginId) {
@@ -57,6 +60,18 @@ public class ForgotPasswordRequest {
   public ForgotPasswordRequest(String loginId, boolean sendForgotPasswordEmail) {
     this.loginId = loginId;
     this.sendForgotPasswordEmail = sendForgotPasswordEmail;
+  }
+
+  public ForgotPasswordRequest(EventInfo eventInfo, UUID applicationId, String loginId) {
+    super(eventInfo);
+    this.applicationId = applicationId;
+    this.loginId = loginId;
+  }
+
+  public ForgotPasswordRequest(EventInfo eventInfo, String loginId, Map<String, Object> state) {
+    super(eventInfo);
+    this.loginId = loginId;
+    this.state = state;
   }
 
   public String getEmail() {

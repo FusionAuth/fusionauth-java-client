@@ -43,6 +43,9 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Application implements Buildable<Application>, _InternalJSONColumn, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
+  @InternalJSONColumn
+  public ApplicationAccessControlConfiguration accessControlConfiguration = new ApplicationAccessControlConfiguration();
+
   /**
    * @deprecated prefer the use of {@link #state}.
    */
@@ -123,6 +126,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public Application(Application other) {
     this.active = other.active;
+    this.accessControlConfiguration = new ApplicationAccessControlConfiguration(other.accessControlConfiguration);
     this.authenticationTokenConfiguration = new AuthenticationTokenConfiguration(other.authenticationTokenConfiguration);
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
@@ -186,6 +190,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     }
     Application that = (Application) o;
     return verifyRegistration == that.verifyRegistration &&
+           Objects.equals(accessControlConfiguration, that.accessControlConfiguration) &&
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
            Objects.equals(data, that.data) &&
@@ -242,7 +247,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration,
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration,
                         loginConfiguration, name, multiFactorConfiguration, oauthConfiguration, passwordlessConfiguration, registrationConfiguration,
                         registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, themeId, unverified,
                         verificationEmailTemplateId, verificationStrategy, verifyRegistration);
@@ -284,21 +289,47 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   }
 
   public static class ApplicationEmailConfiguration implements Buildable<ApplicationEmailConfiguration> {
+    public UUID emailUpdateEmailTemplateId;
+
     public UUID emailVerificationEmailTemplateId;
 
+    public UUID emailVerifiedEmailTemplateId;
+
     public UUID forgotPasswordEmailTemplateId;
+
+    // TODO : Events/Emails : Can override tenant?
+//    public UUID loginIdInUseOnCreateEmailTemplateId;
+//    public UUID loginIdInUseOnUpdateEmailTemplateId;
+
+    public UUID loginNewDeviceEmailTemplateId;
+
+    public UUID loginSuspiciousEmailTemplateId;
+
+    public UUID passwordResetSuccessEmailTemplateId;
+
+    // TODO : Events/Emails : Can override tenant?
+//    public UUID passwordUpdateEmailTemplateId;
 
     public UUID passwordlessEmailTemplateId;
 
     public UUID setPasswordEmailTemplateId;
+
+    // TODO : Events/Emails : Can override tenant?
+//    public UUID twoFactorMethodAddEmailTemplateId;
+//    public UUID twoFactorMethodRemoveEmailTemplateId;
 
     @JacksonConstructor
     public ApplicationEmailConfiguration() {
     }
 
     public ApplicationEmailConfiguration(ApplicationEmailConfiguration other) {
+      this.emailUpdateEmailTemplateId = other.emailUpdateEmailTemplateId;
       this.emailVerificationEmailTemplateId = other.emailVerificationEmailTemplateId;
+      this.emailVerifiedEmailTemplateId = other.emailVerifiedEmailTemplateId;
       this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
+      this.loginNewDeviceEmailTemplateId = other.loginNewDeviceEmailTemplateId;
+      this.loginSuspiciousEmailTemplateId = other.loginSuspiciousEmailTemplateId;
+      this.passwordResetSuccessEmailTemplateId = other.passwordResetSuccessEmailTemplateId;
       this.passwordlessEmailTemplateId = other.passwordlessEmailTemplateId;
       this.setPasswordEmailTemplateId = other.setPasswordEmailTemplateId;
     }
@@ -312,15 +343,12 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
         return false;
       }
       ApplicationEmailConfiguration that = (ApplicationEmailConfiguration) o;
-      return Objects.equals(emailVerificationEmailTemplateId, that.emailVerificationEmailTemplateId) &&
-             Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) &&
-             Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) &&
-             Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId);
+      return Objects.equals(emailVerificationEmailTemplateId, that.emailVerificationEmailTemplateId) && Objects.equals(emailVerifiedEmailTemplateId, that.emailVerifiedEmailTemplateId) && Objects.equals(forgotPasswordEmailTemplateId, that.forgotPasswordEmailTemplateId) && Objects.equals(loginNewDeviceEmailTemplateId, that.loginNewDeviceEmailTemplateId) && Objects.equals(loginSuspiciousEmailTemplateId, that.loginSuspiciousEmailTemplateId) && Objects.equals(passwordResetSuccessEmailTemplateId, that.passwordResetSuccessEmailTemplateId) && Objects.equals(passwordlessEmailTemplateId, that.passwordlessEmailTemplateId) && Objects.equals(setPasswordEmailTemplateId, that.setPasswordEmailTemplateId);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(emailVerificationEmailTemplateId, forgotPasswordEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId);
+      return Objects.hash(emailVerificationEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, passwordResetSuccessEmailTemplateId, passwordlessEmailTemplateId, setPasswordEmailTemplateId);
     }
 
     @Override
@@ -520,7 +548,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       if (this == o) {
         return true;
       }
-      if (!(o instanceof RegistrationConfiguration)) {
+      if (o == null || getClass() != o.getClass()) {
         return false;
       }
       if (!super.equals(o)) {

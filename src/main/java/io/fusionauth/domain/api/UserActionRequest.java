@@ -33,5 +33,4 @@ public class UserActionRequest {
   public UserActionRequest(UserAction userAction) {
     this.userAction = userAction;
   }
-
 }

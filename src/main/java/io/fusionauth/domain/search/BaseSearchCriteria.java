@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.search;
 
+import io.fusionauth.domain.util.SQLTools;
+
 /**
  * @author Brian Pontarelli
  */
@@ -25,27 +27,14 @@ public abstract class BaseSearchCriteria {
 
   public int startRow;
 
-  protected static String toSearchString(String str) {
-    if (str == null) {
-      return null;
-    }
+  public abstract BaseSearchCriteria prepare();
 
-    if (str.contains("*")) {
-      return str.trim().toLowerCase().replace("*", "%");
-    } else {
-      return "%" + str.trim().toLowerCase() + "%";
-    }
+  public BaseSearchCriteria secure() {
+    orderBy = SQLTools.sanitizeOrderBy(orderBy);
+    return this;
   }
-
-  public abstract void prepare();
 
   protected String defaultOrderBy() {
     return null;
-  }
-
-  protected void secure() {
-    if (orderBy != null && !orderBy.matches("[a-zA-Z_0-9.]+\\s+[adescADESC]+")) {
-      orderBy = defaultOrderBy();
-    }
   }
 }

@@ -15,6 +15,11 @@
  */
 package io.fusionauth.domain.search;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -23,4 +28,23 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class UserSearchCriteria extends BaseElasticSearchCriteria implements Buildable<UserSearchCriteria> {
+  public final static Set<String> SortableFields = new LinkedHashSet<>(Arrays.asList("birthDate",
+                                                                                     "email",
+                                                                                     "fullName",
+                                                                                     "id",
+                                                                                     "insertInstant",
+                                                                                     "lastLoginInstant",
+                                                                                     "login",
+                                                                                     "tenantId",
+                                                                                     "username",
+                                                                                     "registrations.applicationId",
+                                                                                     "registrations.id",
+                                                                                     "registrations.insertInstant",
+                                                                                     "registrations.lastLoginInstant",
+                                                                                     "registrations.roles"));
+
+  // Not currently supporting 'registration.*'
+  public static final Set<String> DatabaseSortableFields = SortableFields.stream()
+                                                                         .filter(field -> !field.startsWith("registrations."))
+                                                                         .collect(Collectors.toSet());
 }

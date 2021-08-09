@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * Models the JWT Refresh Event. This event will be fired when a JWT is "refreshed" (generated) using a Refresh Token.
@@ -42,7 +43,8 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
   public JWTRefreshEvent() {
   }
 
-  public JWTRefreshEvent(UUID applicationId, String token, String original, String refreshToken, UUID userId) {
+  public JWTRefreshEvent(EventInfo info, UUID applicationId, String token, String original, String refreshToken, UUID userId) {
+    super(info);
     this.applicationId = applicationId;
     this.token = token;
     this.original = original;

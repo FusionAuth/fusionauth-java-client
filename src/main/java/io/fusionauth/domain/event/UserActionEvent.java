@@ -28,6 +28,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.email.Email;
 
 /**
@@ -98,11 +99,12 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
    * @param emailedUser       A flag indicating that FusionAuth emailed the user.
    * @param email             The email that should be sent to the end user.
    */
-  public UserActionEvent(UUID actionId, UUID actioneeUserId, UUID actionerUserId, List<UUID> applicationIds,
+  public UserActionEvent(EventInfo info, UUID actionId, UUID actioneeUserId, UUID actionerUserId, List<UUID> applicationIds,
                          String action, String localizedAction, String option, String localizedOption,
                          String reason, String localizedReason, String reasonCode, ZonedDateTime expiry,
                          String localizedDuration, UserActionPhase phase, String comment, boolean notifyUser,
                          boolean emailedUser, Email email) {
+    super(info);
     this.actionId = actionId;
     this.action = action;
     this.actioneeUserId = actioneeUserId;

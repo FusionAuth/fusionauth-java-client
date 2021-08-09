@@ -24,6 +24,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * Models the JWT public key Refresh Token Revoke Event (and can be converted to JSON). This event might be for a single
@@ -38,12 +39,14 @@ public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTP
   public JWTPublicKeyUpdateEvent() {
   }
 
-  public JWTPublicKeyUpdateEvent(UUID applicationId) {
+  public JWTPublicKeyUpdateEvent(EventInfo info, UUID applicationId) {
+    super(info);
     this.applicationIds = new HashSet<>();
     this.applicationIds.add(applicationId);
   }
 
-  public JWTPublicKeyUpdateEvent(Set<UUID> applicationIds) {
+  public JWTPublicKeyUpdateEvent(EventInfo info, Set<UUID> applicationIds) {
+    super(info);
     this.applicationIds = applicationIds;
   }
 
@@ -62,7 +65,7 @@ public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTP
     }
     JWTPublicKeyUpdateEvent that = (JWTPublicKeyUpdateEvent) o;
     return super.equals(o) &&
-        Objects.equals(applicationIds, that.applicationIds);
+           Objects.equals(applicationIds, that.applicationIds);
   }
 
   @Override

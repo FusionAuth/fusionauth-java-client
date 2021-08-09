@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -34,7 +35,8 @@ public class UserCreateEvent extends BaseEvent implements Buildable<UserCreateEv
   public UserCreateEvent() {
   }
 
-  public UserCreateEvent(User user) {
+  public UserCreateEvent(EventInfo info, User user) {
+    super(info);
     this.user = user;
   }
 
@@ -48,7 +50,7 @@ public class UserCreateEvent extends BaseEvent implements Buildable<UserCreateEv
     }
     UserCreateEvent that = (UserCreateEvent) o;
     return super.equals(o) &&
-        Objects.equals(user, that.user);
+           Objects.equals(user, that.user);
   }
 
   @Override

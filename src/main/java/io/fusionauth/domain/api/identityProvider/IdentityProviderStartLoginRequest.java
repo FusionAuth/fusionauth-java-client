@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
@@ -48,7 +49,11 @@ public class IdentityProviderStartLoginRequest extends BaseLoginRequest implemen
     this.applicationId = applicationId;
     this.identityProviderId = identityProviderId;
     this.loginId = loginId;
-    this.ipAddress = ipAddress;
+
+    if (ipAddress != null) {
+      eventInfo = eventInfo != null ? eventInfo : new EventInfo();
+      eventInfo.ipAddress = ipAddress;
+    }
   }
 
   public IdentityProviderStartLoginRequest(UUID applicationId, UUID identityProviderId, String loginId, String ipAddress,
@@ -56,7 +61,11 @@ public class IdentityProviderStartLoginRequest extends BaseLoginRequest implemen
     this.applicationId = applicationId;
     this.identityProviderId = identityProviderId;
     this.loginId = loginId;
-    this.ipAddress = ipAddress;
     this.state = state;
+
+    if (ipAddress != null) {
+      eventInfo = eventInfo != null ? eventInfo : new EventInfo();
+      eventInfo.ipAddress = ipAddress;
+    }
   }
 }

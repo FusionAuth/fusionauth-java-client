@@ -15,7 +15,12 @@
  */
 package io.fusionauth.domain.search;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
+import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
  * Search criteria for entity grants.
@@ -23,6 +28,8 @@ import java.util.UUID;
  * @author Brian Pontarelli
  */
 public class EntityGrantSearchCriteria extends BaseSearchCriteria {
+  public static final Map<String, String> SortableFields = new LinkedHashMap<>();
+
   public UUID entityId;
 
   public String name;
@@ -30,21 +37,24 @@ public class EntityGrantSearchCriteria extends BaseSearchCriteria {
   public UUID userId;
 
   @Override
-  public void prepare() {
-    secure();
-
+  public EntityGrantSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
-    orderBy = orderBy.replace("insertInstant", "eg.insert_instant")
-                     .replace("lastUpdateInstant", "eg.last_update_instant");
-
+    orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
+    return this;
   }
 
   @Override
   protected String defaultOrderBy() {
     return "name ASC";
+  }
+
+  static {
+    SortableFields.put("insertInstant", "eg.insert_instant");
+    SortableFields.put("insertUser", "eg.insert_user");
+    SortableFields.put("name", "name");
   }
 }

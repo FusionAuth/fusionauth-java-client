@@ -56,6 +56,11 @@ public class EventConfiguration implements Buildable<EventConfiguration> {
     return Objects.hash(events);
   }
 
+  public EventConfiguration normalize() {
+    events.forEach((key, value) -> value.transactionType = key.isTransactionalEvent() ? value.transactionType : TransactionType.None);
+    return this;
+  }
+
   @Override
   public String toString() {
     return ToString.toString(this);
@@ -88,7 +93,7 @@ public class EventConfiguration implements Buildable<EventConfiguration> {
       }
       EventConfigurationData that = (EventConfigurationData) o;
       return super.equals(o) &&
-          Objects.equals(transactionType, that.transactionType);
+             Objects.equals(transactionType, that.transactionType);
     }
 
     @Override

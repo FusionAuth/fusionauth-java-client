@@ -27,6 +27,8 @@ import com.inversoft.json.ToString;
 public class DisplayableRawLogin extends RawLogin implements Buildable<DisplayableRawLogin> {
   public String applicationName;
 
+  public Location location;
+
   public String loginId;
 
   @Override
@@ -39,16 +41,17 @@ public class DisplayableRawLogin extends RawLogin implements Buildable<Displayab
     }
     DisplayableRawLogin rawLogin = (DisplayableRawLogin) o;
     return Objects.equals(applicationId, rawLogin.applicationId) &&
-        Objects.equals(instant, rawLogin.instant) &&
-        Objects.equals(ipAddress, rawLogin.ipAddress) &&
-        Objects.equals(userId, rawLogin.userId) &&
-        Objects.equals(applicationName, rawLogin.applicationName) &&
-        Objects.equals(loginId, rawLogin.loginId);
+           Objects.equals(applicationName, rawLogin.applicationName) &&
+           Objects.equals(instant, rawLogin.instant) &&
+           Objects.equals(ipAddress, rawLogin.ipAddress) &&
+           Objects.equals(location, rawLogin.location) &&
+           Objects.equals(loginId, rawLogin.loginId) &&
+           Objects.equals(userId, rawLogin.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, instant, ipAddress, userId, applicationName, loginId);
+    return Objects.hash(applicationId, applicationName, instant, ipAddress, location, loginId, userId);
   }
 
   @Override

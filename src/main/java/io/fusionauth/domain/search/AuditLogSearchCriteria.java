@@ -16,17 +16,29 @@
 package io.fusionauth.domain.search;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.util.SQLTools;
+import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
  * @author Brian Pontarelli
  */
 public class AuditLogSearchCriteria extends BaseSearchCriteria implements Buildable<AuditLogSearchCriteria> {
+  public static final Map<String, String> SortableFields = new LinkedHashMap<>();
+
   public ZonedDateTime end;
 
   public String message;
+
+  public String newValue;
+
+  public String oldValue;
+
+  public String reason;
 
   public ZonedDateTime start;
 
@@ -34,7 +46,7 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
 
   @JacksonConstructor
   public AuditLogSearchCriteria() {
-    orderBy = defaultOrderBy();
+    prepare();
   }
 
   public AuditLogSearchCriteria(String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
@@ -57,17 +69,28 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
   }
 
   @Override
-  public void prepare() {
-    secure();
+  public AuditLogSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
+
+    orderBy = SQLTools.normalizeOrderBy(orderBy, SortableFields);
     user = toSearchString(user);
     message = toSearchString(message);
+    newValue = toSearchString(newValue);
+    oldValue = toSearchString(oldValue);
+    reason = toSearchString(reason);
+    return this;
   }
 
   @Override
   protected String defaultOrderBy() {
-    return "insert_instant DESC";
+    return "insertInstant DESC";
+  }
+
+  static {
+    SortableFields.put("insertInstant", "insert_instant");
+    SortableFields.put("insertUser", "insert_user");
+    SortableFields.put("message", "message");
   }
 }

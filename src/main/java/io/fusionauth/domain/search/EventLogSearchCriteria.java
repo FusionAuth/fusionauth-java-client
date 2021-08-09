@@ -16,9 +16,13 @@
 package io.fusionauth.domain.search;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventLogType;
+import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
+import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
  * Search criteria for the event log.
@@ -26,6 +30,8 @@ import io.fusionauth.domain.EventLogType;
  * @author Brian Pontarelli
  */
 public class EventLogSearchCriteria extends BaseSearchCriteria {
+  public static final Map<String, String> SortableFields = new LinkedHashMap<>();
+
   public ZonedDateTime end;
 
   public String message;
@@ -36,7 +42,7 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
 
   @JacksonConstructor
   public EventLogSearchCriteria() {
-    orderBy = defaultOrderBy();
+    prepare();
   }
 
   public EventLogSearchCriteria(String message, EventLogType type, ZonedDateTime start, ZonedDateTime end, int startRow,
@@ -51,22 +57,31 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
   }
 
   public EventLogSearchCriteria(int startRow, int numberOfResults) {
+    prepare();
     this.numberOfResults = numberOfResults;
-    orderBy = defaultOrderBy();
     this.startRow = startRow;
   }
 
   @Override
-  public void prepare() {
-    secure();
+  public EventLogSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
+
+    orderBy = normalizeOrderBy(orderBy, SortableFields);
     message = toSearchString(message);
+    return this;
   }
 
   @Override
   protected String defaultOrderBy() {
-    return "insert_instant DESC, id DESC";
+    return "insertInstant DESC, id DESC";
+  }
+
+  static {
+    SortableFields.put("id", "id");
+    SortableFields.put("insertInstant", "insert_instant");
+    SortableFields.put("message", "message");
+    SortableFields.put("type", "type");
   }
 }

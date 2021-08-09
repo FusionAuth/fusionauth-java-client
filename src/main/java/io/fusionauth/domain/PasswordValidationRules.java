@@ -68,12 +68,12 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
     }
     PasswordValidationRules that = (PasswordValidationRules) o;
     return maxLength == that.maxLength &&
-        minLength == that.minLength &&
-        requireMixedCase == that.requireMixedCase &&
-        requireNonAlpha == that.requireNonAlpha &&
-        requireNumber == that.requireNumber &&
-        Objects.equals(breachDetection, that.breachDetection) &&
-        Objects.equals(rememberPreviousPasswords, that.rememberPreviousPasswords);
+           minLength == that.minLength &&
+           requireMixedCase == that.requireMixedCase &&
+           requireNonAlpha == that.requireNonAlpha &&
+           requireNumber == that.requireNumber &&
+           Objects.equals(breachDetection, that.breachDetection) &&
+           Objects.equals(rememberPreviousPasswords, that.rememberPreviousPasswords);
   }
 
   @Override

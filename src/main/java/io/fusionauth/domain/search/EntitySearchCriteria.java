@@ -15,6 +15,10 @@
  */
 package io.fusionauth.domain.search;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -23,16 +27,22 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class EntitySearchCriteria extends BaseElasticSearchCriteria implements Buildable<EntitySearchCriteria> {
-  @Override
-  public void prepare() {
-    secure();
+  public static final Set<String> SortableFields = new LinkedHashSet<>(Arrays.asList("clientId",
+                                                                                     "id",
+                                                                                     "insertInstant",
+                                                                                     "lastUpdateInstant",
+                                                                                     "name",
+                                                                                     "parentId",
+                                                                                     "tenantId",
+                                                                                     "typeId"));
 
+  @Override
+  public EntitySearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
-    orderBy = orderBy.replace("insertInstant", "insert_instant")
-                     .replace("lastUpdateInstant", "last_update_instant");
+    return this;
   }
 
   @Override

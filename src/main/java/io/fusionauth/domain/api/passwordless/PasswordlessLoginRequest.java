@@ -17,6 +17,7 @@ package io.fusionauth.domain.api.passwordless;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
@@ -37,6 +38,15 @@ public class PasswordlessLoginRequest extends BaseLoginRequest implements Builda
 
   public PasswordlessLoginRequest(String code, String ipAddress) {
     this.code = code;
-    this.ipAddress = ipAddress;
+
+    if (ipAddress != null) {
+      eventInfo = eventInfo != null ? eventInfo : new EventInfo();
+      eventInfo.ipAddress = ipAddress;
+    }
+  }
+
+  public PasswordlessLoginRequest(EventInfo eventInfo, String code) {
+    super(eventInfo);
+    this.code = code;
   }
 }

@@ -15,14 +15,20 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.UUID;
+
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * Change password request object.
  *
  * @author Brian Pontarelli
  */
-public class ChangePasswordRequest {
+public class ChangePasswordRequest extends BaseEventRequest implements Buildable<ChangePasswordRequest> {
+  public UUID applicationId;
+
   public String currentPassword;
 
   public String loginId;

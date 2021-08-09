@@ -58,7 +58,8 @@ public class LoginRecordSearchCriteria extends BaseSearchCriteria implements Bui
   }
 
   @Override
-  public void prepare() {
+  public LoginRecordSearchCriteria prepare() {
     orderBy = null;
+    return this;
   }
 }

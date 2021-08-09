@@ -16,7 +16,7 @@
 package io.fusionauth.domain.provider;
 
 import java.net.URI;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -37,7 +37,7 @@ import io.fusionauth.domain.util.HTTPMethod;
  */
 public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration>
     implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
-  public final Set<String> domains = new HashSet<>();
+  public final Set<String> domains = new LinkedHashSet<>();
 
   @InternalJSONColumn
   public URI buttonImageURL;

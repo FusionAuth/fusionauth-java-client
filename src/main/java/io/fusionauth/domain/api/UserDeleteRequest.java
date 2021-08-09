@@ -19,13 +19,15 @@ import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * User API delete request object.
  *
  * @author Daniel DeGroff
  */
-public class UserDeleteRequest {
+public class UserDeleteRequest extends BaseEventRequest implements Buildable<UserDeleteRequest> {
   public boolean dryRun;
 
   public boolean hardDelete;
@@ -45,6 +47,12 @@ public class UserDeleteRequest {
   }
 
   public UserDeleteRequest(List<UUID> userIds, boolean hardDelete) {
+    this.hardDelete = hardDelete;
+    this.userIds = userIds;
+  }
+
+  public UserDeleteRequest(EventInfo eventInfo, List<UUID> userIds, boolean hardDelete) {
+    super(eventInfo);
     this.hardDelete = hardDelete;
     this.userIds = userIds;
   }

@@ -25,6 +25,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -46,14 +47,16 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
   public JWTRefreshTokenRevokeEvent() {
   }
 
-  public JWTRefreshTokenRevokeEvent(User user, UUID applicationId, int timeToLiveInSeconds) {
+  public JWTRefreshTokenRevokeEvent(EventInfo info, User user, UUID applicationId, int timeToLiveInSeconds) {
+    super(info);
     this.applicationId = applicationId;
     this.applicationTimeToLiveInSeconds.put(applicationId, timeToLiveInSeconds);
     this.user = user;
     this.userId = user == null ? null : user.id;
   }
 
-  public JWTRefreshTokenRevokeEvent(User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
+  public JWTRefreshTokenRevokeEvent(EventInfo info, User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
+    super(info);
     this.applicationTimeToLiveInSeconds.putAll(applicationTimeToLiveInSeconds);
     this.user = user;
     this.userId = user == null ? null : user.id;

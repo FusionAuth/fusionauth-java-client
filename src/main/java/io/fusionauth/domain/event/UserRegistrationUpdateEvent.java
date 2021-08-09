@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 
@@ -42,7 +43,8 @@ public class UserRegistrationUpdateEvent extends BaseEvent implements Buildable<
   public UserRegistrationUpdateEvent() {
   }
 
-  public UserRegistrationUpdateEvent(UUID applicationId, UserRegistration original, UserRegistration registration, User user) {
+  public UserRegistrationUpdateEvent(EventInfo info, UUID applicationId, UserRegistration original, UserRegistration registration, User user) {
+    super(info);
     this.applicationId = applicationId;
     this.original = original;
     this.registration = registration;
@@ -59,10 +61,10 @@ public class UserRegistrationUpdateEvent extends BaseEvent implements Buildable<
     }
     UserRegistrationUpdateEvent that = (UserRegistrationUpdateEvent) o;
     return super.equals(o) &&
-        Objects.equals(applicationId, that.applicationId) &&
-        Objects.equals(original, that.original) &&
-        Objects.equals(registration, that.registration) &&
-        Objects.equals(user, that.user);
+           Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(original, that.original) &&
+           Objects.equals(registration, that.registration) &&
+           Objects.equals(user, that.user);
   }
 
   @Override

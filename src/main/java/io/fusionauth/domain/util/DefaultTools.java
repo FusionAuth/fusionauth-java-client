@@ -17,6 +17,7 @@ package io.fusionauth.domain.util;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Helper for dealing with default values.
@@ -32,6 +33,10 @@ public final class DefaultTools {
 
   public static <T> T defaultIfNull(T value, T defaultValue) {
     return Optional.ofNullable(value).orElse(defaultValue);
+  }
+
+  public static <T> T defaultIfNull(T value, Supplier<T> defaultValue) {
+    return Optional.ofNullable(value).orElse(defaultValue.get());
   }
 
   public static int defaultIfZero(int value, int defaultValue) {

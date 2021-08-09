@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -34,7 +35,8 @@ public class UserReactivateEvent extends BaseEvent implements Buildable<UserReac
   public UserReactivateEvent() {
   }
 
-  public UserReactivateEvent(User user) {
+  public UserReactivateEvent(EventInfo info, User user) {
+    super(info);
     this.user = user;
   }
 
@@ -48,7 +50,12 @@ public class UserReactivateEvent extends BaseEvent implements Buildable<UserReac
     }
     UserReactivateEvent that = (UserReactivateEvent) o;
     return super.equals(o) &&
-        Objects.equals(user, that.user);
+           Objects.equals(user, that.user);
+  }
+
+  @Override
+  public EventType getType() {
+    return EventType.UserReactivate;
   }
 
   @Override
@@ -59,10 +66,5 @@ public class UserReactivateEvent extends BaseEvent implements Buildable<UserReac
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserReactivate;
   }
 }

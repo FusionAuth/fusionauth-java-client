@@ -76,6 +76,10 @@ import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.api.IdentityProviderResponse;
 import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
+import io.fusionauth.domain.api.IPAccessControlListRequest;
+import io.fusionauth.domain.api.IPAccessControlListResponse;
+import io.fusionauth.domain.api.IPAccessControlListSearchRequest;
+import io.fusionauth.domain.api.IPAccessControlListSearchResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
@@ -84,6 +88,7 @@ import io.fusionauth.domain.api.LoginRecordSearchRequest;
 import io.fusionauth.domain.api.LoginRecordSearchResponse;
 import io.fusionauth.domain.api.LoginRequest;
 import io.fusionauth.domain.api.LoginResponse;
+import io.fusionauth.domain.api.LogoutRequest;
 import io.fusionauth.domain.api.MemberDeleteRequest;
 import io.fusionauth.domain.api.MemberRequest;
 import io.fusionauth.domain.api.MemberResponse;
@@ -104,10 +109,12 @@ import io.fusionauth.domain.api.ReactorResponse;
 import io.fusionauth.domain.api.ReindexRequest;
 import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
+import io.fusionauth.domain.api.TenantDeleteRequest;
 import io.fusionauth.domain.api.TenantRequest;
 import io.fusionauth.domain.api.TenantResponse;
 import io.fusionauth.domain.api.ThemeRequest;
 import io.fusionauth.domain.api.ThemeResponse;
+import io.fusionauth.domain.api.TwoFactorDisableRequest;
 import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
 import io.fusionauth.domain.api.TwoFactorResponse;
@@ -121,6 +128,7 @@ import io.fusionauth.domain.api.UserConsentRequest;
 import io.fusionauth.domain.api.UserConsentResponse;
 import io.fusionauth.domain.api.UserDeleteRequest;
 import io.fusionauth.domain.api.UserDeleteResponse;
+import io.fusionauth.domain.api.UserDeleteSingleRequest;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
 import io.fusionauth.domain.api.VersionResponse;
@@ -136,8 +144,11 @@ import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRespo
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
 import io.fusionauth.domain.api.jwt.IssueResponse;
 import io.fusionauth.domain.api.jwt.JWTRefreshResponse;
+import io.fusionauth.domain.api.jwt.JWTVendRequest;
+import io.fusionauth.domain.api.jwt.JWTVendResponse;
 import io.fusionauth.domain.api.jwt.RefreshRequest;
 import io.fusionauth.domain.api.jwt.RefreshTokenResponse;
+import io.fusionauth.domain.api.jwt.RefreshTokenRevokeRequest;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
 import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
@@ -162,6 +173,7 @@ import io.fusionauth.domain.api.user.ForgotPasswordResponse;
 import io.fusionauth.domain.api.user.ImportRequest;
 import io.fusionauth.domain.api.user.RecentLoginResponse;
 import io.fusionauth.domain.api.user.RefreshTokenImportRequest;
+import io.fusionauth.domain.api.user.RegistrationDeleteRequest;
 import io.fusionauth.domain.api.user.RegistrationRequest;
 import io.fusionauth.domain.api.user.RegistrationResponse;
 import io.fusionauth.domain.api.user.SearchRequest;
@@ -603,6 +615,22 @@ public class FusionAuthClient {
   public ClientResponse<MemberResponse, Errors> createGroupMembers(MemberRequest request) {
     return start(MemberResponse.class, Errors.class)
         .uri("/api/group/member")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates an IP Access Control List. You can optionally specify an Id on this create request, if one is not provided one will be generated.
+   *
+   * @param accessControlListId (Optional) The Id for the IP Access Control List. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all of the information used to create the IP Access Control List.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Errors> createIPAccessControlList(UUID accessControlListId, IPAccessControlListRequest request) {
+    return start(IPAccessControlListResponse.class, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(accessControlListId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -1102,6 +1130,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the IP Access Control List for the given Id.
+   *
+   * @param ipAccessControlListId The Id of the IP Access Control List to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteIPAccessControlList(UUID ipAccessControlListId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(ipAccessControlListId)
+        .delete()
+        .go();
+  }
+
+  /**
    * Deletes the identity provider for the given Id.
    *
    * @param identityProviderId The Id of the identity provider to delete.
@@ -1188,7 +1230,26 @@ public class FusionAuthClient {
   }
 
   /**
-   * Deletes the tenant for the given Id.
+   * Deletes the user registration for the given user and application along with the given JSON body that contains the event information.
+   *
+   * @param userId The Id of the user whose registration is being deleted.
+   * @param applicationId The Id of the application to remove the registration for.
+   * @param request The request body that contains the event information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteRegistrationWithRequest(UUID userId, UUID applicationId, RegistrationDeleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/registration")
+        .urlSegment(userId)
+        .urlSegment(applicationId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the tenant based on the given Id on the URL. This permanently deletes all information, metrics, reports and data associated
+   * with the tenant and everything under the tenant (applications, users, etc).
    *
    * @param tenantId The Id of the tenant to delete.
    * @return The ClientResponse object.
@@ -1213,6 +1274,23 @@ public class FusionAuthClient {
         .uri("/api/tenant")
         .urlSegment(tenantId)
         .urlParameter("async", true)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the tenant based on the given request (sent to the API as JSON). This permanently deletes all information, metrics, reports and data associated
+   * with the tenant and everything under the tenant (applications, users, etc).
+   *
+   * @param tenantId The Id of the tenant to delete.
+   * @param request The request object that contains all of the information used to delete the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteTenantWithRequest(UUID tenantId, TenantDeleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/tenant")
+        .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .delete()
         .go();
   }
@@ -1296,6 +1374,23 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the user based on the given request (sent to the API as JSON). This permanently deletes all information, metrics, reports and data associated
+   * with the user.
+   *
+   * @param userId The Id of the user to delete (required).
+   * @param request The request object that contains all of the information used to delete the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteUserWithRequest(UUID userId, UserDeleteSingleRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
+  }
+
+  /**
    * Deletes the users with the given ids, or users matching the provided JSON query or queryString.
    * The order of preference is ids, query and then queryString, it is recommended to only provide one of the three for the request.
    * 
@@ -1358,9 +1453,25 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> disableTwoFactor(UUID userId, String methodId, String code) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/two-factor")
-        .urlParameter("userId", userId)
+        .urlSegment(userId)
         .urlParameter("methodId", methodId)
         .urlParameter("code", code)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Disable Two Factor authentication for a user using a JSON body rather than URL parameters.
+   *
+   * @param userId The Id of the User for which you're disabling Two Factor authentication.
+   * @param request The request information that contains the code and methodId along with any event information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> disableTwoFactorWithRequest(UUID userId, TwoFactorDisableRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/two-factor")
+        .urlSegment(userId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .delete()
         .go();
   }
@@ -1777,6 +1888,21 @@ public class FusionAuthClient {
         .uri("/api/logout")
         .urlParameter("global", global)
         .urlParameter("refreshToken", refreshToken)
+        .post()
+        .go();
+  }
+
+  /**
+   * The Logout API is intended to be used to remove the refresh token and access token cookies if they exist on the
+   * client and revoke the refresh token stored. This API takes the refresh token in the JSON body.
+   *
+   * @param request The request object that contains all of the information used to logout the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> logoutWithRequest(LogoutRequest request) {
+    return startAnonymous(Void.TYPE, Void.TYPE)
+        .uri("/api/logout")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
   }
@@ -2766,6 +2892,20 @@ public class FusionAuthClient {
   public ClientResponse<GroupResponse, Void> retrieveGroups() {
     return start(GroupResponse.class, Void.TYPE)
         .uri("/api/group")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the IP Access Control List with the given Id.
+   *
+   * @param ipAccessControlListId The Id of the IP Access Control List.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Void> retrieveIPAccessControlList(UUID ipAccessControlListId) {
+    return start(IPAccessControlListResponse.class, Void.TYPE)
+        .uri("/api/ip-acl")
+        .urlSegment(ipAccessControlListId)
         .get()
         .go();
   }
@@ -3811,6 +3951,21 @@ public class FusionAuthClient {
   }
 
   /**
+   * Revokes refresh tokens using the information in the JSON body. The handling for this method is the same as the revokeRefreshToken method
+   * and is based on the information you provide in the RefreshDeleteRequest object. See that method for additional information.
+   *
+   * @param request The request information used to revoke the refresh tokens.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> revokeRefreshTokensWithRequest(RefreshTokenRevokeRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/jwt/refresh")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
+  }
+
+  /**
    * Revokes a single User consent by Id.
    *
    * @param userConsentId The User Consent Id
@@ -3903,6 +4058,20 @@ public class FusionAuthClient {
   public ClientResponse<EventLogSearchResponse, Void> searchEventLogs(EventLogSearchRequest request) {
     return start(EventLogSearchResponse.class, Void.TYPE)
         .uri("/api/system/event-log/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches the IP Access Control Lists with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListSearchResponse, Void> searchIPAccessControlLists(IPAccessControlListSearchRequest request) {
+    return start(IPAccessControlListSearchResponse.class, Void.TYPE)
+        .uri("/api/ip-acl/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4353,6 +4522,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates the IP Access Control List with the given Id.
+   *
+   * @param accessControlListId The Id of the IP Access Control List to update.
+   * @param request The request that contains all of the new IP Access Control List information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Errors> updateIPAccessControlList(UUID accessControlListId, IPAccessControlListRequest request) {
+    return start(IPAccessControlListResponse.class, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(accessControlListId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
    * Updates the identity provider with the given Id.
    *
    * @param identityProviderId The Id of the identity provider to update.
@@ -4636,6 +4821,28 @@ public class FusionAuthClient {
         .uri("/api/jwt/validate")
         .authorization("Bearer " + encodedJWT)
         .get()
+        .go();
+  }
+
+  /**
+   * It's a JWT vending machine!
+   * 
+   * Issue a new access token (JWT) with the provided claims in the request. This JWT is not scoped to a tenant or user, it is a free form 
+   * token that will contain what claims you provide.
+   * <p>
+   * The iat, exp and jti claims will be added by FusionAuth, all other claims must be provided by the caller.
+   * 
+   * If a TTL is not provided in the request, the TTL will be retrieved from the default Tenant or the Tenant specified on the request either 
+   * by way of the X-FusionAuth-TenantId request header, or a tenant scoped API key.
+   *
+   * @param request The request that contains all of the claims for this JWT.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<JWTVendResponse, Errors> vendJWT(JWTVendRequest request) {
+    return start(JWTVendResponse.class, Errors.class)
+        .uri("/api/jwt/vend")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
         .go();
   }
 

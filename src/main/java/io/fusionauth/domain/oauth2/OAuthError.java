@@ -31,6 +31,7 @@ public class OAuthError implements OAuthResponse {
 
   public OAuthErrorType error;
 
+  @SuppressWarnings("unused")
   @JsonProperty("error_uri")
   public String errorURI;
 

@@ -18,14 +18,16 @@ package io.fusionauth.domain.api.user;
 import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * Import request.
  *
  * @author Brian Pontarelli
  */
-public class ImportRequest {
+public class ImportRequest extends BaseEventRequest {
   public String encryptionScheme;
 
   public Integer factor;
@@ -39,6 +41,11 @@ public class ImportRequest {
   }
 
   public ImportRequest(List<User> users) {
+    this.users = users;
+  }
+
+  public ImportRequest(EventInfo eventInfo, List<User> users) {
+    super(eventInfo);
     this.users = users;
   }
 }

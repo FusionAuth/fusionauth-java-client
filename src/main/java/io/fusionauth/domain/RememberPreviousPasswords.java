@@ -24,7 +24,7 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class RememberPreviousPasswords extends Enableable {
-  public int count;
+  public int count = 1;
 
   @JacksonConstructor
   public RememberPreviousPasswords() {
@@ -45,7 +45,7 @@ public class RememberPreviousPasswords extends Enableable {
     }
     RememberPreviousPasswords that = (RememberPreviousPasswords) o;
     return super.equals(o) &&
-        Objects.equals(count, that.count);
+           Objects.equals(count, that.count);
   }
 
   @Override

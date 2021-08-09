@@ -34,6 +34,7 @@ public abstract class BaseElasticSearchCriteria extends BaseSearchCriteria {
   public List<SortField> sortFields = new ArrayList<>();
 
   @Override
-  public void prepare() {
+  public BaseElasticSearchCriteria prepare() {
+    return this;
   }
 }

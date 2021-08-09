@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -34,7 +35,8 @@ public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserE
   public UserEmailVerifiedEvent() {
   }
 
-  public UserEmailVerifiedEvent(User user) {
+  public UserEmailVerifiedEvent(EventInfo info, User user) {
+    super(info);
     this.user = user;
   }
 
@@ -48,7 +50,12 @@ public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserE
     }
     UserEmailVerifiedEvent that = (UserEmailVerifiedEvent) o;
     return super.equals(o) &&
-        Objects.equals(user, that.user);
+           Objects.equals(user, that.user);
+  }
+
+  @Override
+  public EventType getType() {
+    return EventType.UserEmailVerified;
   }
 
   @Override
@@ -59,10 +66,5 @@ public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserE
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserEmailVerified;
   }
 }

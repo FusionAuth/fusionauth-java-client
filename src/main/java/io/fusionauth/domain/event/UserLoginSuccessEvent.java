@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
 import static io.fusionauth.domain.connector.BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
@@ -42,6 +43,7 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
 
   public String identityProviderName;
 
+  @Deprecated
   public String ipAddress;
 
   public User user;
@@ -50,23 +52,33 @@ public class UserLoginSuccessEvent extends BaseEvent implements Buildable<UserLo
   public UserLoginSuccessEvent() {
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, String ipAddress, User user) {
+  public UserLoginSuccessEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
+    super(info);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     // Identity provider login always takes the FusionAuth connector Id
     this.connectorId = FUSIONAUTH_CONNECTOR_ID;
     this.identityProviderId = identityProvider.id;
     this.identityProviderName = identityProvider.name;
-    this.ipAddress = ipAddress;
     this.user = user;
+
+    // Maintain the old JSON format
+    if (info != null && info.ipAddress != null) {
+      ipAddress = info.ipAddress;
+    }
   }
 
-  public UserLoginSuccessEvent(UUID applicationId, UUID connectorId, String authenticationType, String ipAddress, User user) {
+  public UserLoginSuccessEvent(EventInfo info, UUID applicationId, UUID connectorId, String authenticationType, User user) {
+    super(info);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     this.connectorId = connectorId;
-    this.ipAddress = ipAddress;
     this.user = user;
+
+    // Maintain the old JSON format
+    if (info != null && info.ipAddress != null) {
+      ipAddress = info.ipAddress;
+    }
   }
 
   @Override

@@ -166,7 +166,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.registrationSent,
                      templates.registrationVerificationRequired,
                      templates.registrationVerify,
-                     templates.samlv2Logout)
+                     templates.samlv2Logout,
+                     templates.unauthorized)
                  .anyMatch(Objects::isNull);
   }
 
@@ -250,7 +251,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "registrationSent",
         "registrationVerificationRequired",
         "registrationVerify",
-        "samlv2Logout"
+        "samlv2Logout",
+        "unauthorized"
     )));
 
     public String accountEdit;
@@ -323,6 +325,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String samlv2Logout;
 
+    public String unauthorized;
+
     public Templates() {
     }
 
@@ -362,6 +366,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.registrationVerificationRequired = other.registrationVerificationRequired;
       this.registrationVerify = other.registrationVerify;
       this.samlv2Logout = other.samlv2Logout;
+      this.unauthorized = other.unauthorized;
     }
 
     @Override
@@ -407,7 +412,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(registrationSent, that.registrationSent) &&
              Objects.equals(registrationVerificationRequired, that.registrationVerificationRequired) &&
              Objects.equals(registrationVerify, that.registrationVerify) &&
-             Objects.equals(samlv2Logout, that.samlv2Logout);
+             Objects.equals(samlv2Logout, that.samlv2Logout) &&
+             Objects.equals(unauthorized, that.unauthorized);
     }
 
     @Deprecated
@@ -467,7 +473,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           registrationSent,
           registrationVerificationRequired,
           registrationVerify,
-          samlv2Logout);
+          samlv2Logout,
+          unauthorized);
     }
 
     @SuppressWarnings("DuplicatedCode")
@@ -507,6 +514,7 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       registrationVerificationRequired = lineReturns(trimToNull(registrationVerificationRequired));
       registrationVerify = lineReturns(trimToNull(registrationVerify));
       samlv2Logout = lineReturns(trimToNull(samlv2Logout));
+      unauthorized = lineReturns(trimToNull(unauthorized));
     }
 
     @Override

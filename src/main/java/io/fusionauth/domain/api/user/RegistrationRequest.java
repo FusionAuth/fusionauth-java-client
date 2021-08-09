@@ -16,15 +16,19 @@
 package io.fusionauth.domain.api.user;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * Registration API request object.
  *
  * @author Brian Pontarelli
  */
-public class RegistrationRequest {
+public class RegistrationRequest extends BaseEventRequest {
+  public boolean disableDomainBlock;
+
   public boolean generateAuthenticationToken;
 
   public UserRegistration registration;
@@ -47,6 +51,20 @@ public class RegistrationRequest {
   }
 
   public RegistrationRequest(User user, UserRegistration registration, boolean sendSetPasswordEmail, boolean skipVerification) {
+    this.user = user;
+    this.registration = registration;
+    this.sendSetPasswordEmail = sendSetPasswordEmail;
+    this.skipVerification = skipVerification;
+  }
+
+  public RegistrationRequest(EventInfo eventInfo, User user, UserRegistration registration) {
+    super(eventInfo);
+    this.user = user;
+    this.registration = registration;
+  }
+
+  public RegistrationRequest(EventInfo eventInfo, User user, UserRegistration registration, boolean sendSetPasswordEmail, boolean skipVerification) {
+    super(eventInfo);
     this.user = user;
     this.registration = registration;
     this.sendSetPasswordEmail = sendSetPasswordEmail;

@@ -36,6 +36,8 @@ public class APIKey implements Buildable<APIKey> {
 
   public ZonedDateTime insertInstant;
 
+  public UUID ipAccessControlListId;
+
   public String key;
 
   public boolean keyManager;
@@ -65,12 +67,20 @@ public class APIKey implements Buildable<APIKey> {
       return false;
     }
     APIKey apiKey = (APIKey) o;
-    return keyManager == apiKey.keyManager && Objects.equals(id, apiKey.id) && Objects.equals(insertInstant, apiKey.insertInstant) && Objects.equals(key, apiKey.key) && Objects.equals(lastUpdateInstant, apiKey.lastUpdateInstant) && Objects.equals(metaData, apiKey.metaData) && Objects.equals(permissions, apiKey.permissions) && Objects.equals(tenantId, apiKey.tenantId);
+    return keyManager == apiKey.keyManager &&
+           Objects.equals(id, apiKey.id) &&
+           Objects.equals(insertInstant, apiKey.insertInstant) &&
+           Objects.equals(ipAccessControlListId, apiKey.ipAccessControlListId) &&
+           Objects.equals(key, apiKey.key) &&
+           Objects.equals(lastUpdateInstant, apiKey.lastUpdateInstant) &&
+           Objects.equals(metaData, apiKey.metaData) &&
+           Objects.equals(permissions, apiKey.permissions) &&
+           Objects.equals(tenantId, apiKey.tenantId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, insertInstant, key, keyManager, lastUpdateInstant, metaData, permissions, tenantId);
+    return Objects.hash(id, insertInstant, ipAccessControlListId, key, keyManager, lastUpdateInstant, metaData, permissions, tenantId);
   }
 
   public void normalize() {

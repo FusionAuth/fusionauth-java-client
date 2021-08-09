@@ -17,6 +17,7 @@ package io.fusionauth.domain.provider;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -36,7 +37,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
   @InternalJSONColumn
   public final Map<String, String> claimMap = new LinkedHashMap<>();
 
-  public final Set<String> domains = new HashSet<>();
+  public final Set<String> domains = new LinkedHashSet<>();
 
   public UUID defaultKeyId;
 

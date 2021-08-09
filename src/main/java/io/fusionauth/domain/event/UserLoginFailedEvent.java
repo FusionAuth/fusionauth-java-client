@@ -21,6 +21,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -33,6 +34,7 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
 
   public String authenticationType;
 
+  @Deprecated
   public String ipAddress;
 
   public User user;
@@ -41,11 +43,16 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
   public UserLoginFailedEvent() {
   }
 
-  public UserLoginFailedEvent(UUID applicationId, String authenticationType, String ipAddress, User user) {
+  public UserLoginFailedEvent(EventInfo info, UUID applicationId, String authenticationType, User user) {
+    super(info);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
-    this.ipAddress = ipAddress;
     this.user = user;
+
+    // Maintain the old JSON format
+    if (info != null && info.ipAddress != null) {
+      ipAddress = info.ipAddress;
+    }
   }
 
   @Override

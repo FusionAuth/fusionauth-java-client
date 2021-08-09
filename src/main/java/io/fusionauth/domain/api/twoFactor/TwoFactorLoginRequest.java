@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
@@ -43,10 +44,22 @@ public class TwoFactorLoginRequest extends BaseLoginRequest implements Buildable
     this.twoFactorId = twoFactorId;
   }
 
+  public TwoFactorLoginRequest(EventInfo eventInfo, UUID applicationId, String code, String twoFactorId) {
+    super(eventInfo);
+    this.applicationId = applicationId;
+    this.code = code;
+    this.twoFactorId = twoFactorId;
+  }
+
+  @Deprecated
   public TwoFactorLoginRequest(UUID applicationId, String code, String twoFactorId, String ipAddress) {
     this.applicationId = applicationId;
     this.code = code;
     this.twoFactorId = twoFactorId;
-    this.ipAddress = ipAddress;
+
+    if (ipAddress != null) {
+      eventInfo = eventInfo != null ? eventInfo : new EventInfo();
+      eventInfo.ipAddress = ipAddress;
+    }
   }
 }

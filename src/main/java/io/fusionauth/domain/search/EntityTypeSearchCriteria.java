@@ -15,30 +15,42 @@
  */
 package io.fusionauth.domain.search;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
+import static io.fusionauth.domain.util.SQLTools.toSearchString;
+
 /**
  * Search criteria for entity types.
  *
  * @author Brian Pontarelli
  */
 public class EntityTypeSearchCriteria extends BaseSearchCriteria {
+  public static final Map<String, String> SortableFields = new LinkedHashMap<>();
+
   public String name;
 
   @Override
-  public void prepare() {
-    secure();
-
+  public EntityTypeSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
-    orderBy = orderBy.replace("insertInstant", "insert_instant")
-                     .replace("lastUpdateInstant", "last_update_instant");
-
+    orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
+    return this;
   }
 
   @Override
   protected String defaultOrderBy() {
     return "name ASC";
+  }
+
+  static {
+    SortableFields.put("id", "id");
+    SortableFields.put("insertInstant", "insert_instant");
+    SortableFields.put("lastUpdateInstant", "last_update_instant");
+    SortableFields.put("name", "name");
   }
 }

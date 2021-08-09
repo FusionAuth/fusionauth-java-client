@@ -20,6 +20,7 @@ import java.util.Objects;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -36,7 +37,8 @@ public class UserUpdateEvent extends BaseEvent implements Buildable<UserUpdateEv
   public UserUpdateEvent() {
   }
 
-  public UserUpdateEvent(User original, User user) {
+  public UserUpdateEvent(EventInfo info, User original, User user) {
+    super(info);
     this.original = original;
     this.user = user;
   }
@@ -51,7 +53,12 @@ public class UserUpdateEvent extends BaseEvent implements Buildable<UserUpdateEv
     }
     UserUpdateEvent that = (UserUpdateEvent) o;
     return super.equals(o) &&
-        Objects.equals(user, that.user) && Objects.equals(original, that.original);
+           Objects.equals(user, that.user) && Objects.equals(original, that.original);
+  }
+
+  @Override
+  public EventType getType() {
+    return EventType.UserUpdate;
   }
 
   @Override
@@ -62,10 +69,5 @@ public class UserUpdateEvent extends BaseEvent implements Buildable<UserUpdateEv
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserUpdate;
   }
 }

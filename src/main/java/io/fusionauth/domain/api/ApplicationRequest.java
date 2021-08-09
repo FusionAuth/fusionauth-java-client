@@ -21,13 +21,14 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.ApplicationRole;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * The Application API request object.
  *
  * @author Brian Pontarelli
  */
-public class ApplicationRequest {
+public class ApplicationRequest extends BaseEventRequest {
   public Application application;
 
   public ApplicationRole role;
@@ -44,6 +45,17 @@ public class ApplicationRequest {
   }
 
   public ApplicationRequest(ApplicationRole role) {
+    this.role = role;
+  }
+
+  public ApplicationRequest(EventInfo info, Application application, List<UUID> webhookIds) {
+    super(info);
+    this.application = application;
+    this.webhookIds = webhookIds;
+  }
+
+  public ApplicationRequest(EventInfo info, ApplicationRole role) {
+    super(info);
     this.role = role;
   }
 }

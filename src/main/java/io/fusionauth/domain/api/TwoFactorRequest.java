@@ -17,11 +17,12 @@ package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * @author Brian Pontarelli
  */
-public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
+public class TwoFactorRequest extends BaseEventRequest implements Buildable<TwoFactorRequest> {
   public String authenticatorId;
 
   public String code;
@@ -41,11 +42,21 @@ public class TwoFactorRequest implements Buildable<TwoFactorRequest> {
   }
 
   public TwoFactorRequest(String code, String secret) {
-    this.code = code;
-    this.secret = secret;
+    this(code, null, secret);
   }
 
   public TwoFactorRequest(String code, String method, String secret) {
+    this.code = code;
+    this.method = method;
+    this.secret = secret;
+  }
+
+  public TwoFactorRequest(EventInfo eventInfo, String code, String secret) {
+    this(eventInfo, code, null, secret);
+  }
+
+  public TwoFactorRequest(EventInfo eventInfo, String code, String method, String secret) {
+    super(eventInfo);
     this.code = code;
     this.method = method;
     this.secret = secret;

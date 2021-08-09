@@ -26,6 +26,7 @@ import com.inversoft.json.ToString;
  *
  * @author Brian Pontarelli
  */
+// TODO : Future : This shouldn't be enableable
 public class Lambda extends Enableable implements Buildable<Lambda> {
   public String body;
 

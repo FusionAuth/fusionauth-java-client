@@ -23,6 +23,8 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.api.BaseEventRequest;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -31,7 +33,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  *
  * @author Brian Pontarelli
  */
-public class ActionRequest {
+public class ActionRequest extends BaseEventRequest {
   public ActionData action;
 
   public boolean broadcast;
@@ -41,6 +43,12 @@ public class ActionRequest {
   }
 
   public ActionRequest(ActionData action, boolean broadcast) {
+    this.action = action;
+    this.broadcast = broadcast;
+  }
+
+  public ActionRequest(EventInfo eventInfo, ActionData action, boolean broadcast) {
+    super(eventInfo);
     this.action = action;
     this.broadcast = broadcast;
   }

@@ -18,21 +18,27 @@ package io.fusionauth.domain.api;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.Tenant;
 
 /**
  * @author Daniel DeGroff
  */
-public class TenantRequest {
+public class TenantRequest extends BaseEventRequest {
   public UUID sourceTenantId;
 
   public Tenant tenant;
+
+  @JacksonConstructor
+  public TenantRequest() {
+  }
 
   public TenantRequest(Tenant tenant) {
     this.tenant = tenant;
   }
 
-  @JacksonConstructor
-  public TenantRequest() {
+  public TenantRequest(EventInfo eventInfo, Tenant tenant) {
+    super(eventInfo);
+    this.tenant = tenant;
   }
 }

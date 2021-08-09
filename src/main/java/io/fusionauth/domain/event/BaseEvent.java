@@ -19,45 +19,29 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * Base-class for all FusionAuth events.
  *
  * @author Brian Pontarelli
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({
-    @Type(value = UserActionEvent.class, name = "user.action"),
-    @Type(value = UserCreateEvent.class, name = "user.create"),
-    @Type(value = UserUpdateEvent.class, name = "user.update"),
-    @Type(value = UserDeleteEvent.class, name = "user.delete"),
-    @Type(value = UserDeactivateEvent.class, name = "user.deactivate"),
-    @Type(value = UserEmailVerifiedEvent.class, name = "user.email.verified"),
-    @Type(value = UserReactivateEvent.class, name = "user.reactivate"),
-    @Type(value = UserBulkCreateEvent.class, name = "user.bulk.create"),
-    @Type(value = UserLoginFailedEvent.class, name = "user.login.failed"),
-    @Type(value = UserLoginSuccessEvent.class, name = "user.login.success"),
-    @Type(value = UserPasswordBreachEvent.class, name = "user.password.breach"),
-    @Type(value = UserRegistrationCreateEvent.class, name = "user.registration.create"),
-    @Type(value = UserRegistrationUpdateEvent.class, name = "user.registration.update"),
-    @Type(value = UserRegistrationDeleteEvent.class, name = "user.registration.delete"),
-    @Type(value = UserRegistrationVerifiedEvent.class, name = "user.registration.verified"),
-    @Type(value = JWTRefreshTokenRevokeEvent.class, name = "jwt.refresh-token.revoke"),
-    @Type(value = JWTPublicKeyUpdateEvent.class, name = "jwt.public-key.update"),
-    @Type(value = JWTRefreshEvent.class, name = "jwt.refresh"),
-    @Type(value = TestEvent.class, name = "test")
-})
 public abstract class BaseEvent {
   public ZonedDateTime createInstant;
 
   public UUID id;
 
+  public EventInfo info;
+
   public UUID tenantId;
+
+  public BaseEvent() {
+  }
+
+  public BaseEvent(EventInfo info) {
+    this.info = info;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -70,19 +54,18 @@ public abstract class BaseEvent {
     BaseEvent baseEvent = (BaseEvent) o;
     return Objects.equals(createInstant, baseEvent.createInstant) &&
            Objects.equals(id, baseEvent.id) &&
-           Objects.equals(tenantId, baseEvent.tenantId) &&
-           Objects.equals(getType(), baseEvent.getType());
+           Objects.equals(info, baseEvent.info) &&
+           Objects.equals(tenantId, baseEvent.tenantId);
   }
 
   /**
    * @return The type of this event.
    */
-  @JsonIgnore
   public abstract EventType getType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(createInstant, id, tenantId, getType());
+    return Objects.hash(createInstant, id, info, tenantId);
   }
 
   @Override

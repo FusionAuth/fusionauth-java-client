@@ -17,8 +17,10 @@ package io.fusionauth.domain.api;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.AuthenticationThreats;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.ChangePasswordReason;
 import io.fusionauth.domain.TwoFactorMethod;
@@ -45,6 +47,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
   public String registrationVerificationId;
 
   public Map<String, Object> state;
+
+  public Set<AuthenticationThreats> threatsDetected;
 
   public String token;
 

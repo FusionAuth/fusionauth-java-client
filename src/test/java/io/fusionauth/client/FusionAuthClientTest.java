@@ -42,9 +42,9 @@ public class FusionAuthClientTest {
       apiKeyClient.deleteUser(userResponse.successResponse.user.id);
     }
 
-    ClientResponse<UserResponse, Errors> response = apiKeyClient.createUser(null, new UserRequest(new User()
-                                                                                                      .with(u -> u.email = "client_java@fusionauth.io")
-                                                                                                      .with(u -> u.password = "password")));
+    ClientResponse<UserResponse, Errors> response = apiKeyClient.createUser(null, new UserRequest(null, new User()
+        .with(u -> u.email = "client_java@fusionauth.io")
+        .with(u -> u.password = "password")));
     assertTrue(response.wasSuccessful());
 
     // w/ API key, success with response body

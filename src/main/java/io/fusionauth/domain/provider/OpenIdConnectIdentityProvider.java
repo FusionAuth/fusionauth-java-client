@@ -16,7 +16,7 @@
 package io.fusionauth.domain.provider;
 
 import java.net.URI;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -30,7 +30,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdConnectApplicationConfiguration>
     implements Buildable<OpenIdConnectIdentityProvider>, DomainBasedIdentityProvider, SupportsPostBindings {
-  public final Set<String> domains = new HashSet<>();
+  public final Set<String> domains = new LinkedHashSet<>();
 
   @InternalJSONColumn
   public URI buttonImageURL;

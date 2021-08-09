@@ -26,7 +26,7 @@ import com.inversoft.json.ToString;
  * @author Trevor Smith
  */
 public class TimeBasedDeletePolicy extends Enableable implements Buildable<TimeBasedDeletePolicy> {
-  public int numberOfDaysToRetain;
+  public int numberOfDaysToRetain = 120;
 
   @JacksonConstructor
   public TimeBasedDeletePolicy() {

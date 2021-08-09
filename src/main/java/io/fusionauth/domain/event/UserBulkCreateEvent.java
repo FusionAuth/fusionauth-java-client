@@ -21,6 +21,7 @@ import java.util.Objects;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
@@ -35,7 +36,8 @@ public class UserBulkCreateEvent extends BaseEvent implements Buildable<UserBulk
   public UserBulkCreateEvent() {
   }
 
-  public UserBulkCreateEvent(List<User> users) {
+  public UserBulkCreateEvent(EventInfo info, List<User> users) {
+    super(info);
     this.users = users;
   }
 
@@ -49,7 +51,12 @@ public class UserBulkCreateEvent extends BaseEvent implements Buildable<UserBulk
     }
     UserBulkCreateEvent that = (UserBulkCreateEvent) o;
     return super.equals(o) &&
-        Objects.equals(users, that.users);
+           Objects.equals(users, that.users);
+  }
+
+  @Override
+  public EventType getType() {
+    return EventType.UserBulkCreate;
   }
 
   @Override
@@ -60,10 +67,5 @@ public class UserBulkCreateEvent extends BaseEvent implements Buildable<UserBulk
   @Override
   public String toString() {
     return ToString.toString(this);
-  }
-
-  @Override
-  public EventType getType() {
-    return EventType.UserBulkCreate;
   }
 }

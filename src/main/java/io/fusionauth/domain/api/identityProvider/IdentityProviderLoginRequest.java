@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseLoginRequest;
 
 /**
@@ -37,6 +38,10 @@ public class IdentityProviderLoginRequest extends BaseLoginRequest implements Bu
 
   @JacksonConstructor
   public IdentityProviderLoginRequest() {
+  }
+
+  public IdentityProviderLoginRequest(EventInfo eventInfo) {
+    super(eventInfo);
   }
 
   public IdentityProviderLoginRequest addData(String key, String value) {
