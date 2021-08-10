@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.UUID;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
@@ -23,6 +25,8 @@ import io.fusionauth.domain.EventInfo;
  * @author Brian Pontarelli
  */
 public class TwoFactorDisableRequest extends BaseEventRequest implements Buildable<TwoFactorDisableRequest> {
+  public UUID applicationId;
+
   public String code;
 
   public String methodId;
@@ -31,8 +35,9 @@ public class TwoFactorDisableRequest extends BaseEventRequest implements Buildab
   public TwoFactorDisableRequest() {
   }
 
-  public TwoFactorDisableRequest(EventInfo eventInfo, String code, String methodId) {
+  public TwoFactorDisableRequest(EventInfo eventInfo, UUID applicationId, String code, String methodId) {
     super(eventInfo);
+    this.applicationId = applicationId;
     this.code = code;
     this.methodId = methodId;
   }

@@ -15,8 +15,6 @@
  */
 package io.fusionauth.domain.event;
 
-import java.util.UUID;
-
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -31,8 +29,8 @@ public class UserLoginIdDuplicateOnUpdateEvent extends UserLoginIdDuplicateOnCre
   public UserLoginIdDuplicateOnUpdateEvent() {
   }
 
-  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, UUID applicationId, String duplicateEmail, String duplicateUsername, User existing, User user) {
-    super(info, applicationId, duplicateEmail, duplicateUsername, existing, user);
+  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
+    super(info, duplicateEmail, duplicateUsername, existing, user);
   }
 
   @Override

@@ -16,7 +16,6 @@
 package io.fusionauth.domain.event;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -30,8 +29,6 @@ import io.fusionauth.domain.User;
  * @author Daniel DeGroff
  */
 public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
-  public UUID applicationId;
-
   public String duplicateEmail;
 
   public String duplicateUsername;
@@ -44,9 +41,8 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buil
   public UserLoginIdDuplicateOnCreateEvent() {
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, UUID applicationId, String duplicateEmail, String duplicateUsername, User existing, User user) {
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
     super(info);
-    this.applicationId = applicationId;
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
     this.existing = existing;
@@ -65,7 +61,7 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buil
       return false;
     }
     UserLoginIdDuplicateOnCreateEvent that = (UserLoginIdDuplicateOnCreateEvent) o;
-    return Objects.equals(applicationId, that.applicationId) && Objects.equals(duplicateEmail, that.duplicateEmail) && Objects.equals(duplicateUsername, that.duplicateUsername) && Objects.equals(existing, that.existing) && Objects.equals(user, that.user);
+    return Objects.equals(duplicateEmail, that.duplicateEmail) && Objects.equals(duplicateUsername, that.duplicateUsername) && Objects.equals(existing, that.existing) && Objects.equals(user, that.user);
   }
 
   @Override
@@ -75,7 +71,7 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buil
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, duplicateEmail, duplicateUsername, existing, user);
+    return Objects.hash(super.hashCode(), duplicateEmail, duplicateUsername, existing, user);
   }
 
   @Override
