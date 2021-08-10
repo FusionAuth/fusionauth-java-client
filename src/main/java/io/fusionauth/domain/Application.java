@@ -15,10 +15,13 @@
  */
 package io.fusionauth.domain;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
@@ -289,6 +293,21 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   }
 
   public static class ApplicationEmailConfiguration implements Buildable<ApplicationEmailConfiguration> {
+    @JsonIgnore
+    @SuppressWarnings("unused")
+    public static List<String> EmailTemplateIdFieldNames = Arrays.stream(ApplicationEmailConfiguration.class.getDeclaredFields())
+                                                                 .map(Field::getName)
+                                                                 .filter(name -> name.endsWith("EmailTemplateId"))
+                                                                 .sorted()
+                                                                 .collect(Collectors.toList());
+
+    @JsonIgnore
+    @SuppressWarnings("unused")
+    public static List<Field> EmailTemplateIdFields = Arrays.stream(ApplicationEmailConfiguration.class.getDeclaredFields())
+                                                            .filter(f -> f.getName().endsWith("EmailTemplateId"))
+                                                            .sorted(Comparator.comparing(Field::getName))
+                                                            .collect(Collectors.toList());
+
     public UUID emailUpdateEmailTemplateId;
 
     public UUID emailVerificationEmailTemplateId;
