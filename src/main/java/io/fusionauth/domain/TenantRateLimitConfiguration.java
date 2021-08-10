@@ -29,13 +29,13 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration forgotPassword = new RateLimitedRequestConfiguration(5, 60);
 
-  public RateLimitedRequestConfiguration sendEmailVerification = new RateLimitedRequestConfiguration(10, 60);
+  public RateLimitedRequestConfiguration sendEmailVerification = new RateLimitedRequestConfiguration(5, 60);
 
-  public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(10, 60);
+  public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(5, 60);
 
-  public RateLimitedRequestConfiguration sendRegistrationVerification = new RateLimitedRequestConfiguration(10, 60);
+  public RateLimitedRequestConfiguration sendRegistrationVerification = new RateLimitedRequestConfiguration(5, 60);
 
-  public RateLimitedRequestConfiguration sendTwoFactor = new RateLimitedRequestConfiguration(10, 60);
+  public RateLimitedRequestConfiguration sendTwoFactor = new RateLimitedRequestConfiguration(5, 60);
 
   @JacksonConstructor
   public TenantRateLimitConfiguration() {
