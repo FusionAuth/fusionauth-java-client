@@ -17,6 +17,7 @@ package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -84,6 +85,9 @@ public class IPAccessControlList implements Buildable<IPAccessControlList>, _Int
       }
     }
 
+    // Sort the entries for easier readability, and keep the default entry at the top.
+    entries.sort(Comparator.<IPAccessControlEntry, String>comparing(e -> e.startIPAddress, Comparator.nullsLast(Comparator.naturalOrder()))
+                     .thenComparing(e -> e.endIPAddress, Comparator.nullsLast(Comparator.naturalOrder())));
     return this;
   }
 
