@@ -15,9 +15,12 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.AuthenticationThreats;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
@@ -28,17 +31,23 @@ import io.fusionauth.domain.provider.BaseIdentityProvider;
  * @author Daniel DeGroff
  */
 public class UserLoginSuspiciousEvent extends UserLoginSuccessEvent {
+  public Set<AuthenticationThreats> threatsDetected = new HashSet<>();
+
   @JacksonConstructor
   public UserLoginSuspiciousEvent() {
   }
 
   public UserLoginSuspiciousEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider,
-                                  User user) {
+                                  User user, Set<AuthenticationThreats> threatsDetected) {
     super(info, applicationId, authenticationType, identityProvider, user);
+    this.threatsDetected = threatsDetected;
+
   }
 
-  public UserLoginSuspiciousEvent(EventInfo info, UUID applicationId, UUID connectorId, String authenticationType, User user) {
+  public UserLoginSuspiciousEvent(EventInfo info, UUID applicationId, UUID connectorId, String authenticationType, User user,
+                                  Set<AuthenticationThreats> threatsDetected) {
     super(info, applicationId, connectorId, authenticationType, user);
+    this.threatsDetected = threatsDetected;
   }
 
   @Override
