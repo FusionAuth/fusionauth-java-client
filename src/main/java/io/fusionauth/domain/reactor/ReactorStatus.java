@@ -17,6 +17,7 @@ package io.fusionauth.domain.reactor;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -37,9 +38,25 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
+  public boolean licensed;
+
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
-  public boolean licensed;
+  @JacksonConstructor
+  public ReactorStatus() {
+  }
+
+  public ReactorStatus(ReactorStatus other) {
+    advancedIdentityProviders = other.advancedIdentityProviders;
+    advancedMultiFactorAuthentication = other.advancedMultiFactorAuthentication;
+    advancedRegistration = other.advancedRegistration;
+    applicationThemes = other.applicationThemes;
+    breachedPasswordDetection = other.breachedPasswordDetection;
+    connectors = other.connectors;
+    entityManagement = other.entityManagement;
+    licensed = other.licensed;
+    threatDetection = other.threatDetection;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -53,11 +70,12 @@ public class ReactorStatus {
     return advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
            advancedRegistration == that.advancedRegistration &&
+           applicationThemes == that.applicationThemes &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
            entityManagement == that.entityManagement &&
-           threatDetection == that.threatDetection &&
-           licensed == that.licensed;
+           licensed == that.licensed &&
+           threatDetection == that.threatDetection;
   }
 
   @Override
@@ -65,11 +83,12 @@ public class ReactorStatus {
     return Objects.hash(advancedIdentityProviders,
                         advancedMultiFactorAuthentication,
                         advancedRegistration,
+                        applicationThemes,
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,
-                        threatDetection,
-                        licensed);
+                        licensed,
+                        threatDetection);
   }
 
   @Override

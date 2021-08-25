@@ -104,6 +104,7 @@ import io.fusionauth.domain.api.PreviewMessageTemplateResponse;
 import io.fusionauth.domain.api.PreviewRequest;
 import io.fusionauth.domain.api.PreviewResponse;
 import io.fusionauth.domain.api.PublicKeyResponse;
+import io.fusionauth.domain.api.ReactorMetricsResponse;
 import io.fusionauth.domain.api.ReactorRequest;
 import io.fusionauth.domain.api.ReactorResponse;
 import io.fusionauth.domain.api.ReindexRequest;
@@ -3296,6 +3297,18 @@ public class FusionAuthClient {
     return start(PendingResponse.class, Errors.class)
         .uri("/api/user/family/pending")
         .urlParameter("parentEmail", parentEmail)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the FusionAuth Reactor metrics.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ReactorMetricsResponse, Void> retrieveReactorMetrics() {
+    return start(ReactorMetricsResponse.class, Void.TYPE)
+        .uri("/api/reactor/metrics")
         .get()
         .go();
   }

@@ -15,11 +15,11 @@
  */
 package io.fusionauth.domain.api;
 
-import io.fusionauth.domain.reactor.ReactorStatus;
+import io.fusionauth.domain.reactor.ReactorMetrics;
 
 /**
  * @author Daniel DeGroff
  */
-public class ReactorResponse {
-  public ReactorStatus status;
+public class ReactorMetricsResponse {
+  public ReactorMetrics metrics;
 }
