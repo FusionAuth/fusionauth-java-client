@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -38,6 +40,7 @@ public class ConnectorPolicy implements Buildable<ConnectorPolicy>, _InternalJSO
   public Map<String, Object> data = new LinkedHashMap<>();
 
   @InternalJSONColumn
+  @JsonMerge(OptBoolean.FALSE)
   public Set<String> domains = new HashSet<>(Collections.singletonList("*"));
 
   @InternalJSONColumn
