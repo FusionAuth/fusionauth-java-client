@@ -54,7 +54,7 @@ public class SQLTools {
       return null;
     }
 
-    int index = s.indexOf("*");
+    int index = s.indexOf('*');
     if (index == -1) {
       return "%" + s.trim().toLowerCase() + "%";
     }
