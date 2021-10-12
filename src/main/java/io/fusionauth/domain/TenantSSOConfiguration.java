@@ -17,23 +17,32 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
  * @author Brett Pontarelli
  */
-public class SystemSSOConfiguration {
+public class TenantSSOConfiguration {
   public int deviceTrustTimeToLiveInSeconds = 365 * 24 * 60 * 60;
+
+  public TenantSSOConfiguration(TenantSSOConfiguration other) {
+    this.deviceTrustTimeToLiveInSeconds = other.deviceTrustTimeToLiveInSeconds;
+  }
+
+  @JacksonConstructor
+  public TenantSSOConfiguration() {
+  }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SystemSSOConfiguration)) {
+    if (!(o instanceof TenantSSOConfiguration)) {
       return false;
     }
-    SystemSSOConfiguration that = (SystemSSOConfiguration) o;
+    TenantSSOConfiguration that = (TenantSSOConfiguration) o;
     return deviceTrustTimeToLiveInSeconds == that.deviceTrustTimeToLiveInSeconds;
   }
 

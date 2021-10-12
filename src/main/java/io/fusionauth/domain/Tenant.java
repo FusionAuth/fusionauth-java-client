@@ -130,6 +130,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
 
   @InternalJSONColumn
+  public TenantSSOConfiguration ssoConfiguration = new TenantSSOConfiguration();
+
+  @InternalJSONColumn
   public ObjectState state;
 
   public UUID themeId;
@@ -173,6 +176,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.rateLimitConfiguration = new TenantRateLimitConfiguration(other.rateLimitConfiguration);
     this.registrationConfiguration = new TenantRegistrationConfiguration(other.registrationConfiguration);
+    this.ssoConfiguration = new TenantSSOConfiguration(other.ssoConfiguration);
     this.state = other.state;
     this.themeId = other.themeId;
     this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
@@ -215,6 +219,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
            Objects.equals(rateLimitConfiguration, tenant.rateLimitConfiguration) &&
            Objects.equals(registrationConfiguration, tenant.registrationConfiguration) &&
+           Objects.equals(ssoConfiguration, tenant.ssoConfiguration) &&
            Objects.equals(state, tenant.state) &&
            Objects.equals(themeId, tenant.themeId) &&
            Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&

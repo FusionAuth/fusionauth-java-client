@@ -60,9 +60,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
   public ZoneId reportTimezone;
 
   @InternalJSONColumn
-  public SystemSSOConfiguration ssoConfiguration = new SystemSSOConfiguration();
-
-  @InternalJSONColumn
   public UIConfiguration uiConfiguration = new UIConfiguration();
 
   @Override
@@ -83,13 +80,12 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
-           Objects.equals(ssoConfiguration, that.ssoConfiguration) &&
            Objects.equals(uiConfiguration, that.uiConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, ssoConfiguration, uiConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {
