@@ -31,7 +31,7 @@ import io.fusionauth.domain.util.HTTPMethod;
 /**
  * @author Daniel DeGroff
  */
-public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplicationConfiguration> implements Buildable<AppleIdentityProvider>, JSONWebKeyInfoProvider, RequiresCORSConfiguration {
+public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplicationConfiguration> implements Buildable<AppleIdentityProvider>, JSONWebKeyInfoProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public static final URI ISSUER = URI.create("https://appleid.apple.com");
 
   public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
@@ -135,6 +135,11 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   @Override
   public void normalize() {
     super.normalize();
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return false;
   }
 
   @Override

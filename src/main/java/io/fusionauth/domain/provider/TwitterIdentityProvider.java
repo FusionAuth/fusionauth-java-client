@@ -27,7 +27,7 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  *
  * @author Daniel DeGroff
  */
-public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider> {
+public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider>, SupportsPostBindings {
   @InternalJSONColumn
   public String buttonText = "Login with Twitter";
 
@@ -86,6 +86,11 @@ public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplica
 
   public String lookupConsumerSecret(String clientId) {
     return lookup(() -> consumerSecret, () -> app(clientId, app -> app.consumerSecret));
+  }
+
+  @Override
+  public boolean postRequestEnabled() {
+    return false;
   }
 
   @Override
