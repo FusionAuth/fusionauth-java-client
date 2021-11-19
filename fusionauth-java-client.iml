@@ -162,11 +162,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.0/jackson5-2.6.0.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.1/jackson5-2.6.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.0/jackson5-2.6.0-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.1/jackson5-2.6.1-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -313,3 +313,4 @@
     </orderEntry>
   </component>
 </module>
+
