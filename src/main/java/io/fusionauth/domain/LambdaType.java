@@ -42,7 +42,7 @@ public enum LambdaType {
 
   OpenIDReconcile("reconcile", "" +
       "// Using the JWT returned from UserInfo, reconcile the User and User Registration.\n" +
-      "function reconcile(user, registration, jwt) {\n" +
+      "function reconcile(user, registration, jwt, id_token) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
