@@ -32,11 +32,11 @@
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/inject/guice/4.2.3/guice-4.2.3.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/inject/guice/5.0.1/guice-5.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/inject/guice/4.2.3/guice-4.2.3-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/inject/guice/5.0.1/guice-5.0.1-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -65,11 +65,11 @@
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/guava/guava/27.1.0-jre/guava-27.1.0-jre.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/guava/guava/30.1.0-jre/guava-30.1.0-jre.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/guava/guava/27.1.0-jre/guava-27.1.0-jre-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/guava/guava/30.1.0-jre/guava-30.1.0-jre-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -80,28 +80,6 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/j2objc/j2objc-annotations/1.1.0/j2objc-annotations-1.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/j2objc/j2objc-annotations/1.1.0/j2objc-annotations-1.1.0-src.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/codehaus/mojo/animal-sniffer-annotations/1.17.0/animal-sniffer-annotations-1.17.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/codehaus/mojo/animal-sniffer-annotations/1.17.0/animal-sniffer-annotations-1.17.0-src.jar!/" />
-        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="PROVIDED">
@@ -118,22 +96,22 @@
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/j2objc/j2objc-annotations/1.3.0/j2objc-annotations-1.3.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/j2objc/j2objc-annotations/1.3.0/j2objc-annotations-1.3.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="PROVIDED">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -145,6 +123,17 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.savant/cache/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1-src.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.savant/cache/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -162,22 +151,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.8.0/restify-3.8.0.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.9.0/restify-3.9.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.8.0/restify-3.8.0-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/3.9.0/restify-3.9.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.4.8/jackson5-2.4.8.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.0/jackson5-2.6.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.4.8/jackson5-2.4.8-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/jackson5/2.6.0/jackson5-2.6.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -195,33 +184,33 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.12.2/jackson-databind-2.12.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.12.2/jackson-databind-2.12.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-annotations/2.12.2/jackson-annotations-2.12.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-annotations/2.12.2/jackson-annotations-2.12.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.12.2/jackson-core-2.12.2.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.12.2/jackson-core-2.12.2-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -314,11 +303,11 @@
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/2.0.0-alpha5/slf4j-api-2.0.0-alpha5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/org/slf4j/slf4j-api/2.0.0-alpha5/slf4j-api-2.0.0-alpha5-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

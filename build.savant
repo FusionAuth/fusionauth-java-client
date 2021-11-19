@@ -16,15 +16,15 @@
 savantVersion = "1.0.0"
 
 fusionauthJWTVersion = "3.6.0"
-guavaVersion = "27.1.0-jre"
-guiceVersion = "4.2.3"
-jacksonVersion = "2.12.2"
-jackson5Version = "2.4.8"
+guavaVersion = "30.1.0-jre"
+guiceVersion = "5.0.1"
+jacksonVersion = "2.13.0"
+jackson5Version = "2.6.0"
 javaErrorVersion = "2.2.2"
-restifyVersion = "3.8.0"
+restifyVersion = "3.9.0"
 testngVersion = "7.3.0"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.31.0", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.99.9", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -36,7 +36,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.31.0
   dependencies {
     group(name: "provided") {
       dependency(id: "javax.servlet:servlet-api:3.1.0", skipCompatibilityCheck: true)
-      dependency(id: "com.google.inject:guice:${guiceVersion}")
+      dependency(id: "com.google.inject:guice:${guiceVersion}", skipCompatibilityCheck: true)
     }
     group(name: "compile") {
       dependency(id: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
@@ -61,7 +61,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.31.0
 // Plugins
 dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:1.0.2")
 java = loadPlugin(id: "org.savantbuild.plugin:java:1.2.0")
-javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:1.0.8")
+javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:1.0.9")
 file = loadPlugin(id: "org.savantbuild.plugin:file:1.0.2")
 idea = loadPlugin(id: "org.savantbuild.plugin:idea:1.0.1")
 release = loadPlugin(id: "org.savantbuild.plugin:release-git:${savantVersion}")
