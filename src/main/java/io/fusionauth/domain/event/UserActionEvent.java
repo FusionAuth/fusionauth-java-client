@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.event;
 
-
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -80,6 +79,7 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
   }
 
   /**
+   * @param info              The event info object containing IP information, and possibly location from the request.
    * @param actionId          The id that tracks this user action (the log id).
    * @param actioneeUserId    The user id of the person being actioned.
    * @param actionerUserId    The user id of the person that took the action.
@@ -148,24 +148,24 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
     }
     UserActionEvent that = (UserActionEvent) o;
     return super.equals(o) &&
-        Objects.equals(actionId, that.actionId) &&
-        Objects.equals(notifyUser, that.notifyUser) &&
-        Objects.equals(emailedUser, that.emailedUser) &&
-        Objects.equals(applicationIds, that.applicationIds) &&
-        Objects.equals(action, that.action) &&
-        Objects.equals(actioneeUserId, that.actioneeUserId) &&
-        Objects.equals(actionerUserId, that.actionerUserId) &&
-        Objects.equals(comment, that.comment) &&
-        Objects.equals(email, that.email) &&
-        Objects.equals(expiry, that.expiry) &&
-        Objects.equals(localizedAction, that.localizedAction) &&
-        Objects.equals(localizedDuration, that.localizedDuration) &&
-        Objects.equals(localizedOption, that.localizedOption) &&
-        Objects.equals(localizedReason, that.localizedReason) &&
-        Objects.equals(option, that.option) &&
-        Objects.equals(phase, that.phase) &&
-        Objects.equals(reason, that.reason) &&
-        Objects.equals(reasonCode, that.reasonCode);
+           Objects.equals(actionId, that.actionId) &&
+           Objects.equals(notifyUser, that.notifyUser) &&
+           Objects.equals(emailedUser, that.emailedUser) &&
+           Objects.equals(applicationIds, that.applicationIds) &&
+           Objects.equals(action, that.action) &&
+           Objects.equals(actioneeUserId, that.actioneeUserId) &&
+           Objects.equals(actionerUserId, that.actionerUserId) &&
+           Objects.equals(comment, that.comment) &&
+           Objects.equals(email, that.email) &&
+           Objects.equals(expiry, that.expiry) &&
+           Objects.equals(localizedAction, that.localizedAction) &&
+           Objects.equals(localizedDuration, that.localizedDuration) &&
+           Objects.equals(localizedOption, that.localizedOption) &&
+           Objects.equals(localizedReason, that.localizedReason) &&
+           Objects.equals(option, that.option) &&
+           Objects.equals(phase, that.phase) &&
+           Objects.equals(reason, that.reason) &&
+           Objects.equals(reasonCode, that.reasonCode);
   }
 
   @Override
