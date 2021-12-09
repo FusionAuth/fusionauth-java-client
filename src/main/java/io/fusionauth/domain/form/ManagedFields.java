@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * This class contains the managed fields that are also put into the database during FusionAuth setup.
  * <p>
- * NOTE TO FUSIONAUTH DEVS: These fields are are also declared in SQL in order to boot strap the system. These need to stay in sync.
+ * NOTE TO FUSIONAUTH DEVS: These fields are also declared in SQL in order to boot strap the system. These need to stay in sync.
  * - Any changes to these fields needs to also be reflected in mysql.sql and postgresql.sql
  *
  * @author Brian Pontarelli
@@ -147,6 +147,15 @@ public final class ManagedFields {
                            .with(f -> f.type = FormDataType.string)
                            .with(f -> f.data.put("leftAddon", "lock"))
                            .with(f -> f.name = "[Admin User] password"));
+
+    map.put("user.parentEmail",
+            new FormField().with(f -> f.key = "user.parentEmail")
+                           .with(f -> f.confirm = false)
+                           .with(f -> f.control = FormControl.text)
+                           .with(f -> f.required = false)
+                           .with(f -> f.type = FormDataType.email)
+                           .with(f -> f.data.put("leftAddon", "user"))
+                           .with(f -> f.name = "parent email"));
 
     map.put("user.preferredLanguages",
             new FormField().with(f -> f.key = "user.preferredLanguages")
