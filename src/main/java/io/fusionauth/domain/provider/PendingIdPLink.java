@@ -15,11 +15,13 @@
  */
 package io.fusionauth.domain.provider;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.IdentityProviderLink;
 import io.fusionauth.domain.User;
 
 /**
@@ -32,7 +34,11 @@ public class PendingIdPLink implements Buildable<PendingIdPLink> {
 
   public UUID identityProviderId;
 
+  public List<IdentityProviderLink> identityProviderLinks;
+
   public String identityProviderName;
+
+  public IdentityProviderTenantConfiguration identityProviderTenantConfiguration;
 
   public IdentityProviderType identityProviderType;
 
@@ -51,12 +57,27 @@ public class PendingIdPLink implements Buildable<PendingIdPLink> {
       return false;
     }
     PendingIdPLink that = (PendingIdPLink) o;
-    return Objects.equals(displayName, that.displayName) && Objects.equals(email, that.email) && Objects.equals(user, that.user) && Objects.equals(identityProviderId, that.identityProviderId) && Objects.equals(identityProviderName, that.identityProviderName) && Objects.equals(identityProviderType, that.identityProviderType) && Objects.equals(identityProviderUserId, that.identityProviderUserId) && Objects.equals(username, that.username);
+    return Objects.equals(displayName, that.displayName) && Objects.equals(email, that.email) && Objects.equals(identityProviderId, that.identityProviderId) && Objects.equals(identityProviderLinks, that.identityProviderLinks) && Objects.equals(identityProviderName, that.identityProviderName) && identityProviderType == that.identityProviderType && Objects.equals(identityProviderUserId, that.identityProviderUserId) && Objects.equals(user, that.user) && Objects.equals(username, that.username);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(displayName, email, user, identityProviderId, identityProviderName, identityProviderType, identityProviderUserId, username);
+    return Objects.hash(displayName, email, identityProviderId, identityProviderLinks, identityProviderName, identityProviderType, identityProviderUserId, user, username);
+  }
+
+  public boolean isLinkLimitExceeded() {
+    // If this IdP does not have a tenant configuration, or the user does not have any links, the limit is not exceeded.
+    if (identityProviderTenantConfiguration == null || identityProviderLinks == null) {
+      return false;
+    }
+
+    // If the user is already linked to this specific IdP user, the limit is not exceeded.
+    if (identityProviderLinks.stream().anyMatch(l -> l.identityProviderUserId.equals(identityProviderUserId))) {
+      return false;
+    }
+
+    // If the remaining links for this one IdP are greater than or equal to the configured maximum, we have exceeded the limit.
+    return identityProviderLinks.size() >= identityProviderTenantConfiguration.limitUserLinkCount.maximumLinks;
   }
 
   @Override

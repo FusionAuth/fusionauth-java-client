@@ -20,11 +20,11 @@ guavaVersion = "30.1.0-jre"
 guiceVersion = "5.0.1"
 jacksonVersion = "2.13.0"
 jackson5Version = "2.6.1"
-javaErrorVersion = "2.2.2"
+javaErrorVersion = "2.2.3"
 restifyVersion = "3.9.0"
 testngVersion = "7.3.0"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.31.1", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.32.0", licenses: ["ApacheV2_0"]) {
   workflow {
     fetch {
       cache()

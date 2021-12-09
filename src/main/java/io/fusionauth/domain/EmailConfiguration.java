@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -48,6 +49,8 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
                                                           .sorted(Comparator.comparing(Field::getName))
                                                           .collect(Collectors.toList());
 
+  public List<EmailHeader> additionalHeaders = new ArrayList<>();
+
   public String defaultFromEmail = "change-me@example.com";
 
   public String defaultFromName;
@@ -62,6 +65,11 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   public UUID forgotPasswordEmailTemplateId;
 
   public String host = "localhost";
+
+  // Allows email to be verified as the result of completing a similar based email workflow such as change password.
+  // - When set to false, the user must explicitly complete the email verification workflow even if the user has already
+  //   completed a similar email workflow such as change password (when completed by email)
+  public boolean implicitEmailVerificationAllowed = true;
 
   @ExcludeFromDatabaseDataColumn
   public UUID loginIdInUseOnCreateEmailTemplateId;
@@ -119,12 +127,14 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   }
 
   public EmailConfiguration(EmailConfiguration other) {
+    this.additionalHeaders.addAll(other.additionalHeaders);
     this.defaultFromEmail = other.defaultFromEmail;
     this.defaultFromName = other.defaultFromName;
     this.emailUpdateEmailTemplateId = other.emailUpdateEmailTemplateId;
     this.emailVerifiedEmailTemplateId = other.emailVerifiedEmailTemplateId;
     this.forgotPasswordEmailTemplateId = other.forgotPasswordEmailTemplateId;
     this.host = other.host;
+    this.implicitEmailVerificationAllowed = other.implicitEmailVerificationAllowed;
     this.loginNewDeviceEmailTemplateId = other.loginNewDeviceEmailTemplateId;
     this.loginSuspiciousEmailTemplateId = other.loginSuspiciousEmailTemplateId;
     this.password = other.password;
@@ -156,8 +166,10 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
       return false;
     }
     EmailConfiguration that = (EmailConfiguration) o;
-    return verifyEmail == that.verifyEmail &&
+    return implicitEmailVerificationAllowed == that.implicitEmailVerificationAllowed &&
+           verifyEmail == that.verifyEmail &&
            verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
+           Objects.equals(additionalHeaders, that.additionalHeaders) &&
            Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
            Objects.equals(defaultFromName, that.defaultFromName) &&
            Objects.equals(emailUpdateEmailTemplateId, that.emailUpdateEmailTemplateId) &&
@@ -186,7 +198,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
+    return Objects.hash(additionalHeaders, defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, implicitEmailVerificationAllowed, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
   }
 
   public void normalize() {
