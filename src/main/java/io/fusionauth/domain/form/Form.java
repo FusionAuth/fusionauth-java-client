@@ -46,6 +46,19 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
 
   public FormType type = FormType.registration;
 
+  public Form() {
+  }
+
+  public Form(Form other) {
+    this.data = other.data;
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.name = other.name;
+    this.steps = other.steps;
+    this.type = other.type;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
