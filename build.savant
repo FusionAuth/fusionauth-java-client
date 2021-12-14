@@ -24,11 +24,11 @@ javaErrorVersion = "2.2.3"
 restifyVersion = "3.9.0"
 testngVersion = "7.3.0"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.32.0", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.32.2", licenses: ["ApacheV2_0"]) {
   workflow {
     fetch {
       cache()
-      url(url: "https://external.savant.fusionauth.io")
+      url(url: "https://repository.savantbuild.org")
     }
     publish {
       cache()
@@ -36,7 +36,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.32.0
   }
 
   publishWorkflow {
-    subversion(repository: "https://external.svn.fusionauth.io")
+    subversion(repository: "https://svn.savantbuild.org")
   }
 
   dependencies {

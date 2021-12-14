@@ -54,7 +54,6 @@ public class EntityGrantSearchCriteria extends BaseSearchCriteria {
 
   static {
     SortableFields.put("insertInstant", "eg.insert_instant");
-    SortableFields.put("insertUser", "eg.insert_user");
     SortableFields.put("name", "name");
   }
 }
