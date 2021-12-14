@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -57,7 +58,7 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
     this.insertInstant = other.insertInstant;
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.name = other.name;
-    this.steps.addAll(other.steps);
+    this.steps = other.steps.stream().map(fs -> new FormStep(fs.fields.toArray(new UUID[0]))).collect(Collectors.toList());
     this.type = other.type;
   }
 
