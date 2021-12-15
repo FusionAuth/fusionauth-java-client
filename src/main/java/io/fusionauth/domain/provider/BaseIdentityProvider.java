@@ -56,6 +56,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public String name;
 
+  public Map<UUID, IdentityProviderTenantConfiguration> tenantConfiguration = new HashMap<>();
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -76,14 +78,15 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            linkingStrategy == that.linkingStrategy &&
-           Objects.equals(name, that.name);
+           Objects.equals(name, that.name) &&
+           Objects.equals(tenantConfiguration, that.tenantConfiguration);
   }
 
   public abstract IdentityProviderType getType();
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name);
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantConfiguration);
   }
 
   @JsonIgnore

@@ -295,7 +295,7 @@ public class FusionAuthClient {
    * Adds a user to an existing family. The family id must be specified.
    *
    * @param familyId The id of the family.
-   * @param request The request object that contains all of the information used to determine which user to add to the family.
+   * @param request The request object that contains all the information used to determine which user to add to the family.
    * @return The ClientResponse object.
    */
   public ClientResponse<FamilyResponse, Errors> addUserToFamily(UUID familyId, FamilyRequest request) {
@@ -359,7 +359,7 @@ public class FusionAuthClient {
   /**
    * Adds a comment to the user's account.
    *
-   * @param request The request object that contains all of the information used to create the user comment.
+   * @param request The request object that contains all the information used to create the user comment.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
@@ -394,7 +394,7 @@ public class FusionAuthClient {
    * Creates an application. You can optionally specify an Id for the application, if not provided one will be generated.
    *
    * @param applicationId (Optional) The Id to use for the application. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the application.
+   * @param request The request object that contains all the information used to create the application.
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> createApplication(UUID applicationId, ApplicationRequest request) {
@@ -412,7 +412,7 @@ public class FusionAuthClient {
    *
    * @param applicationId The Id of the application to create the role on.
    * @param roleId (Optional) The Id of the role. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the application role.
+   * @param request The request object that contains all the information used to create the application role.
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationResponse, Errors> createApplicationRole(UUID applicationId, UUID roleId, ApplicationRequest request) {
@@ -431,7 +431,7 @@ public class FusionAuthClient {
    * make changes to the FusionAuth database. When using the FusionAuth App web interface, any changes are automatically
    * written to the audit log. However, if you are accessing the API, you must write the audit logs yourself.
    *
-   * @param request The request object that contains all of the information used to create the audit log entry.
+   * @param request The request object that contains all the information used to create the audit log entry.
    * @return The ClientResponse object.
    */
   public ClientResponse<AuditLogResponse, Errors> createAuditLog(AuditLogRequest request) {
@@ -446,7 +446,7 @@ public class FusionAuthClient {
    * Creates a connector.  You can optionally specify an Id for the connector, if not provided one will be generated.
    *
    * @param connectorId (Optional) The Id for the connector. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the connector.
+   * @param request The request object that contains all the information used to create the connector.
    * @return The ClientResponse object.
    */
   public ClientResponse<ConnectorResponse, Errors> createConnector(UUID connectorId, ConnectorRequest request) {
@@ -462,7 +462,7 @@ public class FusionAuthClient {
    * Creates a user consent type. You can optionally specify an Id for the consent type, if not provided one will be generated.
    *
    * @param consentId (Optional) The Id for the consent. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the consent.
+   * @param request The request object that contains all the information used to create the consent.
    * @return The ClientResponse object.
    */
   public ClientResponse<ConsentResponse, Errors> createConsent(UUID consentId, ConsentRequest request) {
@@ -478,7 +478,7 @@ public class FusionAuthClient {
    * Creates an email template. You can optionally specify an Id for the template, if not provided one will be generated.
    *
    * @param emailTemplateId (Optional) The Id for the template. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the email template.
+   * @param request The request object that contains all the information used to create the email template.
    * @return The ClientResponse object.
    */
   public ClientResponse<EmailTemplateResponse, Errors> createEmailTemplate(UUID emailTemplateId, EmailTemplateRequest request) {
@@ -494,7 +494,7 @@ public class FusionAuthClient {
    * Creates an Entity. You can optionally specify an Id for the Entity. If not provided one will be generated.
    *
    * @param entityId (Optional) The Id for the Entity. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the Entity.
+   * @param request The request object that contains all the information used to create the Entity.
    * @return The ClientResponse object.
    */
   public ClientResponse<EntityResponse, Errors> createEntity(UUID entityId, EntityRequest request) {
@@ -510,7 +510,7 @@ public class FusionAuthClient {
    * Creates a Entity Type. You can optionally specify an Id for the Entity Type, if not provided one will be generated.
    *
    * @param entityTypeId (Optional) The Id for the Entity Type. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the Entity Type.
+   * @param request The request object that contains all the information used to create the Entity Type.
    * @return The ClientResponse object.
    */
   public ClientResponse<EntityTypeResponse, Errors> createEntityType(UUID entityTypeId, EntityTypeRequest request) {
@@ -528,7 +528,7 @@ public class FusionAuthClient {
    *
    * @param entityTypeId The Id of the entity type to create the permission on.
    * @param permissionId (Optional) The Id of the permission. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the permission.
+   * @param request The request object that contains all the information used to create the permission.
    * @return The ClientResponse object.
    */
   public ClientResponse<EntityTypeResponse, Errors> createEntityTypePermission(UUID entityTypeId, UUID permissionId, EntityTypeRequest request) {
@@ -547,7 +547,7 @@ public class FusionAuthClient {
    * family, if not provided one will be generated.
    *
    * @param familyId (Optional) The id for the family. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the family.
+   * @param request The request object that contains all the information used to create the family.
    * @return The ClientResponse object.
    */
   public ClientResponse<FamilyResponse, Errors> createFamily(UUID familyId, FamilyRequest request) {
@@ -563,7 +563,7 @@ public class FusionAuthClient {
    * Creates a form.  You can optionally specify an Id for the form, if not provided one will be generated.
    *
    * @param formId (Optional) The Id for the form. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the form.
+   * @param request The request object that contains all the information used to create the form.
    * @return The ClientResponse object.
    */
   public ClientResponse<FormResponse, Errors> createForm(UUID formId, FormRequest request) {
@@ -579,7 +579,7 @@ public class FusionAuthClient {
    * Creates a form field.  You can optionally specify an Id for the form, if not provided one will be generated.
    *
    * @param fieldId (Optional) The Id for the form field. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the form field.
+   * @param request The request object that contains all the information used to create the form field.
    * @return The ClientResponse object.
    */
   public ClientResponse<FormFieldResponse, Errors> createFormField(UUID fieldId, FormFieldRequest request) {
@@ -595,7 +595,7 @@ public class FusionAuthClient {
    * Creates a group. You can optionally specify an Id for the group, if not provided one will be generated.
    *
    * @param groupId (Optional) The Id for the group. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the group.
+   * @param request The request object that contains all the information used to create the group.
    * @return The ClientResponse object.
    */
   public ClientResponse<GroupResponse, Errors> createGroup(UUID groupId, GroupRequest request) {
@@ -610,7 +610,7 @@ public class FusionAuthClient {
   /**
    * Creates a member in a group.
    *
-   * @param request The request object that contains all of the information used to create the group member(s).
+   * @param request The request object that contains all the information used to create the group member(s).
    * @return The ClientResponse object.
    */
   public ClientResponse<MemberResponse, Errors> createGroupMembers(MemberRequest request) {
@@ -625,7 +625,7 @@ public class FusionAuthClient {
    * Creates an IP Access Control List. You can optionally specify an Id on this create request, if one is not provided one will be generated.
    *
    * @param accessControlListId (Optional) The Id for the IP Access Control List. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the IP Access Control List.
+   * @param request The request object that contains all the information used to create the IP Access Control List.
    * @return The ClientResponse object.
    */
   public ClientResponse<IPAccessControlListResponse, Errors> createIPAccessControlList(UUID accessControlListId, IPAccessControlListRequest request) {
@@ -641,7 +641,7 @@ public class FusionAuthClient {
    * Creates an identity provider. You can optionally specify an Id for the identity provider, if not provided one will be generated.
    *
    * @param identityProviderId (Optional) The Id of the identity provider. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the identity provider.
+   * @param request The request object that contains all the information used to create the identity provider.
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderResponse, Errors> createIdentityProvider(UUID identityProviderId, IdentityProviderRequest request) {
@@ -657,7 +657,7 @@ public class FusionAuthClient {
    * Creates a Lambda. You can optionally specify an Id for the lambda, if not provided one will be generated.
    *
    * @param lambdaId (Optional) The Id for the lambda. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the lambda.
+   * @param request The request object that contains all the information used to create the lambda.
    * @return The ClientResponse object.
    */
   public ClientResponse<LambdaResponse, Errors> createLambda(UUID lambdaId, LambdaRequest request) {
@@ -673,7 +673,7 @@ public class FusionAuthClient {
    * Creates an message template. You can optionally specify an Id for the template, if not provided one will be generated.
    *
    * @param messageTemplateId (Optional) The Id for the template. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the message template.
+   * @param request The request object that contains all the information used to create the message template.
    * @return The ClientResponse object.
    */
   public ClientResponse<MessageTemplateResponse, Errors> createMessageTemplate(UUID messageTemplateId, MessageTemplateRequest request) {
@@ -689,7 +689,7 @@ public class FusionAuthClient {
    * Creates a messenger.  You can optionally specify an Id for the messenger, if not provided one will be generated.
    *
    * @param messengerId (Optional) The Id for the messenger. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the messenger.
+   * @param request The request object that contains all the information used to create the messenger.
    * @return The ClientResponse object.
    */
   public ClientResponse<MessengerResponse, Errors> createMessenger(UUID messengerId, MessengerRequest request) {
@@ -705,7 +705,7 @@ public class FusionAuthClient {
    * Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated.
    *
    * @param tenantId (Optional) The Id for the tenant. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the tenant.
+   * @param request The request object that contains all the information used to create the tenant.
    * @return The ClientResponse object.
    */
   public ClientResponse<TenantResponse, Errors> createTenant(UUID tenantId, TenantRequest request) {
@@ -721,7 +721,7 @@ public class FusionAuthClient {
    * Creates a Theme. You can optionally specify an Id for the theme, if not provided one will be generated.
    *
    * @param themeId (Optional) The Id for the theme. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the theme.
+   * @param request The request object that contains all the information used to create the theme.
    * @return The ClientResponse object.
    */
   public ClientResponse<ThemeResponse, Errors> createTheme(UUID themeId, ThemeRequest request) {
@@ -737,7 +737,7 @@ public class FusionAuthClient {
    * Creates a user. You can optionally specify an Id for the user, if not provided one will be generated.
    *
    * @param userId (Optional) The Id for the user. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the user.
+   * @param request The request object that contains all the information used to create the user.
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> createUser(UUID userId, UserRequest request) {
@@ -754,7 +754,7 @@ public class FusionAuthClient {
    * that the user action can be applied to any user.
    *
    * @param userActionId (Optional) The Id for the user action. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the user action.
+   * @param request The request object that contains all the information used to create the user action.
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionResponse, Errors> createUserAction(UUID userActionId, UserActionRequest request) {
@@ -771,7 +771,7 @@ public class FusionAuthClient {
    * successfully. Anytime after that the user action reason can be used.
    *
    * @param userActionReasonId (Optional) The Id for the user action reason. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the user action reason.
+   * @param request The request object that contains all the information used to create the user action reason.
    * @return The ClientResponse object.
    */
   public ClientResponse<UserActionReasonResponse, Errors> createUserActionReason(UUID userActionReasonId, UserActionReasonRequest request) {
@@ -802,7 +802,7 @@ public class FusionAuthClient {
   /**
    * Link an external user from a 3rd party identity provider to a FusionAuth user.
    *
-   * @param request The request object that contains all of the information used to link the FusionAuth user.
+   * @param request The request object that contains all the information used to link the FusionAuth user.
    * @return The ClientResponse object.
    */
   public ClientResponse<IdentityProviderLinkResponse, Errors> createUserLink(IdentityProviderLinkRequest request) {
@@ -817,7 +817,7 @@ public class FusionAuthClient {
    * Creates a webhook. You can optionally specify an Id for the webhook, if not provided one will be generated.
    *
    * @param webhookId (Optional) The Id for the webhook. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the webhook.
+   * @param request The request object that contains all the information used to create the webhook.
    * @return The ClientResponse object.
    */
   public ClientResponse<WebhookResponse, Errors> createWebhook(UUID webhookId, WebhookRequest request) {
@@ -1284,7 +1284,7 @@ public class FusionAuthClient {
    * with the tenant and everything under the tenant (applications, users, etc).
    *
    * @param tenantId The Id of the tenant to delete.
-   * @param request The request object that contains all of the information used to delete the user.
+   * @param request The request object that contains all the information used to delete the user.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteTenantWithRequest(UUID tenantId, TenantDeleteRequest request) {
@@ -1379,7 +1379,7 @@ public class FusionAuthClient {
    * with the user.
    *
    * @param userId The Id of the user to delete (required).
-   * @param request The request object that contains all of the information used to delete the user.
+   * @param request The request object that contains all the information used to delete the user.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> deleteUserWithRequest(UUID userId, UserDeleteSingleRequest request) {
@@ -1645,7 +1645,7 @@ public class FusionAuthClient {
    * Generate a new RSA or EC key pair or an HMAC secret.
    *
    * @param keyId (Optional) The Id for the key. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the key.
+   * @param request The request object that contains all the information used to create the key.
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> generateKey(UUID keyId, KeyRequest request) {
@@ -1739,7 +1739,7 @@ public class FusionAuthClient {
    * Import an existing RSA or EC key pair or an HMAC secret.
    *
    * @param keyId (Optional) The Id for the key. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all of the information used to create the key.
+   * @param request The request object that contains all the information used to create the key.
    * @return The ClientResponse object.
    */
   public ClientResponse<KeyResponse, Errors> importKey(UUID keyId, KeyRequest request) {
@@ -1897,7 +1897,7 @@ public class FusionAuthClient {
    * The Logout API is intended to be used to remove the refresh token and access token cookies if they exist on the
    * client and revoke the refresh token stored. This API takes the refresh token in the JSON body.
    *
-   * @param request The request object that contains all of the information used to logout the user.
+   * @param request The request object that contains all the information used to logout the user.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> logoutWithRequest(LogoutRequest request) {
@@ -4214,7 +4214,7 @@ public class FusionAuthClient {
   /**
    * Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling.
    *
-   * @param request The request object that contains all of the information used to send the code.
+   * @param request The request object that contains all the information used to send the code.
    * @return The ClientResponse object.
    * @deprecated This method has been renamed to sendTwoFactorCodeForEnableDisable, use that method instead.
    */
@@ -4230,7 +4230,7 @@ public class FusionAuthClient {
   /**
    * Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling.
    *
-   * @param request The request object that contains all of the information used to send the code.
+   * @param request The request object that contains all the information used to send the code.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> sendTwoFactorCodeForEnableDisable(TwoFactorSendRequest request) {
@@ -4340,7 +4340,7 @@ public class FusionAuthClient {
    * Updates an API key by given id
    *
    * @param apiKeyId The Id of the API key to update.
-   * @param request The request object that contains all of the information used to create the API Key.
+   * @param request The request object that contains all the information used to create the API Key.
    * @return The ClientResponse object.
    */
   public ClientResponse<APIKeyResponse, Errors> updateAPIKey(UUID apiKeyId, APIKeyRequest request) {
@@ -4790,7 +4790,7 @@ public class FusionAuthClient {
    * Creates or updates an Entity Grant. This is when a User/Entity is granted permissions to an Entity.
    *
    * @param entityId The Id of the Entity that the User/Entity is being granted access to.
-   * @param request The request object that contains all of the information used to create the Entity Grant.
+   * @param request The request object that contains all the information used to create the Entity Grant.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> upsertEntityGrant(UUID entityId, EntityGrantRequest request) {

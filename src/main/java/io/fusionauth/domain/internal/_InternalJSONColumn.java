@@ -36,7 +36,7 @@ public interface _InternalJSONColumn {
    * </p>
    *
    * @return The Map to set into SQL.
-   * @throws IllegalAccessException  If a field could not be retrieve for some reason.
+   * @throws IllegalAccessException  If a field could not be retrieved for some reason.
    * @throws NoSuchFieldException    You know the field does not exist, so why are you even trying?
    * @throws JsonProcessingException When Jackson explodes.
    */
