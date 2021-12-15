@@ -57,7 +57,7 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
     this.insertInstant = other.insertInstant;
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.name = other.name;
-    other.steps.forEach(a -> steps.add(new FormStep(a)));
+    other.steps.forEach(step -> steps.add(new FormStep(step)));
     this.type = other.type;
   }
 
