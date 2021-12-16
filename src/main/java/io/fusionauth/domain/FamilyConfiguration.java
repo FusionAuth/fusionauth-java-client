@@ -18,6 +18,7 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
@@ -64,6 +65,11 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
     this.parentRegistrationEmailTemplateId = other.parentRegistrationEmailTemplateId;
   }
 
+  @JsonIgnore
+  public boolean checkChildAge() {
+    return !allowChildRegistrations || parentEmailRequired;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -77,14 +83,14 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
     }
     FamilyConfiguration that = (FamilyConfiguration) o;
     return allowChildRegistrations == that.allowChildRegistrations &&
-        deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
-        deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
-        maximumChildAge == that.maximumChildAge &&
-        minimumOwnerAge == that.minimumOwnerAge &&
-        parentEmailRequired == that.parentEmailRequired &&
-        Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
-        Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
-        Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
+           deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
+           deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
+           maximumChildAge == that.maximumChildAge &&
+           minimumOwnerAge == that.minimumOwnerAge &&
+           parentEmailRequired == that.parentEmailRequired &&
+           Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
+           Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
+           Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
   }
 
   @Override
