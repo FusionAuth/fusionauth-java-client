@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.internal._InternalJSONColumn;
@@ -45,6 +46,20 @@ public class Form implements Buildable<Form>, _InternalJSONColumn {
   public List<FormStep> steps = new ArrayList<>();
 
   public FormType type = FormType.registration;
+
+  @JacksonConstructor
+  public Form() {
+  }
+
+  public Form(Form other) {
+    this.data.putAll(other.data);
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.name = other.name;
+    other.steps.forEach(step -> steps.add(new FormStep(step)));
+    this.type = other.type;
+  }
 
   @Override
   public boolean equals(Object o) {

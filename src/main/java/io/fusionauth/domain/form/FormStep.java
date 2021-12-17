@@ -35,6 +35,10 @@ public class FormStep implements Buildable<FormStep> {
   public FormStep() {
   }
 
+  public FormStep(FormStep other) {
+    fields.addAll(other.fields);
+  }
+
   public FormStep(UUID... fieldIds) {
     fields.addAll(Arrays.asList(fieldIds));
   }
