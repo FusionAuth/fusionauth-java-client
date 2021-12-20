@@ -18,7 +18,6 @@ package io.fusionauth.domain;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
@@ -63,11 +62,6 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
     this.minimumOwnerAge = other.minimumOwnerAge;
     this.parentEmailRequired = other.parentEmailRequired;
     this.parentRegistrationEmailTemplateId = other.parentRegistrationEmailTemplateId;
-  }
-
-  @JsonIgnore
-  public boolean checkChildAge() {
-    return !allowChildRegistrations || parentEmailRequired;
   }
 
   @Override
