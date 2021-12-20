@@ -155,7 +155,7 @@ public final class ManagedFields {
                            .with(f -> f.required = false)
                            .with(f -> f.type = FormDataType.email)
                            .with(f -> f.data.put("leftAddon", "user"))
-                           .with(f -> f.name = "parent email"));
+                           .with(f -> f.name = "[Registration] parent email"));
 
     map.put("user.preferredLanguages",
             new FormField().with(f -> f.key = "user.preferredLanguages")
