@@ -77,14 +77,14 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
     }
     FamilyConfiguration that = (FamilyConfiguration) o;
     return allowChildRegistrations == that.allowChildRegistrations &&
-        deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
-        deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
-        maximumChildAge == that.maximumChildAge &&
-        minimumOwnerAge == that.minimumOwnerAge &&
-        parentEmailRequired == that.parentEmailRequired &&
-        Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
-        Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
-        Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
+           deleteOrphanedAccounts == that.deleteOrphanedAccounts &&
+           deleteOrphanedAccountsDays == that.deleteOrphanedAccountsDays &&
+           maximumChildAge == that.maximumChildAge &&
+           minimumOwnerAge == that.minimumOwnerAge &&
+           parentEmailRequired == that.parentEmailRequired &&
+           Objects.equals(familyRequestEmailTemplateId, that.familyRequestEmailTemplateId) &&
+           Objects.equals(confirmChildEmailTemplateId, that.confirmChildEmailTemplateId) &&
+           Objects.equals(parentRegistrationEmailTemplateId, that.parentRegistrationEmailTemplateId);
   }
 
   @Override
