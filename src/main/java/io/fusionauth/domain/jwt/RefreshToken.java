@@ -38,9 +38,6 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Daniel DeGroff
  */
 public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColumn {
-  @JsonIgnore
-  public Application application;
-
   public UUID applicationId;
 
   public Map<String, Object> data = new LinkedHashMap<>();
