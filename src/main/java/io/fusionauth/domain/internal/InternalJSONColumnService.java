@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,51 @@ package io.fusionauth.domain.internal;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public interface _InternalJSONColumn {
+/**
+ * An SPI that allows the user of the `fusionauth-java-client` library to provide the InternalJSONColumn handling (if needed). The implementation is
+ * specified using the {@link #setImplementation(InternalJSONColumnService)} method.
+ *
+ * @author Brian Pontarelli
+ */
+public abstract class InternalJSONColumnService {
+  private static InternalJSONColumnService Implementation;
+
+  /**
+   * @return The current implementation.
+   * @throws IllegalStateException If there is no implementation specified.
+   */
+  public static InternalJSONColumnService getImplementation() {
+    if (Implementation == null) {
+      throw new IllegalStateException("You must specify an implementation of this service in order to use InternalJSONColumn in fusionauth-java-client");
+    }
+
+    return Implementation;
+  }
+
+  /**
+   * Sets the implementation of this service.
+   *
+   * @param implementation The implementation of this SPI.
+   */
+  public static void setImplementation(InternalJSONColumnService implementation) {
+    Implementation = implementation;
+  }
+
   /**
    * <strong>Internal Use Only</strong>
    * <p>
    * Getter for use in the MyBatis SQL. Do not call this manually.
    * </p>
    *
+   * @param object The object being stored in the database.
    * @return The Map to set into SQL.
    * @throws IllegalAccessException  If a field could not be retrieved for some reason.
    * @throws NoSuchFieldException    You know the field does not exist, so why are you even trying?
    * @throws JsonProcessingException When Jackson explodes.
    */
-  @JsonIgnore
-  default String getDataToDatabase() throws IllegalAccessException, NoSuchFieldException, JsonProcessingException {
-    return InternalJSONColumnService.getImplementation().getDataToDatabase(this);
-  }
+  public abstract String getDataToDatabase(Object object) throws IllegalAccessException, NoSuchFieldException, JsonProcessingException;
 
   /**
    * <strong>Internal Use Only</strong>
@@ -43,13 +69,11 @@ public interface _InternalJSONColumn {
    * Setter for use in the MyBatis SQL. Do not call this manually.
    * </p>
    *
+   * @param object The object being retrieved from the database.
    * @param source the string source from the database to set into this object.
    * @throws NoSuchFieldException   I think you know what you did.
    * @throws IllegalAccessException You know better than to access that.
    * @throws IOException            I "O" you know better than to ask about this one.
    */
-  @JsonIgnore
-  default void setDataFromDatabase(String source) throws NoSuchFieldException, IllegalAccessException, IOException {
-    InternalJSONColumnService.getImplementation().setDataFromDatabase(this, source);
-  }
+  public abstract void setDataFromDatabase(Object object, String source) throws NoSuchFieldException, IllegalAccessException, IOException;
 }

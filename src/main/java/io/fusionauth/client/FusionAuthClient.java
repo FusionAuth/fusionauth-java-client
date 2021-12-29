@@ -15,8 +15,10 @@
  */
 package io.fusionauth.client;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -1504,12 +1506,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret, String redirect_uri) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("code", code);
-    parameters.put("client_id", client_id);
-    parameters.put("client_secret", client_secret);
-    parameters.put("grant_type", "authorization_code");
-    parameters.put("redirect_uri", redirect_uri);
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("code", Arrays.asList(code));
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("grant_type", Arrays.asList("authorization_code"));
+    parameters.put("redirect_uri", Arrays.asList(redirect_uri));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1529,13 +1531,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenUsingPKCE(String code, String client_id, String client_secret, String redirect_uri, String code_verifier) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("code", code);
-    parameters.put("client_id", client_id);
-    parameters.put("client_secret", client_secret);
-    parameters.put("grant_type", "authorization_code");
-    parameters.put("redirect_uri", redirect_uri);
-    parameters.put("code_verifier", code_verifier);
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("code", Arrays.asList(code));
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("grant_type", Arrays.asList("authorization_code"));
+    parameters.put("redirect_uri", Arrays.asList(redirect_uri));
+    parameters.put("code_verifier", Arrays.asList(code_verifier));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1555,13 +1557,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeRefreshTokenForAccessToken(String refresh_token, String client_id, String client_secret, String scope, String user_code) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("refresh_token", refresh_token);
-    parameters.put("client_id", client_id);
-    parameters.put("client_secret", client_secret);
-    parameters.put("grant_type", "refresh_token");
-    parameters.put("scope", scope);
-    parameters.put("user_code", user_code);
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("refresh_token", Arrays.asList(refresh_token));
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("grant_type", Arrays.asList("refresh_token"));
+    parameters.put("scope", Arrays.asList(scope));
+    parameters.put("user_code", Arrays.asList(user_code));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1596,14 +1598,14 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeUserCredentialsForAccessToken(String username, String password, String client_id, String client_secret, String scope, String user_code) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("username", username);
-    parameters.put("password", password);
-    parameters.put("client_id", client_id);
-    parameters.put("client_secret", client_secret);
-    parameters.put("grant_type", "password");
-    parameters.put("scope", scope);
-    parameters.put("user_code", user_code);
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("username", Arrays.asList(username));
+    parameters.put("password", Arrays.asList(password));
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("grant_type", Arrays.asList("password"));
+    parameters.put("scope", Arrays.asList(scope));
+    parameters.put("user_code", Arrays.asList(user_code));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1801,9 +1803,9 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IntrospectResponse, OAuthError> introspectAccessToken(String client_id, String token) {
-    Map<String, String> parameters = new HashMap<>();
-    parameters.put("client_id", client_id);
-    parameters.put("token", token);
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("token", Arrays.asList(token));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
         .bodyHandler(new FormDataBodyHandler(parameters))
