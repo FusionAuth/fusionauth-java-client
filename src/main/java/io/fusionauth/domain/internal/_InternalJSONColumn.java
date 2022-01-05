@@ -16,10 +16,18 @@
 package io.fusionauth.domain.internal;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import static io.fusionauth.domain.internal.DatabaseObjectMapperHolder.objectMapper;
 
+@SuppressWarnings("unused")
 public interface _InternalJSONColumn {
   /**
    * <strong>Internal Use Only</strong>
@@ -33,8 +41,19 @@ public interface _InternalJSONColumn {
    * @throws JsonProcessingException When Jackson explodes.
    */
   @JsonIgnore
+  @SuppressWarnings("unchecked")
   default String getDataToDatabase() throws IllegalAccessException, NoSuchFieldException, JsonProcessingException {
-    return InternalJSONColumnService.getImplementation().getDataToDatabase(this);
+    Map<String, Object> fromInstance = (Map<String, Object>) getClass().getField("data").get(this);
+    Map<String, Object> forDatabase = new LinkedHashMap<>();
+    forDatabase.put("data", fromInstance);
+
+    List<Field> fields = ReflectionTools.internalDataColumns(getClass());
+    for (Field field : fields) {
+      Object value = field.get(this);
+      forDatabase.put(field.getName(), value);
+    }
+
+    return objectMapper.writeValueAsString(forDatabase);
   }
 
   /**
@@ -49,7 +68,31 @@ public interface _InternalJSONColumn {
    * @throws IOException            I "O" you know better than to ask about this one.
    */
   @JsonIgnore
+  @SuppressWarnings("unchecked")
   default void setDataFromDatabase(String source) throws NoSuchFieldException, IllegalAccessException, IOException {
-    InternalJSONColumnService.getImplementation().setDataFromDatabase(this, source);
+    Object result = objectMapper.readerFor(getClass()).readValue(source);
+    List<Field> fields = ReflectionTools.internalDataColumns(getClass());
+    for (Field field : fields) {
+      // This is an assumption that final fields are collections of some type
+      if ((field.getModifiers() & Modifier.FINAL) == Modifier.FINAL) {
+        // Check for Map and Collection
+        if (Map.class.isAssignableFrom(field.getType())) {
+          Map<Object, Object> sourceMap = (Map<Object, Object>) result.getClass().getField(field.getName()).get(result);
+          Map<Object, Object> targetMap = (Map<Object, Object>) field.get(this);
+          targetMap.putAll(sourceMap);
+        } else if (Collection.class.isAssignableFrom(field.getType())) {
+          Collection<Object> sourceCollection = (Collection<Object>) result.getClass().getField(field.getName()).get(result);
+          Collection<Object> targetCollection = (Collection<Object>) field.get(this);
+          targetCollection.addAll(sourceCollection);
+        }
+      } else {
+        field.set(this, result.getClass().getField(field.getName()).get(result));
+      }
+    }
+
+    // Put the remainder into the data map
+    Map<String, Object> fromInstance = (Map<String, Object>) getClass().getField("data").get(this);
+    fromInstance.clear();
+    fromInstance.putAll((Map<String, Object>) result.getClass().getField("data").get(result));
   }
 }
