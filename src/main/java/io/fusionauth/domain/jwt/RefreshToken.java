@@ -17,6 +17,7 @@ package io.fusionauth.domain.jwt;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
@@ -66,6 +68,24 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
 
   public UUID userId;
 
+  @JacksonConstructor
+  public RefreshToken() {
+  }
+
+  public RefreshToken(RefreshToken other) {
+    this.applicationId = other.applicationId;
+    if (other.data != null) {
+      this.data.putAll(other.data);
+    }
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.metaData = new MetaData(other.metaData);
+    this.startInstant = other.startInstant;
+    this.tenantId = other.tenantId;
+    this.token = other.token;
+    this.userId = other.userId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -107,6 +127,17 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
     public DeviceInfo device = new DeviceInfo();
 
     public Set<String> scopes;
+
+    @JacksonConstructor
+    public MetaData() {
+    }
+
+    public MetaData(MetaData other) {
+      this.device = new DeviceInfo(other.device);
+      if (other.scopes != null) {
+        this.scopes = new HashSet<>(other.scopes);
+      }
+    }
 
     @Override
     public boolean equals(Object o) {

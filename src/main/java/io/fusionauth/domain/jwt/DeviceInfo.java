@@ -18,6 +18,7 @@ package io.fusionauth.domain.jwt;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
@@ -34,6 +35,18 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
   public String name;
 
   public DeviceType type = DeviceType.UNKNOWN;
+
+  @JacksonConstructor
+  public DeviceInfo() {
+  }
+
+  public DeviceInfo(DeviceInfo other) {
+    this.description = other.description;
+    this.lastAccessedAddress = other.lastAccessedAddress;
+    this.lastAccessedInstant = other.lastAccessedInstant;
+    this.name = other.name;
+    this.type = other.type;
+  }
 
   @Override
   public boolean equals(Object o) {
