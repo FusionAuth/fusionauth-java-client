@@ -94,6 +94,12 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
                         parentRegistrationEmailTemplateId);
   }
 
+  public void normalize() {
+    if (!allowChildRegistrations) {
+      parentEmailRequired = false;
+    }
+  }
+
   @Override
   public String toString() {
     return ToString.toString(this);
