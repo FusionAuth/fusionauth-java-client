@@ -123,7 +123,7 @@ public class FormField implements Buildable<FormField>, _InternalJSONColumn {
       // IJ warns about null, but we don't have any nulls in our ManagedFields set, so we are ok.
       //noinspection ConstantConditions
       if (key.equals("user.password")) {
-        // The shipped field for use in self service registration is not set to 'confirm', but the admin field will be.
+        // The shipped field for use in self-service registration is not set to 'confirm', but the admin field will be.
         // - If the user creates another field for this key, we will default it to 'confirm' true.
         control = FormControl.password;
         required = true;
