@@ -301,7 +301,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
   }
 
   /**
-   * Normalizes all of the fields.
+   * Normalizes all the fields.
    */
   public void normalize() {
     Normalizer.removeEmpty(data);
