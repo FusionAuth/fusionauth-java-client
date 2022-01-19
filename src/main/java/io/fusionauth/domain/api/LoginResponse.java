@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +52,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
   public Set<AuthenticationThreats> threatsDetected;
 
   public String token;
+
+  public ZonedDateTime tokenExpirationInstant;
 
   public String twoFactorId;
 
