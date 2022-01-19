@@ -66,15 +66,10 @@ public enum EventType {
 
   UserLoginFailed("user.login.failed"),
 
-  // TODO : Lots of Emails : Daniel : Need to hook this event up.
-  //        Tests: Event + Email
   UserLoginNewDevice("user.login.new-device"),
 
   UserLoginSuccess("user.login.success"),
 
-  // TODO : Lots of Emails : Daniel : Need to hook this event up.
-  //        Tests: Event + Email
-  // TODO : Is there a better name for this?
   UserLoginSuspicious("user.login.suspicious"),
 
   UserPasswordBreach("user.password.breach"),
