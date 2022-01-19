@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.time.ZonedDateTime;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
@@ -32,6 +34,8 @@ public class RegistrationResponse {
   public String registrationVerificationId;
 
   public String token;
+
+  public ZonedDateTime tokenExpirationInstant;
 
   public User user;
 

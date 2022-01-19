@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,6 +33,8 @@ public class UserResponse {
   public Map<UUID, String> registrationVerificationIds;
 
   public String token;
+
+  public ZonedDateTime tokenExpirationInstant;
 
   public User user;
 
