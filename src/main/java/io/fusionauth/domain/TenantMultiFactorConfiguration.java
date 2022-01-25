@@ -44,9 +44,9 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
   }
 
   /**
-   * Returns true if at least one multi-factor method is enabled.
+   * Returns true if at least one Multi-Factor method is enabled.
    *
-   * @return true if at least one multi-factor method is enabled
+   * @return true if at least one Multi-Factor method is enabled
    */
   @JsonIgnore
   public boolean anyEnabled() {
