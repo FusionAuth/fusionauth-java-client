@@ -33,8 +33,16 @@ public class TwoFactorStartRequest implements Buildable<TwoFactorStartRequest> {
 
   public Map<String, Object> state;
 
+  public UUID userId;
+
   @JacksonConstructor
   public TwoFactorStartRequest() {
+  }
+
+  public TwoFactorStartRequest(UUID applicationId, String code, UUID userId) {
+    this.applicationId = applicationId;
+    this.code = code;
+    this.userId = userId;
   }
 
   @SuppressWarnings("unused")
