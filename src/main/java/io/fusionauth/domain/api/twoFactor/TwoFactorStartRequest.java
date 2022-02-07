@@ -33,6 +33,8 @@ public class TwoFactorStartRequest implements Buildable<TwoFactorStartRequest> {
 
   public Map<String, Object> state;
 
+  public String trustChallenge;
+
   public UUID userId;
 
   @JacksonConstructor

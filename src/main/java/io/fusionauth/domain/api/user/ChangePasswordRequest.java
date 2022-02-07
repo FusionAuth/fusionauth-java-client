@@ -39,6 +39,10 @@ public class ChangePasswordRequest extends BaseEventRequest implements Buildable
 
   public String refreshToken;
 
+  public String trustChallenge;
+
+  public String trustToken;
+
   @JacksonConstructor
   public ChangePasswordRequest() {
   }

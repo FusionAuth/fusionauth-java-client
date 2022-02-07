@@ -62,6 +62,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int setupPasswordIdTimeToLiveInSeconds = 86400;
 
+  public int trustTokenTimeToLiveInSeconds = 180;
+
   public int twoFactorIdTimeToLiveInSeconds = 300;
 
   public SecureGeneratorConfiguration twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
@@ -94,6 +96,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.samlv2AuthNRequestIdTimeToLiveInSeconds = other.samlv2AuthNRequestIdTimeToLiveInSeconds;
     this.setupPasswordIdGenerator = new SecureGeneratorConfiguration(other.setupPasswordIdGenerator);
     this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
+    this.trustTokenTimeToLiveInSeconds = other.trustTokenTimeToLiveInSeconds;
     this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
     this.twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(other.twoFactorOneTimeCodeIdGenerator);
     this.twoFactorOneTimeCodeIdTimeToLiveInSeconds = other.twoFactorOneTimeCodeIdTimeToLiveInSeconds;
@@ -120,6 +123,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
            samlv2AuthNRequestIdTimeToLiveInSeconds == that.samlv2AuthNRequestIdTimeToLiveInSeconds &&
            setupPasswordIdTimeToLiveInSeconds == that.setupPasswordIdTimeToLiveInSeconds &&
+           trustTokenTimeToLiveInSeconds == that.trustTokenTimeToLiveInSeconds &&
            twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
            twoFactorOneTimeCodeIdTimeToLiveInSeconds == that.twoFactorOneTimeCodeIdTimeToLiveInSeconds &&
            twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
@@ -155,6 +159,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         samlv2AuthNRequestIdTimeToLiveInSeconds,
                         setupPasswordIdGenerator,
                         setupPasswordIdTimeToLiveInSeconds,
+                        trustTokenTimeToLiveInSeconds,
                         twoFactorIdTimeToLiveInSeconds,
                         twoFactorOneTimeCodeIdGenerator,
                         twoFactorOneTimeCodeIdTimeToLiveInSeconds,

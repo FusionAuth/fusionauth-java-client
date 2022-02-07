@@ -55,6 +55,8 @@ public class LoginResponse implements Buildable<LoginResponse> {
 
   public ZonedDateTime tokenExpirationInstant;
 
+  public String trustToken;
+
   public String twoFactorId;
 
   public String twoFactorTrustId;
