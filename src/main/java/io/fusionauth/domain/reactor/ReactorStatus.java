@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ import com.inversoft.json.ToString;
 public class ReactorStatus {
   public ReactorFeatureStatus advancedIdentityProviders = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus advancedLambdas = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus advancedMultiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus advancedRegistration = ReactorFeatureStatus.UNKNOWN;
@@ -48,6 +50,7 @@ public class ReactorStatus {
 
   public ReactorStatus(ReactorStatus other) {
     advancedIdentityProviders = other.advancedIdentityProviders;
+    advancedLambdas = other.advancedLambdas;
     advancedMultiFactorAuthentication = other.advancedMultiFactorAuthentication;
     advancedRegistration = other.advancedRegistration;
     applicationThemes = other.applicationThemes;
@@ -68,6 +71,7 @@ public class ReactorStatus {
     }
     ReactorStatus that = (ReactorStatus) o;
     return advancedIdentityProviders == that.advancedIdentityProviders &&
+           advancedLambdas == that.advancedLambdas &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
            advancedRegistration == that.advancedRegistration &&
            applicationThemes == that.applicationThemes &&
@@ -81,6 +85,7 @@ public class ReactorStatus {
   @Override
   public int hashCode() {
     return Objects.hash(advancedIdentityProviders,
+                        advancedLambdas,
                         advancedMultiFactorAuthentication,
                         advancedRegistration,
                         applicationThemes,
