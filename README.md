@@ -29,6 +29,13 @@ String apiKey = "5a826da2-1e3a-49df-85ba-cd88575e4e9d";
 FusionAuthClient client = new FusionAuthClient(apiKey, "http://localhost:9011");
 ```
 
+### Build the SSL Client
+
+```java
+String apiKey = "5a826da2-1e3a-49df-85ba-cd88575e4e9d";
+FusionAuthClient client = new FusionAuthClient(apiKey, "http://localhost:9011", Boolean.TRUE, "BASE64 Encode ssl certificate value");
+```
+
 ### Login a user
 
 ```java
