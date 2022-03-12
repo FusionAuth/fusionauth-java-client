@@ -188,6 +188,7 @@ import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
 import io.fusionauth.domain.provider.IdentityProviderType;
+import io.fusionauth.ssl.SSLRestClient;
 
 /**
  * Client that connects to a FusionAuth server and provides access to the full set of FusionAuth APIs.
@@ -224,24 +225,73 @@ public class FusionAuthClient {
 
   public int readTimeout;
 
+  /**
+   * fusion auth client support https
+   */
+  public final Boolean sslEnable;
+
+  /**
+   * ssl certificate context
+   */
+  public final String sslCertificate;
+
   public FusionAuthClient(String apiKey, String baseURL) {
     this(apiKey, baseURL, null);
   }
 
   public FusionAuthClient(String apiKey, String baseURL, String tenantId) {
-    this(apiKey, baseURL, 2000, 2000, tenantId);
+    this(apiKey, baseURL, 2000, 2000, tenantId, Boolean.FALSE, null);
   }
 
   public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout) {
-    this(apiKey, baseURL, connectTimeout, readTimeout, null);
+    this(apiKey, baseURL, connectTimeout, readTimeout, null, Boolean.FALSE, null);
   }
 
-  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId) {
+  /**
+   * ssl construct
+   * @param apiKey
+   * @param baseURL
+   * @param sslEnable
+   * @param sslCertificate
+   */
+  public FusionAuthClient(String apiKey, String baseURL, Boolean sslEnable, String sslCertificate) {
+    this(apiKey, baseURL, null, sslEnable, sslCertificate);
+  }
+
+  /**
+   * sslCertificate
+   * @param apiKey
+   * @param baseURL
+   * @param tenantId
+   * @param sslEnable
+   * @param sslCertificate
+   */
+  public FusionAuthClient(String apiKey, String baseURL, String tenantId, Boolean sslEnable, String sslCertificate) {
+    this(apiKey, baseURL, 2000, 2000, tenantId, sslEnable, sslCertificate);
+  }
+
+  /**
+   * sslCertificate
+   * @param apiKey
+   * @param baseURL
+   * @param connectTimeout
+   * @param readTimeout
+   * @param sslEnable
+   * @param sslCertificate
+   */
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, Boolean sslEnable, String sslCertificate) {
+    this(apiKey, baseURL, connectTimeout, readTimeout, null, sslEnable, sslCertificate);
+  }
+
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId,
+                          Boolean sslEnable, String sslCertificate) {
     this.apiKey = apiKey;
     this.baseURL = baseURL;
     this.connectTimeout = connectTimeout;
     this.readTimeout = readTimeout;
     this.tenantId = tenantId;
+    this.sslEnable = sslEnable;
+    this.sslCertificate = sslCertificate;
   }
 
   /**
@@ -258,7 +308,7 @@ public class FusionAuthClient {
       return this;
     }
 
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString());
+    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString(), sslEnable, sslCertificate);
   }
 
   /**
@@ -4992,12 +5042,25 @@ public class FusionAuthClient {
   }
 
   protected <T, U> RESTClient<T, U> startAnonymous(Class<T> type, Class<U> errorType) {
-    RESTClient<T, U> client = new RESTClient<>(type, errorType)
-        .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
-        .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
-        .url(baseURL)
-        .connectTimeout(connectTimeout)
-        .readTimeout(readTimeout);
+    RESTClient<T, U> client;
+
+    if(Boolean.TRUE.equals(sslEnable)){
+      client = new SSLRestClient<>(type, errorType)
+              .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
+              .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
+              .url(baseURL)
+              .connectTimeout(connectTimeout)
+              .readTimeout(readTimeout)
+              .certificate(sslCertificate)
+              .disableSNIVerification();
+    }else {
+      client = new RESTClient<>(type, errorType)
+              .successResponseHandler(type != Void.TYPE ? new JSONResponseHandler<>(type, objectMapper) : null)
+              .errorResponseHandler(errorType != Void.TYPE ? new JSONResponseHandler<>(errorType, objectMapper) : null)
+              .url(baseURL)
+              .connectTimeout(connectTimeout)
+              .readTimeout(readTimeout);
+    }
 
     if (tenantId != null) {
       client.header(TENANT_ID_HEADER, tenantId);
