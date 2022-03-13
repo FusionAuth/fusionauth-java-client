@@ -37,7 +37,7 @@ public class FusionAuthSSLClientTest {
     String fusionauthApiKey = System.getenv().getOrDefault("FUSIONAUTH_API_KEY", "api-key");
     FusionAuthClient apiKeyClient = new FusionAuthClient(fusionauthApiKey, fusionauthURL)
             .sslCertificate("BASE64 Encode ssl certificate value")
-            .sslKey("BASE64 Encode ssl key value");
+            .sslKey("BASE64 Encode ssl private key value");
 
     ClientResponse<UserResponse, Errors> userResponse = apiKeyClient.retrieveUserByEmail("client_java@fusionauth.io");
     if (userResponse.status != 404) {
@@ -59,7 +59,7 @@ public class FusionAuthSSLClientTest {
     // w/out API Key, success but no response body
     FusionAuthClient noApiKeyClient = new FusionAuthClient(null, fusionauthURL)
             .sslCertificate("BASE64 Encode ssl certificate value")
-            .sslKey("BASE64 Encode ssl key value");
+            .sslKey("BASE64 Encode ssl private key value");
     forgotPasswordResponse = noApiKeyClient.forgotPassword(new ForgotPasswordRequest(response.successResponse.user.email, false));
     assertTrue(forgotPasswordResponse.wasSuccessful());
     assertNull(forgotPasswordResponse.successResponse);

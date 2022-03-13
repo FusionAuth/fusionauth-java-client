@@ -34,7 +34,7 @@ FusionAuthClient client = new FusionAuthClient(apiKey, "http://localhost:9011");
 ```java
 String apiKey = "5a826da2-1e3a-49df-85ba-cd88575e4e9d";
 FusionAuthClient client = new FusionAuthClient(apiKey, "https://localhost:9011").sslCertificate("BASE64 Encode ssl certificate value");
-FusionAuthClient client = new FusionAuthClient(apiKey, "https://localhost:9011").sslCertificate("BASE64 Encode ssl certificate value").sslKey("BASE64 Encode ssl key value");
+FusionAuthClient client = new FusionAuthClient(apiKey, "https://localhost:9011").sslCertificate("BASE64 Encode ssl certificate value").sslKey("BASE64 Encode ssl private key value");
 ```
 
 ### Login a user
