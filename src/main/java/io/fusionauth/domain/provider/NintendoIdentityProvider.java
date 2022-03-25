@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,9 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
 
   @InternalJSONColumn
   public String client_secret;
+
+  @InternalJSONColumn
+  public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
   @InternalJSONColumn
   public String scope;
