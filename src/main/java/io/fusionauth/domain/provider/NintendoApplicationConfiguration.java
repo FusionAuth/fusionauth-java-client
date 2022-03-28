@@ -35,10 +35,16 @@ public class NintendoApplicationConfiguration extends BaseIdentityProviderApplic
   public String client_secret;
 
   @InternalJSONColumn
-  public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration().with(c -> c.uniqueIdClaim = "id");
+  public String emailClaim = "email";
 
   @InternalJSONColumn
   public String scope;
+
+  @InternalJSONColumn
+  public String uniqueIdClaim = "id";
+
+  @InternalJSONColumn
+  public String usernameClaim = "preferred_username";
 
   @Override
   public boolean equals(Object o) {
@@ -55,12 +61,15 @@ public class NintendoApplicationConfiguration extends BaseIdentityProviderApplic
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
-           Objects.equals(scope, that.scope);
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
+           Objects.equals(emailClaim, that.emailClaim) &&
+           Objects.equals(usernameClaim, that.usernameClaim);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope, uniqueIdClaim, emailClaim, usernameClaim);
   }
 
   @Override

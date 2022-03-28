@@ -38,10 +38,16 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
   public String client_secret;
 
   @InternalJSONColumn
-  public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
+  public String emailClaim = "email";
 
   @InternalJSONColumn
   public String scope;
+
+  @InternalJSONColumn
+  public String uniqueIdClaim = "id";
+
+  @InternalJSONColumn
+  public String usernameClaim = "preferred_username";
 
   public NintendoIdentityProvider() {
     linkingStrategy = IdentityProviderLinkingStrategy.CreatePendingLink;
