@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,10 @@ public enum EventType {
   UserCreate("user.create"),
 
   UserCreateComplete("user.create.complete"),
+
+  UserIdentityProviderLink("user.idp.link"),
+
+  UserIdentityProviderUnlink("user.idp.unlink"),
 
   UserDeactivate("user.deactivate"),
 
@@ -135,6 +139,8 @@ public enum EventType {
                          EventType.UserDeleteComplete,
                          EventType.UserEmailUpdate,
                          EventType.UserEmailVerified,
+                         EventType.UserIdentityProviderLink,
+                         EventType.UserIdentityProviderUnlink,
                          EventType.UserLoginIdDuplicateOnCreate,
                          EventType.UserLoginIdDuplicateOnUpdate,
                          EventType.UserLoginFailed,

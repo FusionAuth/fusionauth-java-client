@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,12 @@ package io.fusionauth.domain.api.identityProvider;
 import java.util.UUID;
 
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * @author Daniel DeGroff
  */
-public class IdentityProviderLinkRequest implements Buildable<IdentityProviderLinkRequest> {
+public class IdentityProviderLinkRequest extends BaseEventRequest implements Buildable<IdentityProviderLinkRequest> {
   public String displayName;
 
   public UUID identityProviderId;
