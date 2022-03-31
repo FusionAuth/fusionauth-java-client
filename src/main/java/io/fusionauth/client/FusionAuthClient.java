@@ -70,6 +70,8 @@ import io.fusionauth.domain.api.EventLogSearchResponse;
 import io.fusionauth.domain.api.FamilyEmailRequest;
 import io.fusionauth.domain.api.FamilyRequest;
 import io.fusionauth.domain.api.FamilyResponse;
+import io.fusionauth.domain.api.GroupMemberSearchRequest;
+import io.fusionauth.domain.api.GroupMemberSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
 import io.fusionauth.domain.api.IdentityProviderRequest;
@@ -2577,7 +2579,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the actions for the user with the given Id. This will return all time based actions that are active,
+   * Retrieves all the actions for the user with the given Id. This will return all time based actions that are active,
    * and inactive as well as non-time based actions.
    *
    * @param userId The Id of the user to fetch the actions for.
@@ -2592,7 +2594,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the actions for the user with the given Id that are currently preventing the User from logging in.
+   * Retrieves all the actions for the user with the given Id that are currently preventing the User from logging in.
    *
    * @param userId The Id of the user to fetch the actions for.
    * @return The ClientResponse object.
@@ -2607,7 +2609,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the actions for the user with the given Id that are currently active.
+   * Retrieves all the actions for the user with the given Id that are currently active.
    * An active action means one that is time based and has not been canceled, and has not ended.
    *
    * @param userId The Id of the user to fetch the actions for.
@@ -2637,7 +2639,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the applications.
+   * Retrieves all the applications.
    *
    * @return The ClientResponse object.
    */
@@ -2677,7 +2679,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the connectors.
+   * Retrieves all the connectors.
    *
    * @return The ClientResponse object.
    */
@@ -2703,7 +2705,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the consent.
+   * Retrieves all the consent.
    *
    * @return The ClientResponse object.
    */
@@ -2764,7 +2766,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the email templates.
+   * Retrieves all the email templates.
    *
    * @return The ClientResponse object.
    */
@@ -2823,7 +2825,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the Entity Types.
+   * Retrieves all the Entity Types.
    *
    * @return The ClientResponse object.
    */
@@ -2849,7 +2851,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the families that a user belongs to.
+   * Retrieves all the families that a user belongs to.
    *
    * @param userId The User's id
    * @return The ClientResponse object.
@@ -2863,7 +2865,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the members of a family by the unique Family Id.
+   * Retrieves all the members of a family by the unique Family Id.
    *
    * @param familyId The unique Id of the Family.
    * @return The ClientResponse object.
@@ -2905,7 +2907,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the forms fields
+   * Retrieves all the forms fields
    *
    * @return The ClientResponse object.
    */
@@ -2917,7 +2919,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the forms.
+   * Retrieves all the forms.
    *
    * @return The ClientResponse object.
    */
@@ -2943,7 +2945,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the groups.
+   * Retrieves all the groups.
    *
    * @return The ClientResponse object.
    */
@@ -2999,7 +3001,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the identity providers.
+   * Retrieves all the identity providers.
    *
    * @return The ClientResponse object.
    */
@@ -3011,7 +3013,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the actions for the user with the given Id that are currently inactive.
+   * Retrieves all the actions for the user with the given Id that are currently inactive.
    * An inactive action means one that is time based and has been canceled or has expired, or is not time based.
    *
    * @param userId The Id of the user to fetch the actions for.
@@ -3027,7 +3029,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the applications that are currently inactive.
+   * Retrieves all the applications that are currently inactive.
    *
    * @return The ClientResponse object.
    */
@@ -3040,7 +3042,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the user actions that are currently inactive.
+   * Retrieves all the user actions that are currently inactive.
    *
    * @return The ClientResponse object.
    */
@@ -3131,7 +3133,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the keys.
+   * Retrieves all the keys.
    *
    * @return The ClientResponse object.
    */
@@ -3157,7 +3159,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the lambdas.
+   * Retrieves all the lambdas.
    *
    * @return The ClientResponse object.
    */
@@ -3169,7 +3171,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the lambdas for the provided type.
+   * Retrieves all the lambdas for the provided type.
    *
    * @param type The type of the lambda to return.
    * @return The ClientResponse object.
@@ -3230,7 +3232,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the message templates.
+   * Retrieves all the message templates.
    *
    * @return The ClientResponse object.
    */
@@ -3256,7 +3258,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the messengers.
+   * Retrieves all the messengers.
    *
    * @return The ClientResponse object.
    */
@@ -3345,7 +3347,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the children for the given parent email address.
+   * Retrieves all the children for the given parent email address.
    *
    * @param parentEmail The email of the parent.
    * @return The ClientResponse object.
@@ -3501,7 +3503,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the tenants.
+   * Retrieves all the tenants.
    *
    * @return The ClientResponse object.
    */
@@ -3527,7 +3529,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the themes.
+   * Retrieves all the themes.
    *
    * @return The ClientResponse object.
    */
@@ -3622,7 +3624,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the user actions.
+   * Retrieves all the user actions.
    *
    * @return The ClientResponse object.
    */
@@ -3706,7 +3708,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the comments for the user with the given Id.
+   * Retrieves all the comments for the user with the given Id.
    *
    * @param userId The Id of the user.
    * @return The ClientResponse object.
@@ -3734,7 +3736,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves all of the consents for a User.
+   * Retrieves all the consents for a User.
    *
    * @param userId The User's Id
    * @return The ClientResponse object.
@@ -4055,8 +4057,8 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AuditLogSearchResponse, Void> searchAuditLogs(AuditLogSearchRequest request) {
-    return start(AuditLogSearchResponse.class, Void.TYPE)
+  public ClientResponse<AuditLogSearchResponse, Errors> searchAuditLogs(AuditLogSearchRequest request) {
+    return start(AuditLogSearchResponse.class, Errors.class)
         .uri("/api/system/audit-log/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -4111,8 +4113,8 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<EntityTypeSearchResponse, Void> searchEntityTypes(EntityTypeSearchRequest request) {
-    return start(EntityTypeSearchResponse.class, Void.TYPE)
+  public ClientResponse<EntityTypeSearchResponse, Errors> searchEntityTypes(EntityTypeSearchRequest request) {
+    return start(EntityTypeSearchResponse.class, Errors.class)
         .uri("/api/entity/type/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -4125,9 +4127,23 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<EventLogSearchResponse, Void> searchEventLogs(EventLogSearchRequest request) {
-    return start(EventLogSearchResponse.class, Void.TYPE)
+  public ClientResponse<EventLogSearchResponse, Errors> searchEventLogs(EventLogSearchRequest request) {
+    return start(EventLogSearchResponse.class, Errors.class)
         .uri("/api/system/event-log/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches group members with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<GroupMemberSearchResponse, Errors> searchGroupMembers(GroupMemberSearchRequest request) {
+    return start(GroupMemberSearchResponse.class, Errors.class)
+        .uri("/api/group/member/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4139,8 +4155,8 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<IPAccessControlListSearchResponse, Void> searchIPAccessControlLists(IPAccessControlListSearchRequest request) {
-    return start(IPAccessControlListSearchResponse.class, Void.TYPE)
+  public ClientResponse<IPAccessControlListSearchResponse, Errors> searchIPAccessControlLists(IPAccessControlListSearchRequest request) {
+    return start(IPAccessControlListSearchResponse.class, Errors.class)
         .uri("/api/ip-acl/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -4153,8 +4169,8 @@ public class FusionAuthClient {
    * @param request The search criteria and pagination information.
    * @return The ClientResponse object.
    */
-  public ClientResponse<LoginRecordSearchResponse, Void> searchLoginRecords(LoginRecordSearchRequest request) {
-    return start(LoginRecordSearchResponse.class, Void.TYPE)
+  public ClientResponse<LoginRecordSearchResponse, Errors> searchLoginRecords(LoginRecordSearchRequest request) {
+    return start(LoginRecordSearchResponse.class, Errors.class)
         .uri("/api/system/login-record/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -4586,6 +4602,20 @@ public class FusionAuthClient {
     return start(GroupResponse.class, Errors.class)
         .uri("/api/group")
         .urlSegment(groupId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .put()
+        .go();
+  }
+
+  /**
+   * Creates a member in a group.
+   *
+   * @param request The request object that contains all the information used to create the group member(s).
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<MemberResponse, Errors> updateGroupMembers(MemberRequest request) {
+    return start(MemberResponse.class, Errors.class)
+        .uri("/api/group/member")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .put()
         .go();

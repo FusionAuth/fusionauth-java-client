@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain.search;
 import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventLogType;
@@ -42,7 +43,6 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
 
   @JacksonConstructor
   public EventLogSearchCriteria() {
-    prepare();
   }
 
   public EventLogSearchCriteria(String message, EventLogType type, ZonedDateTime start, ZonedDateTime end, int startRow,
@@ -71,6 +71,11 @@ public class EventLogSearchCriteria extends BaseSearchCriteria {
     orderBy = normalizeOrderBy(orderBy, SortableFields);
     message = toSearchString(message);
     return this;
+  }
+
+  @Override
+  public Set<String> supportedOrderByColumns() {
+    return SortableFields.keySet();
   }
 
   @Override

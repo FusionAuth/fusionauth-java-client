@@ -42,6 +42,8 @@ public class ReactorStatus {
 
   public boolean licensed;
 
+  public ReactorFeatureStatus scimServer = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
   @JacksonConstructor
@@ -58,6 +60,7 @@ public class ReactorStatus {
     connectors = other.connectors;
     entityManagement = other.entityManagement;
     licensed = other.licensed;
+    scimServer = other.scimServer;
     threatDetection = other.threatDetection;
   }
 
@@ -79,6 +82,7 @@ public class ReactorStatus {
            connectors == that.connectors &&
            entityManagement == that.entityManagement &&
            licensed == that.licensed &&
+           scimServer == that.scimServer &&
            threatDetection == that.threatDetection;
   }
 
@@ -93,6 +97,7 @@ public class ReactorStatus {
                         connectors,
                         entityManagement,
                         licensed,
+                        scimServer,
                         threatDetection);
   }
 

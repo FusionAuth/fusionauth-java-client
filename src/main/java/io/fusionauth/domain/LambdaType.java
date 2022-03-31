@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -341,6 +341,74 @@ public enum LambdaType {
       "  //  console.info(JSON.stringify(user)); \n" +
       "\n" +
       "  // Happy coding! Populate your JWT here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  SCIMServerGroupRequestConverter("convert", "" +
+      "// Using the incoming SCIM group, build a FusionAuth group by mapping incoming fields to the correct FusionAuth group fields.\n" +
+      "function convert(group, members, options, scimGroup) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(scimGroup)); \n" +
+      "\n" +
+      "  // Happy coding! Convert the SCIM group to a FusionAuth group here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n"),
+
+  SCIMServerGroupResponseConverter("convert", "" +
+      "// Using the FusionAuth group, build a SCIM group by mapping group fields the correct SCIM group fields.\n" +
+      "function convert(scimGroup, group, members) {\n" +
+       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+       "  //  \n" +
+       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+       "  //  console.info(JSON.stringify(group)); \n" +
+       "\n" +
+       "  // Happy coding! Convert the FusionAuth group to a SCIM group here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
+      "}\n"),
+
+  SCIMServerUserRequestConverter("convert", "" +
+      "// Using the incoming SCIM user, build a FusionAuth user by mapping incoming fields to the correct FusionAuth user fields.\n" +
+      "function convert(user, options, scimUser) {\n" +
+       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+       "  //  \n" +
+       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+       "  //  console.info(JSON.stringify(scimUser)); \n" +
+       "\n" +
+       "  // Happy coding! Convert the SCIM user to a FusionAuth user here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
+      "}\n"),
+
+  SCIMServerUserResponseConverter("convert", "" +
+      "// Using the FusionAuth user, build a SCIM user by mapping user fields to the correct SCIM user fields.\n" +
+      "function convert(scimUser, user) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Convert the SCIM user to a FusionAuth user here.\n" +
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +

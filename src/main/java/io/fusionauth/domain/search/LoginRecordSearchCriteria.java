@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package io.fusionauth.domain.search;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -61,5 +63,11 @@ public class LoginRecordSearchCriteria extends BaseSearchCriteria implements Bui
   public LoginRecordSearchCriteria prepare() {
     orderBy = null;
     return this;
+  }
+
+  @Override
+  public Set<String> supportedOrderByColumns() {
+    // Currently, no sorting is allowed using this Search API.
+    return Collections.emptySet();
   }
 }

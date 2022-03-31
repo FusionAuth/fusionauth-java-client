@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import io.fusionauth.domain.EntityType;
 import io.fusionauth.domain.search.SearchResults;
 
 /**
- * Search request for entity types.
+ * Search response for entity types.
  *
  * @author Brian Pontarelli
  */

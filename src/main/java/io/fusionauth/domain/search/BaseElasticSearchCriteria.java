@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package io.fusionauth.domain.search;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -36,5 +38,11 @@ public abstract class BaseElasticSearchCriteria extends BaseSearchCriteria {
   @Override
   public BaseElasticSearchCriteria prepare() {
     return this;
+  }
+
+  @Override
+  public Set<String> supportedOrderByColumns() {
+    // Return empty set since any Elasticsearch query will have service level validation on sorting.
+    return Collections.emptySet();
   }
 }

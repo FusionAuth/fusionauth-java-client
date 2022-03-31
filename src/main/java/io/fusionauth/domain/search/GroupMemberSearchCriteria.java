@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,28 +18,29 @@ package io.fusionauth.domain.search;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
-import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
- * Search criteria for entity types.
+ * Search criteria for Group Members
  *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class EntityTypeSearchCriteria extends BaseSearchCriteria {
+public class GroupMemberSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public String name;
+  public UUID groupId;
+
+  public UUID userId;
 
   @Override
-  public EntityTypeSearchCriteria prepare() {
+  public GroupMemberSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
-    name = toSearchString(name);
     return this;
   }
 
@@ -50,14 +51,13 @@ public class EntityTypeSearchCriteria extends BaseSearchCriteria {
 
   @Override
   protected String defaultOrderBy() {
-    return "name ASC";
+    return "insertInstant ASC";
   }
 
   static {
-    SortableFields.put("entityTypePermissionsCount", "entityTypePermissionsCount");
     SortableFields.put("id", "id");
-    SortableFields.put("insertInstant", "insert_instant");
-    SortableFields.put("lastUpdateInstant", "last_update_instant");
-    SortableFields.put("name", "name");
+    SortableFields.put("insertInstant", "gm.insert_instant");
+    SortableFields.put("groupId", "gm.groups_id");
+    SortableFields.put("userId", "gm.users_id");
   }
 }

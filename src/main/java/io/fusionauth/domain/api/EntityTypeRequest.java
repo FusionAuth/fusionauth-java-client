@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EntityType;
 import io.fusionauth.domain.EntityTypePermission;
 
@@ -24,7 +25,7 @@ import io.fusionauth.domain.EntityTypePermission;
  *
  * @author Brian Pontarelli
  */
-public class EntityTypeRequest {
+public class EntityTypeRequest implements Buildable<EntityTypeRequest> {
   public EntityType entityType;
 
   public EntityTypePermission permission;

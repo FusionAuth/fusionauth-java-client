@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,6 +116,10 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
     ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
     JWTConfiguration jwtConfiguration = tenant.lookupJWTConfiguration(application);
     return startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now);
+  }
+
+  public void secure() {
+    data = null;
   }
 
   @Override

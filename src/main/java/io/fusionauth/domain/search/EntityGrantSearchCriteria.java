@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package io.fusionauth.domain.search;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
@@ -45,6 +46,11 @@ public class EntityGrantSearchCriteria extends BaseSearchCriteria {
     orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
     return this;
+  }
+
+  @Override
+  public Set<String> supportedOrderByColumns() {
+    return SortableFields.keySet();
   }
 
   @Override

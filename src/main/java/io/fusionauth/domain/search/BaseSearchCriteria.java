@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.search;
+
+import java.util.Set;
 
 import io.fusionauth.domain.util.SQLTools;
 
@@ -33,6 +35,8 @@ public abstract class BaseSearchCriteria {
     orderBy = SQLTools.sanitizeOrderBy(orderBy);
     return this;
   }
+
+  public abstract Set<String> supportedOrderByColumns();
 
   protected String defaultOrderBy() {
     return null;

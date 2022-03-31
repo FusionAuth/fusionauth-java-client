@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,28 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.Entity;
+import io.fusionauth.domain.GroupMember;
+import io.fusionauth.domain.search.SearchResults;
 
 /**
- * Entity API request object.
+ * Search response for Group Members
  *
- * @author Brian Pontarelli
+ * @author Daniel DeGroff
  */
-public class EntityRequest implements Buildable<EntityRequest> {
-  public Entity entity;
+public class GroupMemberSearchResponse {
+  public List<GroupMember> members;
+
+  public long total;
 
   @JacksonConstructor
-  public EntityRequest() {
+  public GroupMemberSearchResponse() {
   }
 
-  public EntityRequest(Entity entity) {
-    this.entity = entity;
+  public GroupMemberSearchResponse(SearchResults<GroupMember> searchResults) {
+    this.members = searchResults.results;
+    this.total = searchResults.total;
   }
 }

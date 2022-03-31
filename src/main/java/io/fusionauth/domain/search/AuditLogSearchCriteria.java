@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain.search;
 import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
@@ -46,7 +47,6 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
 
   @JacksonConstructor
   public AuditLogSearchCriteria() {
-    prepare();
   }
 
   public AuditLogSearchCriteria(String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
@@ -81,6 +81,11 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
     oldValue = toSearchString(oldValue);
     reason = toSearchString(reason);
     return this;
+  }
+
+  @Override
+  public Set<String> supportedOrderByColumns() {
+    return SortableFields.keySet();
   }
 
   @Override

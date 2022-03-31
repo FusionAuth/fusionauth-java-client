@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.Group;
 
 /**
@@ -26,7 +27,7 @@ import io.fusionauth.domain.Group;
  *
  * @author Daniel DeGroff
  */
-public class GroupRequest {
+public class GroupRequest implements Buildable<GroupRequest> {
   public Group group;
 
   public List<UUID> roleIds;

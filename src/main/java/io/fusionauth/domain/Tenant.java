@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,6 +92,8 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   @JsonIgnoreProperties("enabled")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
+  public TenantLambdaConfiguration lambdaConfiguration = new TenantLambdaConfiguration();
+
   public ZonedDateTime lastUpdateInstant;
 
   @InternalJSONColumn
@@ -130,6 +132,9 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
 
   @InternalJSONColumn
+  public TenantSCIMServerConfiguration scimServerConfiguration = new TenantSCIMServerConfiguration();
+
+  @InternalJSONColumn
   public TenantSSOConfiguration ssoConfiguration = new TenantSSOConfiguration();
 
   @InternalJSONColumn
@@ -164,6 +169,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.accessControlConfiguration = new TenantAccessControlConfiguration(other.accessControlConfiguration);
     this.issuer = other.issuer;
     this.jwtConfiguration = new JWTConfiguration(other.jwtConfiguration);
+    this.lambdaConfiguration = new TenantLambdaConfiguration(other.lambdaConfiguration);
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginConfiguration = new TenantLoginConfiguration(other.loginConfiguration);
     this.logoutURL = other.logoutURL;
@@ -176,6 +182,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.rateLimitConfiguration = new TenantRateLimitConfiguration(other.rateLimitConfiguration);
     this.registrationConfiguration = new TenantRegistrationConfiguration(other.registrationConfiguration);
+    this.scimServerConfiguration = new TenantSCIMServerConfiguration(other.scimServerConfiguration);
     this.ssoConfiguration = new TenantSSOConfiguration(other.ssoConfiguration);
     this.state = other.state;
     this.themeId = other.themeId;
@@ -208,6 +215,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(accessControlConfiguration, tenant.accessControlConfiguration) &&
            Objects.equals(issuer, tenant.issuer) &&
            Objects.equals(jwtConfiguration, tenant.jwtConfiguration) &&
+           Objects.equals(lambdaConfiguration, tenant.lambdaConfiguration) &&
            Objects.equals(lastUpdateInstant, tenant.lastUpdateInstant) &&
            Objects.equals(loginConfiguration, tenant.loginConfiguration) &&
            Objects.equals(logoutURL, tenant.logoutURL) &&
@@ -219,6 +227,7 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
            Objects.equals(rateLimitConfiguration, tenant.rateLimitConfiguration) &&
            Objects.equals(registrationConfiguration, tenant.registrationConfiguration) &&
+           Objects.equals(scimServerConfiguration, tenant.scimServerConfiguration) &&
            Objects.equals(ssoConfiguration, tenant.ssoConfiguration) &&
            Objects.equals(state, tenant.state) &&
            Objects.equals(themeId, tenant.themeId) &&
@@ -233,7 +242,38 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(captchaConfiguration, configured, connectorPolicies, data, emailConfiguration, eventConfiguration, externalIdentifierConfiguration, failedAuthenticationConfiguration, familyConfiguration, formConfiguration, httpSessionMaxInactiveInterval, id, insertInstant, accessControlConfiguration, issuer, jwtConfiguration, lastUpdateInstant, loginConfiguration, logoutURL, maximumPasswordAge, minimumPasswordAge, name, passwordEncryptionConfiguration, passwordValidationRules, state, rateLimitConfiguration, registrationConfiguration, themeId, userDeletePolicy, usernameConfiguration);
+    return Objects.hash(captchaConfiguration,
+                        configured,
+                        connectorPolicies,
+                        data,
+                        emailConfiguration,
+                        eventConfiguration,
+                        externalIdentifierConfiguration,
+                        failedAuthenticationConfiguration,
+                        familyConfiguration,
+                        formConfiguration,
+                        httpSessionMaxInactiveInterval,
+                        id,
+                        insertInstant,
+                        accessControlConfiguration,
+                        issuer,
+                        jwtConfiguration,
+                        lambdaConfiguration,
+                        lastUpdateInstant,
+                        loginConfiguration,
+                        logoutURL,
+                        maximumPasswordAge,
+                        minimumPasswordAge,
+                        name,
+                        passwordEncryptionConfiguration,
+                        passwordValidationRules,
+                        rateLimitConfiguration,
+                        registrationConfiguration,
+                        scimServerConfiguration,
+                        state,
+                        themeId,
+                        userDeletePolicy,
+                        usernameConfiguration);
   }
 
   @JsonIgnore
