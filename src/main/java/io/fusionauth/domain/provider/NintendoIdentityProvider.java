@@ -58,7 +58,7 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     if (this == o) {
       return true;
     }
-    if (!(o instanceof NintendoIdentityProvider)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     if (!super.equals(o)) {
@@ -68,7 +68,10 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
-           Objects.equals(scope, that.scope);
+           Objects.equals(emailClaim, that.emailClaim) &&
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
+           Objects.equals(usernameClaim, that.usernameClaim);
   }
 
   @Override
@@ -78,7 +81,7 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, emailClaim, scope, uniqueIdClaim, usernameClaim);
   }
 
   public String lookupButtonText(String clientId) {
