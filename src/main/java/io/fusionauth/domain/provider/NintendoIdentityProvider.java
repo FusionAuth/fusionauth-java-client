@@ -100,8 +100,20 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
   }
 
+  public String lookupEmailClaim(UUID applicationId) {
+    return lookup(() -> emailClaim, () -> app(emailClaim, app -> app.emailClaim));
+  }
+
   public String lookupScope(String clientId) {
     return lookup(() -> scope, () -> app(clientId, app -> app.scope));
+  }
+
+  public String lookupUniqueIdClaim(UUID applicationId) {
+    return lookup(() -> uniqueIdClaim, () -> app(uniqueIdClaim, app -> app.uniqueIdClaim));
+  }
+
+  public String lookupUsernameClaim(UUID applicationId) {
+    return lookup(() -> usernameClaim, () -> app(usernameClaim, app -> app.usernameClaim));
   }
 
   @Override
