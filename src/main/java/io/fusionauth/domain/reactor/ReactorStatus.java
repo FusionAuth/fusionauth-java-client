@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.reactor;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
@@ -40,6 +41,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
+  public LocalDate expiration;
+
   public boolean licensed;
 
   public ReactorFeatureStatus scimServer = ReactorFeatureStatus.UNKNOWN;
@@ -59,6 +62,7 @@ public class ReactorStatus {
     breachedPasswordDetection = other.breachedPasswordDetection;
     connectors = other.connectors;
     entityManagement = other.entityManagement;
+    expiration = other.expiration;
     licensed = other.licensed;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
@@ -73,7 +77,8 @@ public class ReactorStatus {
       return false;
     }
     ReactorStatus that = (ReactorStatus) o;
-    return advancedIdentityProviders == that.advancedIdentityProviders &&
+    return licensed == that.licensed &&
+           advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedLambdas == that.advancedLambdas &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
            advancedRegistration == that.advancedRegistration &&
@@ -81,7 +86,7 @@ public class ReactorStatus {
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
            entityManagement == that.entityManagement &&
-           licensed == that.licensed &&
+           Objects.equals(expiration, that.expiration) &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection;
   }
@@ -96,6 +101,7 @@ public class ReactorStatus {
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,
+                        expiration,
                         licensed,
                         scimServer,
                         threatDetection);
