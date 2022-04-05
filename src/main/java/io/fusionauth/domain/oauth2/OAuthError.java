@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,12 @@
  */
 package io.fusionauth.domain.oauth2;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.TwoFactorMethod;
 
 /**
  * @author Daniel DeGroff
@@ -34,6 +37,9 @@ public class OAuthError implements OAuthResponse {
   @SuppressWarnings("unused")
   @JsonProperty("error_uri")
   public String errorURI;
+
+  @JsonProperty("two_factor_methods")
+  public List<TwoFactorMethod> methods;
 
   @JsonProperty("error_reason")
   public OAuthErrorReason reason;
