@@ -58,7 +58,7 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof NintendoIdentityProvider)) {
       return false;
     }
     if (!super.equals(o)) {
