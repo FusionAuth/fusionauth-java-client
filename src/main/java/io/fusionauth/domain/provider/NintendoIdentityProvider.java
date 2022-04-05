@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,16 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
   public String client_secret;
 
   @InternalJSONColumn
+  public String emailClaim = "email";
+
+  @InternalJSONColumn
   public String scope;
+
+  @InternalJSONColumn
+  public String uniqueIdClaim = "id";
+
+  @InternalJSONColumn
+  public String usernameClaim = "preferred_username";
 
   public NintendoIdentityProvider() {
     linkingStrategy = IdentityProviderLinkingStrategy.CreatePendingLink;
@@ -49,7 +58,7 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     if (this == o) {
       return true;
     }
-    if (!(o instanceof NintendoIdentityProvider)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     if (!super.equals(o)) {
@@ -59,7 +68,10 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     return Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
-           Objects.equals(scope, that.scope);
+           Objects.equals(emailClaim, that.emailClaim) &&
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
+           Objects.equals(usernameClaim, that.usernameClaim);
   }
 
   @Override
@@ -69,7 +81,7 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, emailClaim, scope, uniqueIdClaim, usernameClaim);
   }
 
   public String lookupButtonText(String clientId) {
@@ -88,8 +100,20 @@ public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoAppli
     return lookup(() -> client_secret, () -> app(applicationId, app -> app.client_secret));
   }
 
+  public String lookupEmailClaim(UUID applicationId) {
+    return lookup(() -> emailClaim, () -> app(emailClaim, app -> app.emailClaim));
+  }
+
   public String lookupScope(String clientId) {
     return lookup(() -> scope, () -> app(clientId, app -> app.scope));
+  }
+
+  public String lookupUniqueIdClaim(UUID applicationId) {
+    return lookup(() -> uniqueIdClaim, () -> app(uniqueIdClaim, app -> app.uniqueIdClaim));
+  }
+
+  public String lookupUsernameClaim(UUID applicationId) {
+    return lookup(() -> usernameClaim, () -> app(usernameClaim, app -> app.usernameClaim));
   }
 
   @Override
