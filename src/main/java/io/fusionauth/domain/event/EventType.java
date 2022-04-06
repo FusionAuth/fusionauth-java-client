@@ -50,15 +50,15 @@ public enum EventType {
 
   UserCreateComplete("user.create.complete"),
 
-  UserIdentityProviderLink("user.idp.link"),
-
-  UserIdentityProviderUnlink("user.idp.unlink"),
-
   UserDeactivate("user.deactivate"),
 
   UserDelete("user.delete"),
 
   UserDeleteComplete("user.delete.complete"),
+
+  UserIdentityProviderLink("user.identity-provider.link"),
+
+  UserIdentityProviderUnlink("user.identity-provider.unlink"),
 
   UserLoginIdDuplicateOnCreate("user.loginId.duplicate.create"),
 
