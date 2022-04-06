@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,6 +169,15 @@ public enum EventType {
   @JsonValue
   public String eventName() {
     return eventName;
+  }
+
+  public boolean isInstanceEvent() {
+    try {
+      return Class.forName(getClass().getPackage().getName() + "." + name() + "Event").getConstructor().newInstance() instanceof InstanceEvent;
+    } catch (Exception ignore) {
+    }
+
+    return false;
   }
 
   public boolean isTransactionalEvent() {

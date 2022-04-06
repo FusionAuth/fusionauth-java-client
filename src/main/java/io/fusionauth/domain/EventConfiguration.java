@@ -58,6 +58,7 @@ public class EventConfiguration implements Buildable<EventConfiguration> {
 
   public EventConfiguration normalize() {
     events.forEach((key, value) -> value.transactionType = key.isTransactionalEvent() ? value.transactionType : TransactionType.None);
+    events.keySet().removeIf(EventType::isInstanceEvent);
     return this;
   }
 
