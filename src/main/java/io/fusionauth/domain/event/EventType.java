@@ -56,6 +56,10 @@ public enum EventType {
 
   UserDeleteComplete("user.delete.complete"),
 
+  UserEmailUpdate("user.email.update"),
+
+  UserEmailVerified("user.email.verified"),
+
   UserIdentityProviderLink("user.identity-provider.link"),
 
   UserIdentityProviderUnlink("user.identity-provider.unlink"),
@@ -63,10 +67,6 @@ public enum EventType {
   UserLoginIdDuplicateOnCreate("user.loginId.duplicate.create"),
 
   UserLoginIdDuplicateOnUpdate("user.loginId.duplicate.update"),
-
-  UserEmailUpdate("user.email.update"),
-
-  UserEmailVerified("user.email.verified"),
 
   UserLoginFailed("user.login.failed"),
 
