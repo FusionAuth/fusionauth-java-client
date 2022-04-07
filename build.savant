@@ -21,7 +21,7 @@ guiceVersion = "5.1.0"
 jacksonVersion = "2.13.2"
 jackson5Version = "2.6.1"
 javaErrorVersion = "2.2.3"
-restifyVersion = "3.9.0"
+restifyVersion = "3.9.1"
 testngVersion = "7.3.0"
 
 project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.36.0", licenses: ["ApacheV2_0"]) {

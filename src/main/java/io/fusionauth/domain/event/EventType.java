@@ -56,13 +56,17 @@ public enum EventType {
 
   UserDeleteComplete("user.delete.complete"),
 
-  UserLoginIdDuplicateOnCreate("user.loginId.duplicate.create"),
-
-  UserLoginIdDuplicateOnUpdate("user.loginId.duplicate.update"),
-
   UserEmailUpdate("user.email.update"),
 
   UserEmailVerified("user.email.verified"),
+
+  UserIdentityProviderLink("user.identity-provider.link"),
+
+  UserIdentityProviderUnlink("user.identity-provider.unlink"),
+
+  UserLoginIdDuplicateOnCreate("user.loginId.duplicate.create"),
+
+  UserLoginIdDuplicateOnUpdate("user.loginId.duplicate.update"),
 
   UserLoginFailed("user.login.failed"),
 
@@ -135,6 +139,8 @@ public enum EventType {
                          EventType.UserDeleteComplete,
                          EventType.UserEmailUpdate,
                          EventType.UserEmailVerified,
+                         EventType.UserIdentityProviderLink,
+                         EventType.UserIdentityProviderUnlink,
                          EventType.UserLoginIdDuplicateOnCreate,
                          EventType.UserLoginIdDuplicateOnUpdate,
                          EventType.UserLoginFailed,
