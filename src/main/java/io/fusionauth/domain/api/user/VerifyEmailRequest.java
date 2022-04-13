@@ -54,4 +54,8 @@ public class VerifyEmailRequest extends BaseEventRequest {
     super(eventInfo);
     this.verificationId = verificationId;
   }
+
+  public VerifyEmailRequest(UUID userId) {
+    this.userId = userId;
+  }
 }
