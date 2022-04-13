@@ -4969,16 +4969,28 @@ public class FusionAuthClient {
    * the tenant is configured to gate a user until their email address is verified, this procedures requires two values instead of one. 
    * The verificationId is a high entropy value and the one-time use code is a low entropy value that is easily entered in a user interactive form. The 
    * two values together are able to confirm a user's email address and mark the user's email address as verified.
-   * 
-   * Requests made with an API key can instead provide a userId in the request body to override email verification for the user.
    *
    * @param request The request that contains the verificationId and optional one-time use code paired with the verificationId.
-   *     
-   *     API key-authenticated requests can instead provide a userId to override the email verification status for the user.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> verifyEmailAddress(VerifyEmailRequest request) {
     return startAnonymous(Void.TYPE, Errors.class)
+        .uri("/api/user/verify-email")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Manually confirms a user's email address. 
+   * 
+   * The request body will contain the userId to be verified. This manual verification method requires an API key.
+   *
+   * @param request The request that contains the userId to verify.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> verifyEmailAddressByUserId(VerifyEmailRequest request) {
+    return start(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
