@@ -4982,7 +4982,7 @@ public class FusionAuthClient {
   }
 
   /**
-   * Manually confirms a user's email address. 
+   * Administratively verify a user's email address. Use this method to bypass email verification for the user.
    * 
    * The request body will contain the userId to be verified. This manual verification method requires an API key.
    *
