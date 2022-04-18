@@ -4984,7 +4984,7 @@ public class FusionAuthClient {
   /**
    * Administratively verify a user's email address. Use this method to bypass email verification for the user.
    * 
-   * The request body will contain the userId to be verified. This manual verification method requires an API key.
+   * The request body will contain the userId to be verified. An API key is required when sending the userId in the request body.
    *
    * @param request The request that contains the userId to verify.
    * @return The ClientResponse object.
