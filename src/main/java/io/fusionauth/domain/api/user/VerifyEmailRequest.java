@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.UUID;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseEventRequest;
@@ -24,6 +26,8 @@ import io.fusionauth.domain.api.BaseEventRequest;
  */
 public class VerifyEmailRequest extends BaseEventRequest {
   public String oneTimeCode;
+
+  public UUID userId;
 
   public String verificationId;
 
@@ -49,5 +53,9 @@ public class VerifyEmailRequest extends BaseEventRequest {
   public VerifyEmailRequest(EventInfo eventInfo, String verificationId) {
     super(eventInfo);
     this.verificationId = verificationId;
+  }
+
+  public VerifyEmailRequest(UUID userId) {
+    this.userId = userId;
   }
 }
