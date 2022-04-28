@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,19 +85,19 @@ public class CleanSpeakConfiguration extends Enableable implements Buildable<Cle
     if (this == o) {
       return true;
     }
-    if (!(o instanceof CleanSpeakConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
       return false;
     }
     CleanSpeakConfiguration that = (CleanSpeakConfiguration) o;
-    return super.equals(o) &&
-           Objects.equals(apiKey, that.apiKey) &&
-           Objects.equals(usernameModeration, that.usernameModeration) &&
-           Objects.equals(url, that.url);
+    return Objects.equals(apiKey, that.apiKey) && Objects.equals(applicationIds, that.applicationIds) && Objects.equals(url, that.url) && Objects.equals(usernameModeration, that.usernameModeration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), apiKey, usernameModeration, url);
+    return Objects.hash(super.hashCode(), apiKey, applicationIds, url, usernameModeration);
   }
 
   public void normalize() {
