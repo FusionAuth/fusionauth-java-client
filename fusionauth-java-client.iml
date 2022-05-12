@@ -151,11 +151,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/4.0.0/restify-4.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/4.2.0-{integration}/restify-4.2.0-{integration}.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/4.0.0/restify-4.0.0-src.jar!/" />
+          <root url="jar://$USER_HOME$/.savant/cache/com/inversoft/restify/4.2.0-{integration}/restify-4.2.0-{integration}-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
