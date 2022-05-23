@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,6 +55,13 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, _I
   }
 
   public IdentityProviderLink(UUID identityProviderId, String identityProviderUserId, UUID userId) {
+    this.identityProviderId = identityProviderId;
+    this.identityProviderUserId = identityProviderUserId;
+    this.userId = userId;
+  }
+
+  public IdentityProviderLink(String displayName, UUID identityProviderId, String identityProviderUserId, UUID userId) {
+    this.displayName = displayName;
     this.identityProviderId = identityProviderId;
     this.identityProviderUserId = identityProviderUserId;
     this.userId = userId;
