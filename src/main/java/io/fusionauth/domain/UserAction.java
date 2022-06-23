@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ public class UserAction implements Comparable<UserAction>, Buildable<UserAction>
   /**
    * Only time-based actions. This indicates FusionAuth will send an event when the action expires
    */
-  public boolean sendEndEvent;
+  public boolean sendEndEvent = true;
 
   /**
    * All actions. The template to be used when an action is first taken
