@@ -36,18 +36,14 @@ import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
-import io.fusionauth.domain.api.ApplicationRequest;
-import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.APIKeyRequest;
 import io.fusionauth.domain.api.APIKeyResponse;
+import io.fusionauth.domain.api.ApplicationRequest;
+import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
-import io.fusionauth.domain.api.FormFieldRequest;
-import io.fusionauth.domain.api.FormFieldResponse;
-import io.fusionauth.domain.api.FormRequest;
-import io.fusionauth.domain.api.FormResponse;
 import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.api.ConnectorResponse;
 import io.fusionauth.domain.api.ConsentRequest;
@@ -72,18 +68,22 @@ import io.fusionauth.domain.api.EventLogSearchResponse;
 import io.fusionauth.domain.api.FamilyEmailRequest;
 import io.fusionauth.domain.api.FamilyRequest;
 import io.fusionauth.domain.api.FamilyResponse;
+import io.fusionauth.domain.api.FormFieldRequest;
+import io.fusionauth.domain.api.FormFieldResponse;
+import io.fusionauth.domain.api.FormRequest;
+import io.fusionauth.domain.api.FormResponse;
 import io.fusionauth.domain.api.GroupMemberSearchRequest;
 import io.fusionauth.domain.api.GroupMemberSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
-import io.fusionauth.domain.api.IdentityProviderRequest;
-import io.fusionauth.domain.api.IdentityProviderResponse;
-import io.fusionauth.domain.api.IntegrationRequest;
-import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.IPAccessControlListRequest;
 import io.fusionauth.domain.api.IPAccessControlListResponse;
 import io.fusionauth.domain.api.IPAccessControlListSearchRequest;
 import io.fusionauth.domain.api.IPAccessControlListSearchResponse;
+import io.fusionauth.domain.api.IdentityProviderRequest;
+import io.fusionauth.domain.api.IdentityProviderResponse;
+import io.fusionauth.domain.api.IntegrationRequest;
+import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
@@ -156,9 +156,9 @@ import io.fusionauth.domain.api.jwt.RefreshTokenResponse;
 import io.fusionauth.domain.api.jwt.RefreshTokenRevokeRequest;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
-import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessSendRequest;
 import io.fusionauth.domain.api.passwordless.PasswordlessStartRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
 import io.fusionauth.domain.api.report.DailyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
@@ -187,10 +187,15 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.api.webauthn.PublicKeyCredentialCreationOptions;
+import io.fusionauth.domain.api.webauthn.PublicKeyCredentialRequestOptions;
+import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnStartRequest;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
-import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
+import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -426,6 +431,34 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge
+   *
+   * @param request An object containing data necessary for completing the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginResponse, Errors> completeWebAuthnLogin(WebAuthnLoginRequest request) {
+    return startAnonymous(LoginResponse.class, Errors.class)
+        .uri("/api/webauthn/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn registration ceremony by validating the client request and saving the new credential
+   *
+   * @param request An object containing data necessary for completing the registration ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4392,6 +4425,34 @@ public class FusionAuthClient {
   public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
     return start(TwoFactorStartResponse.class, Errors.class)
         .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a WebAuthn authentication ceremony by generating a new challenge for the user
+   *
+   * @param request An object containing data necessary for starting the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PublicKeyCredentialRequestOptions, Errors> startWebAuthnLogin(WebAuthnStartRequest request) {
+    return start(PublicKeyCredentialRequestOptions.class, Errors.class)
+        .uri("/api/webauthn/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a WebAuthn registration ceremony by generating a new challenge for the user
+   *
+   * @param request An object containing data necessary for starting the registration ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<PublicKeyCredentialCreationOptions, Errors> startWebAuthnRegistration(WebAuthnStartRequest request) {
+    return start(PublicKeyCredentialCreationOptions.class, Errors.class)
+        .uri("/api/webauthn/register")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
