@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -158,6 +146,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
                      templates.oauth2TwoFactor,
                      templates.oauth2TwoFactorMethods,
                      templates.oauth2Wait,
+                     templates.oauth2WebAuthN,
+                     templates.oauth2WebAuthNComplete,
                      templates.passwordChange,
                      templates.passwordComplete,
                      templates.passwordForgot,
@@ -188,7 +178,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
   }
 
   /**
-   * Looks up a message, if it does not exist the key is returned. This is defined here to assist with code completion in FreeMarker templates. The FusionAuth-App package overrides
+   * Looks up a message, if it does not exist the key is returned. This is defined here to assist with code completion in FreeMarker templates. The
+   * FusionAuth-App package overrides
    * this with the actual lookup method.
    *
    * @param key       The key of the message to lookup.
@@ -243,6 +234,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
         "oauth2TwoFactor",
         "oauth2TwoFactorMethods",
         "oauth2Wait",
+        "oauth2WebAuthN",
+        "oauth2WebAuthNComplete",
         "passwordChange",
         "passwordComplete",
         "passwordForgot",
@@ -307,6 +300,10 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
     public String oauth2Wait;
 
+    public String oauth2WebAuthN;
+
+    public String oauth2WebAuthNComplete;
+
     public String passwordChange;
 
     public String passwordComplete;
@@ -357,6 +354,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       this.oauth2TwoFactor = other.oauth2TwoFactor;
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
+      this.oauth2WebAuthN = other.oauth2WebAuthN;
+      this.oauth2WebAuthNComplete = other.oauth2WebAuthNComplete;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
@@ -404,6 +403,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
+             Objects.equals(oauth2WebAuthN, that.oauth2WebAuthN) &&
+             Objects.equals(oauth2WebAuthNComplete, that.oauth2WebAuthNComplete) &&
              Objects.equals(passwordChange, that.passwordChange) &&
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
@@ -465,6 +466,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
           oauth2TwoFactor,
           oauth2TwoFactorMethods,
           oauth2Wait,
+          oauth2WebAuthN,
+          oauth2WebAuthNComplete,
           passwordChange,
           passwordComplete,
           passwordForgot,
@@ -505,6 +508,8 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
+      oauth2WebAuthN = lineReturns(trimToNull(oauth2WebAuthN));
+      oauth2WebAuthNComplete = lineReturns(trimToNull(oauth2WebAuthNComplete));
       passwordChange = lineReturns(trimToNull(passwordChange));
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));
