@@ -3919,6 +3919,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the WebAuthn credential for the given Id.
+   *
+   * @param id The Id of the WebAuthn credential.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCredentialResponse, Errors> retrieveWebAuthnCredential(UUID id) {
+    return start(WebAuthnCredentialResponse.class, Errors.class)
+        .uri("/api/webauthn")
+        .urlSegment(id)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the webhook for the given Id. If you pass in null for the id, this will return all the webhooks.
    *
    * @param webhookId (Optional) The Id of the webhook.
