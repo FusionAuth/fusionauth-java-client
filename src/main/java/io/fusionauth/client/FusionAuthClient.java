@@ -137,6 +137,7 @@ import io.fusionauth.domain.api.UserDeleteSingleRequest;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
 import io.fusionauth.domain.api.VersionResponse;
+import io.fusionauth.domain.api.WebAuthnCredentialResponse;
 import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
@@ -1519,6 +1520,20 @@ public class FusionAuthClient {
     return start(UserDeleteResponse.class, Errors.class)
         .uri("/api/user/bulk")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the WebAuthn credential for the given Id.
+   *
+   * @param id The Id of the WebAuthn credential to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteWebAuthnCredential(UUID id) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn")
+        .urlSegment(id)
         .delete()
         .go();
   }
