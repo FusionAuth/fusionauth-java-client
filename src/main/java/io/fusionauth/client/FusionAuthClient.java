@@ -188,11 +188,12 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
-import io.fusionauth.domain.api.webauthn.PublicKeyCredentialCreationOptions;
-import io.fusionauth.domain.api.webauthn.PublicKeyCredentialRequestOptions;
 import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnRegisterRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnRegisterResponse;
 import io.fusionauth.domain.api.webauthn.WebAuthnStartRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnStartResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.JWKSResponse;
@@ -4465,8 +4466,8 @@ public class FusionAuthClient {
    * @param request An object containing data necessary for starting the authentication ceremony
    * @return The ClientResponse object.
    */
-  public ClientResponse<PublicKeyCredentialRequestOptions, Errors> startWebAuthnLogin(WebAuthnStartRequest request) {
-    return start(PublicKeyCredentialRequestOptions.class, Errors.class)
+  public ClientResponse<WebAuthnStartResponse, Errors> startWebAuthnLogin(WebAuthnStartRequest request) {
+    return start(WebAuthnStartResponse.class, Errors.class)
         .uri("/api/webauthn/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -4479,8 +4480,8 @@ public class FusionAuthClient {
    * @param request An object containing data necessary for starting the registration ceremony
    * @return The ClientResponse object.
    */
-  public ClientResponse<PublicKeyCredentialCreationOptions, Errors> startWebAuthnRegistration(WebAuthnStartRequest request) {
-    return start(PublicKeyCredentialCreationOptions.class, Errors.class)
+  public ClientResponse<WebAuthnRegisterResponse, Errors> startWebAuthnRegistration(WebAuthnRegisterRequest request) {
+    return start(WebAuthnRegisterResponse.class, Errors.class)
         .uri("/api/webauthn/register")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
