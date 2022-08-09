@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Nintendo gaming login provider.
@@ -28,25 +28,25 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brett Pontarelli
  */
 public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoApplicationConfiguration> implements Buildable<NintendoIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Nintendo";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String emailClaim = "email";
 
-  @InternalJSONColumn
+  
   public String scope;
 
-  @InternalJSONColumn
+  
   public String uniqueIdClaim = "id";
 
-  @InternalJSONColumn
+  
   public String usernameClaim = "preferred_username";
 
   public NintendoIdentityProvider() {

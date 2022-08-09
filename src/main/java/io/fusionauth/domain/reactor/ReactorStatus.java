@@ -1,21 +1,11 @@
 /*
  * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.reactor;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
@@ -33,6 +23,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus advancedRegistration = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus applicationMultiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus applicationThemes = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
@@ -42,6 +34,8 @@ public class ReactorStatus {
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
   public LocalDate expiration;
+
+  public Map<String, String> licenseAttributes = new HashMap<>();
 
   public boolean licensed;
 
@@ -58,11 +52,13 @@ public class ReactorStatus {
     advancedLambdas = other.advancedLambdas;
     advancedMultiFactorAuthentication = other.advancedMultiFactorAuthentication;
     advancedRegistration = other.advancedRegistration;
+    applicationMultiFactorAuthentication = other.applicationMultiFactorAuthentication;
     applicationThemes = other.applicationThemes;
     breachedPasswordDetection = other.breachedPasswordDetection;
     connectors = other.connectors;
     entityManagement = other.entityManagement;
     expiration = other.expiration;
+    licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
@@ -77,16 +73,18 @@ public class ReactorStatus {
       return false;
     }
     ReactorStatus that = (ReactorStatus) o;
-    return licensed == that.licensed &&
-           advancedIdentityProviders == that.advancedIdentityProviders &&
+    return advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedLambdas == that.advancedLambdas &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
            advancedRegistration == that.advancedRegistration &&
+           applicationMultiFactorAuthentication == that.applicationMultiFactorAuthentication &&
            applicationThemes == that.applicationThemes &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
            entityManagement == that.entityManagement &&
            Objects.equals(expiration, that.expiration) &&
+           licensed == that.licensed &&
+           Objects.equals(licenseAttributes, that.licenseAttributes) &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection;
   }
@@ -97,12 +95,14 @@ public class ReactorStatus {
                         advancedLambdas,
                         advancedMultiFactorAuthentication,
                         advancedRegistration,
+                        applicationMultiFactorAuthentication,
                         applicationThemes,
                         breachedPasswordDetection,
                         connectors,
                         entityManagement,
                         expiration,
                         licensed,
+                        licenseAttributes,
                         scimServer,
                         threatDetection);
   }

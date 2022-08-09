@@ -21,16 +21,16 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationConfiguration> implements Buildable<HYPRIdentityProvider>, PasswordlessIdentityProvider {
-  @InternalJSONColumn
+  
   public String relyingPartyApplicationId;
 
-  @InternalJSONColumn
+  
   public URI relyingPartyURL;
 
   @Override

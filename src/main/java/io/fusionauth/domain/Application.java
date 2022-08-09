@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -35,19 +23,19 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
+
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
  * @author Seth Musselman
  */
-public class Application implements Buildable<Application>, _InternalJSONColumn, Tenantable {
+public class Application implements Buildable<Application>, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
-  @InternalJSONColumn
+  
   public ApplicationAccessControlConfiguration accessControlConfiguration = new ApplicationAccessControlConfiguration();
 
   /**
@@ -56,24 +44,27 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
   @Deprecated
   public boolean active;
 
-  @InternalJSONColumn
+  
   public AuthenticationTokenConfiguration authenticationTokenConfiguration = new AuthenticationTokenConfiguration();
 
-  @InternalJSONColumn
+  
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public ApplicationEmailConfiguration emailConfiguration = new ApplicationEmailConfiguration();
 
-  @InternalJSONColumn
+  
+  public ApplicationExternalIdentifierConfiguration externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration();
+
+  
   public ApplicationFormConfiguration formConfiguration = new ApplicationFormConfiguration();
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
-  @InternalJSONColumn
+  
   @JsonIgnoreProperties("refreshTokenRevocationPolicy")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
@@ -81,47 +72,47 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   public ZonedDateTime lastUpdateInstant;
 
-  @InternalJSONColumn
+  
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
 
-  @InternalJSONColumn
+  
   public ApplicationMultiFactorConfiguration multiFactorConfiguration = new ApplicationMultiFactorConfiguration();
 
   public String name;
 
-  @InternalJSONColumn
+  
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
 
-  @InternalJSONColumn
+  
   public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 
-  @InternalJSONColumn
+  
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
-  @InternalJSONColumn
+  
   public ApplicationRegistrationDeletePolicy registrationDeletePolicy = new ApplicationRegistrationDeletePolicy();
 
   public List<ApplicationRole> roles = new ArrayList<>();
 
-  @InternalJSONColumn
+  
   public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
-  @InternalJSONColumn
+  
   public ObjectState state;
 
   public UUID tenantId;
 
   public UUID themeId;
 
-  @InternalJSONColumn
+  
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
   public UUID verificationEmailTemplateId;
 
-  @InternalJSONColumn
+  
   public VerificationStrategy verificationStrategy;
 
-  @InternalJSONColumn
+  
   public boolean verifyRegistration;
 
   @JacksonConstructor
@@ -137,6 +128,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     }
     this.data.putAll(other.data);
     this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
+    this.externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
     this.formConfiguration = new ApplicationFormConfiguration(other.formConfiguration);
     this.id = other.id;
     this.insertInstant = other.insertInstant;
@@ -189,19 +181,24 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Application)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Application that = (Application) o;
+    // active is omitted
     return verifyRegistration == that.verifyRegistration &&
            Objects.equals(accessControlConfiguration, that.accessControlConfiguration) &&
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
            Objects.equals(data, that.data) &&
+           Objects.equals(emailConfiguration, that.emailConfiguration) &&
+           Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
            Objects.equals(formConfiguration, that.formConfiguration) &&
            Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(jwtConfiguration, that.jwtConfiguration) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginConfiguration, that.loginConfiguration) &&
            Objects.equals(multiFactorConfiguration, that.multiFactorConfiguration) &&
            Objects.equals(name, that.name) &&
@@ -211,14 +208,12 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
-           Objects.equals(state, that.state) &&
-           Objects.equals(insertInstant, that.insertInstant) &&
-           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
-           Objects.equals(verificationStrategy, that.verificationStrategy);
+           verificationStrategy == that.verificationStrategy;
   }
 
   public boolean getActive() {
@@ -251,10 +246,8 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, id, formConfiguration, jwtConfiguration, lambdaConfiguration,
-                        loginConfiguration, name, multiFactorConfiguration, oauthConfiguration, passwordlessConfiguration, registrationConfiguration,
-                        registrationDeletePolicy, roles, samlv2Configuration, state, insertInstant, lastUpdateInstant, tenantId, themeId, unverified,
-                        verificationEmailTemplateId, verificationStrategy, verifyRegistration);
+    // active is omitted
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration);
   }
 
   public void normalize() {
@@ -635,13 +628,13 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
     public boolean debug;
 
     // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-    @ExcludeFromDatabaseDataColumn
+    
     public UUID defaultVerificationKeyId;
 
     public String issuer;
 
     // Key pair used to sign w/
-    @ExcludeFromDatabaseDataColumn
+    
     public UUID keyId;
 
     public SAMLv2Logout logout = new SAMLv2Logout();
@@ -740,10 +733,10 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
       public SAMLLogoutBehavior behavior = SAMLLogoutBehavior.AllParticipants;
 
       // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-      @ExcludeFromDatabaseDataColumn
+      
       public UUID defaultVerificationKeyId;
 
-      @ExcludeFromDatabaseDataColumn
+      
       public UUID keyId;
 
       public boolean requireSignedRequests;
@@ -790,7 +783,7 @@ public class Application implements Buildable<Application>, _InternalJSONColumn,
 
     public static class SAMLv2SingleLogout extends Enableable {
       // Key pair used to sign w/
-      @ExcludeFromDatabaseDataColumn
+      
       public UUID keyId;
 
       public URI url;

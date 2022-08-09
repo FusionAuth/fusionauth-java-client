@@ -19,28 +19,28 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class FacebookApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<FacebookApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public String appId;
 
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String fields;
 
-  @InternalJSONColumn
+  
   public IdentityProviderLoginMethod loginMethod;
 
-  @InternalJSONColumn
+  
   public String permissions;
 
   @Override

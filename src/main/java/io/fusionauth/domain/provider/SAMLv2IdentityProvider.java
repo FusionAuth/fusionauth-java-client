@@ -27,7 +27,7 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.CanonicalizationMethod;
 import io.fusionauth.domain.RequiresCORSConfiguration;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 import io.fusionauth.domain.util.HTTPMethod;
 
 /**
@@ -39,51 +39,53 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
     implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public final Set<String> domains = new LinkedHashSet<>();
 
-  @InternalJSONColumn
+  
   public URI buttonImageURL;
 
-  @InternalJSONColumn
+  
   public String buttonText = "Login with SAML";
 
-  @InternalJSONColumn
+  
   public String emailClaim;
 
-  @InternalJSONColumn
+  
   public URI idpEndpoint;
 
   /**
-   * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to ${public_url}/samlv2/sp/${identityProviderId}.
+   * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to
+   * ${public_url}/samlv2/sp/${identityProviderId}.
    */
   @Deprecated
-  @InternalJSONColumn
+  
   public String issuer;
 
   /**
-   * The default key used for SAML Response Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML response.
+   * The default key used for SAML Response Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML
+   * response.
    */
   public UUID keyId;
 
-  @InternalJSONColumn
+  
   public String nameIdFormat = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
 
-  @InternalJSONColumn
+  
   public boolean postRequest;
 
   public UUID requestSigningKeyId;
 
-  @InternalJSONColumn
+  
   public boolean signRequest;
 
-  @InternalJSONColumn
+  
   public String uniqueIdClaim;
 
-  @InternalJSONColumn
+  
   public boolean useNameIdForEmail;
 
-  @InternalJSONColumn
+  
   public String usernameClaim;
 
-  @InternalJSONColumn
+  
   public CanonicalizationMethod xmlSignatureC14nMethod;
 
   @Override

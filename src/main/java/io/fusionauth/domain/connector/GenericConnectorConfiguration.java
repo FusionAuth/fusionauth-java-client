@@ -22,7 +22,7 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.HTTPHeaders;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Models a generic connector.
@@ -30,22 +30,22 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Trevor Smith
  */
 public class GenericConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<GenericConnectorConfiguration> {
-  @InternalJSONColumn
+  
   public URI authenticationURL;
 
-  @InternalJSONColumn
+  
   public int connectTimeout;
 
-  @InternalJSONColumn
+  
   public HTTPHeaders headers = new HTTPHeaders();
 
-  @InternalJSONColumn
+  
   public String httpAuthenticationPassword;
 
-  @InternalJSONColumn
+  
   public String httpAuthenticationUsername;
 
-  @InternalJSONColumn
+  
   public int readTimeout;
 
   public UUID sslCertificateKeyId;

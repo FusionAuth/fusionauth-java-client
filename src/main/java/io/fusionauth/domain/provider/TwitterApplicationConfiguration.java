@@ -19,19 +19,19 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class TwitterApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<TwitterApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public String consumerKey;
 
-  @InternalJSONColumn
+  
   public String consumerSecret;
 
   @Override
@@ -47,8 +47,8 @@ public class TwitterApplicationConfiguration extends BaseIdentityProviderApplica
     }
     TwitterApplicationConfiguration that = (TwitterApplicationConfiguration) o;
     return Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(consumerKey, that.consumerKey) &&
-        Objects.equals(consumerSecret, that.consumerSecret);
+           Objects.equals(consumerKey, that.consumerKey) &&
+           Objects.equals(consumerSecret, that.consumerSecret);
   }
 
   @Override

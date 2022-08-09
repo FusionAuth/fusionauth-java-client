@@ -20,16 +20,16 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brian Pontarelli
  */
 public class SAMLv2ApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SAMLv2ApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public URI buttonImageURL;
 
-  @InternalJSONColumn
+  
   public String buttonText;
 
   @Override
@@ -45,7 +45,7 @@ public class SAMLv2ApplicationConfiguration extends BaseIdentityProviderApplicat
     }
     SAMLv2ApplicationConfiguration that = (SAMLv2ApplicationConfiguration) o;
     return Objects.equals(buttonImageURL, that.buttonImageURL) &&
-        Objects.equals(buttonText, that.buttonText);
+           Objects.equals(buttonText, that.buttonText);
   }
 
   @Override

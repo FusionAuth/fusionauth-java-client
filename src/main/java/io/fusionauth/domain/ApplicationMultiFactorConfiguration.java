@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -27,7 +15,11 @@ import com.inversoft.json.ToString;
 public class ApplicationMultiFactorConfiguration {
   public MultiFactorEmailTemplate email = new MultiFactorEmailTemplate();
 
+  public MultiFactorLoginPolicy loginPolicy;
+
   public MultiFactorSMSTemplate sms = new MultiFactorSMSTemplate();
+
+  public ApplicationMultiFactorTrustPolicy trustPolicy;
 
   @JacksonConstructor
   public ApplicationMultiFactorConfiguration() {
@@ -35,7 +27,9 @@ public class ApplicationMultiFactorConfiguration {
 
   public ApplicationMultiFactorConfiguration(ApplicationMultiFactorConfiguration other) {
     this.email = new MultiFactorEmailTemplate(other.email);
+    this.loginPolicy = other.loginPolicy;
     this.sms = new MultiFactorSMSTemplate(other.sms);
+    this.trustPolicy = other.trustPolicy;
   }
 
   @Override
@@ -47,12 +41,15 @@ public class ApplicationMultiFactorConfiguration {
       return false;
     }
     ApplicationMultiFactorConfiguration that = (ApplicationMultiFactorConfiguration) o;
-    return Objects.equals(email, that.email) && Objects.equals(sms, that.sms);
+    return Objects.equals(email, that.email) &&
+           loginPolicy == that.loginPolicy &&
+           Objects.equals(sms, that.sms) &&
+           trustPolicy == that.trustPolicy;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, sms);
+    return Objects.hash(email, loginPolicy, sms, trustPolicy);
   }
 
   @Override

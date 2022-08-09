@@ -20,19 +20,19 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class OpenIdConnectApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<OpenIdConnectApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public URI buttonImageURL;
 
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
   @Override
@@ -48,8 +48,8 @@ public class OpenIdConnectApplicationConfiguration extends BaseIdentityProviderA
     }
     OpenIdConnectApplicationConfiguration that = (OpenIdConnectApplicationConfiguration) o;
     return Objects.equals(buttonImageURL, that.buttonImageURL) &&
-        Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(oauth2, that.oauth2);
+           Objects.equals(buttonText, that.buttonText) &&
+           Objects.equals(oauth2, that.oauth2);
   }
 
   @Override

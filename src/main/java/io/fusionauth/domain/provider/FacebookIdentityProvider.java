@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Facebook social login provider.
@@ -28,22 +28,22 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brian Pontarelli
  */
 public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookApplicationConfiguration> implements Buildable<FacebookIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String appId;
 
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Facebook";
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String fields;
 
-  @InternalJSONColumn
+  
   public IdentityProviderLoginMethod loginMethod;
 
-  @InternalJSONColumn
+  
   public String permissions;
 
   @Override

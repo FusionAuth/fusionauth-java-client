@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 
 /**
  * Stores an message template used to distribute messages;
@@ -31,7 +31,7 @@ import io.fusionauth.domain.internal._InternalJSONColumn;
  * @author Michael Sleevi
  */
 @JsonIgnoreProperties(value = "type", allowGetters = true, allowSetters = false)
-public abstract class MessageTemplate implements _InternalJSONColumn {
+public abstract class MessageTemplate  {
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Steam gaming login provider.
@@ -28,16 +28,16 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brett Pontarelli
  */
 public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplicationConfiguration> implements Buildable<SteamIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Steam";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String scope;
 
-  @InternalJSONColumn
+  
   public String webAPIKey;
 
   public SteamIdentityProvider() {

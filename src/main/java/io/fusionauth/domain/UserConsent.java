@@ -25,15 +25,15 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 
 /**
  * Models a User consent.
  *
  * @author Daniel DeGroff
  */
-public class UserConsent implements Buildable<UserConsent>, _InternalJSONColumn {
+public class UserConsent implements Buildable<UserConsent> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public Consent consent;
@@ -48,12 +48,12 @@ public class UserConsent implements Buildable<UserConsent>, _InternalJSONColumn 
 
   public ZonedDateTime lastUpdateInstant;
 
-  @InternalJSONColumn
+  
   public ConsentStatus status;
 
   public UUID userId;
 
-  @InternalJSONColumn
+  
   public List<String> values = new ArrayList<>();
 
   public UserConsent(UserConsent userConsent) {
@@ -85,15 +85,15 @@ public class UserConsent implements Buildable<UserConsent>, _InternalJSONColumn 
     }
     UserConsent userConsent = (UserConsent) o;
     return Objects.equals(consent, userConsent.consent) &&
-        Objects.equals(consentId, userConsent.consentId) &&
-        Objects.equals(data, userConsent.data) &&
-        Objects.equals(giverUserId, userConsent.giverUserId) &&
-        Objects.equals(id, userConsent.id) &&
-        Objects.equals(insertInstant, userConsent.insertInstant) &&
-        Objects.equals(lastUpdateInstant, userConsent.lastUpdateInstant) &&
-        status == userConsent.status &&
-        Objects.equals(userId, userConsent.userId) &&
-        Objects.equals(values, userConsent.values);
+           Objects.equals(consentId, userConsent.consentId) &&
+           Objects.equals(data, userConsent.data) &&
+           Objects.equals(giverUserId, userConsent.giverUserId) &&
+           Objects.equals(id, userConsent.id) &&
+           Objects.equals(insertInstant, userConsent.insertInstant) &&
+           Objects.equals(lastUpdateInstant, userConsent.lastUpdateInstant) &&
+           status == userConsent.status &&
+           Objects.equals(userId, userConsent.userId) &&
+           Objects.equals(values, userConsent.values);
   }
 
   @Override

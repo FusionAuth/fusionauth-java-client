@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.provider;
 
@@ -28,6 +16,11 @@ public enum IdentityProviderLinkingStrategy {
    * This will link only the IdP unique Id to the FusionAuth user unique Id.
    */
   CreatePendingLink,
+
+  /**
+   * Disable automatic linking for this IdP. Linking must be done via API call.
+   */
+  Disabled,
 
   /**
    * Create a link w/out prompting the user to create a user or link to an existing user. This behavior allows you to login via a 3rd party IdP w/out

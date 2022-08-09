@@ -19,22 +19,22 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class LinkedInApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<LinkedInApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   @Override

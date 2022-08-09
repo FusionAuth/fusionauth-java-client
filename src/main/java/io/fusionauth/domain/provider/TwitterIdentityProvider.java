@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Twitter social login provider.
@@ -28,13 +28,13 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Daniel DeGroff
  */
 public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Twitter";
 
-  @InternalJSONColumn
+  
   public String consumerKey;
 
-  @InternalJSONColumn
+  
   public String consumerSecret;
 
   @Override
@@ -50,8 +50,8 @@ public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplica
     }
     TwitterIdentityProvider that = (TwitterIdentityProvider) o;
     return Objects.equals(buttonText, that.buttonText) &&
-        Objects.equals(consumerKey, that.consumerKey) &&
-        Objects.equals(consumerSecret, that.consumerSecret);
+           Objects.equals(consumerKey, that.consumerKey) &&
+           Objects.equals(consumerSecret, that.consumerSecret);
   }
 
   @Override

@@ -23,18 +23,18 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 
 /**
  * @author Brett Guy
  */
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
 @JsonIgnoreProperties(value = "type", allowGetters = true, allowSetters = false)
-public abstract class BaseMessengerConfiguration implements _InternalJSONColumn {
+public abstract class BaseMessengerConfiguration  {
   public final Map<String, Object> data = new HashMap<>();
 
-  @InternalJSONColumn
+  
   public boolean debug;
 
   public UUID id;
@@ -45,7 +45,7 @@ public abstract class BaseMessengerConfiguration implements _InternalJSONColumn 
 
   public String name;
 
-  @InternalJSONColumn
+  
   public String transport = MessengerTransport.SMS;
 
   @Override

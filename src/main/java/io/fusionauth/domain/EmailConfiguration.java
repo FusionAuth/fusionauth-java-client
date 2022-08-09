@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -27,7 +15,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal.annotation.ExcludeFromDatabaseDataColumn;
+
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
@@ -51,17 +39,19 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public List<EmailHeader> additionalHeaders = new ArrayList<>();
 
+  public boolean debug;
+
   public String defaultFromEmail = "change-me@example.com";
 
   public String defaultFromName;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID emailUpdateEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID emailVerifiedEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID forgotPasswordEmailTemplateId;
 
   public String host = "localhost";
@@ -71,27 +61,27 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   //   completed a similar email workflow such as change password (when completed by email)
   public boolean implicitEmailVerificationAllowed = true;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID loginIdInUseOnCreateEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID loginIdInUseOnUpdateEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID loginNewDeviceEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID loginSuspiciousEmailTemplateId;
 
   public String password;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID passwordResetSuccessEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID passwordUpdateEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID passwordlessEmailTemplateId;
 
   public Integer port = 25;
@@ -100,20 +90,20 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public EmailSecurityType security;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID setPasswordEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID twoFactorMethodAddEmailTemplateId;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID twoFactorMethodRemoveEmailTemplateId;
 
   public EmailUnverifiedOptions unverified = new EmailUnverifiedOptions();
 
   public String username;
 
-  @ExcludeFromDatabaseDataColumn
+  
   public UUID verificationEmailTemplateId;
 
   public VerificationStrategy verificationStrategy;
@@ -128,6 +118,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public EmailConfiguration(EmailConfiguration other) {
     this.additionalHeaders.addAll(other.additionalHeaders);
+    this.debug = other.debug;
     this.defaultFromEmail = other.defaultFromEmail;
     this.defaultFromName = other.defaultFromName;
     this.emailUpdateEmailTemplateId = other.emailUpdateEmailTemplateId;
@@ -170,6 +161,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
            verifyEmail == that.verifyEmail &&
            verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
            Objects.equals(additionalHeaders, that.additionalHeaders) &&
+           Objects.equals(debug, that.debug) &&
            Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
            Objects.equals(defaultFromName, that.defaultFromName) &&
            Objects.equals(emailUpdateEmailTemplateId, that.emailUpdateEmailTemplateId) &&
@@ -198,7 +190,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalHeaders, defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, implicitEmailVerificationAllowed, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
+    return Objects.hash(additionalHeaders, debug, defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, implicitEmailVerificationAllowed, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
   }
 
   public void normalize() {

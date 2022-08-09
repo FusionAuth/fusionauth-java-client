@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Xbox gaming login provider.
@@ -28,16 +28,16 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brett Pontarelli
  */
 public class XboxIdentityProvider extends BaseIdentityProvider<XboxApplicationConfiguration> implements Buildable<XboxIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Xbox";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   public XboxIdentityProvider() {

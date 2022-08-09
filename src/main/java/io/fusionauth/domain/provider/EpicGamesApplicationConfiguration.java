@@ -19,22 +19,22 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brett Pontarelli
  */
 public class EpicGamesApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<EpicGamesApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   @Override

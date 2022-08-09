@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Models an LDAP connector.
@@ -31,36 +31,36 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Trevor Smith
  */
 public class LDAPConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<LDAPConnectorConfiguration> {
-  @InternalJSONColumn
+  
   public URI authenticationURL;
 
-  @InternalJSONColumn
+  
   public String baseStructure;
 
-  @InternalJSONColumn
+  
   public int connectTimeout;
 
-  @InternalJSONColumn
+  
   public String identifyingAttribute;
 
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
 
-  @InternalJSONColumn
+  
   public String loginIdAttribute;
 
-  @InternalJSONColumn
+  
   public int readTimeout;
 
-  @InternalJSONColumn
+  
   public List<String> requestedAttributes = new ArrayList<>();
 
-  @InternalJSONColumn
+  
   public LDAPSecurityMethod securityMethod;
 
-  @InternalJSONColumn
+  
   public String systemAccountDN;
 
-  @InternalJSONColumn
+  
   public String systemAccountPassword;
 
   @Override

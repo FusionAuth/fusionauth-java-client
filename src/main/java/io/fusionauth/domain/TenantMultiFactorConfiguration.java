@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -31,6 +19,8 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
 
   public MultiFactorEmailMethod email = new MultiFactorEmailMethod();
 
+  public MultiFactorLoginPolicy loginPolicy = MultiFactorLoginPolicy.Enabled;
+
   public MultiFactorSMSMethod sms = new MultiFactorSMSMethod();
 
   @JacksonConstructor
@@ -40,6 +30,7 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
   public TenantMultiFactorConfiguration(TenantMultiFactorConfiguration other) {
     this.authenticator = new MultiFactorAuthenticatorMethod(other.authenticator);
     this.email = new MultiFactorEmailMethod(other.email);
+    this.loginPolicy = other.loginPolicy;
     this.sms = new MultiFactorSMSMethod(other.sms);
   }
 
@@ -62,12 +53,12 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
       return false;
     }
     TenantMultiFactorConfiguration that = (TenantMultiFactorConfiguration) o;
-    return Objects.equals(email, that.email) && Objects.equals(sms, that.sms);
+    return Objects.equals(authenticator, that.authenticator) && Objects.equals(email, that.email) && loginPolicy == that.loginPolicy && Objects.equals(sms, that.sms);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, sms);
+    return Objects.hash(authenticator, email, loginPolicy, sms);
   }
 
   @Override

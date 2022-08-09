@@ -21,31 +21,31 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.HTTPHeaders;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brett Guy
  */
 public class GenericMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<GenericMessengerConfiguration> {
-  @InternalJSONColumn
+  
   public Integer connectTimeout;
 
-  @InternalJSONColumn
+  
   public HTTPHeaders headers = new HTTPHeaders();
 
-  @InternalJSONColumn
+  
   public String httpAuthenticationPassword;
 
-  @InternalJSONColumn
+  
   public String httpAuthenticationUsername;
 
-  @InternalJSONColumn
+  
   public Integer readTimeout;
 
-  @InternalJSONColumn
+  
   public String sslCertificate;
 
-  @InternalJSONColumn
+  
   public URI url;
 
   @Override

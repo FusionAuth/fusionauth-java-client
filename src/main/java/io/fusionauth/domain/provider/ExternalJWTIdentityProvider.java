@@ -25,7 +25,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 import io.fusionauth.domain.util.Normalizer;
 
 /**
@@ -34,17 +34,17 @@ import io.fusionauth.domain.util.Normalizer;
  * @author Daniel DeGroff and Brian Pontarelli
  */
 public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJWTApplicationConfiguration> implements Buildable<ExternalJWTIdentityProvider>, DomainBasedIdentityProvider {
-  @InternalJSONColumn
+  
   public final Map<String, String> claimMap = new LinkedHashMap<>();
 
   public final Set<String> domains = new LinkedHashSet<>();
 
   public UUID defaultKeyId;
 
-  @InternalJSONColumn
+  
   public String headerKeyParameter = "kid";
 
-  @InternalJSONColumn
+  
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
   /**
@@ -53,7 +53,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
    * @deprecated use oauth2.uniqueIdClaim, oauth2.usernameClaim and oauth2.emailClaim instead.
    */
   @Deprecated
-  @InternalJSONColumn
+  
   public String uniqueIdentityClaim;
 
   @Override

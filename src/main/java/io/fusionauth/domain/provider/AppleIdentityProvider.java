@@ -24,7 +24,7 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.RequiresCORSConfiguration;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 import io.fusionauth.domain.jwks.JSONWebKeyInfoProvider;
 import io.fusionauth.domain.util.HTTPMethod;
 
@@ -36,18 +36,18 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
 
   public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
 
-  @InternalJSONColumn
+  
   public String buttonText = "Sign in with Apple";
 
   public UUID keyId;
 
-  @InternalJSONColumn
+  
   public String scope;
 
-  @InternalJSONColumn
+  
   public String servicesId;
 
-  @InternalJSONColumn
+  
   public String teamId;
 
   @Override

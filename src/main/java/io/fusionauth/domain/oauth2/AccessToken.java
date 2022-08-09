@@ -1,20 +1,7 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.oauth2;
-
 
 import java.net.URI;
 import java.time.ZoneOffset;
@@ -50,6 +37,9 @@ public class AccessToken implements OAuthResponse, Buildable<AccessToken> {
 
   @JsonProperty("refresh_token")
   public String refreshToken;
+
+  @JsonProperty("refresh_token_id")
+  public UUID refreshTokenId;
 
   public String scope;
 
@@ -94,22 +84,35 @@ public class AccessToken implements OAuthResponse, Buildable<AccessToken> {
     }
     AccessToken that = (AccessToken) o;
     return Objects.equals(clientId, that.clientId) &&
-        Objects.equals(createInstant, that.createInstant) &&
-        Objects.equals(expiresIn, that.expiresIn) &&
-        Objects.equals(idToken, that.idToken) &&
-        Objects.equals(redirectURI, that.redirectURI) &&
-        Objects.equals(token, that.token) &&
-        Objects.equals(tokenType, that.tokenType) &&
-        Objects.equals(userId, that.userId);
+           Objects.equals(expiresIn, that.expiresIn) &&
+           Objects.equals(idToken, that.idToken) &&
+           Objects.equals(redirectURI, that.redirectURI) &&
+           Objects.equals(refreshToken, that.refreshToken) &&
+           Objects.equals(refreshTokenId, that.refreshTokenId) &&
+           Objects.equals(scope, that.scope) &&
+           Objects.equals(token, that.token) &&
+           tokenType == that.tokenType &&
+           Objects.equals(userId, that.userId) &&
+           Objects.equals(createInstant, that.createInstant);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientId, createInstant, expiresIn, idToken, redirectURI, token, tokenType, userId);
+    return Objects.hash(clientId,
+                        expiresIn,
+                        idToken,
+                        redirectURI,
+                        refreshToken,
+                        refreshTokenId,
+                        scope,
+                        token,
+                        tokenType,
+                        userId,
+                        createInstant);
   }
 
   /**
-   * Accept 'Bearer' and 'bearer' equally as the token type when we deserialize this from a JSON response.
+   * Accept 'Bearer' and 'bearer' equally for the token type when we deserialize this from a JSON response.
    *
    * @param tokenType the incoming token type
    */

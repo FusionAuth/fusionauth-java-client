@@ -20,25 +20,25 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brett Guy
  */
 public class TwilioMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<TwilioMessengerConfiguration> {
-  @InternalJSONColumn
+  
   public String accountSID;
 
-  @InternalJSONColumn
+  
   public String authToken;
 
-  @InternalJSONColumn
+  
   public String fromPhoneNumber;
 
-  @InternalJSONColumn
+  
   public String messagingServiceSid;
 
-  @InternalJSONColumn
+  
   public URI url;
 
   @Override

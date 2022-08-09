@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Epic gaming login provider.
@@ -28,16 +28,16 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brett Pontarelli
  */
 public class EpicGamesIdentityProvider extends BaseIdentityProvider<EpicGamesApplicationConfiguration> implements Buildable<EpicGamesIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Epic Games";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   public EpicGamesIdentityProvider() {
