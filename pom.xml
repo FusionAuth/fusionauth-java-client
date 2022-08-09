@@ -21,7 +21,7 @@
 
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-  <version>1.36.9</version>
+  <version>1.37.0</version>
   <packaging>jar</packaging>
 
   <name>FusionAuth Java Client Library</name>
@@ -75,32 +75,32 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.13.2</version>
+      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.13.2.2</version>
+      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.13.2</version>
+      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>com.inversoft</groupId>
       <artifactId>restify</artifactId>
-      <version>3.9.1</version>
+      <version>4.1.2</version>
     </dependency>
     <dependency>
       <groupId>io.fusionauth</groupId>
       <artifactId>fusionauth-jwt</artifactId>
-      <version>5.1.0</version>
+      <version>5.1.2</version>
     </dependency>
     <dependency>
       <groupId>com.inversoft</groupId>
       <artifactId>jackson5</artifactId>
-      <version>2.6.1</version>
+      <version>3.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.inversoft</groupId>
