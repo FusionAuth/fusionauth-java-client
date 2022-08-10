@@ -23,14 +23,14 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 
 /**
  * Models a family grouping of users.
  *
  * @author Brian Pontarelli
  */
-public class Family implements Buildable<Family>, _InternalJSONColumn {
+public class Family implements Buildable<Family> {
   public final List<FamilyMember> members = new ArrayList<>();
 
   public UUID id;

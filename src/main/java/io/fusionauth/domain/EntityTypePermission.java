@@ -24,7 +24,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
@@ -32,7 +32,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  *
  * @author Brian Pontarelli
  */
-public class EntityTypePermission implements Buildable<EntityTypePermission>, _InternalJSONColumn {
+public class EntityTypePermission implements Buildable<EntityTypePermission> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public String description;

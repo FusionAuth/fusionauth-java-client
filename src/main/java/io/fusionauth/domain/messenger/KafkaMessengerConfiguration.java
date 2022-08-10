@@ -20,16 +20,16 @@ import java.util.Objects;
 import java.util.TreeMap;
 
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brett Guy
  */
 public class KafkaMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<KafkaMessengerConfiguration> {
-  @InternalJSONColumn
+  
   public String defaultTopic;
 
-  @InternalJSONColumn
+  
   public Map<String, String> producer = new TreeMap<>();
 
   @Override

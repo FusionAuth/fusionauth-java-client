@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 import io.fusionauth.domain.util.Normalizer;
 
 /**
@@ -30,7 +30,7 @@ import io.fusionauth.domain.util.Normalizer;
  *
  * @author Brian Pontarelli
  */
-public class AuditLog implements Buildable<AuditLog>, _InternalJSONColumn {
+public class AuditLog implements Buildable<AuditLog> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public Long id;
@@ -41,13 +41,13 @@ public class AuditLog implements Buildable<AuditLog>, _InternalJSONColumn {
 
   public String message;
 
-  @InternalJSONColumn
+  
   public Object newValue;
 
-  @InternalJSONColumn
+  
   public Object oldValue;
 
-  @InternalJSONColumn
+  
   public String reason;
 
   public AuditLog() {

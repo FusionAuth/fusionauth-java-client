@@ -26,13 +26,13 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 import io.fusionauth.domain.util.Normalizer;
 
 /**
  * @author Daniel DeGroff
  */
-public class Form implements Buildable<Form>, _InternalJSONColumn {
+public class Form implements Buildable<Form> {
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;

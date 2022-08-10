@@ -34,8 +34,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
@@ -46,8 +46,8 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  *
  * @author Seth Musselman
  */
-public class User extends SecureIdentity implements Buildable<User>, _InternalJSONColumn, Tenantable {
-  @InternalJSONColumn
+public class User extends SecureIdentity implements Buildable<User>, Tenantable {
+  
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   private final List<GroupMember> memberships = new ArrayList<>();
@@ -88,7 +88,7 @@ public class User extends SecureIdentity implements Buildable<User>, _InternalJS
 
   public ZoneId timezone;
 
-  @InternalJSONColumn
+  
   public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
 
   @JacksonConstructor

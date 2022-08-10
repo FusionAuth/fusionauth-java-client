@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.lineReturns;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
@@ -27,12 +27,12 @@ import static java.util.Arrays.asList;
 /**
  * @author Trevor Smith
  */
-public class Theme implements Buildable<Theme>, _InternalJSONColumn {
+public class Theme implements Buildable<Theme> {
   public static final UUID FUSIONAUTH_THEME_ID = UUID.fromString("75a068fd-e94b-451a-9aeb-3ddb9a3b5987");
 
   public Map<String, Object> data = new HashMap<>();
 
-  @InternalJSONColumn
+  
   public String defaultMessages;
 
   public UUID id;
@@ -41,15 +41,15 @@ public class Theme implements Buildable<Theme>, _InternalJSONColumn {
 
   public ZonedDateTime lastUpdateInstant;
 
-  @InternalJSONColumn
+  
   public LocalizedStrings localizedMessages = new LocalizedStrings();
 
   public String name;
 
-  @InternalJSONColumn
+  
   public String stylesheet;
 
-  @InternalJSONColumn
+  
   public Templates templates;
 
   public Theme() {

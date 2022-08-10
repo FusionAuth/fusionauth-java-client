@@ -23,14 +23,14 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 
 /**
  * A grant for an entity to a user or another entity.
  *
  * @author Brian Pontarelli
  */
-public class EntityGrant implements Buildable<EntityGrant>, _InternalJSONColumn {
+public class EntityGrant implements Buildable<EntityGrant> {
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public Entity entity;

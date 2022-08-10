@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -25,17 +13,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 
 /**
  * @author Brett Guy
  */
-public class IPAccessControlList implements Buildable<IPAccessControlList>, _InternalJSONColumn {
+public class IPAccessControlList implements Buildable<IPAccessControlList> {
+  // This is used for InternalJSONColumn and we don't document any custom data. If we do end up documenting custom data, remove this annotation.
+  @JsonInclude(Include.NON_EMPTY)
   public final Map<String, Object> data = new LinkedHashMap<>();
 
-  @InternalJSONColumn
+  
   public List<IPAccessControlEntry> entries = new ArrayList<>();
 
   public UUID id;
@@ -87,7 +79,7 @@ public class IPAccessControlList implements Buildable<IPAccessControlList>, _Int
 
     // Sort the entries for easier readability, and keep the default entry at the top.
     entries.sort(Comparator.<IPAccessControlEntry, String>comparing(e -> e.startIPAddress, Comparator.nullsLast(Comparator.naturalOrder()))
-                     .thenComparing(e -> e.endIPAddress, Comparator.nullsLast(Comparator.naturalOrder())));
+                           .thenComparing(e -> e.endIPAddress, Comparator.nullsLast(Comparator.naturalOrder())));
     return this;
   }
 

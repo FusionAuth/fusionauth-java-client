@@ -23,14 +23,14 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 
 /**
  * Models an entity that a user can be granted permissions to. Or an entity that can be granted permissions to another entity.
  *
  * @author Brian Pontarelli
  */
-public class Entity implements Buildable<Entity>, Tenantable, _InternalJSONColumn {
+public class Entity implements Buildable<Entity>, Tenantable {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public String clientId;

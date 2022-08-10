@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * SonyPSN gaming login provider.
@@ -28,16 +28,16 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Brett Pontarelli
  */
 public class SonyPSNIdentityProvider extends BaseIdentityProvider<SonyPSNApplicationConfiguration> implements Buildable<SonyPSNIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Playstation Network";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   public SonyPSNIdentityProvider() {

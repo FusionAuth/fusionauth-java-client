@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.jwt;
 
@@ -31,15 +19,15 @@ import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.JWTConfiguration;
 import io.fusionauth.domain.Tenant;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 
 /**
  * Models a JWT Refresh Token.
  *
  * @author Daniel DeGroff
  */
-public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColumn {
+public class RefreshToken implements Buildable<RefreshToken> {
   public UUID applicationId;
 
   public Map<String, Object> data = new LinkedHashMap<>();
@@ -48,16 +36,18 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
 
   /**
    * The time this token was created. The start time of this token may be prior to the insert instant when generating
-   * refresh tokens for another application in a SSO scenario.
+   * refresh tokens for another application in an SSO scenario.
    */
   public ZonedDateTime insertInstant;
 
-  @InternalJSONColumn
+  
   public MetaData metaData = new MetaData();
 
   /**
    * The time at which the life started of this token. The start + ttl = expiration. The expiration should be calculated
    * using the start instant.
+   * <p>
+   * When using a sliding window expiration policy, this value gets reset each time the token is used.
    */
   public ZonedDateTime startInstant;
 
@@ -118,8 +108,9 @@ public class RefreshToken implements Buildable<RefreshToken>, _InternalJSONColum
     return startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now);
   }
 
-  public void secure() {
+  public RefreshToken secure() {
     data = null;
+    return this;
   }
 
   @Override

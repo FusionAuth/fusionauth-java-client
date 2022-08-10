@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -32,44 +20,44 @@ import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.connector.BaseConnectorConfiguration;
 import io.fusionauth.domain.connector.ConnectorPolicy;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
  * @author Daniel DeGroff
  */
-public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
+public class Tenant implements Buildable<Tenant> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
-  @InternalJSONColumn
+  
   public TenantAccessControlConfiguration accessControlConfiguration = new TenantAccessControlConfiguration();
 
-  @InternalJSONColumn
+  
   public TenantCaptchaConfiguration captchaConfiguration = new TenantCaptchaConfiguration();
 
-  @InternalJSONColumn
+  
   public boolean configured;
 
   public List<ConnectorPolicy> connectorPolicies = new ArrayList<>();
 
-  @InternalJSONColumn
+  
   public EmailConfiguration emailConfiguration = new EmailConfiguration();
 
-  @InternalJSONColumn
+  
   public EventConfiguration eventConfiguration = new EventConfiguration();
 
-  @InternalJSONColumn
+  
   public ExternalIdentifierConfiguration externalIdentifierConfiguration = new ExternalIdentifierConfiguration();
 
-  @InternalJSONColumn
+  
   public FailedAuthenticationConfiguration failedAuthenticationConfiguration = new FailedAuthenticationConfiguration();
 
-  @InternalJSONColumn
+  
   public FamilyConfiguration familyConfiguration = new FamilyConfiguration();
 
-  @InternalJSONColumn
+  
   public TenantFormConfiguration formConfiguration = new TenantFormConfiguration();
 
   /**
@@ -78,17 +66,17 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
    * <p>
    * Default is 60 minutes.
    */
-  @InternalJSONColumn
+  
   public int httpSessionMaxInactiveInterval = 3600;
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
-  @InternalJSONColumn
+  
   public String issuer;
 
-  @InternalJSONColumn
+  
   @JsonIgnoreProperties("enabled")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
@@ -96,56 +84,56 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
 
   public ZonedDateTime lastUpdateInstant;
 
-  @InternalJSONColumn
+  
   public TenantLoginConfiguration loginConfiguration = new TenantLoginConfiguration();
 
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
    * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
    */
-  @InternalJSONColumn
+  
   public URI logoutURL;
 
-  @InternalJSONColumn
+  
   public MaximumPasswordAge maximumPasswordAge = new MaximumPasswordAge();
 
-  @InternalJSONColumn
+  
   public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
 
-  @InternalJSONColumn
+  
   public TenantMultiFactorConfiguration multiFactorConfiguration = new TenantMultiFactorConfiguration();
 
   public String name;
 
   public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
 
-  @InternalJSONColumn
+  
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
-  @InternalJSONColumn
+  
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
-  @InternalJSONColumn
+  
   public TenantRateLimitConfiguration rateLimitConfiguration = new TenantRateLimitConfiguration();
 
-  @InternalJSONColumn
+  
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
 
-  @InternalJSONColumn
+  
   public TenantSCIMServerConfiguration scimServerConfiguration = new TenantSCIMServerConfiguration();
 
-  @InternalJSONColumn
+  
   public TenantSSOConfiguration ssoConfiguration = new TenantSSOConfiguration();
 
-  @InternalJSONColumn
+  
   public ObjectState state;
 
   public UUID themeId;
 
-  @InternalJSONColumn
+  
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
 
-  @InternalJSONColumn
+  
   public TenantUsernameConfiguration usernameConfiguration = new TenantUsernameConfiguration();
 
   @JacksonConstructor
@@ -283,6 +271,15 @@ public class Tenant implements Buildable<Tenant>, _InternalJSONColumn {
     }
 
     return jwtConfiguration;
+  }
+
+  @JsonIgnore
+  public MultiFactorLoginPolicy lookupMultiFactorLoginPolicy(Application application) {
+    if (application != null && application.multiFactorConfiguration.loginPolicy != null) {
+      return application.multiFactorConfiguration.loginPolicy;
+    }
+
+    return multiFactorConfiguration.loginPolicy;
   }
 
   public void normalize() {

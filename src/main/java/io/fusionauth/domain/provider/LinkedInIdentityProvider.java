@@ -20,22 +20,22 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Daniel DeGroff
  */
 public class LinkedInIdentityProvider extends BaseIdentityProvider<LinkedInApplicationConfiguration> implements Buildable<LinkedInIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Sign in with LinkedIn";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   @Override

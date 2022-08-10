@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -23,15 +11,15 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 import io.fusionauth.domain.internal.annotation.InternalUse;
 
 /**
  * @author Brian Pontarelli
  */
-public class SystemConfiguration implements Buildable<SystemConfiguration>, _InternalJSONColumn {
-  @InternalJSONColumn
+public class SystemConfiguration implements Buildable<SystemConfiguration> {
+  
   public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
 
   /**
@@ -39,27 +27,27 @@ public class SystemConfiguration implements Buildable<SystemConfiguration>, _Int
    * cookies.
    */
   @InternalUse
-  @InternalJSONColumn
+  
   public String cookieEncryptionKey;
 
-  @InternalJSONColumn
+  
   public CORSConfiguration corsConfiguration = new CORSConfiguration();
 
   public Map<String, Object> data = new HashMap<>();
 
-  @InternalJSONColumn
+  
   public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
   public ZonedDateTime insertInstant;
 
   public ZonedDateTime lastUpdateInstant;
 
-  @InternalJSONColumn
+  
   public LoginRecordConfiguration loginRecordConfiguration = new LoginRecordConfiguration();
 
   public ZoneId reportTimezone;
 
-  @InternalJSONColumn
+  
   public UIConfiguration uiConfiguration = new UIConfiguration();
 
   @Override

@@ -1,19 +1,7 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
-package io.fusionauth.json;
+package io.fusionauth.client.json;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,8 +36,10 @@ import static io.fusionauth.domain.provider.IdentityProviderType.ExternalJWT;
 public class IdentityProviderJacksonHelper {
   public static IdentityProviderType extractType(DeserializationContext ctxt, JsonParser p, JsonNode idpNode)
       throws IOException {
+    // .at() will not return null, instead it returns a "missing node". So passing a default value to asText() is only a fail-safe since we don't
+    // expect node.asText() to ever be null, instead it returns empty string I believe.
     JsonNode node = idpNode.at("/type");
-    String type = node.asText(ExternalJWT.name());
+    String type = node.isMissingNode() ? ExternalJWT.name() : node.asText(ExternalJWT.name());
 
     IdentityProviderType identityProviderType = IdentityProviderType.safeValueOf(type);
     if (identityProviderType == null) {
@@ -97,7 +87,7 @@ public class IdentityProviderJacksonHelper {
       case Xbox:
         return new XboxIdentityProvider();
       default:
-        throw new IllegalStateException("Unexpected type [" + type + "]. This is a FusionAuth bug, someone forgot to add a case statement for a new type.");
+        throw new IllegalArgumentException();
     }
   }
 }

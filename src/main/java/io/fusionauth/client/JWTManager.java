@@ -1,22 +1,11 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +23,17 @@ import io.fusionauth.jwt.domain.JWT;
 public class JWTManager {
   private static final ScheduledThreadPoolExecutor executorService;
 
-  private static final Map<UUID, ZonedDateTime> revokedJWTs = new ConcurrentHashMap<>();
+  // Application Id -> Revocation Context
+  // - Used to revoke Refresh Tokens by Application
+  private static final Map<UUID, ZonedDateTime> revokedByApplication = new ConcurrentHashMap<>();
+
+  // User Id -> Revocation Context
+  // - Used to revoke Refresh Tokens by Application
+  private static final Map<UUID, Map<UUID, ZonedDateTime>> revokedByUser = new ConcurrentHashMap<>();
+
+  // Refresh Token Id -> Expiration
+  // - Used to revoke individual Refresh Tokens
+  private static final Map<UUID, ZonedDateTime> revokedRefreshTokens = new ConcurrentHashMap<>();
 
   /**
    * Determines if a given JWT object is valid or not. This checks if the subject in the JWT is in the list of revoked
@@ -44,23 +43,73 @@ public class JWTManager {
    * @return True if the JWT is valid, false it not.
    */
   public static boolean isValid(JWT jwt) {
-    UUID userId = UUID.fromString(jwt.subject);
-    ZonedDateTime expiration = revokedJWTs.get(userId);
-    return expiration == null || expiration.isBefore(jwt.expiration);
+    boolean result;
+
+    // 1. Look for revoked Refresh Tokens by Refresh Token Id
+    try {
+      String refreshTokenId = jwt.getString("sid");
+      if (refreshTokenId != null) {
+        ZonedDateTime expiration = revokedRefreshTokens.get(UUID.fromString(refreshTokenId));
+        if (expiration != null) {
+          result = expiration.isBefore(jwt.expiration);
+          if (!result) {
+            return false;
+          }
+        }
+      }
+    } catch (Exception ignore) {
+    }
+
+    // 2. Look for revoked Refresh Tokens by Application
+    try {
+      String applicationId = jwt.getString("applicationId");
+      if (applicationId != null) {
+        ZonedDateTime expiration = revokedByApplication.get(UUID.fromString(applicationId));
+        if (expiration != null) {
+          result = expiration.isBefore(jwt.expiration);
+          if (!result) {
+            return false;
+          }
+        }
+
+        // 3. Look for revoked Refresh Tokens by User Id
+        String userId = jwt.subject;
+        if (userId != null) {
+          Map<UUID, ZonedDateTime> context = revokedByUser.get(UUID.fromString(userId));
+          if (context != null) {
+            expiration = context.get(UUID.fromString(applicationId));
+            if (expiration != null) {
+              result = expiration.isBefore(jwt.expiration);
+              if (!result) {
+                return false;
+              }
+            }
+          }
+        }
+      }
+
+    } catch (Exception ignore) {
+    }
+
+    return true;
   }
 
-  /**
-   * Makes a user as having their JWTs revoked for the given number of seconds starting at the instant this method is
-   * called. This manages the duration by allowing all JWTs whose expiration instant is after <code>now +
-   * durationSeconds</code>.
-   *
-   * @param userId          The id of the user to revoke their JWTs
-   * @param durationSeconds The duration of the JWTs in seconds. This value should come from FusionAuth based on the
-   *                        application the JWT is for.
-   */
-  public static void revoke(UUID userId, int durationSeconds) {
-    ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(durationSeconds);
-    revokedJWTs.put(userId, expiration);
+  public static void revokeByApplication(UUID applicationId, int durationsInSeconds) {
+    ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(durationsInSeconds);
+    revokedByApplication.put(applicationId, expiration);
+  }
+
+  public static void revokeByRefreshToken(UUID refreshTokenId, int durationInSeconds) {
+    ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(durationInSeconds);
+    revokedRefreshTokens.put(refreshTokenId, expiration);
+  }
+
+  public static void revokedByUser(UUID userId, Map<UUID, Integer> durationsInSeconds) {
+    Map<UUID, ZonedDateTime> context = revokedByUser.computeIfAbsent(userId, key -> new HashMap<>());
+    for (UUID applicationId : durationsInSeconds.keySet()) {
+      ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(durationsInSeconds.get(applicationId));
+      context.put(applicationId, expiration);
+    }
   }
 
   static {
@@ -71,6 +120,12 @@ public class JWTManager {
       return t;
     });
 
-    executorService.schedule(() -> revokedJWTs.entrySet().removeIf(e -> e.getValue().isBefore(ZonedDateTime.now(ZoneOffset.UTC))), 7, TimeUnit.SECONDS);
+
+    executorService.schedule(() -> {
+      ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+      revokedByUser.values().forEach(m -> m.entrySet().removeIf(e -> e.getValue().isBefore(now)));
+      revokedByApplication.entrySet().removeIf(e -> e.getValue().isBefore(now));
+      revokedRefreshTokens.entrySet().removeIf(e -> e.getValue().isBefore(now));
+    }, 7, TimeUnit.SECONDS);
   }
 }

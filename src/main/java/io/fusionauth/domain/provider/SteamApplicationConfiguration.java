@@ -19,23 +19,23 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * @author Brett Pontarelli
  */
 public class SteamApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SteamApplicationConfiguration> {
-  @InternalJSONColumn
+  
   public String buttonText;
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
-  public String webAPIKey;
-
-  @InternalJSONColumn
+  
   public String scope;
+
+  
+  public String webAPIKey;
 
   @Override
   public boolean equals(Object o) {

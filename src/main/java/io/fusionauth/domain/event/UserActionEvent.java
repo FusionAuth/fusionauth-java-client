@@ -1,24 +1,11 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.event;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -35,10 +22,8 @@ import io.fusionauth.domain.email.Email;
  *
  * @author Brian Pontarelli
  */
-public class UserActionEvent extends BaseEvent implements Buildable<UserActionEvent>, ApplicationEvent {
+public class UserActionEvent extends BaseEvent implements Buildable<UserActionEvent> {
   public static ZonedDateTime Infinite = ZonedDateTime.ofInstant(Instant.ofEpochMilli(Long.MAX_VALUE), ZoneOffset.UTC);
-
-  public final List<UUID> applicationIds = new ArrayList<>();
 
   public String action;
 
@@ -131,11 +116,6 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
 
   public boolean active() {
     return expiry != null && ZonedDateTime.now(ZoneOffset.UTC).isBefore(expiry);
-  }
-
-  @Override
-  public List<UUID> applicationIds() {
-    return applicationIds;
   }
 
   @Override

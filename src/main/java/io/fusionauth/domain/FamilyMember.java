@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -21,16 +9,20 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
+
 
 /**
  * Models a single family member.
  *
  * @author Brian Pontarelli
  */
-public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColumn {
+public class FamilyMember implements Buildable<FamilyMember> {
+  // This is used for InternalJSONColumn and we don't document any custom data. If we do end up documenting custom data, remove this annotation.
+  @JsonInclude(Include.NON_EMPTY)
   public Map<String, Object> data = new HashMap<>();
 
   public ZonedDateTime insertInstant;
@@ -66,11 +58,11 @@ public class FamilyMember implements Buildable<FamilyMember>, _InternalJSONColum
     }
     FamilyMember that = (FamilyMember) o;
     return Objects.equals(data, that.data) &&
-        Objects.equals(insertInstant, that.insertInstant) &&
-        Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
-        owner == that.owner &&
-        role == that.role &&
-        Objects.equals(userId, that.userId);
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           owner == that.owner &&
+           role == that.role &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override

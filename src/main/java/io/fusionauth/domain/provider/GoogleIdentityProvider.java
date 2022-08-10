@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * Google social login provider.
@@ -28,19 +28,19 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  * @author Daniel DeGroff
  */
 public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider>, SupportsPostBindings {
-  @InternalJSONColumn
+  
   public String buttonText = "Login with Google";
 
-  @InternalJSONColumn
+  
   public String client_id;
 
-  @InternalJSONColumn
+  
   public String client_secret;
 
-  @InternalJSONColumn
+  
   public IdentityProviderLoginMethod loginMethod;
 
-  @InternalJSONColumn
+  
   public String scope;
 
   @Override

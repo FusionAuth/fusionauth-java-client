@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
 
 /**
  * SAML v2 IdP Initiated identity provider configuration.
@@ -29,10 +29,10 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAMLv2IdPInitiatedApplicationConfiguration>
     implements Buildable<SAMLv2IdPInitiatedIdentityProvider> {
-  @InternalJSONColumn
+  
   public String emailClaim;
 
-  @InternalJSONColumn
+  
   public String issuer;
 
   /**
@@ -40,13 +40,13 @@ public class SAMLv2IdPInitiatedIdentityProvider extends BaseIdentityProvider<SAM
    */
   public UUID keyId;
 
-  @InternalJSONColumn
+  
   public String uniqueIdClaim;
 
-  @InternalJSONColumn
+  
   public boolean useNameIdForEmail;
 
-  @InternalJSONColumn
+  
   public String usernameClaim;
 
   @Override

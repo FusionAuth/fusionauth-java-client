@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2020-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.connector;
 
@@ -23,8 +11,8 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal._InternalJSONColumn;
-import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
+
+
 
 /**
  * Models a connector.
@@ -33,12 +21,12 @@ import io.fusionauth.domain.internal.annotation.InternalJSONColumn;
  */
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
 @JsonIgnoreProperties(value = "type", allowGetters = true, allowSetters = false)
-public abstract class BaseConnectorConfiguration implements _InternalJSONColumn {
+public abstract class BaseConnectorConfiguration  {
   public static final UUID FUSIONAUTH_CONNECTOR_ID = UUID.fromString("e3306678-a53a-4964-9040-1c96f36dda72");
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  @InternalJSONColumn
+  
   public boolean debug;
 
   public UUID id;
