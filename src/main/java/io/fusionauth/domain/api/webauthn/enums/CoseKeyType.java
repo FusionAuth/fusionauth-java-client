@@ -3,13 +3,13 @@
  */
 package io.fusionauth.domain.api.webauthn.enums;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.json.CoseKeyTypeDeserializer;
-import io.fusionauth.json.CoseKeyTypeSerializer;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.fusionauth.client.json.CoseKeyTypeDeserializer;
+import io.fusionauth.client.json.CoseKeyTypeSerializer;
 
 @JsonDeserialize(using = CoseKeyTypeDeserializer.class)
 @JsonSerialize(using = CoseKeyTypeSerializer.class)

@@ -6,8 +6,6 @@ package io.fusionauth.domain.api.webauthn;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
-import java.util.HashMap;
-
 /**
  * Request to authenticate with WebAuthn
  *
@@ -17,7 +15,7 @@ public class PublicKeyAuthenticationRequest implements Buildable<PublicKeyAuthen
   /**
    * Requested extension data for the authentication ceremony
    */
-  public HashMap<String, String> clientExtensionResults;
+  public WebAuthnExtensionsClientOutputs clientExtensionResults = new WebAuthnExtensionsClientOutputs();
 
   /**
    * The selected credential ID in base64URL-encoded format

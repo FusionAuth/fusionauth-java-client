@@ -3,13 +3,12 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Request to register a new public key with WebAuthn
@@ -20,7 +19,7 @@ public class PublicKeyRegistrationRequest implements Buildable<PublicKeyRegistra
   /**
    * Requested extension data for the registration ceremony
    */
-  public HashMap<String, String> clientExtensionResults;
+  public WebAuthnExtensionsClientOutputs clientExtensionResults = new WebAuthnExtensionsClientOutputs();
 
   /**
    * The new credential ID in base64URL-encoded format

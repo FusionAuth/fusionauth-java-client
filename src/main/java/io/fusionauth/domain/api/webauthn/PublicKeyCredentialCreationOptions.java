@@ -1,25 +1,13 @@
 /*
  * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.api.webauthn;
+
+import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.webauthn.enums.AttestationConveyancePreference;
-
-import java.util.List;
 
 /**
  * Allows the Relying Party to specify desired attributes of a new credential.
@@ -47,6 +35,11 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
    * is intended for Relying Parties to limit the creation of multiple credentials for the same account on a single <i>authenticator</i>
    */
   public List<PublicKeyCredentialDescriptor> excludeCredentials;
+
+  /**
+   * Use to request the use of extensions during credential registration
+   */
+  public WebAuthnRegistrationExtensionOptions extensions;
 
   /**
    * Information about desired properties of the credential to be created. Ordered from most- to least-preferred
@@ -77,12 +70,13 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
 
   public PublicKeyCredentialCreationOptions(AttestationConveyancePreference attestation, AuthenticatorSelectionCriteria authenticatorSelection,
                                             String challenge, List<PublicKeyCredentialDescriptor> excludeCredentials,
-                                            List<PublicKeyCredentialParameters> pubKeyCredParams, PublicKeyCredentialRpEntity rp, long timeout,
-                                            PublicKeyCredentialUserEntity user) {
+                                            WebAuthnRegistrationExtensionOptions extensions, List<PublicKeyCredentialParameters> pubKeyCredParams,
+                                            PublicKeyCredentialRpEntity rp, long timeout, PublicKeyCredentialUserEntity user) {
     this.attestation = attestation;
     this.authenticatorSelection = authenticatorSelection;
     this.challenge = challenge;
     this.excludeCredentials = excludeCredentials;
+    this.extensions = extensions;
     this.pubKeyCredParams = pubKeyCredParams;
     this.rp = rp;
     this.timeout = timeout;

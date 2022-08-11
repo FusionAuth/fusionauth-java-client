@@ -15,11 +15,11 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.webauthn.enums.UserVerificationRequirement;
-
-import java.util.List;
 
 /**
  * Provides the <i>authenticator</i> with the data it needs to generate an assertion.

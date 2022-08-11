@@ -3,13 +3,13 @@
  */
 package io.fusionauth.domain.api.webauthn.enums;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.json.CoseEllipticCurveDeserializer;
-import io.fusionauth.json.CoseEllipticCurveSerializer;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.fusionauth.client.json.CoseEllipticCurveDeserializer;
+import io.fusionauth.client.json.CoseEllipticCurveSerializer;
 
 /**
  * COSE Elliptic Curve identifier to determine which elliptic curve to use with a given key

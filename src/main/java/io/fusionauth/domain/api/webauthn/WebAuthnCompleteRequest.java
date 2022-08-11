@@ -3,6 +3,9 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
+import java.util.UUID;
+
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -17,11 +20,6 @@ public class WebAuthnCompleteRequest implements Buildable<WebAuthnCompleteReques
   public PublicKeyRegistrationRequest credential;
 
   /**
-   * The User's loginId. This will prefer email address if supported
-   */
-  public String loginId;
-
-  /**
    * The request origin
    */
   public String origin;
@@ -30,4 +28,13 @@ public class WebAuthnCompleteRequest implements Buildable<WebAuthnCompleteReques
    * The Relying Party ID
    */
   public String rpId;
+
+  /**
+   * The User's database identifier
+   */
+  public UUID userId;
+
+  @JacksonConstructor
+  public WebAuthnCompleteRequest() {
+  }
 }

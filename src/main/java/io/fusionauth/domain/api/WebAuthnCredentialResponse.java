@@ -3,10 +3,10 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.WebAuthnCredential;
-
-import java.util.List;
 
 /**
  * WebAuthn Credential API response

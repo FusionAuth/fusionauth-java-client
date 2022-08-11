@@ -3,13 +3,13 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.WebAuthnCredential;
 import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
 import io.fusionauth.domain.api.webauthn.enums.PublicKeyCredentialType;
-
-import java.util.List;
 
 /**
  * Contains attributes for the Relying Party to refer to an existing public key credential as an input parameter.

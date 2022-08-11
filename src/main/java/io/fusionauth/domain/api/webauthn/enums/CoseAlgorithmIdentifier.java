@@ -3,13 +3,13 @@
  */
 package io.fusionauth.domain.api.webauthn.enums;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.json.CoseAlgorithmIdentifierDeserializer;
-import io.fusionauth.json.CoseAlgorithmIdentifierSerializer;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.fusionauth.client.json.CoseAlgorithmIdentifierDeserializer;
+import io.fusionauth.client.json.CoseAlgorithmIdentifierSerializer;
 
 /**
  * A number identifying a cryptographic algorithm. Values should be registered with the <a
@@ -78,19 +78,27 @@ public enum CoseAlgorithmIdentifier {
 
   public CoseEllipticCurve getCurve() {
     switch (this) {
-      case ES256: return CoseEllipticCurve.P256;
-      case ES384: return CoseEllipticCurve.P384;
-      case ES512: return CoseEllipticCurve.P521;
-      default: throw new IllegalStateException("An incompatible algorithm was provided, this method is only used for ECDSA algorithms.");
+      case ES256:
+        return CoseEllipticCurve.P256;
+      case ES384:
+        return CoseEllipticCurve.P384;
+      case ES512:
+        return CoseEllipticCurve.P521;
+      default:
+        throw new IllegalStateException("An incompatible algorithm was provided, this method is only used for ECDSA algorithms.");
     }
   }
 
   public int getSaltLength() {
     switch (this) {
-      case PS256: return 32;
-      case PS384: return 48;
-      case PS512: return 64;
-      default: throw new IllegalStateException("An incompatible algorithm was provided, this method is only used for RSASSA-PSS algorithms.");
+      case PS256:
+        return 32;
+      case PS384:
+        return 48;
+      case PS512:
+        return 64;
+      default:
+        throw new IllegalStateException("An incompatible algorithm was provided, this method is only used for RSASSA-PSS algorithms.");
     }
   }
 

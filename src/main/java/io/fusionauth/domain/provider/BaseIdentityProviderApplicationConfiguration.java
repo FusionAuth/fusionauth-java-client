@@ -18,7 +18,7 @@ import io.fusionauth.domain.Enableable;
  * @author Daniel DeGroff
  */
 public abstract class BaseIdentityProviderApplicationConfiguration extends Enableable  {
-  // This is used for InternalJSONColumn and we don't document any custom data. If we do end up documenting custom data, remove this annotation.
+  // This is used for JSONColumn and we don't document any custom data. If we do end up documenting custom data, remove this annotation.
   @JsonInclude(Include.NON_EMPTY)
   public final Map<String, Object> data = new HashMap<>();
 

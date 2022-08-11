@@ -136,6 +136,9 @@ public class Tenant implements Buildable<Tenant> {
   
   public TenantUsernameConfiguration usernameConfiguration = new TenantUsernameConfiguration();
 
+  
+  public TenantWebAuthnConfiguration webAuthnConfiguration = new TenantWebAuthnConfiguration();
+
   @JacksonConstructor
   public Tenant() {
   }
@@ -176,6 +179,7 @@ public class Tenant implements Buildable<Tenant> {
     this.themeId = other.themeId;
     this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
     this.usernameConfiguration = new TenantUsernameConfiguration(other.usernameConfiguration);
+    this.webAuthnConfiguration = new TenantWebAuthnConfiguration(other.webAuthnConfiguration);
   }
 
   @Override
@@ -220,7 +224,8 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(state, tenant.state) &&
            Objects.equals(themeId, tenant.themeId) &&
            Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&
-           Objects.equals(usernameConfiguration, tenant.usernameConfiguration);
+           Objects.equals(usernameConfiguration, tenant.usernameConfiguration) &&
+           Objects.equals(webAuthnConfiguration, tenant.webAuthnConfiguration);
   }
 
   @JsonIgnore
@@ -261,7 +266,8 @@ public class Tenant implements Buildable<Tenant> {
                         state,
                         themeId,
                         userDeletePolicy,
-                        usernameConfiguration);
+                        usernameConfiguration,
+                        webAuthnConfiguration);
   }
 
   @JsonIgnore
