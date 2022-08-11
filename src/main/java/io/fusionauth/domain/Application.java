@@ -265,6 +265,10 @@ public class Application implements Buildable<Application>, Tenantable {
     jwtConfiguration.refreshTokenRevocationPolicy = null;
 
     roles.forEach(ApplicationRole::normalize);
+
+    if (multiFactorConfiguration.loginPolicy == null) {
+      multiFactorConfiguration.trustPolicy = null;
+    }
   }
 
   public Application secure() {
