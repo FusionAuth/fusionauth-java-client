@@ -83,6 +83,7 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
     return Objects.hash(super.hashCode(), reauthenticationWorkflowConfiguration, signatureAlgorithmPreference);
   }
 
+  @JsonIgnore
   public boolean isWebAuthnAvailable() {
     return this.enabled && Arrays.stream(WebAuthnWorkflow.values()).anyMatch(w -> retrieveWebAuthnWorkflowConfiguration(w).enabled);
   }
@@ -138,6 +139,7 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
              userVerificationRequirement == that.userVerificationRequirement;
     }
 
+    @JsonIgnore
     public AuthenticatorAttachment getAuthenticatorAttachment() {
       switch (authenticatorAttachmentPreference) {
         case PLATFORM:
