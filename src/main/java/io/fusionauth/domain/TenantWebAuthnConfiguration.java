@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.api.webauthn.PublicKeyCredentialRpEntity;
 import io.fusionauth.domain.api.webauthn.enums.AuthenticatorAttachmentPreference;
 import io.fusionauth.domain.api.webauthn.enums.UserVerificationRequirement;
 
@@ -21,6 +22,10 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
       .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.PLATFORM)
       .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
+  public String rpId = null;
+
+  public String rpName = null;
+
   @JacksonConstructor
   public TenantWebAuthnConfiguration() {
   }
@@ -28,6 +33,8 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
   public TenantWebAuthnConfiguration(TenantWebAuthnConfiguration other) {
     this.enabled = other.enabled;
     this.reauthenticationWorkflowConfiguration = new WebAuthnWorkflowConfiguration(other.reauthenticationWorkflowConfiguration);
+    this.rpId = other.rpId;
+    this.rpName = other.rpName;
   }
 
   @Override
@@ -42,12 +49,14 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
       return false;
     }
     TenantWebAuthnConfiguration that = (TenantWebAuthnConfiguration) o;
-    return reauthenticationWorkflowConfiguration.equals(that.reauthenticationWorkflowConfiguration);
+    return Objects.equals(reauthenticationWorkflowConfiguration, that.reauthenticationWorkflowConfiguration) &&
+           Objects.equals(rpId, that.rpId) &&
+           Objects.equals(rpName, that.rpName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), reauthenticationWorkflowConfiguration);
+    return Objects.hash(super.hashCode(), reauthenticationWorkflowConfiguration, rpId, rpName);
   }
 
   @Override
