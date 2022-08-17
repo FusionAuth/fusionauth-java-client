@@ -6,6 +6,7 @@ package io.fusionauth.domain.event;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +25,8 @@ import io.fusionauth.domain.email.Email;
  */
 public class UserActionEvent extends BaseEvent implements Buildable<UserActionEvent> {
   public static ZonedDateTime Infinite = ZonedDateTime.ofInstant(Instant.ofEpochMilli(Long.MAX_VALUE), ZoneOffset.UTC);
+
+  public final List<UUID> applicationIds = new ArrayList<>();
 
   public String action;
 

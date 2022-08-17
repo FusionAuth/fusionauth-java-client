@@ -4,13 +4,8 @@
 package io.fusionauth.domain.event;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.EventInfo;
@@ -21,8 +16,6 @@ import io.fusionauth.domain.EventInfo;
  * @author Brian Pontarelli
  */
 public abstract class BaseEvent {
-  public List<UUID> applicationIds = new ArrayList<>();
-
   public ZonedDateTime createInstant;
 
   public UUID id;
@@ -36,15 +29,6 @@ public abstract class BaseEvent {
 
   public BaseEvent(EventInfo info) {
     this.info = info;
-  }
-
-  public BaseEvent(EventInfo info, Set<UUID> applicationIds) {
-    this.info = info;
-    this.applicationIds = applicationIds.stream().collect(Collectors.toList());
-  }
-
-  public Collection<UUID> applicationIds() {
-    return applicationIds;
   }
 
   @Override

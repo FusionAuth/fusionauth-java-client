@@ -53,7 +53,6 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
     this.userId = user == null ? null : user.id;
   }
 
-  @Override
   public List<UUID> applicationIds() {
     return new ArrayList<>(applicationTimeToLiveInSeconds.keySet());
   }

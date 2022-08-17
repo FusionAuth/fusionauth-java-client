@@ -3,6 +3,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -19,18 +20,22 @@ import io.fusionauth.domain.EventInfo;
  * @author Brian Pontarelli
  */
 public class JWTPublicKeyUpdateEvent extends BaseEvent implements Buildable<JWTPublicKeyUpdateEvent> {
+  public final Set<UUID> applicationIds;
 
   @JacksonConstructor
   public JWTPublicKeyUpdateEvent() {
+    applicationIds = new HashSet<>(0);
   }
 
   public JWTPublicKeyUpdateEvent(EventInfo info, UUID applicationId) {
     super(info);
+    this.applicationIds = new HashSet<>();
     this.applicationIds.add(applicationId);
   }
 
   public JWTPublicKeyUpdateEvent(EventInfo info, Set<UUID> applicationIds) {
-    super(info, applicationIds);
+    super(info);
+    this.applicationIds = new HashSet<>(applicationIds);
   }
 
   @Override
