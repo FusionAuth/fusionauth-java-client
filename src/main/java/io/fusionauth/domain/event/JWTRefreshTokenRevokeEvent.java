@@ -18,7 +18,7 @@ import io.fusionauth.domain.User;
 import io.fusionauth.domain.jwt.RefreshToken;
 
 /**
- * Models the Refresh Token Revoke Event (and can be converted to JSON). This event might be for a single token, a user
+ * Models the Refresh Token Revoke Event. This event might be for a single token, a user
  * or an entire application.
  *
  * @author Brian Pontarelli

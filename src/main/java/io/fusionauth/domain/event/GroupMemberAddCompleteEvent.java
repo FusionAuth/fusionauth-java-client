@@ -14,7 +14,7 @@ import io.fusionauth.domain.Group;
 import io.fusionauth.domain.GroupMember;
 
 /**
- * Models the Group Create Event (and can be converted to JSON).
+ * Models the Group Member Add Complete Event.
  *
  * @author Daniel DeGroff
  */

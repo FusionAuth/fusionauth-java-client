@@ -12,7 +12,7 @@ import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.Group;
 
 /**
- * Models the Group Create Event (and can be converted to JSON).
+ * Models the Group Create Complete Event.
  *
  * @author Daniel DeGroff
  */

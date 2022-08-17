@@ -19,7 +19,7 @@ import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.email.Email;
 
 /**
- * Models the user action event (and can be converted to JSON).
+ * Models the user action Event.
  *
  * @author Brian Pontarelli
  */
