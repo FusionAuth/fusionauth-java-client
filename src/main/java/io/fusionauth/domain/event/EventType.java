@@ -46,6 +46,10 @@ public enum EventType {
 
   GroupMemberRemoveComplete("group.member.remove.complete"),
 
+  GroupMemberUpdate("group.member.update"),
+
+  GroupMemberUpdateComplete("group.member.update.complete"),
+
   GroupUpdate("group.update"),
 
   GroupUpdateComplete("group.update.complete"),
@@ -146,6 +150,8 @@ public enum EventType {
                          EventType.GroupMemberAddComplete,
                          EventType.GroupMemberRemove,
                          EventType.GroupMemberRemoveComplete,
+                         EventType.GroupMemberUpdate,
+                         EventType.GroupMemberUpdateComplete,
                          EventType.GroupUpdate,
                          EventType.GroupUpdateComplete,
                          EventType.UserAction,
