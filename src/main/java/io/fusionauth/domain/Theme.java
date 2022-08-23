@@ -147,7 +147,6 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2TwoFactorMethods,
                      templates.oauth2Wait,
                      templates.oauth2WebAuthN,
-                     templates.oauth2WebAuthNComplete,
                      templates.passwordChange,
                      templates.passwordComplete,
                      templates.passwordForgot,
@@ -235,7 +234,6 @@ public class Theme implements Buildable<Theme> {
         "oauth2TwoFactorMethods",
         "oauth2Wait",
         "oauth2WebAuthN",
-        "oauth2WebAuthNComplete",
         "passwordChange",
         "passwordComplete",
         "passwordForgot",
@@ -302,8 +300,6 @@ public class Theme implements Buildable<Theme> {
 
     public String oauth2WebAuthN;
 
-    public String oauth2WebAuthNComplete;
-
     public String passwordChange;
 
     public String passwordComplete;
@@ -355,7 +351,6 @@ public class Theme implements Buildable<Theme> {
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
       this.oauth2WebAuthN = other.oauth2WebAuthN;
-      this.oauth2WebAuthNComplete = other.oauth2WebAuthNComplete;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
@@ -404,7 +399,6 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
              Objects.equals(oauth2WebAuthN, that.oauth2WebAuthN) &&
-             Objects.equals(oauth2WebAuthNComplete, that.oauth2WebAuthNComplete) &&
              Objects.equals(passwordChange, that.passwordChange) &&
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
@@ -467,7 +461,6 @@ public class Theme implements Buildable<Theme> {
           oauth2TwoFactorMethods,
           oauth2Wait,
           oauth2WebAuthN,
-          oauth2WebAuthNComplete,
           passwordChange,
           passwordComplete,
           passwordForgot,
@@ -509,7 +502,6 @@ public class Theme implements Buildable<Theme> {
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
       oauth2WebAuthN = lineReturns(trimToNull(oauth2WebAuthN));
-      oauth2WebAuthNComplete = lineReturns(trimToNull(oauth2WebAuthNComplete));
       passwordChange = lineReturns(trimToNull(passwordChange));
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));
