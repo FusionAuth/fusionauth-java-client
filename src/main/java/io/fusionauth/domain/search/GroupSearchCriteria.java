@@ -9,28 +9,30 @@ import java.util.Set;
 import java.util.UUID;
 
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
+import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
- * Search criteria for Group Members
+ * Search criteria for Groups
  *
  * @author Daniel DeGroff
  */
-public class GroupMemberSearchCriteria extends BaseSearchCriteria {
+public class GroupSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public UUID groupId;
+  public UUID id;
+
+  public String name;
 
   public UUID tenantId;
 
-  public UUID userId;
-
   @Override
-  public GroupMemberSearchCriteria prepare() {
+  public GroupSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
+    name = toSearchString(name);
     return this;
   }
 
@@ -45,10 +47,9 @@ public class GroupMemberSearchCriteria extends BaseSearchCriteria {
   }
 
   static {
-    SortableFields.put("id", "id");
-    SortableFields.put("insertInstant", "gm.insert_instant");
-    SortableFields.put("groupId", "gm.groups_id");
+    SortableFields.put("id", "g.id");
+    SortableFields.put("insertInstant", "g.insert_instant");
+    SortableFields.put("name", "g.name");
     SortableFields.put("tenantId", "g.tenants_id");
-    SortableFields.put("userId", "gm.users_id");
   }
 }

@@ -74,6 +74,8 @@ import io.fusionauth.domain.api.FamilyRequest;
 import io.fusionauth.domain.api.FamilyResponse;
 import io.fusionauth.domain.api.GroupMemberSearchRequest;
 import io.fusionauth.domain.api.GroupMemberSearchResponse;
+import io.fusionauth.domain.api.GroupSearchRequest;
+import io.fusionauth.domain.api.GroupSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
 import io.fusionauth.domain.api.IdentityProviderRequest;
@@ -4186,6 +4188,20 @@ public class FusionAuthClient {
   public ClientResponse<GroupMemberSearchResponse, Errors> searchGroupMembers(GroupMemberSearchRequest request) {
     return start(GroupMemberSearchResponse.class, Errors.class)
         .uri("/api/group/member/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches groups with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<GroupSearchResponse, Errors> searchGroups(GroupSearchRequest request) {
+    return start(GroupSearchResponse.class, Errors.class)
+        .uri("/api/group/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
