@@ -16,7 +16,7 @@
 savantVersion = "1.0.0"
 
 fusionauthJWTVersion = "5.1.2"
-jacksonVersion = "2.13.2"
+jacksonVersion = "2.13.3"
 jacksonVersionDatabind = "2.13.2+2"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
