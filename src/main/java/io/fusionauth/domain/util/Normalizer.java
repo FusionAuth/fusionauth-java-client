@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.util;
 
@@ -39,6 +27,10 @@ public final class Normalizer {
    * @param <T>  the type of the list.
    */
   public static <T> void deDuplicate(List<T> list) {
+    if (list == null) {
+      return;
+    }
+
     Set<T> set = new HashSet<>();
     list.removeIf(o -> !set.add(o));
   }
@@ -78,6 +70,10 @@ public final class Normalizer {
    * @param <T>  the type of list.
    */
   public static <T> void removeEmpty(List<T> list) {
+    if (list == null) {
+      return;
+    }
+
     list.removeIf(Objects::isNull);
   }
 
@@ -118,7 +114,7 @@ public final class Normalizer {
    * @param <T>        the type of collection
    */
   public static <T extends Collection<String>> void toLowerCase(Collection<String> collection, Supplier<T> supplier) {
-    if (collection.isEmpty()) {
+    if (collection == null || collection.isEmpty()) {
       return;
     }
 
