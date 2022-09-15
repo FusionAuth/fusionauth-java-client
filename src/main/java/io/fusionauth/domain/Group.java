@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -97,6 +98,13 @@ public class Group implements Buildable<Group>, Tenantable {
   }
 
   public Group secure() {
+    return this;
+  }
+
+  public Group sort() {
+    for (List<ApplicationRole> appRoles : roles.values()) {
+      appRoles.sort(Comparator.comparing(r -> r.name));
+    }
     return this;
   }
 
