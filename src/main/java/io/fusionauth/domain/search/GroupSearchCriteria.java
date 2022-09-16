@@ -19,8 +19,6 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
 public class GroupSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public UUID id;
-
   public String name;
 
   public UUID tenantId;
