@@ -19,11 +19,15 @@ public enum AuthenticatorTransport {
    */
   nfc,
   /**
-   * Authenticator can be contracted over Bluetooth Smart/Bluetooth Low Energy (BLE)
+   * Authenticator can be contacted over Bluetooth Smart/Bluetooth Low Energy (BLE)
    */
   ble,
   /**
    * Authenticator is contacted via a client device-specific transport (a platform authenticator)
    */
-  internal
+  internal,
+  /**
+   * Authenticator can be contacted using Google's "cloud-assisted BLE" pairing. Requires Chrome on host machine and Android device
+   */
+  cable
 }

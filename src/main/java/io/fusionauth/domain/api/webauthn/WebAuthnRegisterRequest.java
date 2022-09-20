@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -16,7 +15,9 @@ import io.fusionauth.domain.api.webauthn.enums.WebAuthnWorkflow;
  * @author Spencer Witt
  */
 public class WebAuthnRegisterRequest implements Buildable<WebAuthnRegisterRequest> {
-  public Map<String, Object> state;
+  public String credentialName;
+
+  public String userAgent;
 
   public UUID userId;
 

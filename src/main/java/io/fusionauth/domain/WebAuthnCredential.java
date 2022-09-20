@@ -72,6 +72,13 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public ZonedDateTime lastUseInstant;
 
   /**
+   * The name used during credential registration. This is a user-supplied value that defaults to their loginId and is meant to distinguish between
+   * WebAuthn credentials with the same displayName
+   */
+  
+  public String name;
+
+  /**
    * The public key encoded in PEM format
    */
   
@@ -97,6 +104,12 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   
   public List<AuthenticatorTransport> transports = new ArrayList<>();
 
+  /**
+   * The user agent string from the browser that registered the credential
+   */
+  
+  public String userAgent = null;
+
   public UUID userId;
 
   @JacksonConstructor
@@ -111,12 +124,14 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     this.insertInstant = other.insertInstant;
     this.isDiscoverableCredential = other.isDiscoverableCredential;
     this.lastUseInstant = other.lastUseInstant;
+    this.name = other.name;
     this.publicKey = other.publicKey;
     this.rpId = other.rpId;
     this.signCount = other.signCount;
     this.authenticatorSupportsUserVerification = other.authenticatorSupportsUserVerification;
     this.tenantId = other.tenantId;
     this.transports.addAll(other.transports);
+    this.userAgent = other.userAgent;
     this.userId = other.userId;
     if (other.data != null) {
       this.data.putAll(other.data);
@@ -134,18 +149,20 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     WebAuthnCredential that = (WebAuthnCredential) o;
     return alg == that.alg &&
            attestationType == that.attestationType &&
-           credentialId.equals(that.credentialId) &&
-           id.equals(that.id) &&
-           insertInstant.equals(that.insertInstant) &&
+           Objects.equals(credentialId, that.credentialId) &&
+           Objects.equals(id, that.id) &&
+           Objects.equals(insertInstant, that.insertInstant) &&
            isDiscoverableCredential == that.isDiscoverableCredential &&
-           lastUseInstant.equals(that.lastUseInstant) &&
-           publicKey.equals(that.publicKey) &&
-           rpId.equals(that.rpId) &&
+           Objects.equals(lastUseInstant, that.lastUseInstant) &&
+           Objects.equals(name, that.name) &&
+           Objects.equals(publicKey, that.publicKey) &&
+           Objects.equals(rpId, that.rpId) &&
            signCount == that.signCount &&
            authenticatorSupportsUserVerification == that.authenticatorSupportsUserVerification &&
-           tenantId.equals(that.tenantId) &&
-           transports.equals(that.transports) &&
-           userId.equals(that.userId);
+           Objects.equals(tenantId, that.tenantId) &&
+           Objects.equals(transports, that.transports) &&
+           Objects.equals(userAgent, that.userAgent) &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override
@@ -155,6 +172,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userId);
+    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, name, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userId);
   }
 }
