@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
-package io.fusionauth.domain.api.webauthn.enums;
+package io.fusionauth.domain.api.webauthn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,35 +24,43 @@ public enum CoseAlgorithmIdentifier {
    * ECDSA using P-256 and SHA-256 OID: 1.2.840.10045.3.1.7 - prime256v1 / secp256r1
    */
   ES256(-7, "SHA256withECDSA", CoseKeyType.EC2),
+
   /**
    * ECDSA using P-384 and SHA-384 OID: 1.3.132.0.34 - secp384r1 / secp384r1
    */
   ES384(-35, "SHA384withECDSA", CoseKeyType.EC2),
+
   /**
    * ECDSA using P-521 and SHA-512 OID: 1.3.132.0.35 - prime521v1 / secp521r1
    */
   ES512(-36, "SHA512withECDSA", CoseKeyType.EC2),
+
   // TODO : WebAuthn/Algorithms - I'm not sure on the spec names other than the ES ones above
   /**
    * RSASSA-PKCS1-v1_5 using SHA-256
    */
   RS256(-257, "SHA256withRSA", CoseKeyType.RSA),
+
   /**
    * RSASSA-PKCS1-v1_5 using SHA-384
    */
   RS384(-258, "SHA384withRSA", CoseKeyType.RSA),
+
   /**
    * RSASSA-PKCS1-v1_5 using SHA-512
    */
   RS512(-259, "SHA512withRSA", CoseKeyType.RSA),
+
   /**
    * RSASSA-PSS using SHA-256 and MGF1 with SHA-256 - SHA256withRSAandMGF1
    */
   PS256(-37, "SHA-256", CoseKeyType.RSA),
+
   /**
    * RSASSA-PSS using SHA-384 and MGF1 with SHA-384 - SHA384withRSAandMGF1
    */
   PS384(-38, "SHA-384", CoseKeyType.RSA),
+
   /**
    * RSASSA-PSS using SHA-512 and MGF1 with SHA-512 - SHA512withRSAandMGF1
    */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client.json;
 
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.api.webauthn.enums.CoseEllipticCurve;
+import io.fusionauth.domain.api.webauthn.CoseEllipticCurve;
 
 public class CoseEllipticCurveDeserializer extends StdDeserializer<CoseEllipticCurve> {
   @JacksonConstructor

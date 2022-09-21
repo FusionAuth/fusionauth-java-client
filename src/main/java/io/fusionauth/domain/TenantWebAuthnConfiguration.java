@@ -7,9 +7,8 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.api.webauthn.PublicKeyCredentialRpEntity;
-import io.fusionauth.domain.api.webauthn.enums.AuthenticatorAttachmentPreference;
-import io.fusionauth.domain.api.webauthn.enums.UserVerificationRequirement;
+import io.fusionauth.domain.api.webauthn.AuthenticatorAttachmentPreference;
+import io.fusionauth.domain.api.webauthn.UserVerificationRequirement;
 
 /**
  * Tenant-level configuration for WebAuthn

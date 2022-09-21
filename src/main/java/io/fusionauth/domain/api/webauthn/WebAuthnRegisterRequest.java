@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.webauthn.enums.WebAuthnWorkflow;
 
 /**
  * API request to start a WebAuthn registration ceremony

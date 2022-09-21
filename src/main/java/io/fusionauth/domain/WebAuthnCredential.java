@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 
 
-import io.fusionauth.domain.api.webauthn.enums.AttestationType;
-import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
-import io.fusionauth.domain.api.webauthn.enums.CoseAlgorithmIdentifier;
+import io.fusionauth.domain.api.webauthn.AttestationType;
+import io.fusionauth.domain.api.webauthn.AuthenticatorTransport;
+import io.fusionauth.domain.api.webauthn.CoseAlgorithmIdentifier;
 
 /**
  * A User's WebAuthnCredential. Contains all data required to complete WebAuthn authentication ceremonies.
@@ -108,7 +108,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The user agent string from the browser that registered the credential
    */
   
-  public String userAgent = null;
+  public String userAgent;
 
   public UUID userId;
 
@@ -172,6 +172,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, name, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userId);
+    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, name, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
   }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
-package io.fusionauth.domain.api.webauthn.enums;
+package io.fusionauth.domain.api.webauthn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,34 +23,42 @@ public enum CoseEllipticCurve {
    * Reserved by specification
    */
   Reserved(0, "N/A"),
+
   /**
    * NIST P-256 also known as secp256r1. For use with {@link CoseKeyType#EC2}
    */
   P256(1, "secp256r1"),
+
   /**
    * NIST P-384 also known as secp384r1. For use with {@link CoseKeyType#EC2}
    */
   P384(2, "secp384r1"),
+
   /**
    * NIST P-521 also known as secp521r1. For use with {@link CoseKeyType#EC2}
    */
   P521(3, "secp521r1"),
+
   /**
    * X25519 for use w/ ECDH only. For use with {@link CoseKeyType#OKP}
    */
   X25519(4, "X25519"),
+
   /**
    * X448 for use w/ ECDH only. For use with {@link CoseKeyType#OKP}
    */
   X448(5, "X448"),
+
   /**
    * Ed25519 for use w/ EdDSA only. For use with {@link CoseKeyType#OKP}
    */
   Ed25519(6, "Ed25519"),
+
   /**
    * Ed448 for use w/ EdDSA only. For use with {@link CoseKeyType#OKP}
    */
   Ed448(7, "Ed448"),
+
   /**
    * SECG secp256k1 curve. For use with {@link CoseKeyType#EC2}
    */

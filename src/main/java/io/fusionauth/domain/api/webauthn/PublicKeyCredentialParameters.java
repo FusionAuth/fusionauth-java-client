@@ -1,12 +1,10 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api.webauthn;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.webauthn.enums.CoseAlgorithmIdentifier;
-import io.fusionauth.domain.api.webauthn.enums.PublicKeyCredentialType;
 
 /**
  * Supply information on credential type and algorithm to the <i>authenticator</i>.

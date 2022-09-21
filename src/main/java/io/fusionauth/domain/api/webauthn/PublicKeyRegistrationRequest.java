@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api.webauthn;
 
@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
 
 /**
  * Request to register a new public key with WebAuthn

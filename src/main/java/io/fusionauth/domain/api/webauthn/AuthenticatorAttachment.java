@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
-package io.fusionauth.domain.api.webauthn.enums;
+package io.fusionauth.domain.api.webauthn;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,6 +16,7 @@ public enum AuthenticatorAttachment {
    */
   @JsonProperty("platform")
   PLATFORM,
+
   /**
    * Roaming authenticators that are removable and can move between devices (e.g. Yubikey, Bluetooth/NFC device)
    */

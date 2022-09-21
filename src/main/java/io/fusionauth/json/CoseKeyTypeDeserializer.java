@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.api.webauthn.enums.CoseKeyType;
+import io.fusionauth.domain.api.webauthn.CoseKeyType;
 
 import java.io.IOException;
 
