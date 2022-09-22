@@ -61,8 +61,6 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
    */
   public PublicKeyCredentialUserEntity user;
 
-  // TODO : WebAuthn - Requested Extensions
-
   @JacksonConstructor
   public PublicKeyCredentialCreationOptions() {
   }

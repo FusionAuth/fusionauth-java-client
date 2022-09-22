@@ -52,6 +52,12 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   @JsonIgnore
   public Map<String, Object> data = new LinkedHashMap<>();
 
+  /**
+   * The display name selected during credential registration. This is a user-supplied value that defaults to their loginId.
+   */
+  
+  public String displayName;
+
   public UUID id;
 
   /**
@@ -70,13 +76,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * Timestamp for the last time the credential was used for an authentication ceremony
    */
   public ZonedDateTime lastUseInstant;
-
-  /**
-   * The name used during credential registration. This is a user-supplied value that defaults to their loginId and is meant to distinguish between
-   * WebAuthn credentials with the same displayName
-   */
-  
-  public String name;
 
   /**
    * The public key encoded in PEM format
@@ -124,7 +123,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     this.insertInstant = other.insertInstant;
     this.isDiscoverableCredential = other.isDiscoverableCredential;
     this.lastUseInstant = other.lastUseInstant;
-    this.name = other.name;
+    this.displayName = other.displayName;
     this.publicKey = other.publicKey;
     this.rpId = other.rpId;
     this.signCount = other.signCount;
@@ -154,7 +153,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
            Objects.equals(insertInstant, that.insertInstant) &&
            isDiscoverableCredential == that.isDiscoverableCredential &&
            Objects.equals(lastUseInstant, that.lastUseInstant) &&
-           Objects.equals(name, that.name) &&
+           Objects.equals(displayName, that.displayName) &&
            Objects.equals(publicKey, that.publicKey) &&
            Objects.equals(rpId, that.rpId) &&
            signCount == that.signCount &&
@@ -172,6 +171,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, name, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
   }
 }
