@@ -191,6 +191,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnImportRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnRegisterRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnRegisterResponse;
@@ -1900,6 +1901,20 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> importUsers(ImportRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/import")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Import a WebAuthn credential
+   *
+   * @param request An object containing data necessary for importing the credential
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> importWebAuthnCredential(WebAuthnImportRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn/import")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();

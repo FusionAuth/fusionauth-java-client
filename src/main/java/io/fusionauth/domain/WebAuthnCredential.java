@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
+import com.inversoft.json.ToString;
 
 
 import io.fusionauth.domain.api.webauthn.AttestationType;
@@ -172,5 +173,10 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   @Override
   public int hashCode() {
     return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }
