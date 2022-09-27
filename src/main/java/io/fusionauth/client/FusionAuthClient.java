@@ -191,6 +191,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnCompleteResponse;
 import io.fusionauth.domain.api.webauthn.WebAuthnImportRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnRegisterRequest;
@@ -461,8 +462,8 @@ public class FusionAuthClient {
    * @param request An object containing data necessary for completing the registration ceremony
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
+    return start(WebAuthnCompleteResponse.class, Errors.class)
         .uri("/api/webauthn/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
