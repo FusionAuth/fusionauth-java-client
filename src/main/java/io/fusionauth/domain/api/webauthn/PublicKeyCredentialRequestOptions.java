@@ -5,7 +5,6 @@ package io.fusionauth.domain.api.webauthn;
 
 import java.util.List;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -41,8 +40,4 @@ public class PublicKeyCredentialRequestOptions implements Buildable<PublicKeyCre
    * {@link UserVerificationRequirement#preferred}.
    */
   public UserVerificationRequirement userVerification;
-
-  @JacksonConstructor
-  public PublicKeyCredentialRequestOptions() {
-  }
 }

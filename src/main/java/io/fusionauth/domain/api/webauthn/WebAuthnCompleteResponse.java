@@ -5,7 +5,6 @@ package io.fusionauth.domain.api.webauthn;
 
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -18,8 +17,4 @@ public class WebAuthnCompleteResponse implements Buildable<WebAuthnCompleteRespo
    * The database ID for the new credential
    */
   public UUID credentialId;
-
-  @JacksonConstructor
-  public WebAuthnCompleteResponse() {
-  }
 }

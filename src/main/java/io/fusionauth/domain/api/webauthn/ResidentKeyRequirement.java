@@ -13,15 +13,15 @@ public enum ResidentKeyRequirement {
   /**
    * The Relying Party prefers creating a server-side credential but will accept a client-side discoverable credential
    */
-  Discouraged,
+  discouraged,
 
   /**
    * The Relying Party strongly prefers creating a client-side discoverable credential but will accept a server-side credential
    */
-  Preferred,
+  preferred,
 
   /**
    * The Relying Party requires a client-side discoverable credential and is prepared to receive an error if one cannot be created
    */
-  Required
+  required
 }

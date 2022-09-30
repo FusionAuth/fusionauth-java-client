@@ -5,7 +5,6 @@ package io.fusionauth.domain.api.webauthn;
 
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -33,8 +32,4 @@ public class WebAuthnRegisterRequest implements Buildable<WebAuthnRegisterReques
    * The workflow the new credential is intended to be used with. This will impact credential creation options
    */
   public WebAuthnWorkflow workflow;
-
-  @JacksonConstructor
-  public WebAuthnRegisterRequest() {
-  }
 }

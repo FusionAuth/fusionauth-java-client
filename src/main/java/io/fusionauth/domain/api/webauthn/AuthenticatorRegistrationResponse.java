@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -21,8 +20,4 @@ public class AuthenticatorRegistrationResponse implements Buildable<Authenticato
    * Base64URL-encoded client data for the registration ceremony
    */
   public String clientDataJSON;
-
-  @JacksonConstructor
-  public AuthenticatorRegistrationResponse() {
-  }
 }

@@ -20,7 +20,7 @@ public class PublicKeyCredentialParameters implements Buildable<PublicKeyCredent
   /**
    * The type of credential to be created.
    */
-  public PublicKeyCredentialType type = PublicKeyCredentialType.PUBLIC_KEY;
+  public PublicKeyCredentialType type = PublicKeyCredentialType.publicKey;
 
   @JacksonConstructor
   public PublicKeyCredentialParameters() {

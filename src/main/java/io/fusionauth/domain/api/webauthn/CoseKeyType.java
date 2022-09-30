@@ -6,18 +6,14 @@ package io.fusionauth.domain.api.webauthn;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.client.json.CoseKeyTypeDeserializer;
-import io.fusionauth.client.json.CoseKeyTypeSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * COSE key type
  *
  * @author Spencer Witt
  */
-@JsonDeserialize(using = CoseKeyTypeDeserializer.class)
-@JsonSerialize(using = CoseKeyTypeSerializer.class)
 public enum CoseKeyType {
   /**
    * Reserved by specification
@@ -46,12 +42,14 @@ public enum CoseKeyType {
 
   private static final Map<Integer, CoseKeyType> BY_KTY = new HashMap<>();
 
+  @JsonValue
   public final int kty;
 
   CoseKeyType(int kty) {
     this.kty = kty;
   }
 
+  @JsonCreator
   public static CoseKeyType valueOfKty(int kty) {
     return BY_KTY.get(kty);
   }

@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -36,8 +35,4 @@ public class PublicKeyAuthenticationRequest implements Buildable<PublicKeyAuthen
    * The credential type
    */
   public String type;
-
-  @JacksonConstructor
-  public PublicKeyAuthenticationRequest() {
-  }
 }

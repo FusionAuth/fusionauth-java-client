@@ -6,10 +6,8 @@ package io.fusionauth.domain.api.webauthn;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.client.json.CoseAlgorithmIdentifierDeserializer;
-import io.fusionauth.client.json.CoseAlgorithmIdentifierSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * A number identifying a cryptographic algorithm. Values should be registered with the <a
@@ -17,8 +15,6 @@ import io.fusionauth.client.json.CoseAlgorithmIdentifierSerializer;
  *
  * @author Spencer Witt
  */
-@JsonDeserialize(using = CoseAlgorithmIdentifierDeserializer.class)
-@JsonSerialize(using = CoseAlgorithmIdentifierSerializer.class)
 public enum CoseAlgorithmIdentifier {
   /**
    * ECDSA using P-256 and SHA-256 OID: 1.2.840.10045.3.1.7 - prime256v1 / secp256r1
@@ -68,6 +64,7 @@ public enum CoseAlgorithmIdentifier {
 
   private static final Map<Long, CoseAlgorithmIdentifier> BY_ALG = new HashMap<>();
 
+  @JsonValue
   public final long alg;
 
   public final String description;
@@ -80,6 +77,7 @@ public enum CoseAlgorithmIdentifier {
     this.keyType = keyType;
   }
 
+  @JsonCreator
   public static CoseAlgorithmIdentifier valueOfAlg(long alg) {
     return BY_ALG.get(alg);
   }

@@ -28,7 +28,7 @@ public class PublicKeyCredentialDescriptor implements Buildable<PublicKeyCredent
   /**
    * The type of credential being referenced.
    */
-  public PublicKeyCredentialType type = PublicKeyCredentialType.PUBLIC_KEY;
+  public PublicKeyCredentialType type = PublicKeyCredentialType.publicKey;
 
   @JacksonConstructor
   public PublicKeyCredentialDescriptor() {

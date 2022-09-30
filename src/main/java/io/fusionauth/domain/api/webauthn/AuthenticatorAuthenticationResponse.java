@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -31,8 +30,4 @@ public class AuthenticatorAuthenticationResponse implements Buildable<Authentica
    * The base64URL-encoded user handle for this authentication ceremony, if present
    */
   public String userHandle;
-
-  @JacksonConstructor
-  public AuthenticatorAuthenticationResponse() {
-  }
 }

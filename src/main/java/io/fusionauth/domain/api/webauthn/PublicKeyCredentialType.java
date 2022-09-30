@@ -15,5 +15,5 @@ public enum PublicKeyCredentialType {
    * The associated credential represents an asymmetric key pair
    */
   @JsonProperty("public-key")
-  PUBLIC_KEY
+  publicKey
 }

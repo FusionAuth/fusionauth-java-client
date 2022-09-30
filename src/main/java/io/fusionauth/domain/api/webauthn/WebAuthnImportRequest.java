@@ -3,9 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import java.util.UUID;
-
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.WebAuthnCredential;
 
@@ -26,8 +23,4 @@ public class WebAuthnImportRequest implements Buildable<WebAuthnImportRequest> {
    * Other fields not specified will be populated with the same defaults as a credential registered through a WebAuthn ceremony.
    */
   public WebAuthnCredential credential;
-
-  @JacksonConstructor
-  public WebAuthnImportRequest() {
-  }
 }

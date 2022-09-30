@@ -9,8 +9,5 @@ package io.fusionauth.domain.api.webauthn;
  * @author Spencer Witt
  */
 public class CredentialPropertiesOutput {
-  public Boolean rk;
-
-  public CredentialPropertiesOutput() {
-  }
+  public boolean rk;
 }

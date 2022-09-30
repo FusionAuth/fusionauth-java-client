@@ -13,7 +13,7 @@ import io.fusionauth.domain.Buildable;
  */
 public class PublicKeyCredentialUserEntity extends PublicKeyCredentialEntity implements Buildable<PublicKeyCredentialUserEntity> {
   /**
-   * A human-palatable name for the user account intended only for display. This value <i>should</i> be chosen by the user.
+   * A human-readable name for the user account intended only for display. This value <i>should</i> be chosen by the user.
    */
   public String displayName;
 

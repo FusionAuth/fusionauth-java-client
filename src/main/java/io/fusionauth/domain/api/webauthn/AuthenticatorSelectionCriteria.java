@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.api.webauthn;
 
@@ -32,7 +20,7 @@ public class AuthenticatorSelectionCriteria implements Buildable<AuthenticatorSe
 
   /**
    * Retained for backwards compatibility with WebAuthn Level 1. Relying Parties should set to true if and only if
-   * {@link AuthenticatorSelectionCriteria#residentKey} is set to {@link ResidentKeyRequirement#Required}. This behavior is enforced by the type.
+   * {@link AuthenticatorSelectionCriteria#residentKey} is set to {@link ResidentKeyRequirement#required}. This behavior is enforced by the type.
    *
    * <i>Authenticators</i> will treat this value as <code>false</code> if it is not supplied.
    */
@@ -40,9 +28,9 @@ public class AuthenticatorSelectionCriteria implements Buildable<AuthenticatorSe
 
   /**
    * Specifies the extent to which the Relying Party wishes to create client-side discoverable credentials. If no value is given, the
-   * <i>authenticator</i> will treat the value as {@link ResidentKeyRequirement#Required} if {@link AuthenticatorSelectionCriteria#requireResidentKey}
+   * <i>authenticator</i> will treat the value as {@link ResidentKeyRequirement#required} if {@link AuthenticatorSelectionCriteria#requireResidentKey}
    * is
-   * <code>true</code>, or {@link ResidentKeyRequirement#Discouraged} if it is <code>false</code> or absent.
+   * <code>true</code>, or {@link ResidentKeyRequirement#discouraged} if it is <code>false</code> or absent.
    */
   public ResidentKeyRequirement residentKey;
 
@@ -58,7 +46,7 @@ public class AuthenticatorSelectionCriteria implements Buildable<AuthenticatorSe
 
   public AuthenticatorSelectionCriteria(AuthenticatorAttachment authenticatorAttachment, ResidentKeyRequirement residentKey,
                                         UserVerificationRequirement userVerification) {
-    this(authenticatorAttachment, residentKey == ResidentKeyRequirement.Required, residentKey, userVerification);
+    this(authenticatorAttachment, residentKey == ResidentKeyRequirement.required, residentKey, userVerification);
   }
 
   public AuthenticatorSelectionCriteria(AuthenticatorAttachment authenticatorAttachment, ResidentKeyRequirement residentKey) {

@@ -6,7 +6,6 @@ package io.fusionauth.domain.api.webauthn;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -44,8 +43,4 @@ public class PublicKeyRegistrationRequest implements Buildable<PublicKeyRegistra
    * The credential type
    */
   public String type;
-
-  @JacksonConstructor
-  public PublicKeyRegistrationRequest() {
-  }
 }

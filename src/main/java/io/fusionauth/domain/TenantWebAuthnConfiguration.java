@@ -18,7 +18,7 @@ import io.fusionauth.domain.api.webauthn.UserVerificationRequirement;
 public class TenantWebAuthnConfiguration extends Enableable implements Buildable<TenantWebAuthnConfiguration> {
 
   public WebAuthnWorkflowConfiguration reauthenticationWorkflowConfiguration = new WebAuthnWorkflowConfiguration()
-      .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.PLATFORM)
+      .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
       .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
   public String rpId = null;

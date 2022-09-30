@@ -6,18 +6,14 @@ package io.fusionauth.domain.api.webauthn;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.fusionauth.client.json.CoseEllipticCurveDeserializer;
-import io.fusionauth.client.json.CoseEllipticCurveSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * COSE Elliptic Curve identifier to determine which elliptic curve to use with a given key
  *
  * @author Spencer Witt
  */
-@JsonDeserialize(using = CoseEllipticCurveDeserializer.class)
-@JsonSerialize(using = CoseEllipticCurveSerializer.class)
 public enum CoseEllipticCurve {
   /**
    * Reserved by specification
@@ -66,6 +62,7 @@ public enum CoseEllipticCurve {
 
   private static final Map<Integer, CoseEllipticCurve> BY_CRV = new HashMap<>();
 
+  @JsonValue
   public final int crv;
 
   public final String spec;
@@ -75,6 +72,7 @@ public enum CoseEllipticCurve {
     this.spec = spec;
   }
 
+  @JsonCreator
   public static CoseEllipticCurve valueOfCrv(int crv) {
     return BY_CRV.get(crv);
   }
