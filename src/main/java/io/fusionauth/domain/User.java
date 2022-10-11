@@ -301,7 +301,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
-    preferredLanguages.removeIf(Objects::isNull);
+    Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
     username = trim(username);
     if (username != null && username.length() == 0) {

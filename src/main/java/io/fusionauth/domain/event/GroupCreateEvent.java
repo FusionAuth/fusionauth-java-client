@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.event;
 
@@ -9,23 +9,23 @@ import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
+import io.fusionauth.domain.Group;
 
 /**
- * Models the User Email Verify Event.
+ * Models the Group Create Event.
  *
- * @author Trevor Smith
+ * @author Daniel DeGroff
  */
-public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserEmailVerifiedEvent> {
-  public User user;
+public class GroupCreateEvent extends BaseEvent implements Buildable<GroupCreateEvent> {
+  public Group group;
 
   @JacksonConstructor
-  public UserEmailVerifiedEvent() {
+  public GroupCreateEvent() {
   }
 
-  public UserEmailVerifiedEvent(EventInfo info, User user) {
+  public GroupCreateEvent(EventInfo info, Group group) {
     super(info);
-    this.user = user;
+    this.group = group;
   }
 
   @Override
@@ -36,19 +36,19 @@ public class UserEmailVerifiedEvent extends BaseEvent implements Buildable<UserE
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserEmailVerifiedEvent that = (UserEmailVerifiedEvent) o;
+    GroupCreateEvent that = (GroupCreateEvent) o;
     return super.equals(o) &&
-           Objects.equals(user, that.user);
+           Objects.equals(group, that.group);
   }
 
   @Override
   public EventType getType() {
-    return EventType.UserEmailVerified;
+    return EventType.GroupCreate;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
+    return Objects.hash(super.hashCode(), group);
   }
 
   @Override
