@@ -64,15 +64,15 @@ public enum CoseAlgorithmIdentifier {
 
   private static final Map<Long, CoseAlgorithmIdentifier> BY_ALG = new HashMap<>();
 
-  @JsonValue
-  public final long alg;
-
   public final String description;
 
   public final CoseKeyType keyType;
 
-  CoseAlgorithmIdentifier(long alg, String description, CoseKeyType keyType) {
-    this.alg = alg;
+  @JsonValue
+  public final long value;
+
+  CoseAlgorithmIdentifier(long value, String description, CoseKeyType keyType) {
+    this.value = value;
     this.description = description;
     this.keyType = keyType;
   }
@@ -110,12 +110,12 @@ public enum CoseAlgorithmIdentifier {
 
   @Override
   public String toString() {
-    return String.format("%s (%d)", description, alg);
+    return String.format("%s (%d)", description, value);
   }
 
   static {
     for (CoseAlgorithmIdentifier a : values()) {
-      BY_ALG.put(a.alg, a);
+      BY_ALG.put(a.value, a);
     }
   }
 }

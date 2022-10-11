@@ -22,14 +22,14 @@ public class PublicKeyAuthenticationRequest implements Buildable<PublicKeyAuthen
   public String id;
 
   /**
+   * The Relying Party ID
+   */
+  public String relyingPartyId;
+
+  /**
    * The detailed client and signature data from the authentication ceremony
    */
   public AuthenticatorAuthenticationResponse response;
-
-  /**
-   * The Relying Party ID
-   */
-  public String rpId;
 
   /**
    * The credential type

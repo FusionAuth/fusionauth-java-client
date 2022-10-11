@@ -3,9 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import io.fusionauth.domain.api.webauthn.AuthenticatorAttachment;
-import io.fusionauth.domain.api.webauthn.AuthenticatorSelectionCriteria;
-
 /**
  * Describes the authenticator attachment modality preference for a WebAuthn workflow. See {@link AuthenticatorAttachment}
  *
@@ -29,5 +26,6 @@ public enum AuthenticatorAttachmentPreference {
    * Selecting this option will leave the {@link AuthenticatorSelectionCriteria#authenticatorAttachment} parameter unset during credential
    * creation indicating the Relying Party has no preference regarding the authenticator attachment modality.
    */
+  // TODO : WebAuthn : Daniel Review : Any? or any?
   either
 }

@@ -30,7 +30,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The signature algorithm used with the key
    */
   
-  public CoseAlgorithmIdentifier alg;
+  public CoseAlgorithmIdentifier algorithm;
 
   /**
    * The attestation type that was provided during credential registration
@@ -88,7 +88,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The Relying Party ID used when the credential was registered
    */
   
-  public String rpId;
+  public String relyingPartyId;
 
   /**
    * The number of signatures generated with the key
@@ -117,7 +117,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   }
 
   public WebAuthnCredential(WebAuthnCredential other) {
-    this.alg = other.alg;
+    this.algorithm = other.algorithm;
     this.attestationType = other.attestationType;
     this.credentialId = other.credentialId;
     this.id = other.id;
@@ -126,7 +126,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     this.lastUseInstant = other.lastUseInstant;
     this.displayName = other.displayName;
     this.publicKey = other.publicKey;
-    this.rpId = other.rpId;
+    this.relyingPartyId = other.relyingPartyId;
     this.signCount = other.signCount;
     this.authenticatorSupportsUserVerification = other.authenticatorSupportsUserVerification;
     this.tenantId = other.tenantId;
@@ -147,7 +147,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
       return false;
     }
     WebAuthnCredential that = (WebAuthnCredential) o;
-    return alg == that.alg &&
+    return algorithm == that.algorithm &&
            attestationType == that.attestationType &&
            Objects.equals(credentialId, that.credentialId) &&
            Objects.equals(id, that.id) &&
@@ -156,7 +156,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
            Objects.equals(lastUseInstant, that.lastUseInstant) &&
            Objects.equals(displayName, that.displayName) &&
            Objects.equals(publicKey, that.publicKey) &&
-           Objects.equals(rpId, that.rpId) &&
+           Objects.equals(relyingPartyId, that.relyingPartyId) &&
            signCount == that.signCount &&
            authenticatorSupportsUserVerification == that.authenticatorSupportsUserVerification &&
            Objects.equals(tenantId, that.tenantId) &&
@@ -172,7 +172,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+    return Objects.hash(algorithm, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, relyingPartyId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
   }
 
   @Override

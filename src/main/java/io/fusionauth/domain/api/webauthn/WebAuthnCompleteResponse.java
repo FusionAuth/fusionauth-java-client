@@ -14,7 +14,7 @@ import io.fusionauth.domain.Buildable;
  */
 public class WebAuthnCompleteResponse implements Buildable<WebAuthnCompleteResponse> {
   /**
-   * The database ID for the new credential
+   * The database Id for the new credential
    */
   public UUID credentialId;
 }

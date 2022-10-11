@@ -3,6 +3,7 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
@@ -15,7 +16,8 @@ public class PublicKeyCredentialParameters implements Buildable<PublicKeyCredent
   /**
    * The cryptographic signature algorithm to be used with the new credential. Controls the type of asymmetric key pair to be created.
    */
-  public CoseAlgorithmIdentifier alg;
+  @JsonProperty("alg")
+  public CoseAlgorithmIdentifier algorithm;
 
   /**
    * The type of credential to be created.
@@ -26,12 +28,12 @@ public class PublicKeyCredentialParameters implements Buildable<PublicKeyCredent
   public PublicKeyCredentialParameters() {
   }
 
-  public PublicKeyCredentialParameters(CoseAlgorithmIdentifier alg) {
-    this.alg = alg;
+  public PublicKeyCredentialParameters(CoseAlgorithmIdentifier algorithm) {
+    this.algorithm = algorithm;
   }
 
-  public PublicKeyCredentialParameters(CoseAlgorithmIdentifier alg, PublicKeyCredentialType type) {
-    this.alg = alg;
+  public PublicKeyCredentialParameters(CoseAlgorithmIdentifier algorithm, PublicKeyCredentialType type) {
+    this.algorithm = algorithm;
     this.type = type;
   }
 }

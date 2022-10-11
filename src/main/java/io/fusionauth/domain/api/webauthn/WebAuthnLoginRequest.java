@@ -25,5 +25,5 @@ public class WebAuthnLoginRequest extends BaseLoginRequest implements Buildable<
   /**
    * The Relying Party ID
    */
-  public String rpId;
+  public String relyingPartyId;
 }

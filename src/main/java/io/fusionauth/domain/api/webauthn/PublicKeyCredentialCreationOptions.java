@@ -5,6 +5,7 @@ package io.fusionauth.domain.api.webauthn;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
@@ -48,12 +49,14 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
   /**
    * Information about the Relying Party responsible for the request
    */
-  public PublicKeyCredentialRpEntity rp;
+  @JsonProperty("rp")
+  public PublicKeyCredentialRelyingPartyEntity relyingParty;
 
   /**
    * The time the caller is willing to wait for the operation to complete in milliseconds. This value is treated as a hint and may be overridden by
    * the client
    */
+  // TODO : WebAuthn : Daniel Review : Naming
   public long timeout = 180_000;
 
   /**
@@ -68,14 +71,14 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
   public PublicKeyCredentialCreationOptions(AttestationConveyancePreference attestation, AuthenticatorSelectionCriteria authenticatorSelection,
                                             String challenge, List<PublicKeyCredentialDescriptor> excludeCredentials,
                                             WebAuthnRegistrationExtensionOptions extensions, List<PublicKeyCredentialParameters> pubKeyCredParams,
-                                            PublicKeyCredentialRpEntity rp, long timeout, PublicKeyCredentialUserEntity user) {
+                                            PublicKeyCredentialRelyingPartyEntity relyingParty, long timeout, PublicKeyCredentialUserEntity user) {
     this.attestation = attestation;
     this.authenticatorSelection = authenticatorSelection;
     this.challenge = challenge;
     this.excludeCredentials = excludeCredentials;
     this.extensions = extensions;
     this.pubKeyCredParams = pubKeyCredParams;
-    this.rp = rp;
+    this.relyingParty = relyingParty;
     this.timeout = timeout;
     this.user = user;
   }

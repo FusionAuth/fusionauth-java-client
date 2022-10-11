@@ -26,7 +26,7 @@ public class WebAuthnCompleteRequest implements Buildable<WebAuthnCompleteReques
   /**
    * The Relying Party ID
    */
-  public String rpId;
+  public String relyingPartyId;
 
   /**
    * The User's database identifier

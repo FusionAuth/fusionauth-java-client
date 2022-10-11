@@ -27,12 +27,13 @@ public class PublicKeyCredentialRequestOptions implements Buildable<PublicKeyCre
    * A unique identifier for the Relying Party. Defaults to the calling host's <a
    * href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-effective-domain">effective domain</a>
    */
-  public String rpId;
+  public String relyingPartyId;
 
   /**
    * The time the caller is willing to wait for the operation to complete in milliseconds. This value is treated as a hint and may be overridden by
    * the client
    */
+  // TODO : WebAuthn : Daniel Review : Naming
   public long timeout = 180_000;
 
   /**
