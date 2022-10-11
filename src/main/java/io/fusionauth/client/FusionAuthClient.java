@@ -443,7 +443,21 @@ public class FusionAuthClient {
   }
 
   /**
-   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge without logging the user in
+   *
+   * @param request An object containing data necessary for completing the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnAssertion(WebAuthnLoginRequest request) {
+    return startAnonymous(WebAuthnCompleteResponse.class, Errors.class)
+        .uri("/api/webauthn/assertion")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge and then login the user in
    *
    * @param request An object containing data necessary for completing the authentication ceremony
    * @return The ClientResponse object.

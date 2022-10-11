@@ -8,7 +8,7 @@ import java.util.UUID;
 import io.fusionauth.domain.Buildable;
 
 /**
- * API response for completing WebAuthn credential registration
+ * API response for completing WebAuthn credential registration or assertion
  *
  * @author Spencer Witt
  */
