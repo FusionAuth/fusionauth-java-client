@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api.webauthn;
 
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -27,14 +27,11 @@ public class WebAuthnCompleteRequest implements Buildable<WebAuthnCompleteReques
   /**
    * The Relying Party ID
    */
-  public String rpId;
+  @JsonProperty("rpId")
+  public String relyingPartyId;
 
   /**
    * The User's database identifier
    */
   public UUID userId;
-
-  @JacksonConstructor
-  public WebAuthnCompleteRequest() {
-  }
 }

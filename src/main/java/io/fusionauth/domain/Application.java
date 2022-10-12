@@ -83,6 +83,10 @@ public class Application implements Buildable<Application>, Tenantable {
   
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
 
+  // TODO : WebAuthn : Daniel Review : If we are doing to show the "manual" WebAuthn login on the login page, we should probably
+  //                   have some configuration to know when to show the button.
+  //                   This configuration would also be used to enforce during the request to /api/webauthn/start
+
   
   public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 

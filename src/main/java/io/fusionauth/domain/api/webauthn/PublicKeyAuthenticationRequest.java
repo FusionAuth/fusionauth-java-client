@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -23,21 +23,18 @@ public class PublicKeyAuthenticationRequest implements Buildable<PublicKeyAuthen
   public String id;
 
   /**
+   * The Relying Party ID
+   */
+  @JsonProperty("rpId")
+  public String relyingPartyId;
+
+  /**
    * The detailed client and signature data from the authentication ceremony
    */
   public AuthenticatorAuthenticationResponse response;
 
   /**
-   * The Relying Party ID
-   */
-  public String rpId;
-
-  /**
    * The credential type
    */
   public String type;
-
-  @JacksonConstructor
-  public PublicKeyAuthenticationRequest() {
-  }
 }

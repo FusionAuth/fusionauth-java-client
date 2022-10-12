@@ -74,6 +74,8 @@ import io.fusionauth.domain.api.FormRequest;
 import io.fusionauth.domain.api.FormResponse;
 import io.fusionauth.domain.api.GroupMemberSearchRequest;
 import io.fusionauth.domain.api.GroupMemberSearchResponse;
+import io.fusionauth.domain.api.GroupSearchRequest;
+import io.fusionauth.domain.api.GroupSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
 import io.fusionauth.domain.api.IPAccessControlListRequest;
@@ -191,6 +193,8 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnCompleteResponse;
+import io.fusionauth.domain.api.webauthn.WebAuthnImportRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnRegisterRequest;
 import io.fusionauth.domain.api.webauthn.WebAuthnRegisterResponse;
@@ -441,7 +445,21 @@ public class FusionAuthClient {
   }
 
   /**
-   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge without logging the user in
+   *
+   * @param request An object containing data necessary for completing the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnAssertion(WebAuthnLoginRequest request) {
+    return startAnonymous(WebAuthnCompleteResponse.class, Errors.class)
+        .uri("/api/webauthn/assertion")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge and then login the user in
    *
    * @param request An object containing data necessary for completing the authentication ceremony
    * @return The ClientResponse object.
@@ -460,8 +478,8 @@ public class FusionAuthClient {
    * @param request An object containing data necessary for completing the registration ceremony
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
+    return start(WebAuthnCompleteResponse.class, Errors.class)
         .uri("/api/webauthn/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
@@ -1900,6 +1918,20 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> importUsers(ImportRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/import")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Import a WebAuthn credential
+   *
+   * @param request An object containing data necessary for importing the credential
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> importWebAuthnCredential(WebAuthnImportRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn/import")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4263,6 +4295,20 @@ public class FusionAuthClient {
   public ClientResponse<GroupMemberSearchResponse, Errors> searchGroupMembers(GroupMemberSearchRequest request) {
     return start(GroupMemberSearchResponse.class, Errors.class)
         .uri("/api/group/member/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches groups with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<GroupSearchResponse, Errors> searchGroups(GroupSearchRequest request) {
+    return start(GroupSearchResponse.class, Errors.class)
+        .uri("/api/group/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();

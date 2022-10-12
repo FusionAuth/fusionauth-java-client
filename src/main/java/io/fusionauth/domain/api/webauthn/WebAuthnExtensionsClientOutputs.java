@@ -13,13 +13,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class WebAuthnExtensionsClientOutputs {
   public CredentialPropertiesOutput credProps = new CredentialPropertiesOutput();
 
-  public WebAuthnExtensionsClientOutputs() {
-  }
-
   @JsonIgnore
   public boolean isDiscoverableCredential() {
     return credProps != null &&
-           credProps.rk != null &&
            credProps.rk;
   }
 }

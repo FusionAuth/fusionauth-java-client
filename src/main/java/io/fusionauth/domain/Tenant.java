@@ -18,10 +18,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+
+
 import io.fusionauth.domain.connector.BaseConnectorConfiguration;
 import io.fusionauth.domain.connector.ConnectorPolicy;
-
-
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 

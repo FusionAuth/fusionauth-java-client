@@ -1,14 +1,13 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api.webauthn;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inversoft.json.JacksonConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
 
 /**
  * Request to register a new public key with WebAuthn
@@ -27,14 +26,15 @@ public class PublicKeyRegistrationRequest implements Buildable<PublicKeyRegistra
   public String id;
 
   /**
+   * The Relying Party Id
+   */
+  @JsonProperty("rpId")
+  public String relyingPartyId;
+
+  /**
    * The detailed client and attestation data from the registration ceremony
    */
   public AuthenticatorRegistrationResponse response;
-
-  /**
-   * The Relying Party ID
-   */
-  public String rpId;
 
   /**
    * List of supported transport methods for the chosen <i>authenticator</i>
@@ -45,8 +45,4 @@ public class PublicKeyRegistrationRequest implements Buildable<PublicKeyRegistra
    * The credential type
    */
   public String type;
-
-  @JacksonConstructor
-  public PublicKeyRegistrationRequest() {
-  }
 }

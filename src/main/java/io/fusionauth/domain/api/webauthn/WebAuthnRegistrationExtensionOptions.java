@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -15,9 +14,5 @@ public class WebAuthnRegistrationExtensionOptions implements Buildable<WebAuthnR
   /**
    * Set to {@code true} to request information on whether the new credential is client-side discoverable
    */
-  public Boolean credProps = null;
-
-  @JacksonConstructor
-  public WebAuthnRegistrationExtensionOptions() {
-  }
+  public boolean credProps;
 }

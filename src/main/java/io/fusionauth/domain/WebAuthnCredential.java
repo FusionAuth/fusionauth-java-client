@@ -13,11 +13,12 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
+import com.inversoft.json.ToString;
 
 
-import io.fusionauth.domain.api.webauthn.enums.AttestationType;
-import io.fusionauth.domain.api.webauthn.enums.AuthenticatorTransport;
-import io.fusionauth.domain.api.webauthn.enums.CoseAlgorithmIdentifier;
+import io.fusionauth.domain.api.webauthn.AttestationType;
+import io.fusionauth.domain.api.webauthn.AuthenticatorTransport;
+import io.fusionauth.domain.api.webauthn.CoseAlgorithmIdentifier;
 
 /**
  * A User's WebAuthnCredential. Contains all data required to complete WebAuthn authentication ceremonies.
@@ -29,7 +30,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The signature algorithm used with the key
    */
   
-  public CoseAlgorithmIdentifier alg;
+  public CoseAlgorithmIdentifier algorithm;
 
   /**
    * The attestation type that was provided during credential registration
@@ -52,6 +53,12 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   @JsonIgnore
   public Map<String, Object> data = new LinkedHashMap<>();
 
+  /**
+   * The display name selected during credential registration. This is a user-supplied value that defaults to their loginId.
+   */
+  
+  public String displayName;
+
   public UUID id;
 
   /**
@@ -72,13 +79,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public ZonedDateTime lastUseInstant;
 
   /**
-   * The name used during credential registration. This is a user-supplied value that defaults to their loginId and is meant to distinguish between
-   * WebAuthn credentials with the same displayName
-   */
-  
-  public String name;
-
-  /**
    * The public key encoded in PEM format
    */
   
@@ -88,7 +88,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The Relying Party ID used when the credential was registered
    */
   
-  public String rpId;
+  public String relyingPartyId;
 
   /**
    * The number of signatures generated with the key
@@ -108,7 +108,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The user agent string from the browser that registered the credential
    */
   
-  public String userAgent = null;
+  public String userAgent;
 
   public UUID userId;
 
@@ -117,16 +117,16 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   }
 
   public WebAuthnCredential(WebAuthnCredential other) {
-    this.alg = other.alg;
+    this.algorithm = other.algorithm;
     this.attestationType = other.attestationType;
     this.credentialId = other.credentialId;
     this.id = other.id;
     this.insertInstant = other.insertInstant;
     this.isDiscoverableCredential = other.isDiscoverableCredential;
     this.lastUseInstant = other.lastUseInstant;
-    this.name = other.name;
+    this.displayName = other.displayName;
     this.publicKey = other.publicKey;
-    this.rpId = other.rpId;
+    this.relyingPartyId = other.relyingPartyId;
     this.signCount = other.signCount;
     this.authenticatorSupportsUserVerification = other.authenticatorSupportsUserVerification;
     this.tenantId = other.tenantId;
@@ -147,16 +147,16 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
       return false;
     }
     WebAuthnCredential that = (WebAuthnCredential) o;
-    return alg == that.alg &&
+    return algorithm == that.algorithm &&
            attestationType == that.attestationType &&
            Objects.equals(credentialId, that.credentialId) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            isDiscoverableCredential == that.isDiscoverableCredential &&
            Objects.equals(lastUseInstant, that.lastUseInstant) &&
-           Objects.equals(name, that.name) &&
+           Objects.equals(displayName, that.displayName) &&
            Objects.equals(publicKey, that.publicKey) &&
-           Objects.equals(rpId, that.rpId) &&
+           Objects.equals(relyingPartyId, that.relyingPartyId) &&
            signCount == that.signCount &&
            authenticatorSupportsUserVerification == that.authenticatorSupportsUserVerification &&
            Objects.equals(tenantId, that.tenantId) &&
@@ -172,6 +172,11 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(alg, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, name, publicKey, rpId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userId);
+    return Objects.hash(algorithm, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, relyingPartyId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

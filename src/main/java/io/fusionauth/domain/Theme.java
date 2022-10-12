@@ -125,6 +125,9 @@ public class Theme implements Buildable<Theme> {
                      templates.accountTwoFactorDisable,
                      templates.accountTwoFactorEnable,
                      templates.accountTwoFactorIndex,
+                     templates.accountWebAuthnAdd,
+                     templates.accountWebAuthnDelete,
+                     templates.accountWebAuthnIndex,
                      templates.emailComplete,
                      templates.emailSent,
                      templates.emailVerificationRequired,
@@ -146,7 +149,7 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2TwoFactor,
                      templates.oauth2TwoFactorMethods,
                      templates.oauth2Wait,
-                     templates.oauth2WebAuthN,
+                     templates.oauth2WebAuthn,
                      templates.passwordChange,
                      templates.passwordComplete,
                      templates.passwordForgot,
@@ -212,6 +215,9 @@ public class Theme implements Buildable<Theme> {
         "accountTwoFactorDisable",
         "accountTwoFactorEnable",
         "accountTwoFactorIndex",
+        "accountWebAuthnAdd",
+        "accountWebAuthnDelete",
+        "accountWebAuthnIndex",
         "emailComplete",
         "emailSent",
         "emailVerificationRequired",
@@ -233,7 +239,7 @@ public class Theme implements Buildable<Theme> {
         "oauth2TwoFactor",
         "oauth2TwoFactorMethods",
         "oauth2Wait",
-        "oauth2WebAuthN",
+        "oauth2WebAuthn",
         "passwordChange",
         "passwordComplete",
         "passwordForgot",
@@ -255,6 +261,12 @@ public class Theme implements Buildable<Theme> {
     public String accountTwoFactorEnable;
 
     public String accountTwoFactorIndex;
+
+    public String accountWebAuthnAdd;
+
+    public String accountWebAuthnDelete;
+
+    public String accountWebAuthnIndex;
 
     public String emailComplete;
 
@@ -298,7 +310,7 @@ public class Theme implements Buildable<Theme> {
 
     public String oauth2Wait;
 
-    public String oauth2WebAuthN;
+    public String oauth2WebAuthn;
 
     public String passwordChange;
 
@@ -329,6 +341,9 @@ public class Theme implements Buildable<Theme> {
       this.accountTwoFactorDisable = other.accountTwoFactorDisable;
       this.accountTwoFactorEnable = other.accountTwoFactorEnable;
       this.accountTwoFactorIndex = other.accountTwoFactorIndex;
+      this.accountWebAuthnAdd = other.accountWebAuthnAdd;
+      this.accountWebAuthnDelete = other.accountWebAuthnDelete;
+      this.accountWebAuthnIndex = other.accountWebAuthnIndex;
       this.emailComplete = other.emailComplete;
       this.emailSent = other.emailSent;
       this.emailVerificationRequired = other.emailVerificationRequired;
@@ -350,7 +365,7 @@ public class Theme implements Buildable<Theme> {
       this.oauth2TwoFactor = other.oauth2TwoFactor;
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
-      this.oauth2WebAuthN = other.oauth2WebAuthN;
+      this.oauth2WebAuthn = other.oauth2WebAuthn;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
@@ -377,6 +392,9 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(accountTwoFactorDisable, that.accountTwoFactorDisable) &&
              Objects.equals(accountTwoFactorEnable, that.accountTwoFactorEnable) &&
              Objects.equals(accountTwoFactorIndex, that.accountTwoFactorIndex) &&
+             Objects.equals(accountWebAuthnAdd, that.accountWebAuthnAdd) &&
+             Objects.equals(accountWebAuthnDelete, that.accountWebAuthnDelete) &&
+             Objects.equals(accountWebAuthnIndex, that.accountWebAuthnIndex) &&
              Objects.equals(emailComplete, that.emailComplete) &&
              Objects.equals(emailSent, that.emailSent) &&
              Objects.equals(emailVerificationRequired, that.emailVerificationRequired) &&
@@ -398,7 +416,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
-             Objects.equals(oauth2WebAuthN, that.oauth2WebAuthN) &&
+             Objects.equals(oauth2WebAuthn, that.oauth2WebAuthn) &&
              Objects.equals(passwordChange, that.passwordChange) &&
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
@@ -439,6 +457,9 @@ public class Theme implements Buildable<Theme> {
           accountTwoFactorDisable,
           accountTwoFactorEnable,
           accountTwoFactorIndex,
+          accountWebAuthnAdd,
+          accountWebAuthnDelete,
+          accountWebAuthnIndex,
           emailComplete,
           emailSent,
           emailVerificationRequired,
@@ -460,7 +481,7 @@ public class Theme implements Buildable<Theme> {
           oauth2TwoFactor,
           oauth2TwoFactorMethods,
           oauth2Wait,
-          oauth2WebAuthN,
+          oauth2WebAuthn,
           passwordChange,
           passwordComplete,
           passwordForgot,
@@ -480,6 +501,9 @@ public class Theme implements Buildable<Theme> {
       accountTwoFactorDisable = lineReturns(trimToNull(accountTwoFactorDisable));
       accountTwoFactorEnable = lineReturns(trimToNull(accountTwoFactorEnable));
       accountTwoFactorIndex = lineReturns(trimToNull(accountTwoFactorIndex));
+      accountWebAuthnAdd = lineReturns(trimToNull(accountWebAuthnAdd));
+      accountWebAuthnDelete = lineReturns(trimToNull(accountWebAuthnDelete));
+      accountWebAuthnIndex = lineReturns(trimToNull(accountWebAuthnIndex));
       emailComplete = lineReturns(trimToNull(emailComplete));
       emailSent = lineReturns(trimToNull(emailSent));
       emailVerificationRequired = lineReturns(trimToNull(emailVerificationRequired));
@@ -501,7 +525,7 @@ public class Theme implements Buildable<Theme> {
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
-      oauth2WebAuthN = lineReturns(trimToNull(oauth2WebAuthN));
+      oauth2WebAuthn = lineReturns(trimToNull(oauth2WebAuthn));
       passwordChange = lineReturns(trimToNull(passwordChange));
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
