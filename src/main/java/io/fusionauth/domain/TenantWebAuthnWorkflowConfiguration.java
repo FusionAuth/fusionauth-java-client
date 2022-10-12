@@ -13,6 +13,7 @@ import io.fusionauth.domain.api.webauthn.UserVerificationRequirement;
 /**
  * @author Spencer Witt
  */
+// TODO : WebAuthn : Daniel Review : If this also ends up living in the Application, we should rename to WebAuthnWorkflowConfiguration
 public class TenantWebAuthnWorkflowConfiguration extends Enableable implements Buildable<TenantWebAuthnWorkflowConfiguration> {
   public AuthenticatorAttachmentPreference authenticatorAttachmentPreference;
 
