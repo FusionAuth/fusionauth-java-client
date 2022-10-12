@@ -22,9 +22,13 @@
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <version>1.38.0-{integration}</version>
 =======
   <version>1.41.0</version>
+>>>>>>> master
+=======
+  <version>1.40.2</version>
 >>>>>>> master
   <packaging>jar</packaging>
 

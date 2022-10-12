@@ -210,6 +210,7 @@ public class Theme implements Buildable<Theme> {
 
   public static class Templates implements Buildable<Templates> {
     public static final SortedSet<String> Names = Collections.unmodifiableSortedSet(new TreeSet<>(asList(
+        // TODO : WebAuthn : Daniel Review : Need a bunch more templates here, need to audit for WebAuthn.
         "accountEdit",
         "accountIndex",
         "accountTwoFactorDisable",
