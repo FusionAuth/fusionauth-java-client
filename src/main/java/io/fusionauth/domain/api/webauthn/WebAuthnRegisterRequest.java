@@ -14,9 +14,14 @@ import io.fusionauth.domain.Buildable;
  */
 public class WebAuthnRegisterRequest implements Buildable<WebAuthnRegisterRequest> {
   /**
-   * Optional display name for the new credential
+   * Display name for the new credential
    */
-  public String credentialName;
+  public String displayName;
+
+  /**
+   * The optional name for the new credential. This will be defaulted to a unique four character string if not provided
+   */
+  public String name;
 
   /**
    * The user agent string during registration

@@ -79,6 +79,13 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public ZonedDateTime lastUseInstant;
 
   /**
+   * The unique name assigned during credential registration. This value is meant to disambiguate credentials with the same
+   * {@link WebAuthnCredential#displayName}
+   */
+  
+  public String name;
+
+  /**
    * The public key encoded in PEM format
    */
   
@@ -125,6 +132,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     this.isDiscoverableCredential = other.isDiscoverableCredential;
     this.lastUseInstant = other.lastUseInstant;
     this.displayName = other.displayName;
+    this.name = other.name;
     this.publicKey = other.publicKey;
     this.relyingPartyId = other.relyingPartyId;
     this.signCount = other.signCount;
@@ -155,6 +163,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
            isDiscoverableCredential == that.isDiscoverableCredential &&
            Objects.equals(lastUseInstant, that.lastUseInstant) &&
            Objects.equals(displayName, that.displayName) &&
+           Objects.equals(name, that.name) &&
            Objects.equals(publicKey, that.publicKey) &&
            Objects.equals(relyingPartyId, that.relyingPartyId) &&
            signCount == that.signCount &&
@@ -172,7 +181,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(algorithm, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, publicKey, relyingPartyId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+    return Objects.hash(algorithm, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, name, publicKey, relyingPartyId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
   }
 
   @Override
