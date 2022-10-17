@@ -16,7 +16,7 @@ import io.fusionauth.domain.WebAuthnCredential;
  */
 public class PublicKeyCredentialDescriptor implements Buildable<PublicKeyCredentialDescriptor> {
   /**
-   * The base64URL-encoded credential ID.
+   * The base64URL-encoded credential Id.
    */
   public String id;
 
@@ -32,10 +32,6 @@ public class PublicKeyCredentialDescriptor implements Buildable<PublicKeyCredent
 
   @JacksonConstructor
   public PublicKeyCredentialDescriptor() {
-  }
-
-  public PublicKeyCredentialDescriptor(String id) {
-    this.id = id;
   }
 
   public PublicKeyCredentialDescriptor(WebAuthnCredential webauthnCredential) {

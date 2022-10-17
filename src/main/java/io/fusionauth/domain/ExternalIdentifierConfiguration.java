@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -72,6 +60,10 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int twoFactorTrustIdTimeToLiveInSeconds = 2592000;
 
+  public int webAuthnAuthenticationChallenge = 180;
+
+  public int webAuthnRegistrationChallenge = 180;
+
   @JacksonConstructor
   public ExternalIdentifierConfiguration() {
   }
@@ -101,6 +93,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(other.twoFactorOneTimeCodeIdGenerator);
     this.twoFactorOneTimeCodeIdTimeToLiveInSeconds = other.twoFactorOneTimeCodeIdTimeToLiveInSeconds;
     this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
+    this.webAuthnAuthenticationChallenge = other.webAuthnAuthenticationChallenge;
+    this.webAuthnRegistrationChallenge = other.webAuthnRegistrationChallenge;
   }
 
   @Override
@@ -127,6 +121,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
            twoFactorOneTimeCodeIdTimeToLiveInSeconds == that.twoFactorOneTimeCodeIdTimeToLiveInSeconds &&
            twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
+           webAuthnAuthenticationChallenge == that.webAuthnAuthenticationChallenge &&
+           webAuthnRegistrationChallenge == that.webAuthnRegistrationChallenge &&
            Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
            Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
            Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
@@ -163,7 +159,9 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         twoFactorIdTimeToLiveInSeconds,
                         twoFactorOneTimeCodeIdGenerator,
                         twoFactorOneTimeCodeIdTimeToLiveInSeconds,
-                        twoFactorTrustIdTimeToLiveInSeconds);
+                        twoFactorTrustIdTimeToLiveInSeconds,
+                        webAuthnAuthenticationChallenge,
+                        webAuthnRegistrationChallenge);
   }
 
   @Override

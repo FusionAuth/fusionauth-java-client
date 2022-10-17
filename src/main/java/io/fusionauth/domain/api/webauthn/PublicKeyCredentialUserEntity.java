@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -22,14 +21,4 @@ public class PublicKeyCredentialUserEntity extends PublicKeyCredentialEntity imp
    * user account with the Relying Party
    */
   public String id;
-
-  @JacksonConstructor
-  public PublicKeyCredentialUserEntity() {
-  }
-
-  public PublicKeyCredentialUserEntity(String name, String displayName, String id) {
-    super(name);
-    this.displayName = displayName;
-    this.id = id;
-  }
 }

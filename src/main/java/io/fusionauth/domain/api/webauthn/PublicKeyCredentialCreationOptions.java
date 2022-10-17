@@ -6,7 +6,6 @@ package io.fusionauth.domain.api.webauthn;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -63,23 +62,4 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
    * Data about the user account for which the Relying Party is requesting a credential
    */
   public PublicKeyCredentialUserEntity user;
-
-  @JacksonConstructor
-  public PublicKeyCredentialCreationOptions() {
-  }
-
-  public PublicKeyCredentialCreationOptions(AttestationConveyancePreference attestation, AuthenticatorSelectionCriteria authenticatorSelection,
-                                            String challenge, List<PublicKeyCredentialDescriptor> excludeCredentials,
-                                            WebAuthnRegistrationExtensionOptions extensions, List<PublicKeyCredentialParameters> pubKeyCredParams,
-                                            PublicKeyCredentialRelyingPartyEntity relyingParty, long timeout, PublicKeyCredentialUserEntity user) {
-    this.attestation = attestation;
-    this.authenticatorSelection = authenticatorSelection;
-    this.challenge = challenge;
-    this.excludeCredentials = excludeCredentials;
-    this.extensions = extensions;
-    this.pubKeyCredParams = pubKeyCredParams;
-    this.relyingParty = relyingParty;
-    this.timeout = timeout;
-    this.user = user;
-  }
 }

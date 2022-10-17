@@ -17,12 +17,16 @@ import io.fusionauth.domain.api.webauthn.UserVerificationRequirement;
  */
 // TODO : WebAuthn : Daniel Review : Do we need this Enableable
 public class TenantWebAuthnConfiguration extends Enableable implements Buildable<TenantWebAuthnConfiguration> {
+  public TenantWebAuthnWorkflowConfiguration bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration()
+      .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
+      .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
+
   // TODO : WebAuthn : Daniel Review : Naming?
   //        Bootstrap:        ?
   //        Reauthentication: ?
   //        TwoFactor:        ?
   // This configuration may be re-used per workflow so it is not initialized in the workflow configuration itself.
-  public TenantWebAuthnWorkflowConfiguration reauthenticationWorkflowConfiguration = new TenantWebAuthnWorkflowConfiguration()
+  public TenantWebAuthnWorkflowConfiguration reauthenticationWorkflow = new TenantWebAuthnWorkflowConfiguration()
       .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
       .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
@@ -38,7 +42,8 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
 
   public TenantWebAuthnConfiguration(TenantWebAuthnConfiguration other) {
     this.enabled = other.enabled;
-    this.reauthenticationWorkflowConfiguration = new TenantWebAuthnWorkflowConfiguration(other.reauthenticationWorkflowConfiguration);
+    this.bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration(other.bootstrapWorkflow);
+    this.reauthenticationWorkflow = new TenantWebAuthnWorkflowConfiguration(other.reauthenticationWorkflow);
     this.relyingPartyId = other.relyingPartyId;
     this.relyingPartyName = other.relyingPartyName;
   }
@@ -55,14 +60,15 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
       return false;
     }
     TenantWebAuthnConfiguration that = (TenantWebAuthnConfiguration) o;
-    return Objects.equals(reauthenticationWorkflowConfiguration, that.reauthenticationWorkflowConfiguration) &&
+    return Objects.equals(bootstrapWorkflow, that.bootstrapWorkflow) &&
+           Objects.equals(reauthenticationWorkflow, that.reauthenticationWorkflow) &&
            Objects.equals(relyingPartyId, that.relyingPartyId) &&
            Objects.equals(relyingPartyName, that.relyingPartyName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), reauthenticationWorkflowConfiguration, relyingPartyId, relyingPartyName);
+    return Objects.hash(super.hashCode(), bootstrapWorkflow, reauthenticationWorkflow, relyingPartyId, relyingPartyName);
   }
 
   @Override

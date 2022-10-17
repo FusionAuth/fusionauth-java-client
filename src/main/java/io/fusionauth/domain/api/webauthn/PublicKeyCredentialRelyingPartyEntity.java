@@ -3,7 +3,6 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -17,13 +16,4 @@ public class PublicKeyCredentialRelyingPartyEntity extends PublicKeyCredentialEn
    * href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-effective-domain">effective domain</a>
    */
   public String id;
-
-  @JacksonConstructor
-  public PublicKeyCredentialRelyingPartyEntity() {
-  }
-
-  public PublicKeyCredentialRelyingPartyEntity(String name, String id) {
-    super(name);
-    this.id = id;
-  }
 }
