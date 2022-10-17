@@ -3,9 +3,9 @@
  */
 package io.fusionauth.domain.api.webauthn;
 
-import java.util.UUID;
-
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.WebAuthnCredential;
 
 /**
  * API response for completing WebAuthn credential registration or assertion
@@ -13,8 +13,13 @@ import io.fusionauth.domain.Buildable;
  * @author Spencer Witt
  */
 public class WebAuthnCompleteResponse implements Buildable<WebAuthnCompleteResponse> {
-  /**
-   * The database Id for the new credential
-   */
-  public UUID credentialId;
+  public WebAuthnCredential credential;
+
+  @JacksonConstructor
+  public WebAuthnCompleteResponse() {
+  }
+
+  public WebAuthnCompleteResponse(WebAuthnCredential credential) {
+    this.credential = credential;
+  }
 }
