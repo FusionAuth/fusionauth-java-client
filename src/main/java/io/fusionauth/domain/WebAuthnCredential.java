@@ -54,6 +54,13 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public Map<String, Object> data = new LinkedHashMap<>();
 
   /**
+   * Indicates whether the credential is a client-side discoverable credential. If the authenticator could not provide assurances one way or the
+   * other, the value is <code>false</code>. Requires the WebAuthn <code>credProps</code> extension
+   */
+  
+  public boolean discoverable;
+
+  /**
    * The display name selected during credential registration. This is a user-supplied value that defaults to their loginId.
    */
   
@@ -65,13 +72,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * Timestamp for credential creation
    */
   public ZonedDateTime insertInstant;
-
-  /**
-   * Indicates whether the credential is a client-side discoverable credential. If the authenticator could not provide assurances one way or the
-   * other, the value is <code>false</code>. Requires the WebAuthn <code>credProps</code> extension
-   */
-  
-  public boolean isDiscoverableCredential;
 
   /**
    * Timestamp for the last time the credential was used for an authentication ceremony
@@ -126,24 +126,25 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public WebAuthnCredential(WebAuthnCredential other) {
     this.algorithm = other.algorithm;
     this.attestationType = other.attestationType;
+    this.authenticatorSupportsUserVerification = other.authenticatorSupportsUserVerification;
     this.credentialId = other.credentialId;
+    if (other.data != null) {
+      this.data.putAll(other.data);
+    }
+    this.discoverable = other.discoverable;
+    this.displayName = other.displayName;
     this.id = other.id;
     this.insertInstant = other.insertInstant;
-    this.isDiscoverableCredential = other.isDiscoverableCredential;
-    this.lastUseInstant = other.lastUseInstant;
-    this.displayName = other.displayName;
     this.name = other.name;
+    this.lastUseInstant = other.lastUseInstant;
     this.publicKey = other.publicKey;
     this.relyingPartyId = other.relyingPartyId;
     this.signCount = other.signCount;
-    this.authenticatorSupportsUserVerification = other.authenticatorSupportsUserVerification;
     this.tenantId = other.tenantId;
     this.transports.addAll(other.transports);
     this.userAgent = other.userAgent;
     this.userId = other.userId;
-    if (other.data != null) {
-      this.data.putAll(other.data);
-    }
+
   }
 
   @Override
@@ -155,19 +156,20 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
       return false;
     }
     WebAuthnCredential that = (WebAuthnCredential) o;
-    return algorithm == that.algorithm &&
+    return authenticatorSupportsUserVerification == that.authenticatorSupportsUserVerification &&
+           discoverable == that.discoverable &&
+           signCount == that.signCount &&
+           algorithm == that.algorithm &&
            attestationType == that.attestationType &&
            Objects.equals(credentialId, that.credentialId) &&
+           Objects.equals(data, that.data) &&
+           Objects.equals(displayName, that.displayName) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
-           isDiscoverableCredential == that.isDiscoverableCredential &&
            Objects.equals(lastUseInstant, that.lastUseInstant) &&
-           Objects.equals(displayName, that.displayName) &&
            Objects.equals(name, that.name) &&
            Objects.equals(publicKey, that.publicKey) &&
            Objects.equals(relyingPartyId, that.relyingPartyId) &&
-           signCount == that.signCount &&
-           authenticatorSupportsUserVerification == that.authenticatorSupportsUserVerification &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(transports, that.transports) &&
            Objects.equals(userAgent, that.userAgent) &&
@@ -181,7 +183,24 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
 
   @Override
   public int hashCode() {
-    return Objects.hash(algorithm, attestationType, credentialId, id, insertInstant, isDiscoverableCredential, lastUseInstant, displayName, name, publicKey, relyingPartyId, signCount, authenticatorSupportsUserVerification, tenantId, transports, userAgent, userId);
+    return Objects.hash(algorithm,
+                        attestationType,
+                        authenticatorSupportsUserVerification,
+                        credentialId,
+                        data,
+                        discoverable,
+                        displayName,
+                        id,
+                        insertInstant,
+                        lastUseInstant,
+                        name,
+                        publicKey,
+                        relyingPartyId,
+                        signCount,
+                        tenantId,
+                        transports,
+                        userAgent,
+                        userId);
   }
 
   @Override

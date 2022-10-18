@@ -15,12 +15,12 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+
+
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.JWTConfiguration;
 import io.fusionauth.domain.Tenant;
-
-
 
 /**
  * Models a JWT Refresh Token.
