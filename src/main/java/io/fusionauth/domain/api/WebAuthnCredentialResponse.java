@@ -14,19 +14,19 @@ import io.fusionauth.domain.WebAuthnCredential;
  * @author Spencer Witt
  */
 public class WebAuthnCredentialResponse {
-  public WebAuthnCredential webauthnCredential;
+  public WebAuthnCredential credential;
 
-  public List<WebAuthnCredential> webauthnCredentials;
+  public List<WebAuthnCredential> credentials;
 
   @JacksonConstructor
   public WebAuthnCredentialResponse() {
   }
 
-  public WebAuthnCredentialResponse(WebAuthnCredential webauthnCredential) {
-    this.webauthnCredential = webauthnCredential;
+  public WebAuthnCredentialResponse(WebAuthnCredential credential) {
+    this.credential = credential;
   }
 
-  public WebAuthnCredentialResponse(List<WebAuthnCredential> webauthnCredentials) {
-    this.webauthnCredentials = webauthnCredentials;
+  public WebAuthnCredentialResponse(List<WebAuthnCredential> credentials) {
+    this.credentials = credentials;
   }
 }

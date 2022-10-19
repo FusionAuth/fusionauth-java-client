@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
@@ -50,7 +49,6 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    */
   public String credentialId;
 
-  @JsonIgnore
   public Map<String, Object> data = new LinkedHashMap<>();
 
   /**
