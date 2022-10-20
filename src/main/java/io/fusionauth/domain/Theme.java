@@ -3,7 +3,9 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -95,6 +97,33 @@ public class Theme implements Buildable<Theme> {
            Objects.equals(name, that.name) &&
            Objects.equals(stylesheet, that.stylesheet) &&
            Objects.equals(templates, that.templates);
+  }
+
+  /**
+   * Format a zoned date time with a format string.
+   * <p>
+   * This is defined here to assist with code completion in FreeMarker templates and is really only intended to be used in a themed template.
+   *
+   * @param zonedDateTime the zoned date time object
+   * @param format        the format string
+   * @return a formatted zoned date time using the default systen timezone, likely UTC.
+   */
+  public String formatZoneDateTime(ZonedDateTime zonedDateTime, String format) {
+    return zonedDateTime.format(DateTimeFormatter.ofPattern(format));
+  }
+
+  /**
+   * Format a zoned date time with a format string and specific time zone.
+   * <p>
+   * This is defined here to assist with code completion in FreeMarker templates and is really only intended to be used in a themed template.
+   *
+   * @param zonedDateTime the zoned date time object
+   * @param format        the format string
+   * @param zoneId        the timezone
+   * @return a formatted zoned date time using the specified timezone.
+   */
+  public String formatZoneDateTime(ZonedDateTime zonedDateTime, String format, ZoneId zoneId) {
+    return zonedDateTime.withZoneSameInstant(zoneId).format(DateTimeFormatter.ofPattern(format));
   }
 
   @Override

@@ -18,12 +18,12 @@ public class PublicKeyAuthenticationRequest implements Buildable<PublicKeyAuthen
   public WebAuthnExtensionsClientOutputs clientExtensionResults = new WebAuthnExtensionsClientOutputs();
 
   /**
-   * The selected credential ID in base64URL-encoded format
+   * The selected credential Id in base64URL-encoded format
    */
   public String id;
 
   /**
-   * The Relying Party ID
+   * The Relying Party Id
    */
   @JsonProperty("rpId")
   public String relyingPartyId;
