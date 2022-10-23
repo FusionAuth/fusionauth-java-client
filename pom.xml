@@ -21,15 +21,7 @@
 
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <version>1.38.0-{integration}</version>
-=======
   <version>1.41.0-EAP.20221027</version>
->>>>>>> master
-=======
-  <version>1.40.2</version>
->>>>>>> master
   <packaging>jar</packaging>
 
   <name>FusionAuth Java Client Library</name>
@@ -83,7 +75,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>1.38.0</version>
+      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
