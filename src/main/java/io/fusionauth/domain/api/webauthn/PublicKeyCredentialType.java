@@ -30,7 +30,7 @@ public enum PublicKeyCredentialType {
   }
 
   @JsonCreator
-  public static PublicKeyCredentialType forValue(int value) {
+  public static PublicKeyCredentialType forValue(String value) {
     return valueMap.get(value);
   }
 

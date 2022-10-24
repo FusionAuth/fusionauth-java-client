@@ -473,7 +473,7 @@ public class FusionAuthClient {
    */
   public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnAssertion(WebAuthnLoginRequest request) {
     return startAnonymous(WebAuthnCompleteResponse.class, Errors.class)
-        .uri("/api/webauthn/assertion")
+        .uri("/api/webauthn/assert")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -501,7 +501,7 @@ public class FusionAuthClient {
    */
   public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
     return start(WebAuthnCompleteResponse.class, Errors.class)
-        .uri("/api/webauthn/complete")
+        .uri("/api/webauthn/register/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4603,7 +4603,7 @@ public class FusionAuthClient {
    */
   public ClientResponse<WebAuthnRegisterResponse, Errors> startWebAuthnRegistration(WebAuthnRegisterRequest request) {
     return start(WebAuthnRegisterResponse.class, Errors.class)
-        .uri("/api/webauthn/register")
+        .uri("/api/webauthn/register/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();

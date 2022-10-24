@@ -60,9 +60,9 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int twoFactorTrustIdTimeToLiveInSeconds = 2592000;
 
-  public int webAuthnAuthenticationChallenge = 180;
+  public int webAuthnAuthenticationChallengeTimeToLiveInSeconds = 180;
 
-  public int webAuthnRegistrationChallenge = 180;
+  public int webAuthnRegistrationChallengeTimeToLiveInSeconds = 180;
 
   @JacksonConstructor
   public ExternalIdentifierConfiguration() {
@@ -93,8 +93,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(other.twoFactorOneTimeCodeIdGenerator);
     this.twoFactorOneTimeCodeIdTimeToLiveInSeconds = other.twoFactorOneTimeCodeIdTimeToLiveInSeconds;
     this.twoFactorTrustIdTimeToLiveInSeconds = other.twoFactorTrustIdTimeToLiveInSeconds;
-    this.webAuthnAuthenticationChallenge = other.webAuthnAuthenticationChallenge;
-    this.webAuthnRegistrationChallenge = other.webAuthnRegistrationChallenge;
+    this.webAuthnAuthenticationChallengeTimeToLiveInSeconds = other.webAuthnAuthenticationChallengeTimeToLiveInSeconds;
+    this.webAuthnRegistrationChallengeTimeToLiveInSeconds = other.webAuthnRegistrationChallengeTimeToLiveInSeconds;
   }
 
   @Override
@@ -121,8 +121,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            twoFactorIdTimeToLiveInSeconds == that.twoFactorIdTimeToLiveInSeconds &&
            twoFactorOneTimeCodeIdTimeToLiveInSeconds == that.twoFactorOneTimeCodeIdTimeToLiveInSeconds &&
            twoFactorTrustIdTimeToLiveInSeconds == that.twoFactorTrustIdTimeToLiveInSeconds &&
-           webAuthnAuthenticationChallenge == that.webAuthnAuthenticationChallenge &&
-           webAuthnRegistrationChallenge == that.webAuthnRegistrationChallenge &&
+           webAuthnAuthenticationChallengeTimeToLiveInSeconds == that.webAuthnAuthenticationChallengeTimeToLiveInSeconds &&
+           webAuthnRegistrationChallengeTimeToLiveInSeconds == that.webAuthnRegistrationChallengeTimeToLiveInSeconds &&
            Objects.equals(changePasswordIdGenerator, that.changePasswordIdGenerator) &&
            Objects.equals(deviceUserCodeIdGenerator, that.deviceUserCodeIdGenerator) &&
            Objects.equals(emailVerificationIdGenerator, that.emailVerificationIdGenerator) &&
@@ -160,8 +160,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         twoFactorOneTimeCodeIdGenerator,
                         twoFactorOneTimeCodeIdTimeToLiveInSeconds,
                         twoFactorTrustIdTimeToLiveInSeconds,
-                        webAuthnAuthenticationChallenge,
-                        webAuthnRegistrationChallenge);
+                        webAuthnAuthenticationChallengeTimeToLiveInSeconds,
+                        webAuthnRegistrationChallengeTimeToLiveInSeconds);
   }
 
   @Override
