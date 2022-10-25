@@ -25,7 +25,7 @@
 <<<<<<< HEAD
   <version>1.38.0-{integration}</version>
 =======
-  <version>1.41.0-EAP.20221022</version>
+  <version>1.41.0-EAP.20221024</version>
 >>>>>>> master
 =======
   <version>1.40.2</version>
