@@ -55,7 +55,6 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
    * The time the caller is willing to wait for the operation to complete in milliseconds. This value is treated as a hint and may be overridden by
    * the client
    */
-  // TODO : WebAuthn : Daniel Review : Naming
   public long timeout = 180_000;
 
   /**

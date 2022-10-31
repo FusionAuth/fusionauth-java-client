@@ -25,7 +25,7 @@ public class WebAuthnCompleteRequest implements Buildable<WebAuthnCompleteReques
   public String origin;
 
   /**
-   * The Relying Party ID
+   * The Relying Party Id
    */
   @JsonProperty("rpId")
   public String relyingPartyId;

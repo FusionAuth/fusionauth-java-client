@@ -90,7 +90,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   public String publicKey;
 
   /**
-   * The Relying Party ID used when the credential was registered
+   * The Relying Party Id used when the credential was registered
    */
   
   public String relyingPartyId;
