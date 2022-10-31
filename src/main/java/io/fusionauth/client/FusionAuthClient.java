@@ -433,9 +433,9 @@ public class FusionAuthClient {
   /**
    * Make a Client Credentials grant request to obtain an access token.
    *
-   * @param client_id The client identifier. The client Id is the Id of the FusionAuth Entity in which you you are attempting to authenticate.
+   * @param client_id The client identifier. The client Id is the Id of the FusionAuth Entity in which you are attempting to authenticate.
    * @param client_secret The client secret used to authenticate this request.
-   * @param scope (Optional) This parameter is used to indicate which target entity you are requesting access. To request access to an entity, use the format target-entity:<target-entity-id>:<roles>. Roles are an optional comma separated list.
+   * @param scope (Optional) This parameter is used to indicate which target entity you are requesting access. To request access to an entity, use the format target-entity:&lt;target-entity-id&gt;:&lt;roles&gt;. Roles are an optional comma separated list.
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> clientCredentialsGrant(String client_id, String client_secret, String scope) {

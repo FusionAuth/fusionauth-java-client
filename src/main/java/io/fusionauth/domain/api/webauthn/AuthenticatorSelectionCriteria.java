@@ -21,7 +21,7 @@ public class AuthenticatorSelectionCriteria implements Buildable<AuthenticatorSe
   /**
    * Retained for backwards compatibility with WebAuthn Level 1. Relying Parties should set to true if and only if
    * {@link AuthenticatorSelectionCriteria#residentKey} is set to {@link ResidentKeyRequirement#required}. This behavior is enforced by the type.
-   * <p/>
+   * <p>
    * <i>Authenticators</i> will treat this value as <code>false</code> if it is not supplied.
    */
   public Boolean requireResidentKey;

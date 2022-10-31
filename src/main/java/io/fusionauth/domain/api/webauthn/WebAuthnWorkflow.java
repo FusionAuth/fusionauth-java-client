@@ -13,7 +13,7 @@ public enum WebAuthnWorkflow {
   /**
    * Used for passwordless re-authentication on a previously used device.
    */
-  reAuthentication,
+  reauthentication,
 
   /**
    * Used for passwordless authentication on a new device.
