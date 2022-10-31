@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.fusionauth.api.domain.webauthn.CoseEllipticCurve;
 
 /**
  * A number identifying a cryptographic algorithm. Values should be registered with the <a

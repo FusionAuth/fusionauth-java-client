@@ -55,7 +55,7 @@ public class PublicKeyCredentialCreationOptions implements Buildable<PublicKeyCr
    * The time the caller is willing to wait for the operation to complete in milliseconds. This value is treated as a hint and may be overridden by
    * the client
    */
-  public long timeout = 180_000;
+  public long timeout;
 
   /**
    * Data about the user account for which the Relying Party is requesting a credential

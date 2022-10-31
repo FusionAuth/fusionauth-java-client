@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *
  * @author Spencer Witt
  */
+// TODO : WebAuthn/Domain - this type is only used internally, but it is referenced in CoseAlgorithmIdentifier which is required in public domain
 public enum CoseKeyType {
   /**
    * Reserved by specification

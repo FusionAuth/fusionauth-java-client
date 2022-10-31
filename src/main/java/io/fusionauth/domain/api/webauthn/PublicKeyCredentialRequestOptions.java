@@ -33,8 +33,7 @@ public class PublicKeyCredentialRequestOptions implements Buildable<PublicKeyCre
    * The time the caller is willing to wait for the operation to complete in milliseconds. This value is treated as a hint and may be overridden by
    * the client
    */
-  // TODO : WebAuthn : Daniel Review : Naming
-  public long timeout = 180_000;
+  public long timeout;
 
   /**
    * Specifies the Relying Party's requirements for user verification. <i>Authenticators</i> default this to
