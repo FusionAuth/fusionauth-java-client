@@ -39,7 +39,7 @@ public class PublicKeyRegistrationRequest implements Buildable<PublicKeyRegistra
   /**
    * List of supported transport methods for the chosen <i>authenticator</i>
    */
-  public List<AuthenticatorTransport> transports = new ArrayList<>();
+  public List<String> transports = new ArrayList<>();
 
   /**
    * The credential type

@@ -5,6 +5,7 @@ package io.fusionauth.domain.api.webauthn;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -27,6 +28,7 @@ public class PublicKeyCredentialRequestOptions implements Buildable<PublicKeyCre
    * A unique identifier for the Relying Party. Defaults to the calling host's <a
    * href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-effective-domain">effective domain</a>
    */
+  @JsonProperty("rpId")
   public String relyingPartyId;
 
   /**

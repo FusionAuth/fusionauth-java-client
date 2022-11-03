@@ -16,7 +16,6 @@ import com.inversoft.json.ToString;
 
 
 import io.fusionauth.domain.api.webauthn.AttestationType;
-import io.fusionauth.domain.api.webauthn.AuthenticatorTransport;
 import io.fusionauth.domain.api.webauthn.CoseAlgorithmIdentifier;
 
 /**
@@ -107,7 +106,7 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * A list of transport types supported by the WebAuthn <i>authenticator</i> that generated the key
    */
   
-  public List<AuthenticatorTransport> transports = new ArrayList<>();
+  public List<String> transports = new ArrayList<>();
 
   /**
    * The user agent string from the browser that registered the credential

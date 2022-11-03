@@ -23,7 +23,7 @@ public class PublicKeyCredentialDescriptor implements Buildable<PublicKeyCredent
   /**
    * A hint as to how the client may communicate with the <i>authenticator</i> managing this credential.
    */
-  public List<AuthenticatorTransport> transports;
+  public List<String> transports;
 
   /**
    * The type of credential being referenced.
