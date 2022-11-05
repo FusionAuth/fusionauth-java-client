@@ -26,6 +26,6 @@ public enum AuthenticatorAttachmentPreference {
    * Selecting this option will leave the {@link AuthenticatorSelectionCriteria#authenticatorAttachment} parameter unset during credential
    * creation indicating the Relying Party has no preference regarding the authenticator attachment modality.
    */
-  // TODO : WebAuthn : Daniel Review : Any? or any?
+  // TODO : WebAuthn : Daniel Review : What if we have more than two in the future - then we would want to call this any?
   either
 }
