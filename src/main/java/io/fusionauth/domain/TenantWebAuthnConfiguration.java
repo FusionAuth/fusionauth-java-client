@@ -15,24 +15,15 @@ import io.fusionauth.domain.api.webauthn.UserVerificationRequirement;
  *
  * @author Spencer Witt
  */
-// TODO : WebAuthn : Daniel Review : Do we need this Enableable
 public class TenantWebAuthnConfiguration extends Enableable implements Buildable<TenantWebAuthnConfiguration> {
-  public TenantWebAuthnWorkflowConfiguration bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration()
-      .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
-      .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
+  public TenantWebAuthnWorkflowConfiguration bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration().with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
+                                                                                                          .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
   public boolean debug;
 
-  // TODO : WebAuthn : Daniel Review : I think we need to add bootstrap or whatever it is called and then use it on the "manual" webauthn login page
-
-  // TODO : WebAuthn : Daniel Review : Naming?
-  //        Bootstrap:        ?
-  //        Reauthentication: ?
-  //        TwoFactor:        ?
-  // This configuration may be re-used per workflow so it is not initialized in the workflow configuration itself.
-  public TenantWebAuthnWorkflowConfiguration reauthenticationWorkflow = new TenantWebAuthnWorkflowConfiguration()
-      .with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
-      .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
+  // This configuration may be re-used per workflow so that it is not initialized in the workflow configuration itself.
+  public TenantWebAuthnWorkflowConfiguration reauthenticationWorkflow = new TenantWebAuthnWorkflowConfiguration().with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
+                                                                                                                 .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
   public String relyingPartyId;
 
@@ -43,9 +34,9 @@ public class TenantWebAuthnConfiguration extends Enableable implements Buildable
   }
 
   public TenantWebAuthnConfiguration(TenantWebAuthnConfiguration other) {
+    this.bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration(other.bootstrapWorkflow);
     this.debug = other.debug;
     this.enabled = other.enabled;
-    this.bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration(other.bootstrapWorkflow);
     this.reauthenticationWorkflow = new TenantWebAuthnWorkflowConfiguration(other.reauthenticationWorkflow);
     this.relyingPartyId = other.relyingPartyId;
     this.relyingPartyName = other.relyingPartyName;
