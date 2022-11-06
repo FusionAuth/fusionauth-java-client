@@ -11,22 +11,17 @@ package io.fusionauth.domain.api.webauthn;
  */
 public enum WebAuthnWorkflow {
   /**
-   * Used for passwordless re-authentication on a previously used device.
-   */
-  reauthentication,
-
-  /**
    * Used for passwordless authentication on a new device.
    */
   bootstrap,
 
   /**
-   * Used as a second factor during the authentication process.
-   */
-  twoFactor,
-
-  /**
    * Used for self-service credential registration.
    */
-  general
+  general,
+
+  /**
+   * Used for passwordless re-authentication on a previously used device.
+   */
+  reauthentication
 }

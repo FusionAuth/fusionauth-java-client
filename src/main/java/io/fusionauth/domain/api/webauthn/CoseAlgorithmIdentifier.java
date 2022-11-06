@@ -31,7 +31,6 @@ public enum CoseAlgorithmIdentifier {
    */
   ES512(-36, "SHA512withECDSA", CoseKeyType.EC2),
 
-  // TODO : WebAuthn/Algorithms - I'm not sure on the spec names other than the ES ones above
   /**
    * RSASSA-PKCS1-v1_5 using SHA-256
    */
