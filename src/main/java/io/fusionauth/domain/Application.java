@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -35,6 +23,9 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+
+
+
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -44,6 +35,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Application implements Buildable<Application>, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
+  
   public ApplicationAccessControlConfiguration accessControlConfiguration = new ApplicationAccessControlConfiguration();
 
   /**
@@ -52,22 +44,27 @@ public class Application implements Buildable<Application>, Tenantable {
   @Deprecated
   public boolean active;
 
+  
   public AuthenticationTokenConfiguration authenticationTokenConfiguration = new AuthenticationTokenConfiguration();
 
+  
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public ApplicationEmailConfiguration emailConfiguration = new ApplicationEmailConfiguration();
 
+  
   public ApplicationExternalIdentifierConfiguration externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration();
 
+  
   public ApplicationFormConfiguration formConfiguration = new ApplicationFormConfiguration();
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
+  
   @JsonIgnoreProperties("refreshTokenRevocationPolicy")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
@@ -75,41 +72,50 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public ZonedDateTime lastUpdateInstant;
 
+  
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
 
+  
   public ApplicationMultiFactorConfiguration multiFactorConfiguration = new ApplicationMultiFactorConfiguration();
 
   public String name;
 
+  
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
 
-  // TODO : WebAuthn : Daniel Review : If we are doing to show the "manual" WebAuthn login on the login page, we should probably
-  //                   have some configuration to know when to show the button.
-  //                   This configuration would also be used to enforce during the request to /api/webauthn/start
-
+  
   public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 
+  
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
+  
   public ApplicationRegistrationDeletePolicy registrationDeletePolicy = new ApplicationRegistrationDeletePolicy();
 
   public List<ApplicationRole> roles = new ArrayList<>();
 
+  
   public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
+  
   public ObjectState state;
 
   public UUID tenantId;
 
   public UUID themeId;
 
+  
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
   public UUID verificationEmailTemplateId;
 
+  
   public VerificationStrategy verificationStrategy;
 
+  
   public boolean verifyRegistration;
+
+  public ApplicationWebAuthnConfiguration webAuthnConfiguration = new ApplicationWebAuthnConfiguration();
 
   @JacksonConstructor
   public Application() {
@@ -147,6 +153,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
     this.verifyRegistration = other.verifyRegistration;
+    this.webAuthnConfiguration = new ApplicationWebAuthnConfiguration(other.webAuthnConfiguration);
   }
 
   public Application(String name) {
@@ -209,6 +216,7 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(themeId, that.themeId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
+           Objects.equals(webAuthnConfiguration, that.webAuthnConfiguration) &&
            verificationStrategy == that.verificationStrategy;
   }
 
@@ -243,7 +251,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -628,13 +636,15 @@ public class Application implements Buildable<Application>, Tenantable {
     public boolean debug;
 
     // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-
+    
     public UUID defaultVerificationKeyId;
+
+    public SAMLv2IdPInitiatedLoginConfiguration initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration();
 
     public String issuer;
 
     // Key pair used to sign w/
-
+    
     public UUID keyId;
 
     public SAMLv2Logout logout = new SAMLv2Logout();
@@ -657,6 +667,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.debug = other.debug;
       this.defaultVerificationKeyId = other.defaultVerificationKeyId;
       this.enabled = other.enabled;
+      this.initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration(other.initiatedLogin);
       this.issuer = other.issuer;
       this.keyId = other.keyId;
       this.logoutURL = other.logoutURL;
@@ -682,6 +693,7 @@ public class Application implements Buildable<Application>, Tenantable {
              Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
              Objects.equals(debug, that.debug) &&
              Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) &&
+             Objects.equals(initiatedLogin, that.initiatedLogin) &&
              Objects.equals(issuer, that.issuer) &&
              Objects.equals(keyId, that.keyId) &&
              Objects.equals(logoutURL, that.logoutURL) &&
@@ -716,7 +728,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
     public enum SAMLLogoutBehavior {
@@ -733,9 +745,10 @@ public class Application implements Buildable<Application>, Tenantable {
       public SAMLLogoutBehavior behavior = SAMLLogoutBehavior.AllParticipants;
 
       // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-
+      
       public UUID defaultVerificationKeyId;
 
+      
       public UUID keyId;
 
       public boolean requireSignedRequests;
@@ -782,7 +795,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public static class SAMLv2SingleLogout extends Enableable {
       // Key pair used to sign w/
-
+      
       public UUID keyId;
 
       public URI url;
