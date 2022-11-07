@@ -138,7 +138,9 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
     this.relyingPartyId = other.relyingPartyId;
     this.signCount = other.signCount;
     this.tenantId = other.tenantId;
-    this.transports.addAll(other.transports);
+    if (other.transports != null) {
+      this.transports.addAll(other.transports);
+    }
     this.userAgent = other.userAgent;
     this.userId = other.userId;
 
