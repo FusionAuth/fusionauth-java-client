@@ -15,8 +15,8 @@ import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 
-import io.fusionauth.domain.api.webauthn.AttestationType;
-import io.fusionauth.domain.api.webauthn.CoseAlgorithmIdentifier;
+import io.fusionauth.domain.webauthn.AttestationType;
+import io.fusionauth.domain.webauthn.CoseAlgorithmIdentifier;
 
 /**
  * A User's WebAuthnCredential. Contains all data required to complete WebAuthn authentication ceremonies.
