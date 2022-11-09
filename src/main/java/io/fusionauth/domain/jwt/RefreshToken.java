@@ -15,12 +15,12 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+
+
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.JWTConfiguration;
 import io.fusionauth.domain.Tenant;
-
-
 
 /**
  * Models a JWT Refresh Token.
@@ -119,6 +119,8 @@ public class RefreshToken implements Buildable<RefreshToken> {
   }
 
   public static class MetaData implements Buildable<MetaData> {
+    public Map<String, Object> data;
+
     public DeviceInfo device = new DeviceInfo();
 
     public Set<String> scopes;
@@ -128,6 +130,9 @@ public class RefreshToken implements Buildable<RefreshToken> {
     }
 
     public MetaData(MetaData other) {
+      if (other.data != null) {
+        this.data = new LinkedHashMap<>(other.data);
+      }
       this.device = new DeviceInfo(other.device);
       if (other.scopes != null) {
         this.scopes = new HashSet<>(other.scopes);
@@ -143,13 +148,14 @@ public class RefreshToken implements Buildable<RefreshToken> {
         return false;
       }
       MetaData metaData = (MetaData) o;
-      return Objects.equals(device, metaData.device) &&
+      return Objects.equals(data, metaData.data) &&
+             Objects.equals(device, metaData.device) &&
              Objects.equals(scopes, metaData.scopes);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(device, scopes);
+      return Objects.hash(data, device, scopes);
     }
 
     @Override

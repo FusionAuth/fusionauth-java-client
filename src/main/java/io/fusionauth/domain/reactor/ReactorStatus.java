@@ -43,6 +43,12 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus webAuthn = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus webAuthnPlatformAuthenticators = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus webAuthnRoamingAuthenticators = ReactorFeatureStatus.UNKNOWN;
+
   @JacksonConstructor
   public ReactorStatus() {
   }
@@ -62,6 +68,9 @@ public class ReactorStatus {
     licensed = other.licensed;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
+    webAuthn = other.webAuthn;
+    webAuthnPlatformAuthenticators = other.webAuthnPlatformAuthenticators;
+    webAuthnRoamingAuthenticators = other.webAuthnRoamingAuthenticators;
   }
 
   @Override
@@ -86,7 +95,10 @@ public class ReactorStatus {
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
            scimServer == that.scimServer &&
-           threatDetection == that.threatDetection;
+           threatDetection == that.threatDetection &&
+           webAuthn == that.webAuthn &&
+           webAuthnPlatformAuthenticators == that.webAuthnPlatformAuthenticators &&
+           webAuthnRoamingAuthenticators == that.webAuthnRoamingAuthenticators;
   }
 
   @Override
@@ -104,7 +116,10 @@ public class ReactorStatus {
                         licensed,
                         licenseAttributes,
                         scimServer,
-                        threatDetection);
+                        threatDetection,
+                        webAuthn,
+                        webAuthnPlatformAuthenticators,
+                        webAuthnRoamingAuthenticators);
   }
 
   @Override

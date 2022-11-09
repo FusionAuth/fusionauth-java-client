@@ -115,6 +115,9 @@ public class Application implements Buildable<Application>, Tenantable {
   
   public boolean verifyRegistration;
 
+  
+  public ApplicationWebAuthnConfiguration webAuthnConfiguration = new ApplicationWebAuthnConfiguration();
+
   @JacksonConstructor
   public Application() {
   }
@@ -151,6 +154,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
     this.verifyRegistration = other.verifyRegistration;
+    this.webAuthnConfiguration = new ApplicationWebAuthnConfiguration(other.webAuthnConfiguration);
   }
 
   public Application(String name) {
@@ -213,6 +217,7 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(themeId, that.themeId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
+           Objects.equals(webAuthnConfiguration, that.webAuthnConfiguration) &&
            verificationStrategy == that.verificationStrategy;
   }
 
@@ -247,7 +252,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -635,6 +640,8 @@ public class Application implements Buildable<Application>, Tenantable {
     
     public UUID defaultVerificationKeyId;
 
+    public SAMLv2IdPInitiatedLoginConfiguration initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration();
+
     public String issuer;
 
     // Key pair used to sign w/
@@ -661,6 +668,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.debug = other.debug;
       this.defaultVerificationKeyId = other.defaultVerificationKeyId;
       this.enabled = other.enabled;
+      this.initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration(other.initiatedLogin);
       this.issuer = other.issuer;
       this.keyId = other.keyId;
       this.logoutURL = other.logoutURL;
@@ -686,6 +694,7 @@ public class Application implements Buildable<Application>, Tenantable {
              Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
              Objects.equals(debug, that.debug) &&
              Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) &&
+             Objects.equals(initiatedLogin, that.initiatedLogin) &&
              Objects.equals(issuer, that.issuer) &&
              Objects.equals(keyId, that.keyId) &&
              Objects.equals(logoutURL, that.logoutURL) &&
@@ -720,7 +729,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
     public enum SAMLLogoutBehavior {

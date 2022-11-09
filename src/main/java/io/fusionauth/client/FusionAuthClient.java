@@ -36,18 +36,14 @@ import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
-import io.fusionauth.domain.api.ApplicationRequest;
-import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.APIKeyRequest;
 import io.fusionauth.domain.api.APIKeyResponse;
+import io.fusionauth.domain.api.ApplicationRequest;
+import io.fusionauth.domain.api.ApplicationResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
-import io.fusionauth.domain.api.FormFieldRequest;
-import io.fusionauth.domain.api.FormFieldResponse;
-import io.fusionauth.domain.api.FormRequest;
-import io.fusionauth.domain.api.FormResponse;
 import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.api.ConnectorResponse;
 import io.fusionauth.domain.api.ConsentRequest;
@@ -72,20 +68,24 @@ import io.fusionauth.domain.api.EventLogSearchResponse;
 import io.fusionauth.domain.api.FamilyEmailRequest;
 import io.fusionauth.domain.api.FamilyRequest;
 import io.fusionauth.domain.api.FamilyResponse;
+import io.fusionauth.domain.api.FormFieldRequest;
+import io.fusionauth.domain.api.FormFieldResponse;
+import io.fusionauth.domain.api.FormRequest;
+import io.fusionauth.domain.api.FormResponse;
 import io.fusionauth.domain.api.GroupMemberSearchRequest;
 import io.fusionauth.domain.api.GroupMemberSearchResponse;
 import io.fusionauth.domain.api.GroupSearchRequest;
 import io.fusionauth.domain.api.GroupSearchResponse;
 import io.fusionauth.domain.api.GroupRequest;
 import io.fusionauth.domain.api.GroupResponse;
-import io.fusionauth.domain.api.IdentityProviderRequest;
-import io.fusionauth.domain.api.IdentityProviderResponse;
-import io.fusionauth.domain.api.IntegrationRequest;
-import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.IPAccessControlListRequest;
 import io.fusionauth.domain.api.IPAccessControlListResponse;
 import io.fusionauth.domain.api.IPAccessControlListSearchRequest;
 import io.fusionauth.domain.api.IPAccessControlListSearchResponse;
+import io.fusionauth.domain.api.IdentityProviderRequest;
+import io.fusionauth.domain.api.IdentityProviderResponse;
+import io.fusionauth.domain.api.IntegrationRequest;
+import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
 import io.fusionauth.domain.api.LambdaRequest;
@@ -140,6 +140,7 @@ import io.fusionauth.domain.api.UserDeleteSingleRequest;
 import io.fusionauth.domain.api.UserRequest;
 import io.fusionauth.domain.api.UserResponse;
 import io.fusionauth.domain.api.VersionResponse;
+import io.fusionauth.domain.api.WebAuthnCredentialResponse;
 import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.email.SendRequest;
@@ -159,9 +160,9 @@ import io.fusionauth.domain.api.jwt.RefreshTokenResponse;
 import io.fusionauth.domain.api.jwt.RefreshTokenRevokeRequest;
 import io.fusionauth.domain.api.jwt.ValidateResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessLoginRequest;
-import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
 import io.fusionauth.domain.api.passwordless.PasswordlessSendRequest;
 import io.fusionauth.domain.api.passwordless.PasswordlessStartRequest;
+import io.fusionauth.domain.api.passwordless.PasswordlessStartResponse;
 import io.fusionauth.domain.api.report.DailyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
@@ -191,10 +192,18 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.api.webauthn.WebAuthnCompleteRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnCompleteResponse;
+import io.fusionauth.domain.api.webauthn.WebAuthnImportRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnLoginRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnRegisterRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnRegisterResponse;
+import io.fusionauth.domain.api.webauthn.WebAuthnStartRequest;
+import io.fusionauth.domain.api.webauthn.WebAuthnStartResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
-import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.oauth2.JWKSResponse;
+import io.fusionauth.domain.oauth2.OAuthError;
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -422,6 +431,27 @@ public class FusionAuthClient {
   }
 
   /**
+   * Make a Client Credentials grant request to obtain an access token.
+   *
+   * @param client_id The client identifier. The client Id is the Id of the FusionAuth Entity in which you are attempting to authenticate.
+   * @param client_secret The client secret used to authenticate this request.
+   * @param scope (Optional) This parameter is used to indicate which target entity you are requesting access. To request access to an entity, use the format target-entity:&lt;target-entity-id&gt;:&lt;roles&gt;. Roles are an optional comma separated list.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<AccessToken, OAuthError> clientCredentialsGrant(String client_id, String client_secret, String scope) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("grant_type", Arrays.asList("client_credentials"));
+    parameters.put("scope", Arrays.asList(scope));
+    return startAnonymous(AccessToken.class, OAuthError.class)
+        .uri("/oauth2/token")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
+  /**
    * Adds a comment to the user's account.
    *
    * @param request The request object that contains all the information used to create the user comment.
@@ -430,6 +460,48 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge without logging the user in
+   *
+   * @param request An object containing data necessary for completing the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnAssertion(WebAuthnLoginRequest request) {
+    return startAnonymous(WebAuthnCompleteResponse.class, Errors.class)
+        .uri("/api/webauthn/assert")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge and then login the user in
+   *
+   * @param request An object containing data necessary for completing the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginResponse, Errors> completeWebAuthnLogin(WebAuthnLoginRequest request) {
+    return startAnonymous(LoginResponse.class, Errors.class)
+        .uri("/api/webauthn/login")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Complete a WebAuthn registration ceremony by validating the client request and saving the new credential
+   *
+   * @param request An object containing data necessary for completing the registration ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCompleteResponse, Errors> completeWebAuthnRegistration(WebAuthnCompleteRequest request) {
+    return start(WebAuthnCompleteResponse.class, Errors.class)
+        .uri("/api/webauthn/register/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -1495,6 +1567,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Deletes the WebAuthn credential for the given Id.
+   *
+   * @param id The Id of the WebAuthn credential to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteWebAuthnCredential(UUID id) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn")
+        .urlSegment(id)
+        .delete()
+        .go();
+  }
+
+  /**
    * Deletes the webhook for the given Id.
    *
    * @param webhookId The Id of the webhook to delete.
@@ -1853,6 +1939,20 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> importUsers(ImportRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/import")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Import a WebAuthn credential
+   *
+   * @param request An object containing data necessary for importing the credential
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> importWebAuthnCredential(WebAuthnImportRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/webauthn/import")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -3928,6 +4028,34 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the WebAuthn credential for the given Id.
+   *
+   * @param id The Id of the WebAuthn credential.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCredentialResponse, Errors> retrieveWebAuthnCredential(UUID id) {
+    return start(WebAuthnCredentialResponse.class, Errors.class)
+        .uri("/api/webauthn")
+        .urlSegment(id)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all WebAuthn credentials for the given user.
+   *
+   * @param userId The user's ID.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnCredentialResponse, Errors> retrieveWebAuthnCredentialsForUser(UUID userId) {
+    return start(WebAuthnCredentialResponse.class, Errors.class)
+        .uri("/api/webauthn")
+        .urlParameter("userId", userId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the webhook for the given Id. If you pass in null for the id, this will return all the webhooks.
    *
    * @param webhookId (Optional) The Id of the webhook.
@@ -4448,6 +4576,34 @@ public class FusionAuthClient {
   public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
     return start(TwoFactorStartResponse.class, Errors.class)
         .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a WebAuthn authentication ceremony by generating a new challenge for the user
+   *
+   * @param request An object containing data necessary for starting the authentication ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnStartResponse, Errors> startWebAuthnLogin(WebAuthnStartRequest request) {
+    return start(WebAuthnStartResponse.class, Errors.class)
+        .uri("/api/webauthn/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a WebAuthn registration ceremony by generating a new challenge for the user
+   *
+   * @param request An object containing data necessary for starting the registration ceremony
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebAuthnRegisterResponse, Errors> startWebAuthnRegistration(WebAuthnRegisterRequest request) {
+    return start(WebAuthnRegisterResponse.class, Errors.class)
+        .uri("/api/webauthn/register/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();

@@ -1,21 +1,11 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -109,6 +99,33 @@ public class Theme implements Buildable<Theme> {
            Objects.equals(templates, that.templates);
   }
 
+  /**
+   * Format a zoned date time with a format string.
+   * <p>
+   * This is defined here to assist with code completion in FreeMarker templates and is really only intended to be used in a themed template.
+   *
+   * @param zonedDateTime the zoned date time object
+   * @param format        the format string
+   * @return a formatted zoned date time using the default systen timezone, likely UTC.
+   */
+  public String formatZoneDateTime(ZonedDateTime zonedDateTime, String format) {
+    return zonedDateTime.format(DateTimeFormatter.ofPattern(format));
+  }
+
+  /**
+   * Format a zoned date time with a format string and specific time zone.
+   * <p>
+   * This is defined here to assist with code completion in FreeMarker templates and is really only intended to be used in a themed template.
+   *
+   * @param zonedDateTime the zoned date time object
+   * @param format        the format string
+   * @param zoneId        the timezone
+   * @return a formatted zoned date time using the specified timezone.
+   */
+  public String formatZoneDateTime(ZonedDateTime zonedDateTime, String format, ZoneId zoneId) {
+    return zonedDateTime.withZoneSameInstant(zoneId).format(DateTimeFormatter.ofPattern(format));
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(data, defaultMessages, id, insertInstant, lastUpdateInstant, localizedMessages, name, stylesheet, templates);
@@ -137,6 +154,9 @@ public class Theme implements Buildable<Theme> {
                      templates.accountTwoFactorDisable,
                      templates.accountTwoFactorEnable,
                      templates.accountTwoFactorIndex,
+                     templates.accountWebAuthnAdd,
+                     templates.accountWebAuthnDelete,
+                     templates.accountWebAuthnIndex,
                      templates.emailComplete,
                      templates.emailSent,
                      templates.emailVerificationRequired,
@@ -158,6 +178,9 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2TwoFactor,
                      templates.oauth2TwoFactorMethods,
                      templates.oauth2Wait,
+                     templates.oauth2WebAuthn,
+                     templates.oauth2WebAuthnReauth,
+                     templates.oauth2WebAuthnReauthEnable,
                      templates.passwordChange,
                      templates.passwordComplete,
                      templates.passwordForgot,
@@ -223,6 +246,9 @@ public class Theme implements Buildable<Theme> {
         "accountTwoFactorDisable",
         "accountTwoFactorEnable",
         "accountTwoFactorIndex",
+        "accountWebAuthnAdd",
+        "accountWebAuthnDelete",
+        "accountWebAuthnIndex",
         "emailComplete",
         "emailSent",
         "emailVerificationRequired",
@@ -244,6 +270,9 @@ public class Theme implements Buildable<Theme> {
         "oauth2TwoFactor",
         "oauth2TwoFactorMethods",
         "oauth2Wait",
+        "oauth2WebAuthn",
+        "oauth2WebAuthnReauth",
+        "oauth2WebAuthnReauthEnable",
         "passwordChange",
         "passwordComplete",
         "passwordForgot",
@@ -265,6 +294,12 @@ public class Theme implements Buildable<Theme> {
     public String accountTwoFactorEnable;
 
     public String accountTwoFactorIndex;
+
+    public String accountWebAuthnAdd;
+
+    public String accountWebAuthnDelete;
+
+    public String accountWebAuthnIndex;
 
     public String emailComplete;
 
@@ -308,6 +343,12 @@ public class Theme implements Buildable<Theme> {
 
     public String oauth2Wait;
 
+    public String oauth2WebAuthn;
+
+    public String oauth2WebAuthnReauth;
+
+    public String oauth2WebAuthnReauthEnable;
+
     public String passwordChange;
 
     public String passwordComplete;
@@ -337,6 +378,9 @@ public class Theme implements Buildable<Theme> {
       this.accountTwoFactorDisable = other.accountTwoFactorDisable;
       this.accountTwoFactorEnable = other.accountTwoFactorEnable;
       this.accountTwoFactorIndex = other.accountTwoFactorIndex;
+      this.accountWebAuthnAdd = other.accountWebAuthnAdd;
+      this.accountWebAuthnDelete = other.accountWebAuthnDelete;
+      this.accountWebAuthnIndex = other.accountWebAuthnIndex;
       this.emailComplete = other.emailComplete;
       this.emailSent = other.emailSent;
       this.emailVerificationRequired = other.emailVerificationRequired;
@@ -358,6 +402,9 @@ public class Theme implements Buildable<Theme> {
       this.oauth2TwoFactor = other.oauth2TwoFactor;
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
       this.oauth2Wait = other.oauth2Wait;
+      this.oauth2WebAuthn = other.oauth2WebAuthn;
+      this.oauth2WebAuthnReauth = other.oauth2WebAuthnReauth;
+      this.oauth2WebAuthnReauthEnable = other.oauth2WebAuthnReauthEnable;
       this.passwordChange = other.passwordChange;
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
@@ -384,6 +431,9 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(accountTwoFactorDisable, that.accountTwoFactorDisable) &&
              Objects.equals(accountTwoFactorEnable, that.accountTwoFactorEnable) &&
              Objects.equals(accountTwoFactorIndex, that.accountTwoFactorIndex) &&
+             Objects.equals(accountWebAuthnAdd, that.accountWebAuthnAdd) &&
+             Objects.equals(accountWebAuthnDelete, that.accountWebAuthnDelete) &&
+             Objects.equals(accountWebAuthnIndex, that.accountWebAuthnIndex) &&
              Objects.equals(emailComplete, that.emailComplete) &&
              Objects.equals(emailSent, that.emailSent) &&
              Objects.equals(emailVerificationRequired, that.emailVerificationRequired) &&
@@ -405,6 +455,9 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
+             Objects.equals(oauth2WebAuthn, that.oauth2WebAuthn) &&
+             Objects.equals(oauth2WebAuthnReauth, that.oauth2WebAuthnReauth) &&
+             Objects.equals(oauth2WebAuthnReauthEnable, that.oauth2WebAuthnReauthEnable) &&
              Objects.equals(passwordChange, that.passwordChange) &&
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
@@ -445,6 +498,9 @@ public class Theme implements Buildable<Theme> {
           accountTwoFactorDisable,
           accountTwoFactorEnable,
           accountTwoFactorIndex,
+          accountWebAuthnAdd,
+          accountWebAuthnDelete,
+          accountWebAuthnIndex,
           emailComplete,
           emailSent,
           emailVerificationRequired,
@@ -466,6 +522,9 @@ public class Theme implements Buildable<Theme> {
           oauth2TwoFactor,
           oauth2TwoFactorMethods,
           oauth2Wait,
+          oauth2WebAuthn,
+          oauth2WebAuthnReauth,
+          oauth2WebAuthnReauthEnable,
           passwordChange,
           passwordComplete,
           passwordForgot,
@@ -485,6 +544,9 @@ public class Theme implements Buildable<Theme> {
       accountTwoFactorDisable = lineReturns(trimToNull(accountTwoFactorDisable));
       accountTwoFactorEnable = lineReturns(trimToNull(accountTwoFactorEnable));
       accountTwoFactorIndex = lineReturns(trimToNull(accountTwoFactorIndex));
+      accountWebAuthnAdd = lineReturns(trimToNull(accountWebAuthnAdd));
+      accountWebAuthnDelete = lineReturns(trimToNull(accountWebAuthnDelete));
+      accountWebAuthnIndex = lineReturns(trimToNull(accountWebAuthnIndex));
       emailComplete = lineReturns(trimToNull(emailComplete));
       emailSent = lineReturns(trimToNull(emailSent));
       emailVerificationRequired = lineReturns(trimToNull(emailVerificationRequired));
@@ -506,6 +568,9 @@ public class Theme implements Buildable<Theme> {
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
+      oauth2WebAuthn = lineReturns(trimToNull(oauth2WebAuthn));
+      oauth2WebAuthnReauth = lineReturns(trimToNull(oauth2WebAuthnReauth));
+      oauth2WebAuthnReauthEnable = lineReturns(trimToNull(oauth2WebAuthnReauthEnable));
       passwordChange = lineReturns(trimToNull(passwordChange));
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));
