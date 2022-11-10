@@ -15,8 +15,7 @@
  */
 
 fusionauthJWTVersion = "5.1.2"
-jacksonVersion = "2.13.4"
-jacksonDatabindVersion = "2.13.4+2"
+jacksonVersion = "2.14.0"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
 restifyVersion = "4.1.2"
@@ -41,7 +40,7 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.41.0
     group(name: "compile") {
       dependency(id: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
       dependency(id: "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
-      dependency(id: "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
       dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
       dependency(id: "com.inversoft:restify:${restifyVersion}")
