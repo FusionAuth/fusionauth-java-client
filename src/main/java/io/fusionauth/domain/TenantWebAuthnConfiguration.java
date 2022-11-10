@@ -16,7 +16,7 @@ import io.fusionauth.domain.webauthn.UserVerificationRequirement;
  * @author Spencer Witt
  */
 public class TenantWebAuthnConfiguration extends Enableable implements Buildable<TenantWebAuthnConfiguration> {
-  public TenantWebAuthnWorkflowConfiguration bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration().with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.platform)
+  public TenantWebAuthnWorkflowConfiguration bootstrapWorkflow = new TenantWebAuthnWorkflowConfiguration().with(c -> c.authenticatorAttachmentPreference = AuthenticatorAttachmentPreference.crossPlatform)
                                                                                                           .with(c -> c.userVerificationRequirement = UserVerificationRequirement.required);
 
   public boolean debug;
