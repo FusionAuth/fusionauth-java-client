@@ -176,7 +176,9 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2Register,
                      templates.oauth2StartIdPLink,
                      templates.oauth2TwoFactor,
+                     templates.oauth2TwoFactorEnable,
                      templates.oauth2TwoFactorMethods,
+                     templates.oauth2TwoFactorRecoveryCodes,
                      templates.oauth2Wait,
                      templates.oauth2WebAuthn,
                      templates.oauth2WebAuthnReauth,
@@ -268,7 +270,9 @@ public class Theme implements Buildable<Theme> {
         "oauth2Register",
         "oauth2StartIdPLink",
         "oauth2TwoFactor",
+        "oauth2TwoFactorEnable",
         "oauth2TwoFactorMethods",
+        "oauth2TwoFactorRecoveryCodes",
         "oauth2Wait",
         "oauth2WebAuthn",
         "oauth2WebAuthnReauth",
@@ -339,7 +343,11 @@ public class Theme implements Buildable<Theme> {
 
     public String oauth2TwoFactor;
 
+    public String oauth2TwoFactorEnable;
+
     public String oauth2TwoFactorMethods;
+
+    public String oauth2TwoFactorRecoveryCodes;
 
     public String oauth2Wait;
 
@@ -400,7 +408,9 @@ public class Theme implements Buildable<Theme> {
       this.oauth2Register = other.oauth2Register;
       this.oauth2StartIdPLink = other.oauth2StartIdPLink;
       this.oauth2TwoFactor = other.oauth2TwoFactor;
+      this.oauth2TwoFactorEnable = other.oauth2TwoFactorEnable;
       this.oauth2TwoFactorMethods = other.oauth2TwoFactorMethods;
+      this.oauth2TwoFactorRecoveryCodes = other.oauth2TwoFactorRecoveryCodes;
       this.oauth2Wait = other.oauth2Wait;
       this.oauth2WebAuthn = other.oauth2WebAuthn;
       this.oauth2WebAuthnReauth = other.oauth2WebAuthnReauth;
@@ -453,7 +463,9 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2Register, that.oauth2Register) &&
              Objects.equals(oauth2StartIdPLink, that.oauth2StartIdPLink) &&
              Objects.equals(oauth2TwoFactor, that.oauth2TwoFactor) &&
+             Objects.equals(oauth2TwoFactorEnable, that.oauth2TwoFactorEnable) &&
              Objects.equals(oauth2TwoFactorMethods, that.oauth2TwoFactorMethods) &&
+             Objects.equals(oauth2TwoFactorRecoveryCodes, that.oauth2TwoFactorRecoveryCodes) &&
              Objects.equals(oauth2Wait, that.oauth2Wait) &&
              Objects.equals(oauth2WebAuthn, that.oauth2WebAuthn) &&
              Objects.equals(oauth2WebAuthnReauth, that.oauth2WebAuthnReauth) &&
@@ -520,7 +532,9 @@ public class Theme implements Buildable<Theme> {
           oauth2Register,
           oauth2StartIdPLink,
           oauth2TwoFactor,
+          oauth2TwoFactorEnable,
           oauth2TwoFactorMethods,
+          oauth2TwoFactorRecoveryCodes,
           oauth2Wait,
           oauth2WebAuthn,
           oauth2WebAuthnReauth,
@@ -566,7 +580,9 @@ public class Theme implements Buildable<Theme> {
       oauth2Register = lineReturns(trimToNull(oauth2Register));
       oauth2StartIdPLink = lineReturns(trimToNull(oauth2StartIdPLink));
       oauth2TwoFactor = lineReturns(trimToNull(oauth2TwoFactor));
+      oauth2TwoFactorEnable = lineReturns(trimToNull(oauth2TwoFactorEnable));
       oauth2TwoFactorMethods = lineReturns(trimToNull(oauth2TwoFactorMethods));
+      oauth2TwoFactorRecoveryCodes = lineReturns(trimToNull(oauth2TwoFactorRecoveryCodes));
       oauth2Wait = lineReturns(trimToNull(oauth2Wait));
       oauth2WebAuthn = lineReturns(trimToNull(oauth2WebAuthn));
       oauth2WebAuthnReauth = lineReturns(trimToNull(oauth2WebAuthnReauth));
