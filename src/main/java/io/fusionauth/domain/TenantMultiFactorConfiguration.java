@@ -3,6 +3,8 @@
  */
 package io.fusionauth.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -53,7 +55,10 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
       return false;
     }
     TenantMultiFactorConfiguration that = (TenantMultiFactorConfiguration) o;
-    return Objects.equals(authenticator, that.authenticator) && Objects.equals(email, that.email) && loginPolicy == that.loginPolicy && Objects.equals(sms, that.sms);
+    return Objects.equals(authenticator, that.authenticator) &&
+           Objects.equals(email, that.email) &&
+           loginPolicy == that.loginPolicy &&
+           Objects.equals(sms, that.sms);
   }
 
   @Override

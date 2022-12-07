@@ -16,6 +16,8 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class FailedAuthenticationConfiguration implements Buildable<FailedAuthenticationConfiguration> {
+  public FailedAuthenticationActionCancelPolicy actionCancelPolicy = new FailedAuthenticationActionCancelPolicy(false);
+
   /**
    * The duration of the action.
    */
@@ -25,6 +27,12 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
    * The Unit of time of the Action Duration.
    */
   public ExpiryUnit actionDurationUnit = ExpiryUnit.MINUTES;
+
+  /**
+   * True if an email should be sent to the user when the failed action is applied to the user. This configuration only applies when the configured
+   * action is also configured to email the user.
+   */
+  public boolean emailUser;
 
   /**
    * The length of time in seconds the failed login attempt is kept in the cache. This essentially causes the failed
@@ -48,8 +56,10 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
   }
 
   public FailedAuthenticationConfiguration(FailedAuthenticationConfiguration other) {
+    this.actionCancelPolicy = new FailedAuthenticationActionCancelPolicy(other.actionCancelPolicy);
     this.actionDuration = other.actionDuration;
     this.actionDurationUnit = other.actionDurationUnit;
+    this.emailUser = other.emailUser;
     this.resetCountInSeconds = other.resetCountInSeconds;
     this.tooManyAttempts = other.tooManyAttempts;
     this.userActionId = other.userActionId;
@@ -64,16 +74,12 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
       return false;
     }
     FailedAuthenticationConfiguration that = (FailedAuthenticationConfiguration) o;
-    return actionDuration == that.actionDuration &&
-           actionDurationUnit == that.actionDurationUnit &&
-           tooManyAttempts == that.tooManyAttempts &&
-           resetCountInSeconds == that.resetCountInSeconds &&
-           Objects.equals(userActionId, that.userActionId);
+    return actionDuration == that.actionDuration && emailUser == that.emailUser && resetCountInSeconds == that.resetCountInSeconds && tooManyAttempts == that.tooManyAttempts && Objects.equals(actionCancelPolicy, that.actionCancelPolicy) && actionDurationUnit == that.actionDurationUnit && Objects.equals(userActionId, that.userActionId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionDuration, actionDurationUnit, userActionId, tooManyAttempts, resetCountInSeconds);
+    return Objects.hash(actionCancelPolicy, actionDuration, actionDurationUnit, emailUser, resetCountInSeconds, tooManyAttempts, userActionId);
   }
 
   @Override

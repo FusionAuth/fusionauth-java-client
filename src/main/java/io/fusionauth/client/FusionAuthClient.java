@@ -1596,11 +1596,11 @@ public class FusionAuthClient {
   }
 
   /**
-   * Disable Two Factor authentication for a user.
+   * Disable two-factor authentication for a user.
    *
-   * @param userId The Id of the User for which you're disabling Two Factor authentication.
+   * @param userId The Id of the User for which you're disabling two-factor authentication.
    * @param methodId The two-factor method identifier you wish to disable
-   * @param code The Two Factor code used verify the the caller knows the Two Factor secret.
+   * @param code The two-factor code used verify the the caller knows the two-factor secret.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> disableTwoFactor(UUID userId, String methodId, String code) {
@@ -1614,9 +1614,9 @@ public class FusionAuthClient {
   }
 
   /**
-   * Disable Two Factor authentication for a user using a JSON body rather than URL parameters.
+   * Disable two-factor authentication for a user using a JSON body rather than URL parameters.
    *
-   * @param userId The Id of the User for which you're disabling Two Factor authentication.
+   * @param userId The Id of the User for which you're disabling two-factor authentication.
    * @param request The request information that contains the code and methodId along with any event information.
    * @return The ClientResponse object.
    */
@@ -1630,10 +1630,10 @@ public class FusionAuthClient {
   }
 
   /**
-   * Enable Two Factor authentication for a user.
+   * Enable two-factor authentication for a user.
    *
-   * @param userId The Id of the user to enable Two Factor authentication.
-   * @param request The two factor enable request information.
+   * @param userId The Id of the user to enable two-factor authentication.
+   * @param request The two-factor enable request information.
    * @return The ClientResponse object.
    */
   public ClientResponse<TwoFactorResponse, Errors> enableTwoFactor(UUID userId, TwoFactorRequest request) {
@@ -1650,7 +1650,7 @@ public class FusionAuthClient {
    * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
    *
    * @param code The authorization code returned on the /oauth2/authorize response.
-   * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate.
+   * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate.
    * @param client_secret (Optional) The client secret. This value will be required if client authentication is enabled.
    * @param redirect_uri The URI to redirect to upon a successful request.
    * @return The ClientResponse object.
@@ -1674,7 +1674,7 @@ public class FusionAuthClient {
    * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint and a code_verifier for an access token.
    *
    * @param code The authorization code returned on the /oauth2/authorize response.
-   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param redirect_uri The URI to redirect to upon a successful request.
    * @param code_verifier The random string generated previously. Will be compared with the code_challenge sent previously, which allows the OAuth provider to authenticate your app.
@@ -1700,7 +1700,7 @@ public class FusionAuthClient {
    * If you will be using the Refresh Token Grant, you will make a request to the Token endpoint to exchange the user’s refresh token for an access token.
    *
    * @param refresh_token The refresh token that you would like to use to exchange for an access token.
-   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
    * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.
@@ -1741,7 +1741,7 @@ public class FusionAuthClient {
    *
    * @param username The login identifier of the user. The login identifier can be either the email or the username.
    * @param password The user’s password.
-   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate. This parameter is optional when the Authorization header is provided.
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
    * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.

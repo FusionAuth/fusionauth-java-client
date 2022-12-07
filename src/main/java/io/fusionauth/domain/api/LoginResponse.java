@@ -28,6 +28,9 @@ public class LoginResponse implements Buildable<LoginResponse> {
 
   public ChangePasswordReason changePasswordReason;
 
+  // Configurable two-factor methods for the tenant
+  public List<String> configurableMethods;
+
   public String emailVerificationId;
 
   public List<TwoFactorMethod> methods;
