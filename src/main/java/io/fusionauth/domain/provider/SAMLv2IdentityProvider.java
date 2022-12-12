@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.CanonicalizationMethod;
 import io.fusionauth.domain.RequiresCORSConfiguration;
-
 import io.fusionauth.domain.util.HTTPMethod;
 
 /**
@@ -39,16 +38,12 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
     implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public final Set<String> domains = new LinkedHashSet<>();
 
-  
   public URI buttonImageURL;
 
-  
   public String buttonText = "Login with SAML";
 
-  
   public String emailClaim;
 
-  
   public URI idpEndpoint;
 
   /**
@@ -56,7 +51,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
    * ${public_url}/samlv2/sp/${identityProviderId}.
    */
   @Deprecated
-  
+
   public String issuer;
 
   /**
@@ -65,27 +60,22 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
    */
   public UUID keyId;
 
-  
+  public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
+
   public String nameIdFormat = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
 
-  
   public boolean postRequest;
 
   public UUID requestSigningKeyId;
 
-  
   public boolean signRequest;
 
-  
   public String uniqueIdClaim;
 
-  
   public boolean useNameIdForEmail;
 
-  
   public String usernameClaim;
 
-  
   public CanonicalizationMethod xmlSignatureC14nMethod;
 
   @Override
@@ -117,6 +107,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
            Objects.equals(idpEndpoint, that.idpEndpoint) &&
            Objects.equals(issuer, that.issuer) &&
            Objects.equals(keyId, that.keyId) &&
+           Objects.equals(loginHintConfiguration, that.loginHintConfiguration) &&
            Objects.equals(nameIdFormat, that.nameIdFormat) &&
            Objects.equals(requestSigningKeyId, that.requestSigningKeyId) &&
            Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
@@ -144,6 +135,7 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
                         idpEndpoint,
                         issuer,
                         keyId,
+                        loginHintConfiguration,
                         nameIdFormat,
                         postRequest,
                         requestSigningKeyId,
