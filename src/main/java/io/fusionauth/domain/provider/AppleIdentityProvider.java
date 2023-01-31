@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.provider;
 
@@ -21,10 +9,10 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
+
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.RequiresCORSConfiguration;
-
 import io.fusionauth.domain.jwks.JSONWebKeyInfoProvider;
 import io.fusionauth.domain.util.HTTPMethod;
 
@@ -35,6 +23,9 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   public static final URI ISSUER = URI.create("https://appleid.apple.com");
 
   public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
+
+  
+  public String bundleId;
 
   
   public String buttonText = "Sign in with Apple";
@@ -69,7 +60,8 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
       return false;
     }
     AppleIdentityProvider that = (AppleIdentityProvider) o;
-    return Objects.equals(buttonText, that.buttonText) &&
+    return Objects.equals(bundleId, that.bundleId) &&
+           Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(keyId, that.keyId) &&
            Objects.equals(scope, that.scope) &&
            Objects.equals(servicesId, that.servicesId) &&
@@ -83,7 +75,7 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, keyId, scope, servicesId, teamId);
+    return Objects.hash(super.hashCode(), bundleId, buttonText, keyId, scope, servicesId, teamId);
   }
 
   @Override
@@ -94,6 +86,14 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
   @Override
   public URI jwksURI() {
     return JWKS_URI;
+  }
+
+  public String lookupBundleId(String clientId) {
+    return lookup(() -> bundleId, () -> app(clientId, app -> app.bundleId));
+  }
+
+  public String lookupBundleId(UUID applicationId) {
+    return lookup(() -> bundleId, () -> app(applicationId, app -> app.bundleId));
   }
 
   public String lookupButtonText(String clientId) {

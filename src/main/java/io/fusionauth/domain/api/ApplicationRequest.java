@@ -3,6 +3,8 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.UUID;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.ApplicationRole;
@@ -17,6 +19,8 @@ public class ApplicationRequest extends BaseEventRequest {
   public Application application;
 
   public ApplicationRole role;
+
+  public UUID sourceApplicationId;
 
   @JacksonConstructor
   public ApplicationRequest() {

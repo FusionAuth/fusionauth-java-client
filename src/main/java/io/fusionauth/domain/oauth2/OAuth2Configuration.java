@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.oauth2;
 
@@ -28,6 +40,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @JsonMerge(OptBoolean.FALSE)
   public List<URI> authorizedRedirectURLs = new ArrayList<>();
+
+  public Oauth2AuthorizedURLValidationPolicy authorizedURLValidationPolicy = Oauth2AuthorizedURLValidationPolicy.ExactMatch;
 
   public ClientAuthenticationPolicy clientAuthenticationPolicy;
 
@@ -81,6 +95,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
     this.proofKeyForCodeExchangePolicy = other.proofKeyForCodeExchangePolicy;
     this.requireClientAuthentication = other.requireClientAuthentication;
     this.requireRegistration = other.requireRegistration;
+    this.authorizedURLValidationPolicy = other.authorizedURLValidationPolicy;
   }
 
   public OAuth2Configuration(String clientId, String clientSecret) {
@@ -103,6 +118,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
            requireRegistration == that.requireRegistration &&
            Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
            Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
+           Objects.equals(authorizedURLValidationPolicy, that.authorizedURLValidationPolicy) &&
            Objects.equals(clientAuthenticationPolicy, that.clientAuthenticationPolicy) &&
            Objects.equals(clientId, that.clientId) &&
            Objects.equals(clientSecret, that.clientSecret) &&
@@ -115,7 +131,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, clientAuthenticationPolicy, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, proofKeyForCodeExchangePolicy, requireClientAuthentication, requireRegistration);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, authorizedURLValidationPolicy, clientAuthenticationPolicy, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, proofKeyForCodeExchangePolicy, requireClientAuthentication, requireRegistration);
   }
 
   public void normalize() {

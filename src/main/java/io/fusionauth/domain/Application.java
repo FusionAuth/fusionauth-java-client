@@ -437,6 +437,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public UUID samlv2PopulateId;
 
+    public UUID selfServiceRegistrationValidationId;
+
     @JacksonConstructor
     public LambdaConfiguration() {
     }
@@ -445,6 +447,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.accessTokenPopulateId = other.accessTokenPopulateId;
       this.idTokenPopulateId = other.idTokenPopulateId;
       this.samlv2PopulateId = other.samlv2PopulateId;
+      this.selfServiceRegistrationValidationId = other.selfServiceRegistrationValidationId;
     }
 
     @Override
@@ -458,12 +461,13 @@ public class Application implements Buildable<Application>, Tenantable {
       LambdaConfiguration that = (LambdaConfiguration) o;
       return Objects.equals(accessTokenPopulateId, that.accessTokenPopulateId) &&
              Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
-             Objects.equals(samlv2PopulateId, that.samlv2PopulateId);
+             Objects.equals(samlv2PopulateId, that.samlv2PopulateId) &&
+             Objects.equals(selfServiceRegistrationValidationId, that.selfServiceRegistrationValidationId);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId);
+      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId, selfServiceRegistrationValidationId);
     }
 
     @Override

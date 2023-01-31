@@ -23,6 +23,8 @@ import com.inversoft.json.JacksonConstructor;
  * @author Daniel DeGroff
  */
 public class SystemLogsExportRequest extends BaseExportRequest {
+  public boolean includeArchived;
+
   // Default to 64k
   public int lastNBytes = 64 * 1024;
 
@@ -30,9 +32,10 @@ public class SystemLogsExportRequest extends BaseExportRequest {
   public SystemLogsExportRequest() {
   }
 
-  public SystemLogsExportRequest(String dateTimeSecondsFormat, ZoneId zoneId, int lastNBytes) {
+  public SystemLogsExportRequest(String dateTimeSecondsFormat, ZoneId zoneId, int lastNBytes, boolean includeArchived) {
     this.dateTimeSecondsFormat = dateTimeSecondsFormat;
     this.zoneId = zoneId;
     this.lastNBytes = lastNBytes;
+    this.includeArchived = includeArchived;
   }
 }

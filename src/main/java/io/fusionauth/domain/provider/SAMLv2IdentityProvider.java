@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
+
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.CanonicalizationMethod;
@@ -34,48 +35,48 @@ import io.fusionauth.domain.util.HTTPMethod;
  *
  * @author Brian Pontarelli
  */
-public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2ApplicationConfiguration>
+public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2ApplicationConfiguration>
     implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public final Set<String> domains = new LinkedHashSet<>();
 
+  
+  public SAMLv2AssertionConfiguration assertionConfiguration = new SAMLv2AssertionConfiguration();
+
+  
   public URI buttonImageURL;
 
+  
   public String buttonText = "Login with SAML";
 
-  public String emailClaim;
-
+  
   public URI idpEndpoint;
+
+  
+  public SAMLv2IdpInitiatedConfiguration idpInitiatedConfiguration = new SAMLv2IdpInitiatedConfiguration(false);
 
   /**
    * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to
    * ${public_url}/samlv2/sp/${identityProviderId}.
    */
   @Deprecated
-
+  
   public String issuer;
 
-  /**
-   * The default key used for SAML Response Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML
-   * response.
-   */
-  public UUID keyId;
-
+  
   public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
 
+  
   public String nameIdFormat = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
 
+  
   public boolean postRequest;
 
   public UUID requestSigningKeyId;
 
+  
   public boolean signRequest;
 
-  public String uniqueIdClaim;
-
-  public boolean useNameIdForEmail;
-
-  public String usernameClaim;
-
+  
   public CanonicalizationMethod xmlSignatureC14nMethod;
 
   @Override
@@ -99,19 +100,16 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
     SAMLv2IdentityProvider that = (SAMLv2IdentityProvider) o;
     return postRequest == that.postRequest &&
            signRequest == that.signRequest &&
-           useNameIdForEmail == that.useNameIdForEmail &&
            Objects.equals(domains, that.domains) &&
+           Objects.equals(assertionConfiguration, that.assertionConfiguration) &&
            Objects.equals(buttonImageURL, that.buttonImageURL) &&
            Objects.equals(buttonText, that.buttonText) &&
-           Objects.equals(emailClaim, that.emailClaim) &&
            Objects.equals(idpEndpoint, that.idpEndpoint) &&
            Objects.equals(issuer, that.issuer) &&
-           Objects.equals(keyId, that.keyId) &&
            Objects.equals(loginHintConfiguration, that.loginHintConfiguration) &&
            Objects.equals(nameIdFormat, that.nameIdFormat) &&
            Objects.equals(requestSigningKeyId, that.requestSigningKeyId) &&
-           Objects.equals(uniqueIdClaim, that.uniqueIdClaim) &&
-           Objects.equals(usernameClaim, that.usernameClaim) &&
+           Objects.equals(idpInitiatedConfiguration, that.idpInitiatedConfiguration) &&
            xmlSignatureC14nMethod == that.xmlSignatureC14nMethod;
   }
 
@@ -129,20 +127,17 @@ public class SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Applicati
   public int hashCode() {
     return Objects.hash(super.hashCode(),
                         domains,
+                        assertionConfiguration,
                         buttonImageURL,
                         buttonText,
-                        emailClaim,
                         idpEndpoint,
                         issuer,
-                        keyId,
                         loginHintConfiguration,
                         nameIdFormat,
                         postRequest,
                         requestSigningKeyId,
                         signRequest,
-                        uniqueIdClaim,
-                        useNameIdForEmail,
-                        usernameClaim,
+                        idpInitiatedConfiguration,
                         xmlSignatureC14nMethod);
   }
 

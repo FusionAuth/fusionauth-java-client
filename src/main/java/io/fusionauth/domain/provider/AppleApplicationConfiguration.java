@@ -7,13 +7,16 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.Buildable;
 
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
 public class AppleApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<AppleApplicationConfiguration> {
+  
+  public String bundleId;
+
   
   public String buttonText;
 
@@ -40,7 +43,8 @@ public class AppleApplicationConfiguration extends BaseIdentityProviderApplicati
       return false;
     }
     AppleApplicationConfiguration that = (AppleApplicationConfiguration) o;
-    return Objects.equals(buttonText, that.buttonText) &&
+    return Objects.equals(bundleId, that.bundleId) &&
+           Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(keyId, that.keyId) &&
            Objects.equals(scope, that.scope) &&
            Objects.equals(servicesId, that.servicesId) &&
@@ -49,7 +53,7 @@ public class AppleApplicationConfiguration extends BaseIdentityProviderApplicati
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, keyId, scope, servicesId, teamId);
+    return Objects.hash(super.hashCode(), bundleId, buttonText, keyId, scope, servicesId, teamId);
   }
 
   @Override
