@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,34 @@ package io.fusionauth.domain.api.identityProvider;
 import java.util.UUID;
 
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.IdentityProviderLink;
 import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * @author Daniel DeGroff
  */
 public class IdentityProviderLinkRequest extends BaseEventRequest implements Buildable<IdentityProviderLinkRequest> {
-  public String displayName;
-
-  public UUID identityProviderId;
-
-  public String identityProviderUserId;
+  public IdentityProviderLink identityProviderLink = new IdentityProviderLink();
 
   public String pendingIdPLinkId;
 
-  public UUID userId;
+  @Deprecated
+  public void setDisplayName(String displayName) {
+    this.identityProviderLink.displayName = displayName;
+  }
+
+  @Deprecated
+  public void setIdentityProviderId(UUID identityProviderId) {
+    this.identityProviderLink.identityProviderId = identityProviderId;
+  }
+
+  @Deprecated
+  public void setIdentityProviderUserId(String identityProviderUserId) {
+    this.identityProviderLink.identityProviderUserId = identityProviderUserId;
+  }
+
+  @Deprecated
+  public void setUserId(UUID userId) {
+    this.identityProviderLink.userId = userId;
+  }
 }
