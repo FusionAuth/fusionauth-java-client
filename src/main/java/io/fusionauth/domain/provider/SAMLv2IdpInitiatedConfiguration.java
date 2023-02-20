@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.Enableable;
 
 /**
- * Config for regular SAML IDP configurations that support IDP-initiated requests
+ * Config for regular SAML IDP configurations that support IdP initiated requests
  *
  * @author Lyle Schemmerling
  */
