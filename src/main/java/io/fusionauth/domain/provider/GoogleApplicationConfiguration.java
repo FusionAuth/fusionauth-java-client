@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package io.fusionauth.domain.provider;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.Buildable;
 
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
@@ -36,6 +36,9 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
 
   
   public IdentityProviderLoginMethod loginMethod;
+
+  
+  public GoogleIdentityProviderProperties properties = new GoogleIdentityProviderProperties();
 
   
   public String scope;
@@ -56,12 +59,13 @@ public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicat
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
            loginMethod == that.loginMethod &&
+           Objects.equals(properties, that.properties) &&
            Objects.equals(scope, that.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, loginMethod, scope);
+    return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, loginMethod, properties, scope);
   }
 
   @Override

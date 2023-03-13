@@ -18,50 +18,41 @@ package io.fusionauth.domain.provider;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
- * @author Brett Pontarelli
+ * Google social login provider parameters.
+ *
+ * @author Daniel DeGroff
  */
-public class SteamApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SteamApplicationConfiguration> {
-  
-  public SteamAPIMode apiMode;
+public class GoogleIdentityProviderProperties implements Buildable<GoogleIdentityProviderProperties> {
+  public String api;
 
-  
-  public String buttonText;
+  public String button;
 
-  
-  public String client_id;
+  public GoogleIdentityProviderProperties() {
+  }
 
-  
-  public String scope;
-
-  
-  public String webAPIKey;
+  public GoogleIdentityProviderProperties(String api, String button) {
+    this.api = api;
+    this.button = button;
+  }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SteamApplicationConfiguration)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    if (!super.equals(o)) {
-      return false;
-    }
-    SteamApplicationConfiguration that = (SteamApplicationConfiguration) o;
-    return Objects.equals(apiMode, that.apiMode) &&
-           Objects.equals(buttonText, that.buttonText) &&
-           Objects.equals(client_id, that.client_id) &&
-           Objects.equals(webAPIKey, that.webAPIKey) &&
-           Objects.equals(scope, that.scope);
+    GoogleIdentityProviderProperties that = (GoogleIdentityProviderProperties) o;
+    return Objects.equals(api, that.api) && Objects.equals(button, that.button);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), apiMode, buttonText, client_id, webAPIKey, scope);
+    return Objects.hash(api, button);
   }
 
   @Override

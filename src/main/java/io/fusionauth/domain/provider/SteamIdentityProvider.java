@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.provider;
 
@@ -16,6 +28,9 @@ import io.fusionauth.domain.Buildable;
  * @author Brett Pontarelli
  */
 public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplicationConfiguration> implements Buildable<SteamIdentityProvider>, SupportsPostBindings {
+  
+  public SteamAPIMode apiMode = SteamAPIMode.Public;
+
   
   public String buttonText = "Login with Steam";
 
@@ -44,7 +59,8 @@ public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplication
       return false;
     }
     SteamIdentityProvider that = (SteamIdentityProvider) o;
-    return Objects.equals(buttonText, that.buttonText) &&
+    return Objects.equals(apiMode, that.apiMode) &&
+           Objects.equals(buttonText, that.buttonText) &&
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(webAPIKey, that.webAPIKey) &&
            Objects.equals(scope, that.scope);
@@ -57,7 +73,11 @@ public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplication
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), buttonText, client_id, webAPIKey, scope);
+    return Objects.hash(super.hashCode(), apiMode, buttonText, client_id, webAPIKey, scope);
+  }
+
+  public SteamAPIMode lookupAPIMode(UUID applicationId) {
+    return lookup(() -> apiMode, () -> app(applicationId, app -> app.apiMode));
   }
 
   public String lookupButtonText(String clientId) {
