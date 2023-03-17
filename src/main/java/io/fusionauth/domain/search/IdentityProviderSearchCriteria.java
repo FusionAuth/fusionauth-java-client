@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,23 +20,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
- * Search criteria for Groups
+ * Search criteria for Identity Providers.
  *
- * @author Daniel DeGroff
+ * @author Spencer Witt
  */
-public class GroupSearchCriteria extends BaseSearchCriteria {
+public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
+
+  public UUID applicationId;
 
   public String name;
 
-  public UUID tenantId;
+  @JacksonConstructor
+  public IdentityProviderSearchCriteria() {
+  }
 
   @Override
-  public GroupSearchCriteria prepare() {
+  public IdentityProviderSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
@@ -57,9 +62,9 @@ public class GroupSearchCriteria extends BaseSearchCriteria {
   }
 
   static {
-    SortableFields.put("id", "g.id");
-    SortableFields.put("insertInstant", "g.insert_instant");
-    SortableFields.put("name", "g.name");
-    SortableFields.put("tenant", "t.name");
+    SortableFields.put("id", "id");
+    SortableFields.put("insertInstant", "insert_instant");
+    SortableFields.put("name", "name");
+    SortableFields.put("enabled", "enabled");
   }
 }

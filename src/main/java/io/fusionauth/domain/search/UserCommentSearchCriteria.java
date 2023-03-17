@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,29 +20,38 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
 /**
- * Search criteria for Groups
+ * Search criteria for user comments.
  *
- * @author Daniel DeGroff
+ * @author Spencer Witt
  */
-public class GroupSearchCriteria extends BaseSearchCriteria {
+public class UserCommentSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public String name;
+  public String comment;
+
+  public UUID commenterId;
 
   public UUID tenantId;
 
+  public UUID userId;
+
+  @JacksonConstructor
+  public UserCommentSearchCriteria() {
+  }
+
   @Override
-  public GroupSearchCriteria prepare() {
+  public UserCommentSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
-    name = toSearchString(name);
+    comment = toSearchString(comment);
     return this;
   }
 
@@ -53,13 +62,15 @@ public class GroupSearchCriteria extends BaseSearchCriteria {
 
   @Override
   protected String defaultOrderBy() {
-    return "name ASC";
+    return "insertInstant DESC";
   }
 
   static {
-    SortableFields.put("id", "g.id");
-    SortableFields.put("insertInstant", "g.insert_instant");
-    SortableFields.put("name", "g.name");
-    SortableFields.put("tenant", "t.name");
+    SortableFields.put("id", "u.id");
+    SortableFields.put("commenterId", "u.commenter_id");
+    SortableFields.put("insertInstant", "u.insert_instant");
+    SortableFields.put("tenantId", "uu.tenants_id");
+    SortableFields.put("userId", "u.users_id");
+    SortableFields.put("comment", "u.comment");
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ public class EntityTypeSearchResponse {
   }
 
   public EntityTypeSearchResponse(SearchResults<EntityType> searchResults) {
-    this.entityTypes = searchResults.results;
-    this.entityTypes.forEach(et -> et.permissions.sort(Comparator.comparing(etp -> etp.name)));
-    this.total = searchResults.total;
+    entityTypes = searchResults.results;
+    entityTypes.forEach(et -> et.permissions.sort(Comparator.comparing(etp -> etp.name)));
+    total = searchResults.total;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.api.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,14 +37,14 @@ public class SearchResponse {
   @JsonIgnore
   public boolean totalEqualToActual;
 
-  public List<User> users = new ArrayList<>();
+  public List<User> users;
 
   @JacksonConstructor
   public SearchResponse() {
   }
 
   public SearchResponse(SearchResults<User> searchResults) {
-    this.total = searchResults.total;
-    this.users = searchResults.results;
+    total = searchResults.total;
+    users = searchResults.results;
   }
 }

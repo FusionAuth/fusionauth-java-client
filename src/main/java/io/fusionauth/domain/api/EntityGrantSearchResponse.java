@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ public class EntityGrantSearchResponse {
   }
 
   public EntityGrantSearchResponse(SearchResults<EntityGrant> searchResults) {
-    this.grants = searchResults.results;
-    this.total = searchResults.total;
-    this.grants.forEach(g -> g.entity.type.permissions.sort(Comparator.comparing(p -> p.name)));
+    grants = searchResults.results;
+    total = searchResults.total;
+    grants.forEach(g -> g.entity.type.permissions.sort(Comparator.comparing(p -> p.name)));
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,14 @@
  */
 package io.fusionauth.domain.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author Daniel DeGroff
@@ -29,8 +35,40 @@ public class SQLTools {
       Pattern.CASE_INSENSITIVE);
 
   public static String normalizeOrderBy(String orderBy, Map<String, String> sortableFields) {
+    return normalizeOrderBy(orderBy, sortableFields, Collections.emptySet());
+  }
+
+  public static String normalizeOrderBy(String orderBy, Map<String, String> sortableFields, Set<String> nullableFields) {
+    List<List<String>> orderBys = Arrays.stream(orderBy.split(","))
+                                        .map(s -> Arrays.stream(s.trim().split("\\s+")).collect(Collectors.toList()))
+                                        .collect(Collectors.toList());
+    List<String> orderByWithNulls = new ArrayList<>();
+
+    // If any nullable fields appear in ORDER BY, add NULL sorting to be consistent between database types
+    for (List<String> statement : orderBys) {
+      // Only perform this transformation if:
+      //  1) The ORDER BY statement for this column is `<columnName>` or `<columnName> ASC` or `<columnName> DESC`
+      //  2) The column is nullable
+      // The statement.size() check should filter out cases where someone is manually doing a IS NULL or IS NOT NULL sort
+      if (statement.size() <= 2 && nullableFields.contains(statement.get(0))) {
+        // If it is a nullable field, add a null sort to the clause before regular ordering
+        if (statement.get(statement.size() - 1).equalsIgnoreCase("desc")) {
+          // Order was DESC
+          orderByWithNulls.add(statement.get(0) + " IS NULL");
+        } else {
+          // Order was ASC or implied ASC
+          orderByWithNulls.add(statement.get(0) + " IS NOT NULL");
+        }
+      }
+
+      orderByWithNulls.add(String.join(" ", statement));
+    }
+
+    orderBy = String.join(", ", orderByWithNulls);
+
     for (String field : sortableFields.keySet()) {
-      orderBy = orderBy.replace(field, sortableFields.get(field));
+      // Use regex with word boundary to prevent replacing the same field multiple times
+      orderBy = orderBy.replaceAll(String.format("\\b%s\\b", field), sortableFields.get(field));
     }
 
     return orderBy;

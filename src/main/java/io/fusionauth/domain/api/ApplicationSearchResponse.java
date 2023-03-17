@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +18,25 @@ package io.fusionauth.domain.api;
 import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.GroupMember;
+import io.fusionauth.domain.Application;
 import io.fusionauth.domain.search.SearchResults;
 
 /**
- * Search response for Group Members
+ * Application search response
  *
- * @author Daniel DeGroff
+ * @author Spencer Witt
  */
-public class GroupMemberSearchResponse {
-  public List<GroupMember> members;
+public class ApplicationSearchResponse {
+  public List<Application> applications;
 
   public long total;
 
   @JacksonConstructor
-  public GroupMemberSearchResponse() {
+  public ApplicationSearchResponse() {
   }
 
-  public GroupMemberSearchResponse(SearchResults<GroupMember> searchResults) {
-    members = searchResults.results;
-    total = searchResults.total;
+  public ApplicationSearchResponse(SearchResults<Application> searchResults) {
+    this.applications = searchResults.results;
+    this.total = searchResults.total;
   }
 }

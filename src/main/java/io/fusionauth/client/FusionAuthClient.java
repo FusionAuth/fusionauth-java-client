@@ -40,6 +40,8 @@ import io.fusionauth.domain.api.APIKeyRequest;
 import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.ApplicationRequest;
 import io.fusionauth.domain.api.ApplicationResponse;
+import io.fusionauth.domain.api.ApplicationSearchRequest;
+import io.fusionauth.domain.api.ApplicationSearchResponse;
 import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
@@ -48,8 +50,12 @@ import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.api.ConnectorResponse;
 import io.fusionauth.domain.api.ConsentRequest;
 import io.fusionauth.domain.api.ConsentResponse;
+import io.fusionauth.domain.api.ConsentSearchRequest;
+import io.fusionauth.domain.api.ConsentSearchResponse;
 import io.fusionauth.domain.api.EmailTemplateRequest;
 import io.fusionauth.domain.api.EmailTemplateResponse;
+import io.fusionauth.domain.api.EmailTemplateSearchRequest;
+import io.fusionauth.domain.api.EmailTemplateSearchResponse;
 import io.fusionauth.domain.api.EntityGrantRequest;
 import io.fusionauth.domain.api.EntityGrantResponse;
 import io.fusionauth.domain.api.EntityGrantSearchRequest;
@@ -82,14 +88,20 @@ import io.fusionauth.domain.api.IPAccessControlListRequest;
 import io.fusionauth.domain.api.IPAccessControlListResponse;
 import io.fusionauth.domain.api.IPAccessControlListSearchRequest;
 import io.fusionauth.domain.api.IPAccessControlListSearchResponse;
+import io.fusionauth.domain.api.IdentityProviderSearchRequest;
+import io.fusionauth.domain.api.IdentityProviderSearchResponse;
 import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.api.IdentityProviderResponse;
 import io.fusionauth.domain.api.IntegrationRequest;
 import io.fusionauth.domain.api.IntegrationResponse;
 import io.fusionauth.domain.api.KeyRequest;
 import io.fusionauth.domain.api.KeyResponse;
+import io.fusionauth.domain.api.KeySearchRequest;
+import io.fusionauth.domain.api.KeySearchResponse;
 import io.fusionauth.domain.api.LambdaRequest;
 import io.fusionauth.domain.api.LambdaResponse;
+import io.fusionauth.domain.api.LambdaSearchRequest;
+import io.fusionauth.domain.api.LambdaSearchResponse;
 import io.fusionauth.domain.api.LoginRecordSearchRequest;
 import io.fusionauth.domain.api.LoginRecordSearchResponse;
 import io.fusionauth.domain.api.LoginPingRequest;
@@ -120,8 +132,12 @@ import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantDeleteRequest;
 import io.fusionauth.domain.api.TenantRequest;
 import io.fusionauth.domain.api.TenantResponse;
+import io.fusionauth.domain.api.TenantSearchRequest;
+import io.fusionauth.domain.api.TenantSearchResponse;
 import io.fusionauth.domain.api.ThemeRequest;
 import io.fusionauth.domain.api.ThemeResponse;
+import io.fusionauth.domain.api.ThemeSearchRequest;
+import io.fusionauth.domain.api.ThemeSearchResponse;
 import io.fusionauth.domain.api.TwoFactorDisableRequest;
 import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
@@ -132,6 +148,8 @@ import io.fusionauth.domain.api.UserActionRequest;
 import io.fusionauth.domain.api.UserActionResponse;
 import io.fusionauth.domain.api.UserCommentRequest;
 import io.fusionauth.domain.api.UserCommentResponse;
+import io.fusionauth.domain.api.UserCommentSearchRequest;
+import io.fusionauth.domain.api.UserCommentSearchResponse;
 import io.fusionauth.domain.api.UserConsentRequest;
 import io.fusionauth.domain.api.UserConsentResponse;
 import io.fusionauth.domain.api.UserDeleteRequest;
@@ -152,6 +170,8 @@ import io.fusionauth.domain.api.WebAuthnStartRequest;
 import io.fusionauth.domain.api.WebAuthnStartResponse;
 import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
+import io.fusionauth.domain.api.WebhookSearchRequest;
+import io.fusionauth.domain.api.WebhookSearchResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkRequest;
@@ -4225,6 +4245,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches applications with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ApplicationSearchResponse, Errors> searchApplications(ApplicationSearchRequest request) {
+    return start(ApplicationSearchResponse.class, Errors.class)
+        .uri("/api/application/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches the audit logs with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -4233,6 +4267,34 @@ public class FusionAuthClient {
   public ClientResponse<AuditLogSearchResponse, Errors> searchAuditLogs(AuditLogSearchRequest request) {
     return start(AuditLogSearchResponse.class, Errors.class)
         .uri("/api/system/audit-log/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches consents with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentSearchResponse, Errors> searchConsents(ConsentSearchRequest request) {
+    return start(ConsentSearchResponse.class, Errors.class)
+        .uri("/api/consent/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches email templates with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EmailTemplateSearchResponse, Errors> searchEmailTemplates(EmailTemplateSearchRequest request) {
+    return start(EmailTemplateSearchResponse.class, Errors.class)
+        .uri("/api/email/template/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4351,6 +4413,48 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches identity providers with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderSearchResponse, Errors> searchIdentityProviders(IdentityProviderSearchRequest request) {
+    return start(IdentityProviderSearchResponse.class, Errors.class)
+        .uri("/api/identity-provider/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches keys with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeySearchResponse, Errors> searchKeys(KeySearchRequest request) {
+    return start(KeySearchResponse.class, Errors.class)
+        .uri("/api/key/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches lambdas with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LambdaSearchResponse, Errors> searchLambdas(LambdaSearchRequest request) {
+    return start(LambdaSearchResponse.class, Errors.class)
+        .uri("/api/lambda/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches the login records with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -4359,6 +4463,48 @@ public class FusionAuthClient {
   public ClientResponse<LoginRecordSearchResponse, Errors> searchLoginRecords(LoginRecordSearchRequest request) {
     return start(LoginRecordSearchResponse.class, Errors.class)
         .uri("/api/system/login-record/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches tenants with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantSearchResponse, Errors> searchTenants(TenantSearchRequest request) {
+    return start(TenantSearchResponse.class, Errors.class)
+        .uri("/api/tenant/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches themes with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ThemeSearchResponse, Errors> searchThemes(ThemeSearchRequest request) {
+    return start(ThemeSearchResponse.class, Errors.class)
+        .uri("/api/theme/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches user comments with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserCommentSearchResponse, Errors> searchUserComments(UserCommentSearchRequest request) {
+    return start(UserCommentSearchResponse.class, Errors.class)
+        .uri("/api/user/comment/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();
@@ -4421,6 +4567,20 @@ public class FusionAuthClient {
   public ClientResponse<SearchResponse, Errors> searchUsersByQueryString(SearchRequest request) {
     return start(SearchResponse.class, Errors.class)
         .uri("/api/user/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches webhooks with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookSearchResponse, Errors> searchWebhooks(WebhookSearchRequest request) {
+    return start(WebhookSearchResponse.class, Errors.class)
+        .uri("/api/webhook/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper))
         .post()
         .go();

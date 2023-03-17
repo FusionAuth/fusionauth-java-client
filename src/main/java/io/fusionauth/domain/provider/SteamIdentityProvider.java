@@ -37,6 +37,7 @@ public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplication
   
   public String client_id;
 
+  // Note that we are not currently ever passing scope to Steam. Let's not document this unless we're going to use it.
   
   public String scope;
 

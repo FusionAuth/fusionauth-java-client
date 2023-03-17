@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,29 +20,39 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import io.fusionauth.domain.Buildable;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
-/**
- * Search criteria for Groups
- *
- * @author Daniel DeGroff
- */
-public class GroupSearchCriteria extends BaseSearchCriteria {
+public class AuthenticationKeySearchCriteria extends BaseSearchCriteria implements Buildable<AuthenticationKeySearchCriteria> {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public String name;
+  public String description;
+
+  public Boolean keyManager;
 
   public UUID tenantId;
 
+  public AuthenticationKeySearchCriteria() {
+  }
+
+  public AuthenticationKeySearchCriteria(AuthenticationKeySearchCriteria other) {
+    this.description = other.description;
+    this.keyManager = other.keyManager;
+    this.tenantId = other.tenantId;
+    this.numberOfResults = other.numberOfResults;
+    this.orderBy = other.orderBy;
+    this.startRow = other.startRow;
+  }
+
   @Override
-  public GroupSearchCriteria prepare() {
+  public BaseSearchCriteria prepare() {
     if (orderBy == null) {
       orderBy = defaultOrderBy();
     }
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
-    name = toSearchString(name);
+    description = toSearchString(description);
     return this;
   }
 
@@ -53,13 +63,13 @@ public class GroupSearchCriteria extends BaseSearchCriteria {
 
   @Override
   protected String defaultOrderBy() {
-    return "name ASC";
+    return "insertInstant ASC";
   }
 
   static {
-    SortableFields.put("id", "g.id");
-    SortableFields.put("insertInstant", "g.insert_instant");
-    SortableFields.put("name", "g.name");
-    SortableFields.put("tenant", "t.name");
+    SortableFields.put("id", "k.id");
+    SortableFields.put("insertInstant", "k.insert_instant");
+    SortableFields.put("keyManager", "k.key_manager");
+    SortableFields.put("keyValue", "k.key_value");
   }
 }

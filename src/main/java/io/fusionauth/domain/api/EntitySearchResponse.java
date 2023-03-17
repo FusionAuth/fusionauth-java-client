@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +26,7 @@ import io.fusionauth.domain.Entity;
  * @author Brett Guy
  */
 public class EntitySearchResponse {
-  public List<Entity> entities = new ArrayList<>();
+  public List<Entity> entities;
 
   public long total;
 
