@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
@@ -28,7 +27,7 @@ import io.fusionauth.domain.search.SearchResults;
  * @author Daniel DeGroff
  */
 public class GroupSearchResponse {
-  public List<Group> groups= new ArrayList<>();
+  public List<Group> groups;
 
   public long total;
 
