@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ jacksonVersion = "2.14.0"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
 restifyVersion = "4.1.2"
-testngVersion = "7.3.0"
+testngVersion = "7.7.1"
 
 project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.44.0", licenses: ["ApacheV2_0"]) {
   workflow {
@@ -62,6 +62,7 @@ java = loadPlugin(id: "org.savantbuild.plugin:java:2.0.0-RC.4")
 javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:2.0.0-RC.4")
 file = loadPlugin(id: "org.savantbuild.plugin:file:2.0.0-RC.4")
 idea = loadPlugin(id: "org.savantbuild.plugin:idea:2.0.0-RC.4")
+pom = loadPlugin(id: "org.savantbuild.plugin:pom:2.0.0-RC.6")
 release = loadPlugin(id: "org.savantbuild.plugin:release-git:2.0.0-RC.4")
 
 // Plugin settings
@@ -89,7 +90,7 @@ target(name: "doc", description: "Generate the project's JavaDoc", dependsOn: ["
   java.document()
 }
 
-target(name: "int", description: "Releases a local integration build of the project", dependsOn: ["jar"]) {
+target(name: "int", description: "Releases a local integration build of the project", dependsOn: ["jar", "pom"]) {
   dependency.integrate()
 }
 
@@ -113,6 +114,10 @@ target(name: "publish", description: "Publish to MVN repo", dependsOn: ["clean",
 
 target(name: "idea", description: "Updates the IntelliJ IDEA module file") {
   idea.iml()
+}
+
+target(name: "pom", description: "Updates the pom.xml file") {
+  pom.update()
 }
 
 target(name: "bundle", description: "Builds the project release bundle", dependsOn: ["jar"]) {
