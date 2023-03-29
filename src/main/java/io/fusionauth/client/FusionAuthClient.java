@@ -225,6 +225,7 @@ import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.JWKSResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
+import io.fusionauth.domain.oauth2.UserinfoResponse;
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -3920,8 +3921,8 @@ public class FusionAuthClient {
    * @param encodedJWT The encoded JWT (access token).
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT) {
-    return startAnonymous(UserResponse.class, OAuthError.class)
+  public ClientResponse<UserinfoResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT) {
+    return startAnonymous(UserinfoResponse.class, OAuthError.class)
         .uri("/oauth2/userinfo")
         .authorization("Bearer " + encodedJWT)
         .get()
