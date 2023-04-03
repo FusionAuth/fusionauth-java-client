@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -17,6 +17,8 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
   
   public UUID adminRegistrationFormId;
 
+  public SelfServiceFormConfiguration selfServiceFormConfiguration = new SelfServiceFormConfiguration();
+
   
   public UUID selfServiceFormId;
 
@@ -26,6 +28,7 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
 
   public ApplicationFormConfiguration(ApplicationFormConfiguration other) {
     this.adminRegistrationFormId = other.adminRegistrationFormId;
+    this.selfServiceFormConfiguration = new SelfServiceFormConfiguration(other.selfServiceFormConfiguration);
     this.selfServiceFormId = other.selfServiceFormId;
   }
 
@@ -39,12 +42,13 @@ public class ApplicationFormConfiguration implements Buildable<ApplicationFormCo
     }
     ApplicationFormConfiguration that = (ApplicationFormConfiguration) o;
     return Objects.equals(adminRegistrationFormId, that.adminRegistrationFormId)
-           && Objects.equals(selfServiceFormId, that.selfServiceFormId);
+           && Objects.equals(selfServiceFormId, that.selfServiceFormId)
+           && Objects.equals(selfServiceFormConfiguration, that.selfServiceFormConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(adminRegistrationFormId, selfServiceFormId);
+    return Objects.hash(adminRegistrationFormId, selfServiceFormId, selfServiceFormConfiguration);
   }
 
   @Override

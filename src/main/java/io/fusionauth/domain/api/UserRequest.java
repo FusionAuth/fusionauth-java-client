@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.api;
 
@@ -29,6 +17,9 @@ import io.fusionauth.domain.User;
  */
 public class UserRequest extends BaseEventRequest implements Buildable<UserRequest> {
   public UUID applicationId;
+
+  // Used for password update. If it's provided, it'll be validated.
+  public String currentPassword;
 
   public boolean disableDomainBlock;
 
@@ -61,9 +52,11 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
     this.user = user;
   }
 
-  public UserRequest(EventInfo eventInfo, UUID applicationId, boolean sendSetPasswordEmail, boolean skipVerification, User user) {
+  public UserRequest(EventInfo eventInfo, UUID applicationId, boolean sendSetPasswordEmail, boolean skipVerification, String currentPassword,
+                     User user) {
     super(eventInfo);
     this.applicationId = applicationId;
+    this.currentPassword = currentPassword;
     this.sendSetPasswordEmail = sendSetPasswordEmail;
     this.skipVerification = skipVerification;
     this.user = user;
