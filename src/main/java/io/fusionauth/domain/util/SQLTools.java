@@ -109,6 +109,9 @@ public class SQLTools {
         } else {
           sb.append('%');
         }
+      } else if (s.charAt(index) == '%') {
+        sb.append('\\')
+          .append(s.charAt(index));
       } else {
         sb.append(s.charAt(index));
       }

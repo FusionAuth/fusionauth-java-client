@@ -36,6 +36,8 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
   public String name;
 
+  public String type;
+
   @JacksonConstructor
   public IdentityProviderSearchCriteria() {
   }
@@ -48,6 +50,7 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
+    type = toSearchString(type);
     return this;
   }
 
@@ -66,5 +69,6 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
     SortableFields.put("insertInstant", "insert_instant");
     SortableFields.put("name", "name");
     SortableFields.put("enabled", "enabled");
+    SortableFields.put("type", "type");
   }
 }
