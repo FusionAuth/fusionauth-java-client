@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.provider.IdentityProviderType;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 import static io.fusionauth.domain.util.SQLTools.toSearchString;
 
@@ -36,7 +37,7 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
   public String name;
 
-  public String type;
+  public IdentityProviderType type;
 
   @JacksonConstructor
   public IdentityProviderSearchCriteria() {
@@ -50,7 +51,6 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
-    type = toSearchString(type);
     return this;
   }
 
