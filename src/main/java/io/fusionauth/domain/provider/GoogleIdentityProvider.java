@@ -81,25 +81,53 @@ public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicati
     return Objects.hash(super.hashCode(), buttonText, client_id, client_secret, loginMethod, properties, scope);
   }
 
+  /**
+   * Creates a new properties object with the values of {@link GoogleIdentityProviderProperties#api} from {@link GoogleIdentityProvider#properties}
+   * and overrides with values from the corresponding {@link GoogleApplicationConfiguration#properties}
+   *
+   * @param clientId the application's OAuth client Id
+   * @return the merged API properties
+   */
   public Properties lookupAPIProperties(String clientId) {
-    String result = lookup(() -> properties.api, () -> app(clientId, app -> app.properties.api));
+    String app = app(clientId, a -> a.properties.api);
 
     try {
-      Properties properties = new Properties();
-      properties.load(new StringReader(result));
-      return properties;
+      Properties merged = new Properties();
+      merged.load(new StringReader(properties.api));
+
+      if (app != null) {
+        Properties override = new Properties();
+        override.load(new StringReader(app));
+        merged.putAll(override);
+      }
+
+      return merged;
     } catch (Exception e) {
       return null;
     }
   }
 
+  /**
+   * Creates a new properties object with the values of {@link GoogleIdentityProviderProperties#button} from {@link GoogleIdentityProvider#properties}
+   * and overrides with values from the corresponding {@link GoogleApplicationConfiguration#properties}
+   *
+   * @param clientId the application's OAuth client Id
+   * @return the merged button properties
+   */
   public Properties lookupButtonProperties(String clientId) {
-    String result = lookup(() -> properties.button, () -> app(clientId, app -> app.properties.button));
+    String app = app(clientId, a -> a.properties.button);
 
     try {
-      Properties properties = new Properties();
-      properties.load(new StringReader(result));
-      return properties;
+      Properties merged = new Properties();
+      merged.load(new StringReader(properties.button));
+
+      if (app != null) {
+        Properties override = new Properties();
+        override.load(new StringReader(app));
+        merged.putAll(override);
+      }
+
+      return merged;
     } catch (Exception e) {
       return null;
     }
