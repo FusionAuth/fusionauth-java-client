@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
@@ -127,6 +128,17 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
            Objects.equals(logoutBehavior, that.logoutBehavior) &&
            Objects.equals(logoutURL, that.logoutURL) &&
            Objects.equals(proofKeyForCodeExchangePolicy, that.proofKeyForCodeExchangePolicy);
+  }
+
+  /**
+   * @return the first authorized redirect URI excluding any patterns or null if one cannot be found.
+   */
+  @JsonIgnore
+  public URI getFirstAuthorizedRedirectURLIgnoringPatterns() {
+    return authorizedRedirectURLs.stream()
+                                 .filter(uri -> !uri.toString().contains("*"))
+                                 .findFirst()
+                                 .orElse(null);
   }
 
   @Override
