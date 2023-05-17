@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ public class OAuthError implements OAuthResponse {
     not_licensed,
     two_factor_required,
 
-    // RFC 8628 Device Authorization
+    // RFC 8628 Device Authorization, section 3.5
     authorization_pending,
     expired_token,
 

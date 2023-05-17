@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,26 +23,15 @@ import com.inversoft.json.ToString;
 /**
  * @author Daniel DeGroff
  */
-public class RefreshTokenRevocationPolicy implements Buildable<RefreshTokenRevocationPolicy> {
-  public boolean onLoginPrevented;
-
-  public boolean onMultiFactorEnable;
-
-  public boolean onPasswordChanged;
+public class RefreshTokenSlidingWindowConfiguration implements Buildable<RefreshTokenSlidingWindowConfiguration> {
+  public int maximumTimeToLiveInMinutes = 30 * 24 * 60;
 
   @JacksonConstructor
-  public RefreshTokenRevocationPolicy() {
+  public RefreshTokenSlidingWindowConfiguration() {
   }
 
-  public RefreshTokenRevocationPolicy(RefreshTokenRevocationPolicy other) {
-    this.onLoginPrevented = other.onLoginPrevented;
-    this.onMultiFactorEnable = other.onMultiFactorEnable;
-    this.onPasswordChanged = other.onPasswordChanged;
-  }
-
-  public RefreshTokenRevocationPolicy(boolean onLoginPrevented, boolean onPasswordChanged) {
-    this.onLoginPrevented = onLoginPrevented;
-    this.onPasswordChanged = onPasswordChanged;
+  public RefreshTokenSlidingWindowConfiguration(RefreshTokenSlidingWindowConfiguration other) {
+    this.maximumTimeToLiveInMinutes = other.maximumTimeToLiveInMinutes;
   }
 
   @Override
@@ -53,13 +42,13 @@ public class RefreshTokenRevocationPolicy implements Buildable<RefreshTokenRevoc
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RefreshTokenRevocationPolicy that = (RefreshTokenRevocationPolicy) o;
-    return onLoginPrevented == that.onLoginPrevented && onMultiFactorEnable == that.onMultiFactorEnable && onPasswordChanged == that.onPasswordChanged;
+    RefreshTokenSlidingWindowConfiguration that = (RefreshTokenSlidingWindowConfiguration) o;
+    return maximumTimeToLiveInMinutes == that.maximumTimeToLiveInMinutes;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(onLoginPrevented, onMultiFactorEnable, onPasswordChanged);
+    return Objects.hash(maximumTimeToLiveInMinutes);
   }
 
   @Override
