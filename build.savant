@@ -57,13 +57,13 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.46.0
 }
 
 // Plugins
-dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:2.0.0-RC.4")
-java = loadPlugin(id: "org.savantbuild.plugin:java:2.0.0-RC.4")
-javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:2.0.0-RC.4")
-file = loadPlugin(id: "org.savantbuild.plugin:file:2.0.0-RC.4")
-idea = loadPlugin(id: "org.savantbuild.plugin:idea:2.0.0-RC.4")
+dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:2.0.0-RC.6")
+java = loadPlugin(id: "org.savantbuild.plugin:java:2.0.0-RC.6")
+javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:2.0.0-RC.6")
+file = loadPlugin(id: "org.savantbuild.plugin:file:2.0.0-RC.6")
+idea = loadPlugin(id: "org.savantbuild.plugin:idea:2.0.0-RC.6")
 pom = loadPlugin(id: "org.savantbuild.plugin:pom:2.0.0-RC.6")
-release = loadPlugin(id: "org.savantbuild.plugin:release-git:2.0.0-RC.4")
+release = loadPlugin(id: "org.savantbuild.plugin:release-git:2.0.0-RC.6")
 
 // Plugin settings
 java.settings.javaVersion = "1.8"
