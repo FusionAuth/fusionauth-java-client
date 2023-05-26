@@ -61,7 +61,7 @@ dependency = loadPlugin(id: "org.savantbuild.plugin:dependency:2.0.0-RC.6")
 java = loadPlugin(id: "org.savantbuild.plugin:java:2.0.0-RC.6")
 javaTestNG = loadPlugin(id: "org.savantbuild.plugin:java-testng:2.0.0-RC.6")
 file = loadPlugin(id: "org.savantbuild.plugin:file:2.0.0-RC.6")
-idea = loadPlugin(id: "org.savantbuild.plugin:idea:2.0.0-RC.6")
+idea = loadPlugin(id: "org.savantbuild.plugin:idea:2.0.0-RC.7")
 pom = loadPlugin(id: "org.savantbuild.plugin:pom:2.0.0-RC.6")
 release = loadPlugin(id: "org.savantbuild.plugin:release-git:2.0.0-RC.6")
 
