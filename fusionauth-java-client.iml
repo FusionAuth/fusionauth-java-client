@@ -54,11 +54,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/.savant/cache/io/fusionauth/fusionauth-jwt/5.1.2/fusionauth-jwt-5.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/.savant/cache/io/fusionauth/fusionauth-jwt/5.2.4/fusionauth-jwt-5.2.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/.savant/cache/io/fusionauth/fusionauth-jwt/5.1.2/fusionauth-jwt-5.1.2-src.jar!/" />
+          <root url="jar://$MODULE_DIR$/.savant/cache/io/fusionauth/fusionauth-jwt/5.2.4/fusionauth-jwt-5.2.4-src.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
