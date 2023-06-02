@@ -26,17 +26,21 @@ if (!result.wasSuccessful()) {
 // Hooray! Success
 ```
 
-## Building 
+## Installation
 
-### Building with Maven
+Add the dependency via Maven:
 
 ```xml
 <dependency>
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-  <version>1.5.0</version>
+  <version>1.46.0</version>
 </dependency>
 ```
+
+## Building 
+
+### Building with Maven
 
 ```bash
 $ mvn install
