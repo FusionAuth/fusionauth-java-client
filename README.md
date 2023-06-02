@@ -3,23 +3,6 @@ If you're integrating FusionAuth with a Java application, this library will spee
 
 For additional information and documentation on FusionAuth refer to [https://fusionauth.io](https://fusionauth.io).
 
-
-## Maven 
-```xml
-<dependency>
-  <groupId>io.fusionauth</groupId>
-  <artifactId>fusionauth-java-client</artifactId>
-  <version>1.5.0</version>
-</dependency>
-```
-
-Then, perform an integration build of the project by running:
-```bash
-$ sb int
-```
-
-For more information, checkout [savantbuild.org](http://savantbuild.org/).
-
 ## Example Usage
 
 ### Build the Client
@@ -47,6 +30,14 @@ if (!result.wasSuccessful()) {
 
 ### Building with Maven
 
+```xml
+<dependency>
+  <groupId>io.fusionauth</groupId>
+  <artifactId>fusionauth-java-client</artifactId>
+  <version>1.5.0</version>
+</dependency>
+```
+
 ```bash
 $ mvn install
 ```
@@ -62,7 +53,14 @@ $ wget http://savant.inversoft.org/org/savantbuild/savant-core/1.0.0/savant-1.0.
 $ tar xvfz savant-1.0.0.tar.gz
 $ ln -s ./savant-1.0.0 current
 $ export PATH=$PATH:~/savant/current/bin/
+``` 
+
+Then, perform an integration build of the project by running:
+```bash
+$ sb int
 ```
+
+For more information, checkout [savantbuild.org](http://savantbuild.org/).
 
 ## Questions and support
 
