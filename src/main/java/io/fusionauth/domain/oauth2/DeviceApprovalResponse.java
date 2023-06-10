@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,26 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.oauth2;
+
+import java.util.UUID;
+
+import io.fusionauth.api.domain.ExternalIdentifier.DeviceGrantStatus;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.IdentityProviderLink;
+import io.fusionauth.domain.jwt.DeviceInfo;
 
 /**
  * @author Daniel DeGroff
  */
-public enum RefreshTokenExpirationPolicy {
-  // The token expiration is fixed from the time of issue to the configured TTL.
-  Fixed,
+public class DeviceApprovalResponse implements Buildable<DeviceApprovalResponse> {
+  public DeviceGrantStatus deviceGrantStatus;
 
-  // The token expiration is reset on each use to the configured TTL.
-  SlidingWindow
+  public DeviceInfo deviceInfo;
+
+  public IdentityProviderLink identityProviderLink;
+
+  public UUID tenantId;
+
+  public UUID userId;
 }

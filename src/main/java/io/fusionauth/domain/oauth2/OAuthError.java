@@ -73,6 +73,7 @@ public class OAuthError implements OAuthResponse {
     access_token_expired,
     access_token_unavailable_for_processing,
     access_token_failed_processing,
+    access_token_invalid,
 
     refresh_token_not_found,
     refresh_token_type_not_supported,
@@ -96,6 +97,7 @@ public class OAuthError implements OAuthResponse {
     invalid_additional_client_id,
     invalid_target_entity_scope,
     invalid_entity_permission_scope,
+    invalid_user_id,
 
     // Grant disabled
     grant_type_disabled,
@@ -113,6 +115,7 @@ public class OAuthError implements OAuthResponse {
     missing_response_type,
     missing_token,
     missing_user_code,
+    missing_user_id,
     missing_verification_uri,
 
     login_prevented,
@@ -156,7 +159,7 @@ public class OAuthError implements OAuthResponse {
     not_licensed,
     two_factor_required,
 
-    // RFC 8628 Device Authorization, section 3.5
+    // RFC 8628 Device Authorization
     authorization_pending,
     expired_token,
 

@@ -177,6 +177,7 @@ import io.fusionauth.domain.api.email.SendResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderPendingLinkResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderStartLoginResponse;
 import io.fusionauth.domain.api.identityProvider.LookupResponse;
@@ -222,6 +223,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.oauth2.AccessToken;
+import io.fusionauth.domain.oauth2.DeviceApprovalResponse;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.JWKSResponse;
 import io.fusionauth.domain.oauth2.OAuthError;
@@ -347,6 +349,28 @@ public class FusionAuthClient {
   }
 
   /**
+   * Approve a device grant.
+   *
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate.
+   * @param client_secret (Optional) The client secret. This value will be required if client authentication is enabled.
+   * @param token The access token used to identify the user.
+   * @param user_code The end-user verification code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<DeviceApprovalResponse, Errors> approveDevice(String client_id, String client_secret, String token, String user_code) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(client_id));
+    parameters.put("client_secret", Arrays.asList(client_secret));
+    parameters.put("token", Arrays.asList(token));
+    parameters.put("user_code", Arrays.asList(user_code));
+    return start(DeviceApprovalResponse.class, Errors.class)
+        .uri("/oauth2/device/approve")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .post()
+        .go();
+  }
+
+  /**
    * Cancels the user action.
    *
    * @param actionId The action id of the action to cancel.
@@ -455,8 +479,8 @@ public class FusionAuthClient {
   /**
    * Make a Client Credentials grant request to obtain an access token.
    *
-   * @param client_id The client identifier. The client Id is the Id of the FusionAuth Entity in which you are attempting to authenticate.
-   * @param client_secret The client secret used to authenticate this request.
+   * @param client_id (Optional) The client identifier. The client Id is the Id of the FusionAuth Entity in which you are attempting to authenticate.
+   * @param client_secret (Optional) The client secret used to authenticate this request.
    * @param scope (Optional) This parameter is used to indicate which target entity you are requesting access. To request access to an entity, use the format target-entity:&lt;target-entity-id&gt;:&lt;roles&gt;. Roles are an optional comma separated list.
    * @return The ClientResponse object.
    */
@@ -1671,7 +1695,7 @@ public class FusionAuthClient {
    * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
    *
    * @param code The authorization code returned on the /oauth2/authorize response.
-   * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate.
+   * @param client_id (Optional) The unique client identifier. The client Id is the Id of the FusionAuth Application in which you are attempting to authenticate.
    * @param client_secret (Optional) The client secret. This value will be required if client authentication is enabled.
    * @param redirect_uri The URI to redirect to upon a successful request.
    * @return The ClientResponse object.
@@ -3501,6 +3525,22 @@ public class FusionAuthClient {
     return start(PendingResponse.class, Errors.class)
         .uri("/api/user/family/pending")
         .urlParameter("parentEmail", parentEmail)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieve a pending identity provider link. This is useful to validate a pending link and retrieve meta-data about the identity provider link.
+   *
+   * @param pendingLinkId The pending link Id.
+   * @param userId The optional userId. When provided additional meta-data will be provided to identify how many links if any the user already has.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderPendingLinkResponse, Errors> retrievePendingLink(String pendingLinkId, UUID userId) {
+    return start(IdentityProviderPendingLinkResponse.class, Errors.class)
+        .uri("/api/identity-provider/link/pending")
+        .urlSegment(pendingLinkId)
+        .urlParameter("userId", userId)
         .get()
         .go();
   }

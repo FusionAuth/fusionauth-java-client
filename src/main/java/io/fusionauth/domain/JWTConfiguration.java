@@ -1,17 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -48,21 +36,17 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
    */
   public RefreshTokenRevocationPolicy refreshTokenRevocationPolicy = new RefreshTokenRevocationPolicy(true, true);
 
-  public RefreshTokenSlidingWindowConfiguration refreshTokenSlidingWindowConfiguration = new RefreshTokenSlidingWindowConfiguration();
-
   /**
    * The length of time in minutes a Refresh Token is valid from the time it was issued. This should be a non-zero value.
-   * <p>
-   * Default is set at 30 days.
    */
-  public int refreshTokenTimeToLiveInMinutes = 30 * 24 * 60;
+  public int refreshTokenTimeToLiveInMinutes = 43200;
 
   public RefreshTokenUsagePolicy refreshTokenUsagePolicy = RefreshTokenUsagePolicy.Reusable;
 
   /**
    * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
    */
-  public int timeToLiveInSeconds = 60 * 60;
+  public int timeToLiveInSeconds = 3600;
 
   @JacksonConstructor
   public JWTConfiguration() {
@@ -73,8 +57,7 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     this.enabled = other.enabled;
     this.idTokenKeyId = other.idTokenKeyId;
     this.refreshTokenExpirationPolicy = other.refreshTokenExpirationPolicy;
-    this.refreshTokenRevocationPolicy = new RefreshTokenRevocationPolicy(other.refreshTokenRevocationPolicy);
-    this.refreshTokenSlidingWindowConfiguration = new RefreshTokenSlidingWindowConfiguration(other.refreshTokenSlidingWindowConfiguration);
+    this.refreshTokenRevocationPolicy = other.refreshTokenRevocationPolicy;
     this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
     this.refreshTokenUsagePolicy = other.refreshTokenUsagePolicy;
     this.timeToLiveInSeconds = other.timeToLiveInSeconds;
@@ -85,34 +68,22 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    if (!super.equals(o)) {
+    if (!(o instanceof JWTConfiguration)) {
       return false;
     }
     JWTConfiguration that = (JWTConfiguration) o;
-    return Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
+    return super.equals(o) &&
+           Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
            Objects.equals(idTokenKeyId, that.idTokenKeyId) &&
-           refreshTokenExpirationPolicy == that.refreshTokenExpirationPolicy &&
-           Objects.equals(refreshTokenRevocationPolicy, that.refreshTokenRevocationPolicy) &&
-           Objects.equals(refreshTokenSlidingWindowConfiguration, that.refreshTokenSlidingWindowConfiguration) &&
-           refreshTokenTimeToLiveInMinutes == that.refreshTokenTimeToLiveInMinutes &&
-           refreshTokenUsagePolicy == that.refreshTokenUsagePolicy &&
-           timeToLiveInSeconds == that.timeToLiveInSeconds;
+           Objects.equals(refreshTokenExpirationPolicy, that.refreshTokenExpirationPolicy) &&
+           Objects.equals(refreshTokenTimeToLiveInMinutes, that.refreshTokenTimeToLiveInMinutes) &&
+           Objects.equals(refreshTokenUsagePolicy, that.refreshTokenUsagePolicy) &&
+           Objects.equals(timeToLiveInSeconds, that.timeToLiveInSeconds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(),
-                        accessTokenKeyId,
-                        idTokenKeyId,
-                        refreshTokenExpirationPolicy,
-                        refreshTokenRevocationPolicy,
-                        refreshTokenSlidingWindowConfiguration,
-                        refreshTokenTimeToLiveInMinutes,
-                        refreshTokenUsagePolicy,
-                        timeToLiveInSeconds);
+    return Objects.hash(super.hashCode(), accessTokenKeyId, idTokenKeyId, refreshTokenExpirationPolicy, refreshTokenTimeToLiveInMinutes, refreshTokenUsagePolicy, timeToLiveInSeconds);
   }
 
   @Override
