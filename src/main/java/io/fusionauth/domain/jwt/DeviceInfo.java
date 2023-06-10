@@ -74,6 +74,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
     return ToString.toString(this);
   }
 
+  @Deprecated
   public enum DeviceType {
     BROWSER,
     DESKTOP,
