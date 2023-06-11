@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class TwoFactorSendRequest implements Buildable<TwoFactorSendRequest> {
+  public UUID applicationId;
+
   public String email;
 
   public String method;

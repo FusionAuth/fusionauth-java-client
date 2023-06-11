@@ -159,7 +159,7 @@ public class OAuthError implements OAuthResponse {
     not_licensed,
     two_factor_required,
 
-    // RFC 8628 Device Authorization
+    // RFC 8628 Device Authorization, section 3.5
     authorization_pending,
     expired_token,
 
