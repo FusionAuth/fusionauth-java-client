@@ -17,7 +17,6 @@ package io.fusionauth.domain.oauth2;
 
 import java.util.UUID;
 
-import io.fusionauth.api.domain.ExternalIdentifier.DeviceGrantStatus;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.IdentityProviderLink;
 import io.fusionauth.domain.jwt.DeviceInfo;
@@ -26,7 +25,7 @@ import io.fusionauth.domain.jwt.DeviceInfo;
  * @author Daniel DeGroff
  */
 public class DeviceApprovalResponse implements Buildable<DeviceApprovalResponse> {
-  public DeviceGrantStatus deviceGrantStatus;
+  public String deviceGrantStatus;
 
   public DeviceInfo deviceInfo;
 
