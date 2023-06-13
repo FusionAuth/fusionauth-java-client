@@ -3958,6 +3958,26 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
+   * <p>
+   * This API is useful if you want to build your own login workflow to complete a device grant.
+   * <p>
+   * This request will require an API key.
+   *
+   * @param user_code The end-user verification code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> retrieveUserCode(String user_code) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("user_code", Arrays.asList(user_code));
+    return startAnonymous(Void.TYPE, Void.TYPE)
+        .uri("/oauth2/device/user-code")
+        .bodyHandler(new FormDataBodyHandler(parameters))
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves all the comments for the user with the given Id.
    *
    * @param userId The Id of the user.
