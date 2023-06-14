@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public class BaseLoginRequest extends BaseEventRequest {
     }
 
     if (eventInfo.deviceType == null) {
-      eventInfo.deviceType = metaData.device.type != null ? metaData.device.type.name() : null;
+      eventInfo.deviceType = metaData.device.type;
     }
   }
 }

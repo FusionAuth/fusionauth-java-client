@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
 
   public String name;
 
-  public DeviceType type = DeviceType.UNKNOWN;
+  public String type;
 
   @JacksonConstructor
   public DeviceInfo() {
@@ -61,7 +61,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
            Objects.equals(lastAccessedAddress, device.lastAccessedAddress) &&
            Objects.equals(lastAccessedInstant, device.lastAccessedInstant) &&
            Objects.equals(name, device.name) &&
-           type == device.type;
+           Objects.equals(type, device.type);
   }
 
   @Override
@@ -74,6 +74,7 @@ public class DeviceInfo implements Buildable<DeviceInfo> {
     return ToString.toString(this);
   }
 
+  @Deprecated
   public enum DeviceType {
     BROWSER,
     DESKTOP,

@@ -27,6 +27,7 @@ import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 
+import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
  * @author Daniel DeGroff
@@ -40,6 +41,8 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
   public String displayName;
 
   public UUID identityProviderId;
+
+  public IdentityProviderType identityProviderType;
 
   public String identityProviderUserId;
 
@@ -76,6 +79,7 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
     return Objects.equals(data, that.data) &&
            Objects.equals(displayName, that.displayName) &&
            Objects.equals(identityProviderId, that.identityProviderId) &&
+           Objects.equals(identityProviderType, that.identityProviderType) &&
            Objects.equals(identityProviderUserId, that.identityProviderUserId) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
@@ -91,7 +95,7 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, displayName, identityProviderId, identityProviderUserId, insertInstant, lastLoginInstant, tenantId, token, userId);
+    return Objects.hash(data, displayName, identityProviderId, identityProviderType, identityProviderUserId, insertInstant, lastLoginInstant, tenantId, token, userId);
   }
 
   @Override

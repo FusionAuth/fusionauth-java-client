@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.IdentityProviderLink;
@@ -65,6 +66,7 @@ public class PendingIdPLink implements Buildable<PendingIdPLink> {
     return Objects.hash(displayName, email, identityProviderId, identityProviderLinks, identityProviderName, identityProviderType, identityProviderUserId, user, username);
   }
 
+  @JsonIgnore
   public boolean isLinkLimitExceeded() {
     // If this IdP does not have a tenant configuration, or the user does not have any links, the limit is not exceeded.
     if (identityProviderTenantConfiguration == null || identityProviderLinks == null) {
