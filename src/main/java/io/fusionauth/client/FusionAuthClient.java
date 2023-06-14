@@ -2034,7 +2034,7 @@ public class FusionAuthClient {
    * @param token The access token returned by this OAuth provider as the result of a successful client credentials grant.
    * @return The ClientResponse object.
    */
-  public ClientResponse<IntrospectResponse, OAuthError> introspectAccessToken(String token) {
+  public ClientResponse<IntrospectResponse, OAuthError> introspectClientCredentialsAccessToken(String token) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("token", Arrays.asList(token));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
