@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.util.Objects;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.jwt.DeviceInfo;
-import io.fusionauth.domain.jwt.DeviceInfo.DeviceType;
 import io.fusionauth.domain.jwt.RefreshToken.MetaData;
 
 /**
@@ -82,7 +81,7 @@ public class EventInfo implements Buildable<EventInfo> {
     return new MetaData().with(md -> md.device = new DeviceInfo())
                          .with(md -> md.device.description = deviceDescription)
                          .with(md -> md.device.name = deviceName)
-                         .with(md -> md.device.type = DeviceType.safeValueOf(deviceType));
+                         .with(md -> md.device.type = deviceType);
   }
 
   @Override

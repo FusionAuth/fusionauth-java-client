@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,9 @@
 package io.fusionauth.domain.oauth2;
 
 import java.net.URI;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 
 /**
  * @author Trevor Smith
@@ -56,31 +54,5 @@ public class DeviceResponse implements OAuthResponse {
     this.userCode = userCode;
     this.verificationURI = verificationURI;
     this.verificationURIComplete = verificationURIComplete;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    DeviceResponse that = (DeviceResponse) o;
-    return Objects.equals(deviceCode, that.deviceCode) &&
-        Objects.equals(expiresIn, that.expiresIn) &&
-        Objects.equals(interval, that.interval) &&
-        Objects.equals(userCode, that.userCode) &&
-        Objects.equals(verificationURI, that.verificationURI) &&
-        Objects.equals(verificationURIComplete, that.verificationURIComplete);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(deviceCode, expiresIn, interval, userCode, verificationURI, verificationURIComplete);
-  }
-
-  public String toString() {
-    return ToString.toString(this);
   }
 }

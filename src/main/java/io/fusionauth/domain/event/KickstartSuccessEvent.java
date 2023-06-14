@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
 /**
- * Event event to indicate kickstart has been successfully completed.
+ * Event to indicate kickstart has been successfully completed.
  *
  * @author Daniel DeGroff
  */
