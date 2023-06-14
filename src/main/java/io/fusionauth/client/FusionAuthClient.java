@@ -3967,7 +3967,7 @@ public class FusionAuthClient {
    * @param user_code The end-user verification code.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> retrieveUserCode(String user_code) {
+  public ClientResponse<Void, Void> retrieveUserCodeUsingAPIKey(String user_code) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("user_code", Arrays.asList(user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
