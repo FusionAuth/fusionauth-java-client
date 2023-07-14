@@ -42,6 +42,8 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
 
   public UUID identityProviderId;
 
+  public String identityProviderName;
+
   public IdentityProviderType identityProviderType;
 
   public String identityProviderUserId;
@@ -79,6 +81,7 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
     return Objects.equals(data, that.data) &&
            Objects.equals(displayName, that.displayName) &&
            Objects.equals(identityProviderId, that.identityProviderId) &&
+           Objects.equals(identityProviderName, that.identityProviderName) &&
            Objects.equals(identityProviderType, that.identityProviderType) &&
            Objects.equals(identityProviderUserId, that.identityProviderUserId) &&
            Objects.equals(insertInstant, that.insertInstant) &&
@@ -95,7 +98,7 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, displayName, identityProviderId, identityProviderType, identityProviderUserId, insertInstant, lastLoginInstant, tenantId, token, userId);
+    return Objects.hash(data, displayName, identityProviderId, identityProviderName, identityProviderType, identityProviderUserId, insertInstant, lastLoginInstant, tenantId, token, userId);
   }
 
   @Override

@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -568,6 +580,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public Requirable mobilePhone = new Requirable();
 
+    public Requirable preferredLanguages = new Requirable();
+
     public RegistrationType type = RegistrationType.basic;
 
     @JacksonConstructor
@@ -585,6 +599,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.loginIdType = other.loginIdType;
       this.middleName = new Requirable(other.middleName);
       this.mobilePhone = new Requirable(other.mobilePhone);
+      this.preferredLanguages = new Requirable(other.preferredLanguages);
       this.type = other.type;
     }
 
@@ -609,12 +624,13 @@ public class Application implements Buildable<Application>, Tenantable {
              loginIdType == that.loginIdType &&
              Objects.equals(middleName, that.middleName) &&
              Objects.equals(mobilePhone, that.mobilePhone) &&
+             Objects.equals(preferredLanguages, that.preferredLanguages) &&
              type == that.type;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, type);
+      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, preferredLanguages, type);
     }
 
     public String toString() {
@@ -633,6 +649,8 @@ public class Application implements Buildable<Application>, Tenantable {
   }
 
   public static class SAMLv2Configuration extends Enableable implements Buildable<SAMLv2Configuration> {
+    public SAMLv2AssertionEncryptionConfiguration assertionEncryptionConfiguration = new SAMLv2AssertionEncryptionConfiguration();
+
     public String audience;
 
     @JsonMerge(OptBoolean.FALSE)
@@ -667,6 +685,7 @@ public class Application implements Buildable<Application>, Tenantable {
     }
 
     public SAMLv2Configuration(SAMLv2Configuration other) {
+      this.assertionEncryptionConfiguration = other.assertionEncryptionConfiguration;
       this.audience = other.audience;
       this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
       this.debug = other.debug;
@@ -694,7 +713,8 @@ public class Application implements Buildable<Application>, Tenantable {
         return false;
       }
       SAMLv2Configuration that = (SAMLv2Configuration) o;
-      return Objects.equals(audience, that.audience) &&
+      return Objects.equals(assertionEncryptionConfiguration, that.assertionEncryptionConfiguration) &&
+             Objects.equals(audience, that.audience) &&
              Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
              Objects.equals(debug, that.debug) &&
              Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) &&
@@ -733,7 +753,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), assertionEncryptionConfiguration, audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
     public enum SAMLLogoutBehavior {
@@ -744,6 +764,45 @@ public class Application implements Buildable<Application>, Tenantable {
     public enum XMLSignatureLocation {
       Assertion,
       Response
+    }
+
+    public static class SAMLv2AssertionEncryptionConfiguration extends Enableable implements Buildable<SAMLv2AssertionEncryptionConfiguration> {
+      public String digestAlgorithm = "SHA256";
+
+      public String encryptionAlgorithm = "AES256GCM";
+
+      public String keyLocation = "Child";
+
+      public String keyTransportAlgorithm = "RSA_OAEP";
+
+      public UUID keyTransportEncryptionKeyId;
+
+      public String maskGenerationFunction = "MGF1_SHA1";
+
+      @Override
+      public boolean equals(Object o) {
+        if (this == o) {
+          return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+          return false;
+        }
+        if (!super.equals(o)) {
+          return false;
+        }
+        SAMLv2AssertionEncryptionConfiguration that = (SAMLv2AssertionEncryptionConfiguration) o;
+        return Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(encryptionAlgorithm, that.encryptionAlgorithm) && Objects.equals(keyLocation, that.keyLocation) && Objects.equals(keyTransportAlgorithm, that.keyTransportAlgorithm) && Objects.equals(keyTransportEncryptionKeyId, that.keyTransportEncryptionKeyId) && Objects.equals(maskGenerationFunction, that.maskGenerationFunction);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(super.hashCode(), digestAlgorithm, encryptionAlgorithm, keyLocation, keyTransportAlgorithm, keyTransportEncryptionKeyId, maskGenerationFunction);
+      }
+
+      @Override
+      public String toString() {
+        return ToString.toString(this);
+      }
     }
 
     public static class SAMLv2Logout {
