@@ -1,17 +1,5 @@
 /*
  * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -39,6 +27,7 @@ import com.inversoft.json.ToString;
 
 
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
+import io.fusionauth.domain.provider.LoginHintConfiguration;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
@@ -670,6 +659,8 @@ public class Application implements Buildable<Application>, Tenantable {
     
     public UUID keyId;
 
+    public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
+
     public SAMLv2Logout logout = new SAMLv2Logout();
 
     public URI logoutURL;
@@ -694,6 +685,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration(other.initiatedLogin);
       this.issuer = other.issuer;
       this.keyId = other.keyId;
+      this.loginHintConfiguration = new LoginHintConfiguration(other.loginHintConfiguration);
       this.logoutURL = other.logoutURL;
       this.logout = new SAMLv2Logout(other.logout);
       this.requireSignedRequests = other.requireSignedRequests;
@@ -721,6 +713,7 @@ public class Application implements Buildable<Application>, Tenantable {
              Objects.equals(initiatedLogin, that.initiatedLogin) &&
              Objects.equals(issuer, that.issuer) &&
              Objects.equals(keyId, that.keyId) &&
+             Objects.equals(loginHintConfiguration, that.loginHintConfiguration) &&
              Objects.equals(logoutURL, that.logoutURL) &&
              Objects.equals(requireSignedRequests, that.requireSignedRequests) &&
              Objects.equals(xmlSignatureLocation, that.xmlSignatureLocation) &&
@@ -753,7 +746,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), assertionEncryptionConfiguration, audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), assertionEncryptionConfiguration, audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, loginHintConfiguration, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
     public enum SAMLLogoutBehavior {

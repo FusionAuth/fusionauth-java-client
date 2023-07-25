@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain.provider;
 
@@ -22,6 +22,11 @@ public class LoginHintConfiguration extends Enableable implements Buildable<Logi
 
   public LoginHintConfiguration(boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public LoginHintConfiguration(LoginHintConfiguration other) {
+    this.enabled = other.enabled;
+    this.parameterName = other.parameterName;
   }
 
   @Override
