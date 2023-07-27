@@ -63,6 +63,7 @@ public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2App
   public String issuer;
 
   
+  // Note: Once we de-couple fusionauth-java-client this should be either copied or moved to io.fusionauth.domain since it is used in multiple places.
   public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
 
   
