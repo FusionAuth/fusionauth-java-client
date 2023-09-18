@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.Buildable;
 
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
@@ -44,6 +44,8 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
   public String client_secret;
 
   public String emailClaim = "email";
+
+  public String emailVerifiedClaim = "email_verified";
 
   public URI issuer;
 
@@ -70,6 +72,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
     client_id = other.client_id;
     client_secret = other.client_secret;
     emailClaim = other.emailClaim;
+    emailVerifiedClaim = other.emailVerifiedClaim;
     issuer = other.issuer;
     scope = other.scope;
     token_endpoint = other.token_endpoint;
@@ -92,6 +95,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
            Objects.equals(client_id, that.client_id) &&
            Objects.equals(client_secret, that.client_secret) &&
            Objects.equals(emailClaim, that.emailClaim) &&
+           Objects.equals(emailVerifiedClaim, that.emailVerifiedClaim) &&
            Objects.equals(issuer, that.issuer) &&
            Objects.equals(scope, that.scope) &&
            Objects.equals(token_endpoint, that.token_endpoint) &&
@@ -101,7 +105,7 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, issuer, scope, token_endpoint, userinfo_endpoint, usernameClaim);
+    return Objects.hash(authorization_endpoint, clientAuthenticationMethod, client_id, client_secret, emailClaim, emailVerifiedClaim, issuer, scope, token_endpoint, userinfo_endpoint, usernameClaim);
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client.json;
 
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import io.fusionauth.domain.api.MessengerRequest;
 import io.fusionauth.domain.messenger.MessengerType;
@@ -37,7 +38,13 @@ public class MessengerRequestDeserializer extends StdDeserializer<MessengerReque
       req.messenger = MessengerJacksonHelper.newMessenger(mType);
     }
 
-    ((ObjectMapper) p.getCodec()).readerForUpdating(req.messenger).readValue(mNode);
+    if (p.getCodec() instanceof ObjectMapper) {
+      // If the available codec supports it, read the JsonNode directly into the object
+      ((ObjectMapper) p.getCodec()).readerForUpdating(req.messenger).readValue(mNode);
+    } else if (p.getCodec() instanceof ObjectReader) {
+      // Otherwise read the JsonNode and assign it to the request
+      req.messenger = ((ObjectReader) p.getCodec()).readValue(mNode, req.messenger.getClass());
+    }
     return req;
   }
 }

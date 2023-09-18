@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.Buildable;
 
+import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff

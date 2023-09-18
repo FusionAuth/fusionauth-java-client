@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ public class LookupResponse {
     if (this.identityProvider.oauth2 != null) {
       this.identityProvider.oauth2.client_secret = null;
       this.identityProvider.oauth2.emailClaim = null;
+      this.identityProvider.oauth2.emailVerifiedClaim = null;
       this.identityProvider.oauth2.uniqueIdClaim = null;
       this.identityProvider.oauth2.usernameClaim = null;
     }

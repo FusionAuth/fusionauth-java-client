@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client.json;
 
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.connector.ConnectorType;
@@ -39,7 +40,13 @@ public class ConnectorRequestDeserializer extends StdDeserializer<ConnectorReque
       req.connector = ConnectorJacksonHelper.newConnector(connectorType);
     }
 
-    ((ObjectMapper) p.getCodec()).readerForUpdating(req.connector).readValue(connectorNode);
+    if (p.getCodec() instanceof ObjectMapper) {
+      // If the available codec supports it, read the JsonNode directly into the object
+      ((ObjectMapper) p.getCodec()).readerForUpdating(req.connector).readValue(connectorNode);
+    } else if (p.getCodec() instanceof ObjectReader) {
+      // Otherwise read the JsonNode and assign it to the request
+      req.connector = ((ObjectReader) p.getCodec()).readValue(connectorNode, req.connector.getClass());
+    }
     return req;
   }
 }

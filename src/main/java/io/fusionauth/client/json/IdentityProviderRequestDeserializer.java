@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client.json;
 
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import io.fusionauth.domain.api.IdentityProviderRequest;
 import io.fusionauth.domain.provider.IdentityProviderType;
@@ -39,7 +40,13 @@ public class IdentityProviderRequestDeserializer extends StdDeserializer<Identit
       req.identityProvider = IdentityProviderJacksonHelper.newIdentityProvider(idpType);
     }
 
-    ((ObjectMapper) p.getCodec()).readerForUpdating(req.identityProvider).readValue(idpNode);
+    if (p.getCodec() instanceof ObjectMapper) {
+      // If the available codec supports it, read the JsonNode directly into the object
+      ((ObjectMapper) p.getCodec()).readerForUpdating(req.identityProvider).readValue(idpNode);
+    } else if (p.getCodec() instanceof ObjectReader) {
+      // Otherwise read the JsonNode and assign it to the request
+      req.identityProvider = ((ObjectReader) p.getCodec()).readValue(idpNode, req.identityProvider.getClass());
+    }
     return req;
   }
 }
