@@ -13,8 +13,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.util.Normalizer;
 
@@ -22,40 +20,32 @@ import io.fusionauth.domain.util.Normalizer;
  * @author Daniel DeGroff
  */
 public class FormField implements Buildable<FormField> {
-  
   public boolean confirm;
 
   public UUID consentId;
 
-  
   public FormControl control;
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  
   public String description;
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
-  
   public String key;
 
   public ZonedDateTime lastUpdateInstant;
 
   public String name;
 
-  
   public List<String> options = new ArrayList<>();
 
-  
   public boolean required;
 
-  
   public FormDataType type = FormDataType.string;
 
-  
   public FormFieldValidator validator = new FormFieldValidator();
 
   @Override

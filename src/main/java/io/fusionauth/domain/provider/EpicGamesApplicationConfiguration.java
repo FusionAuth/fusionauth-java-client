@@ -20,21 +20,16 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brett Pontarelli
  */
 public class EpicGamesApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<EpicGamesApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   @Override

@@ -20,18 +20,14 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class TwitterApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<TwitterApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String consumerKey;
 
-  
   public String consumerSecret;
 
   @Override

@@ -23,9 +23,6 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
-
 import io.fusionauth.domain.oauth2.OAuth2Configuration;
 import io.fusionauth.domain.provider.LoginHintConfiguration;
 import static io.fusionauth.domain.util.Normalizer.trim;
@@ -36,7 +33,6 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Application implements Buildable<Application>, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
-  
   public ApplicationAccessControlConfiguration accessControlConfiguration = new ApplicationAccessControlConfiguration();
 
   /**
@@ -45,27 +41,22 @@ public class Application implements Buildable<Application>, Tenantable {
   @Deprecated
   public boolean active;
 
-  
   public AuthenticationTokenConfiguration authenticationTokenConfiguration = new AuthenticationTokenConfiguration();
 
-  
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public ApplicationEmailConfiguration emailConfiguration = new ApplicationEmailConfiguration();
 
-  
   public ApplicationExternalIdentifierConfiguration externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration();
 
-  
   public ApplicationFormConfiguration formConfiguration = new ApplicationFormConfiguration();
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
-  
   @JsonIgnoreProperties("refreshTokenRevocationPolicy")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
@@ -73,50 +64,38 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public LoginConfiguration loginConfiguration = new LoginConfiguration();
 
-  
   public ApplicationMultiFactorConfiguration multiFactorConfiguration = new ApplicationMultiFactorConfiguration();
 
   public String name;
 
-  
   public OAuth2Configuration oauthConfiguration = new OAuth2Configuration();
 
-  
   public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 
-  
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
-  
   public ApplicationRegistrationDeletePolicy registrationDeletePolicy = new ApplicationRegistrationDeletePolicy();
 
   public List<ApplicationRole> roles = new ArrayList<>();
 
-  
   public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
-  
   public ObjectState state;
 
   public UUID tenantId;
 
   public UUID themeId;
 
-  
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
   public UUID verificationEmailTemplateId;
 
-  
   public VerificationStrategy verificationStrategy;
 
-  
   public boolean verifyRegistration;
 
-  
   public ApplicationWebAuthnConfiguration webAuthnConfiguration = new ApplicationWebAuthnConfiguration();
 
   @JacksonConstructor
@@ -648,16 +627,14 @@ public class Application implements Buildable<Application>, Tenantable {
     public boolean debug;
 
     // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-    
-    public UUID defaultVerificationKeyId;
+      public UUID defaultVerificationKeyId;
 
     public SAMLv2IdPInitiatedLoginConfiguration initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration();
 
     public String issuer;
 
     // Key pair used to sign w/
-    
-    public UUID keyId;
+      public UUID keyId;
 
     public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
 
@@ -802,11 +779,9 @@ public class Application implements Buildable<Application>, Tenantable {
       public SAMLLogoutBehavior behavior = SAMLLogoutBehavior.AllParticipants;
 
       // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
-      
-      public UUID defaultVerificationKeyId;
+          public UUID defaultVerificationKeyId;
 
-      
-      public UUID keyId;
+          public UUID keyId;
 
       public boolean requireSignedRequests;
 
@@ -852,8 +827,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public static class SAMLv2SingleLogout extends Enableable {
       // Key pair used to sign w/
-      
-      public UUID keyId;
+          public UUID keyId;
 
       public URI url;
 

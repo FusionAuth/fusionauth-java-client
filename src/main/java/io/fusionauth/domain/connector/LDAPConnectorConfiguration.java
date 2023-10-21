@@ -24,43 +24,32 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Models an LDAP connector.
  *
  * @author Trevor Smith
  */
 public class LDAPConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<LDAPConnectorConfiguration> {
-  
   public URI authenticationURL;
 
-  
   public String baseStructure;
 
-  
   public int connectTimeout;
 
-  
   public String identifyingAttribute;
 
   public LambdaConfiguration lambdaConfiguration = new LambdaConfiguration();
 
-  
   public String loginIdAttribute;
 
-  
   public int readTimeout;
 
-  
   public List<String> requestedAttributes = new ArrayList<>();
 
-  
   public LDAPSecurityMethod securityMethod;
 
-  
   public String systemAccountDN;
 
-  
   public String systemAccountPassword;
 
   @Override

@@ -23,7 +23,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.CanonicalizationMethod;
@@ -39,19 +38,14 @@ public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2App
     implements Buildable<SAMLv2IdentityProvider>, DomainBasedIdentityProvider, RequiresCORSConfiguration, SupportsPostBindings {
   public final Set<String> domains = new LinkedHashSet<>();
 
-  
   public SAMLv2AssertionConfiguration assertionConfiguration = new SAMLv2AssertionConfiguration();
 
-  
   public URI buttonImageURL;
 
-  
   public String buttonText = "Login with SAML";
 
-  
   public URI idpEndpoint;
 
-  
   public SAMLv2IdpInitiatedConfiguration idpInitiatedConfiguration = new SAMLv2IdpInitiatedConfiguration(false);
 
   /**
@@ -59,25 +53,19 @@ public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2App
    * ${public_url}/samlv2/sp/${identityProviderId}.
    */
   @Deprecated
-  
   public String issuer;
 
-  
   // Note: Once we de-couple fusionauth-java-client this should be either copied or moved to io.fusionauth.domain since it is used in multiple places.
   public LoginHintConfiguration loginHintConfiguration = new LoginHintConfiguration(true);
 
-  
   public String nameIdFormat = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent";
 
-  
   public boolean postRequest;
 
   public UUID requestSigningKeyId;
 
-  
   public boolean signRequest;
 
-  
   public CanonicalizationMethod xmlSignatureC14nMethod;
 
   @Override

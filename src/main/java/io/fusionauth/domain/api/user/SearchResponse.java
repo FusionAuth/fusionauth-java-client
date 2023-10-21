@@ -20,6 +20,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.api.ExpandableResponse;
 import io.fusionauth.domain.search.SearchResults;
 
 /**
@@ -27,8 +28,10 @@ import io.fusionauth.domain.search.SearchResults;
  *
  * @author Brian Pontarelli
  */
-public class SearchResponse {
+public class SearchResponse extends ExpandableResponse {
   public long total;
+
+  public String nextResults;
 
   // When this is 'true', it indicates the total returned may not be the actual number of users matching the query.
   // - The search index will cap the total hit count to limit query performance, once this limit is reached the count no longer increments.

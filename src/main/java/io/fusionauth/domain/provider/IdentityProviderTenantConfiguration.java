@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
-
 /**
  * @author Daniel DeGroff
  */
@@ -22,7 +20,6 @@ public class IdentityProviderTenantConfiguration implements Buildable<IdentityPr
   @JsonInclude(Include.NON_EMPTY)
   public final Map<String, Object> data = new HashMap<>();
 
-  
   public IdentityProviderLimitUserLinkingPolicy limitUserLinkCount = new IdentityProviderLimitUserLinkingPolicy();
 
   @Override

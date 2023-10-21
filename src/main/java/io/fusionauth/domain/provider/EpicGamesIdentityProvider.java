@@ -21,23 +21,18 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Epic gaming login provider.
  *
  * @author Brett Pontarelli
  */
 public class EpicGamesIdentityProvider extends BaseIdentityProvider<EpicGamesApplicationConfiguration> implements Buildable<EpicGamesIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Epic Games";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   public EpicGamesIdentityProvider() {

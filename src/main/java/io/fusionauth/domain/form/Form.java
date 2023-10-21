@@ -26,7 +26,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
-
 import io.fusionauth.domain.util.Normalizer;
 
 /**

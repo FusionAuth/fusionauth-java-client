@@ -20,27 +20,20 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class FacebookApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<FacebookApplicationConfiguration> {
-  
   public String appId;
 
-  
   public String buttonText;
 
-  
   public String client_secret;
 
-  
   public String fields;
 
-  
   public IdentityProviderLoginMethod loginMethod;
 
-  
   public String permissions;
 
   @Override

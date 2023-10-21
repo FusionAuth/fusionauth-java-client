@@ -28,6 +28,8 @@ import io.fusionauth.domain.Entity;
 public class EntitySearchResponse {
   public List<Entity> entities;
 
+  public String nextResults;
+
   public long total;
 
   // When this is 'true', it indicates the total returned may not be the actual number of entities matching the query.

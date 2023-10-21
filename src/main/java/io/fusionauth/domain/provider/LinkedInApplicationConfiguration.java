@@ -8,21 +8,16 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class LinkedInApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<LinkedInApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   @Override

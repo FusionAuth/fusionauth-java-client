@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * Models a single family member.
  *

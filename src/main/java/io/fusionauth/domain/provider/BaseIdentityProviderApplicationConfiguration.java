@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Enableable;
 
-
-
 /**
  * @author Daniel DeGroff
  */
@@ -22,7 +20,6 @@ public abstract class BaseIdentityProviderApplicationConfiguration extends Enabl
   @JsonInclude(Include.NON_EMPTY)
   public final Map<String, Object> data = new HashMap<>();
 
-  
   public boolean createRegistration = true;
 
   @Override

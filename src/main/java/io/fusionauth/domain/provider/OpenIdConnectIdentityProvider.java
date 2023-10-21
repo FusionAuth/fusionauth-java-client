@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -32,16 +31,12 @@ public class OpenIdConnectIdentityProvider extends BaseIdentityProvider<OpenIdCo
     implements Buildable<OpenIdConnectIdentityProvider>, DomainBasedIdentityProvider, SupportsPostBindings {
   public final Set<String> domains = new LinkedHashSet<>();
 
-  
   public URI buttonImageURL;
 
-  
   public String buttonText = "Login with OpenID Connect";
 
-  
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
-  
   public boolean postRequest;
 
   @Override

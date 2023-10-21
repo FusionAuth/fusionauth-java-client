@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.LocalizedStrings;
-
 import io.fusionauth.domain.message.MessageTemplate;
 import io.fusionauth.domain.message.MessageType;
 import io.fusionauth.domain.util.Normalizer;
@@ -33,10 +32,8 @@ import io.fusionauth.domain.util.Normalizer;
  * @author Michael Sleevi
  */
 public class SMSMessageTemplate extends MessageTemplate implements Buildable<SMSMessageTemplate> {
-  
   public String defaultTemplate;
 
-  
   public LocalizedStrings localizedTemplates = new LocalizedStrings();
 
   @Override

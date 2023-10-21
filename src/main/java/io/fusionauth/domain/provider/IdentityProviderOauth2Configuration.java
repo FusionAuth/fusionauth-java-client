@@ -20,7 +20,6 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -36,7 +35,6 @@ public class IdentityProviderOauth2Configuration implements Buildable<IdentityPr
    * Allow override of the default client authentication method client_secret_basic
    * see https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
    */
-  
   public ClientAuthenticationMethod clientAuthenticationMethod = ClientAuthenticationMethod.client_secret_basic;
 
   public String client_id;

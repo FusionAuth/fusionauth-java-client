@@ -21,15 +21,12 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brian Pontarelli
  */
 public class SAMLv2ApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SAMLv2ApplicationConfiguration> {
-  
   public URI buttonImageURL;
 
-  
   public String buttonText;
 
   @Override

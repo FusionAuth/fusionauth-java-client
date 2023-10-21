@@ -21,32 +21,24 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Nintendo gaming login provider.
  *
  * @author Brett Pontarelli
  */
 public class NintendoIdentityProvider extends BaseIdentityProvider<NintendoApplicationConfiguration> implements Buildable<NintendoIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Nintendo";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String emailClaim = "email";
 
-  
   public String scope;
 
-  
   public String uniqueIdClaim = "id";
 
-  
   public String usernameClaim = "preferred_username";
 
   public NintendoIdentityProvider() {

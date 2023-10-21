@@ -24,7 +24,6 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 
-
 /**
  * A grant for an entity to a user or another entity.
  *

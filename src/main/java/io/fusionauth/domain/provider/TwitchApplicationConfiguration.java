@@ -20,21 +20,16 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brett Pontarelli
  */
 public class TwitchApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<TwitchApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   @Override

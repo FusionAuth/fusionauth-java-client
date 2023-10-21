@@ -24,7 +24,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * Models a family grouping of users.
  *

@@ -21,7 +21,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * JWT Configuration. A JWT Configuration for an Application may not be active if it is using the global configuration, the configuration
  * may be <code>enabled = false</code>.
@@ -32,13 +31,11 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   /**
    * The signing key used to sign the access token
    */
-  
   public UUID accessTokenKeyId;
 
   /**
    * The signing key used to sign the Id token
    */
-  
   public UUID idTokenKeyId;
 
   public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy = RefreshTokenExpirationPolicy.Fixed;

@@ -21,29 +21,22 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Facebook social login provider.
  *
  * @author Brian Pontarelli
  */
 public class FacebookIdentityProvider extends BaseIdentityProvider<FacebookApplicationConfiguration> implements Buildable<FacebookIdentityProvider>, SupportsPostBindings {
-  
   public String appId;
 
-  
   public String buttonText = "Login with Facebook";
 
-  
   public String client_secret;
 
-  
   public String fields;
 
-  
   public IdentityProviderLoginMethod loginMethod;
 
-  
   public String permissions;
 
   @Override

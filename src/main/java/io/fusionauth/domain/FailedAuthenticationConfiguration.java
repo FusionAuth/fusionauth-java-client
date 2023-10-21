@@ -9,7 +9,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * Configuration for the behavior of failed login attempts. This helps us protect against brute force password attacks.
  *
@@ -48,7 +47,6 @@ public class FailedAuthenticationConfiguration implements Buildable<FailedAuthen
   /**
    * Id of the User Action used when a user reaches the threshold defined by <code>tooManyAttempts</code>.
    */
-  
   public UUID userActionId;
 
   @JacksonConstructor

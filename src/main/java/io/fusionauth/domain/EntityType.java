@@ -14,9 +14,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
-
-
 /**
  * Models an entity type that has a specific set of permissions. These are global objects and can be used across tenants.
  *
@@ -29,7 +26,6 @@ public class EntityType implements Buildable<EntityType> {
 
   public ZonedDateTime insertInstant;
 
-  
   public EntityJWTConfiguration jwtConfiguration = new EntityJWTConfiguration();
 
   public ZonedDateTime lastUpdateInstant;
@@ -95,8 +91,7 @@ public class EntityType implements Buildable<EntityType> {
     /**
      * The signing key used to sign the access token
      */
-    
-    public UUID accessTokenKeyId;
+      public UUID accessTokenKeyId;
 
     /**
      * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.

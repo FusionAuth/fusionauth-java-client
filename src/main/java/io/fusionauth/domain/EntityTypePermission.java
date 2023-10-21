@@ -24,7 +24,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**

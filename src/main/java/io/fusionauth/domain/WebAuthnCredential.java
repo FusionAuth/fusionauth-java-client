@@ -13,8 +13,6 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.webauthn.AttestationType;
 import io.fusionauth.domain.webauthn.CoseAlgorithmIdentifier;
 
@@ -27,20 +25,17 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   /**
    * The signature algorithm used with the key
    */
-  
   public CoseAlgorithmIdentifier algorithm;
 
   /**
    * The attestation type that was provided during credential registration
    */
-  
   public AttestationType attestationType;
 
   /**
    * Indicates whether user verification is supported by the generating authenticator based on whether user verification was employed during
    * registration
    */
-  
   public boolean authenticatorSupportsUserVerification;
 
   /**
@@ -54,13 +49,11 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * Indicates whether the credential is a client-side discoverable credential. If the authenticator could not provide assurances one way or the
    * other, the value is <code>false</code>. Requires the WebAuthn <code>credProps</code> extension
    */
-  
   public boolean discoverable;
 
   /**
    * The display name selected during credential registration. This is a user-supplied value that defaults to their loginId.
    */
-  
   public String displayName;
 
   public UUID id;
@@ -79,25 +72,21 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
    * The unique name assigned during credential registration. This value is meant to disambiguate credentials with the same
    * {@link WebAuthnCredential#displayName}
    */
-  
   public String name;
 
   /**
    * The public key encoded in PEM format
    */
-  
   public String publicKey;
 
   /**
    * The Relying Party Id used when the credential was registered
    */
-  
   public String relyingPartyId;
 
   /**
    * The number of signatures generated with the key
    */
-  
   public int signCount;
 
   public UUID tenantId;
@@ -105,13 +94,11 @@ public class WebAuthnCredential implements Tenantable, Buildable<WebAuthnCredent
   /**
    * A list of transport types supported by the WebAuthn <i>authenticator</i> that generated the key
    */
-  
   public List<String> transports = new ArrayList<>();
 
   /**
    * The user agent string from the browser that registered the credential
    */
-  
   public String userAgent;
 
   public UUID userId;

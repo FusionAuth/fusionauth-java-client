@@ -9,21 +9,18 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * @author Brian Pontarelli
  */
 public class FamilyConfiguration extends Enableable implements Buildable<FamilyConfiguration> {
   public boolean allowChildRegistrations = true;
 
-  
   public UUID confirmChildEmailTemplateId;
 
   public boolean deleteOrphanedAccounts;
 
   public int deleteOrphanedAccountsDays = 30;
 
-  
   public UUID familyRequestEmailTemplateId;
 
   public int maximumChildAge = 12;
@@ -32,7 +29,6 @@ public class FamilyConfiguration extends Enableable implements Buildable<FamilyC
 
   public boolean parentEmailRequired;
 
-  
   public UUID parentRegistrationEmailTemplateId;
 
   @JacksonConstructor

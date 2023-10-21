@@ -9,17 +9,14 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class ApplicationFormConfiguration implements Buildable<ApplicationFormConfiguration> {
-  
   public UUID adminRegistrationFormId;
 
   public SelfServiceFormConfiguration selfServiceFormConfiguration = new SelfServiceFormConfiguration();
 
-  
   public UUID selfServiceFormId;
 
   @JacksonConstructor

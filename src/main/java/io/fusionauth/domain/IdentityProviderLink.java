@@ -25,8 +25,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.provider.IdentityProviderType;
 
 /**
@@ -37,7 +35,6 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
   @JsonInclude(Include.NON_EMPTY)
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  
   public String displayName;
 
   public UUID identityProviderId;
@@ -54,7 +51,6 @@ public class IdentityProviderLink implements Buildable<IdentityProviderLink>, Te
 
   public UUID tenantId;
 
-  
   public String token;
 
   public UUID userId;

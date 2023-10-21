@@ -24,7 +24,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 
-
 /**
  * Stores an message template used to distribute messages;
  *

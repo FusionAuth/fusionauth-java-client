@@ -9,12 +9,10 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class TenantFormConfiguration implements Buildable<TenantFormConfiguration> {
-  
   public UUID adminUserFormId;
 
   @JacksonConstructor

@@ -17,8 +17,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.ToString;
 
-
-
 /**
  * @author Brett Guy
  */
@@ -27,7 +25,6 @@ public class IPAccessControlList implements Buildable<IPAccessControlList> {
   @JsonInclude(Include.NON_EMPTY)
   public final Map<String, Object> data = new LinkedHashMap<>();
 
-  
   public List<IPAccessControlEntry> entries = new ArrayList<>();
 
   public UUID id;

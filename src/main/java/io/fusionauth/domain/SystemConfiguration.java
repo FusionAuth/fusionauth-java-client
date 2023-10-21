@@ -11,15 +11,12 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.internal.annotation.InternalUse;
 
 /**
  * @author Brian Pontarelli
  */
 public class SystemConfiguration implements Buildable<SystemConfiguration> {
-  
   public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
 
   /**
@@ -27,27 +24,22 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
    * cookies.
    */
   @InternalUse
-  
   public String cookieEncryptionKey;
 
-  
   public CORSConfiguration corsConfiguration = new CORSConfiguration();
 
   public Map<String, Object> data = new HashMap<>();
 
-  
   public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
   public ZonedDateTime insertInstant;
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public LoginRecordConfiguration loginRecordConfiguration = new LoginRecordConfiguration();
 
   public ZoneId reportTimezone;
 
-  
   public UIConfiguration uiConfiguration = new UIConfiguration();
 
   @Override

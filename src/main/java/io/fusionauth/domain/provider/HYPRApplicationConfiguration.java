@@ -21,15 +21,12 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class HYPRApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<HYPRApplicationConfiguration> {
-  
   public String relyingPartyApplicationId;
 
-  
   public URI relyingPartyURL;
 
   @Override

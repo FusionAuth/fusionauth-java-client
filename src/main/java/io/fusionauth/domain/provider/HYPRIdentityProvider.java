@@ -22,15 +22,12 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicationConfiguration> implements Buildable<HYPRIdentityProvider>, PasswordlessIdentityProvider {
-  
   public String relyingPartyApplicationId;
 
-  
   public URI relyingPartyURL;
 
   @Override

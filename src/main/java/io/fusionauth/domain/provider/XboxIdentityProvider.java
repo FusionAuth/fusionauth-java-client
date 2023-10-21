@@ -21,23 +21,18 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Xbox gaming login provider.
  *
  * @author Brett Pontarelli
  */
 public class XboxIdentityProvider extends BaseIdentityProvider<XboxApplicationConfiguration> implements Buildable<XboxIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Xbox";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   public XboxIdentityProvider() {

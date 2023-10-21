@@ -6,7 +6,6 @@ package io.fusionauth.domain.provider;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -17,7 +16,6 @@ import io.fusionauth.domain.Buildable;
 public class SAMLv2IdPInitiatedIdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2IdPInitiatedApplicationConfiguration>
     implements Buildable<SAMLv2IdPInitiatedIdentityProvider> {
 
-  
   public String issuer;
 
   @Override

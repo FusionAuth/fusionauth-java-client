@@ -7,28 +7,22 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
 public class AppleApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<AppleApplicationConfiguration> {
-  
   public String bundleId;
 
-  
   public String buttonText;
 
   public UUID keyId;
 
-  
   public String scope;
 
-  
   public String servicesId;
 
-  
   public String teamId;
 
   @Override

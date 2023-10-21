@@ -21,18 +21,14 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Daniel DeGroff
  */
 public class OpenIdConnectApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<OpenIdConnectApplicationConfiguration> {
-  
   public URI buttonImageURL;
 
-  
   public String buttonText;
 
-  
   public IdentityProviderOauth2Configuration oauth2 = new IdentityProviderOauth2Configuration();
 
   @Override

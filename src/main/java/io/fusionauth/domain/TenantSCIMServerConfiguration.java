@@ -11,17 +11,14 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * @author Rob Davis
  */
 public class TenantSCIMServerConfiguration extends Enableable implements Buildable<TenantSCIMServerConfiguration> {
-  
   public UUID clientEntityTypeId;
 
   public Map<String, Object> schemas;
 
-  
   public UUID serverEntityTypeId;
 
   @JacksonConstructor

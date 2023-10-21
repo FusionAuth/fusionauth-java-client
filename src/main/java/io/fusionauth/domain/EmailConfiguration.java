@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
@@ -58,13 +57,10 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public String defaultFromName;
 
-  
   public UUID emailUpdateEmailTemplateId;
 
-  
   public UUID emailVerifiedEmailTemplateId;
 
-  
   public UUID forgotPasswordEmailTemplateId;
 
   public String host = "localhost";
@@ -74,27 +70,20 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
   //   completed a similar email workflow such as change password (when completed by email)
   public boolean implicitEmailVerificationAllowed = true;
 
-  
   public UUID loginIdInUseOnCreateEmailTemplateId;
 
-  
   public UUID loginIdInUseOnUpdateEmailTemplateId;
 
-  
   public UUID loginNewDeviceEmailTemplateId;
 
-  
   public UUID loginSuspiciousEmailTemplateId;
 
   public String password;
 
-  
   public UUID passwordResetSuccessEmailTemplateId;
 
-  
   public UUID passwordUpdateEmailTemplateId;
 
-  
   public UUID passwordlessEmailTemplateId;
 
   public Integer port = 25;
@@ -103,20 +92,16 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public EmailSecurityType security;
 
-  
   public UUID setPasswordEmailTemplateId;
 
-  
   public UUID twoFactorMethodAddEmailTemplateId;
 
-  
   public UUID twoFactorMethodRemoveEmailTemplateId;
 
   public EmailUnverifiedOptions unverified = new EmailUnverifiedOptions();
 
   public String username;
 
-  
   public UUID verificationEmailTemplateId;
 
   public VerificationStrategy verificationStrategy;

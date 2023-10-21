@@ -21,23 +21,18 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * SonyPSN gaming login provider.
  *
  * @author Brett Pontarelli
  */
 public class SonyPSNIdentityProvider extends BaseIdentityProvider<SonyPSNApplicationConfiguration> implements Buildable<SonyPSNIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Playstation Network";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope;
 
   public SonyPSNIdentityProvider() {

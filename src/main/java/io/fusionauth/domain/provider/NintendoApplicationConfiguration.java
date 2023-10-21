@@ -20,30 +20,22 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brett Pontarelli
  */
 public class NintendoApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<NintendoApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String emailClaim = "email";
 
-  
   public String scope;
 
-  
   public String uniqueIdClaim = "id";
 
-  
   public String usernameClaim = "preferred_username";
 
   @Override

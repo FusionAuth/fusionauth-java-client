@@ -28,8 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.Enableable;
 
 /**
@@ -44,7 +42,6 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public Map<UUID, D> applicationConfiguration = new HashMap<>();
 
-  
   public boolean debug;
 
   public UUID id;
@@ -55,7 +52,6 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public IdentityProviderLinkingStrategy linkingStrategy = IdentityProviderLinkingStrategy.LinkByEmail;
 
   public String name;

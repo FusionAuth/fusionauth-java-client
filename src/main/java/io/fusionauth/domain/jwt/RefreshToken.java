@@ -28,8 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.Application;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.JWTConfiguration;
@@ -54,7 +52,6 @@ public class RefreshToken implements Buildable<RefreshToken> {
    */
   public ZonedDateTime insertInstant;
 
-  
   public MetaData metaData = new MetaData();
 
   /**
@@ -118,16 +115,23 @@ public class RefreshToken implements Buildable<RefreshToken> {
   @JsonIgnore
   public boolean isExpired(Tenant tenant, Application application) {
     ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-    JWTConfiguration jwtConfiguration = tenant.lookupJWTConfiguration(application);
 
-    // if the rt expired, we're done here.
-    if (startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now)) {
-      return true;
+    if (tenantId != null) {
+      // SSO token
+      return startInstant.plusSeconds(tenant.httpSessionMaxInactiveInterval).isBefore(now);
+    } else {
+      // Refresh Token
+      JWTConfiguration jwtConfiguration = tenant.lookupJWTConfiguration(application);
+
+      // if the rt expired, we're done here.
+      if (startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now)) {
+        return true;
+      }
+
+      // The token is not expired, but it may have reached the maximum TTL when configured.
+      return jwtConfiguration.refreshTokenExpirationPolicy == RefreshTokenExpirationPolicy.SlidingWindowWithMaximumLifetime
+             && insertInstant.plusMinutes(jwtConfiguration.refreshTokenSlidingWindowConfiguration.maximumTimeToLiveInMinutes).isBefore(now);
     }
-
-    // The token is not expired, but it may have reached the maximum TTL when configured.
-    return jwtConfiguration.refreshTokenExpirationPolicy == RefreshTokenExpirationPolicy.SlidingWindowWithMaximumLifetime
-           && insertInstant.plusMinutes(jwtConfiguration.refreshTokenSlidingWindowConfiguration.maximumTimeToLiveInMinutes).isBefore(now);
   }
 
   public RefreshToken secure() {

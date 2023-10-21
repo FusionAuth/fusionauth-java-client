@@ -19,8 +19,6 @@ import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.lineReturns;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
@@ -34,7 +32,6 @@ public class Theme implements Buildable<Theme> {
 
   public Map<String, Object> data = new HashMap<>();
 
-  
   public String defaultMessages;
 
   public UUID id;
@@ -43,15 +40,12 @@ public class Theme implements Buildable<Theme> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public LocalizedStrings localizedMessages = new LocalizedStrings();
 
   public String name;
 
-  
   public String stylesheet;
 
-  
   public Templates templates;
 
   public Theme() {

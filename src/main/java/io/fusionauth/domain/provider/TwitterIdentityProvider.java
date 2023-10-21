@@ -21,20 +21,16 @@ import java.util.UUID;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * Twitter social login provider.
  *
  * @author Daniel DeGroff
  */
 public class TwitterIdentityProvider extends BaseIdentityProvider<TwitterApplicationConfiguration> implements Buildable<TwitterIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Twitter";
 
-  
   public String consumerKey;
 
-  
   public String consumerSecret;
 
   @Override

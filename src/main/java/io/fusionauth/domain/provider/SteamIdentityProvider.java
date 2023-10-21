@@ -19,7 +19,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -28,20 +27,15 @@ import io.fusionauth.domain.Buildable;
  * @author Brett Pontarelli
  */
 public class SteamIdentityProvider extends BaseIdentityProvider<SteamApplicationConfiguration> implements Buildable<SteamIdentityProvider>, SupportsPostBindings {
-  
   public SteamAPIMode apiMode = SteamAPIMode.Public;
 
-  
   public String buttonText = "Login with Steam";
 
-  
   public String client_id;
 
   // Note that we are not currently ever passing scope to Steam. Let's not document this unless we're going to use it.
-  
   public String scope;
 
-  
   public String webAPIKey;
 
   public SteamIdentityProvider() {

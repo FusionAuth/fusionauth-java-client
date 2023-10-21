@@ -18,29 +18,22 @@ package io.fusionauth.domain.provider;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
  * @author Daniel DeGroff
  */
 public class GoogleApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<GoogleApplicationConfiguration> {
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public IdentityProviderLoginMethod loginMethod;
 
-  
   public GoogleIdentityProviderProperties properties = new GoogleIdentityProviderProperties();
 
-  
   public String scope;
 
   @Override

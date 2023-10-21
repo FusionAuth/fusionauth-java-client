@@ -7,12 +7,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-
 /**
  * @author Lyle Schemmerling
  */
 public abstract class BaseSAMLv2IdentityProvider<D extends BaseIdentityProviderApplicationConfiguration> extends BaseIdentityProvider<D> {
-  
   public String emailClaim;
 
   /**
@@ -20,13 +18,10 @@ public abstract class BaseSAMLv2IdentityProvider<D extends BaseIdentityProviderA
    */
   public UUID keyId;
 
-  
   public String uniqueIdClaim;
 
-  
   public boolean useNameIdForEmail;
 
-  
   public String usernameClaim;
 
   @Override

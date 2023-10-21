@@ -15,9 +15,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
-
 import io.fusionauth.domain.util.Normalizer;
 
 /**
@@ -33,13 +30,10 @@ public class Consent implements Buildable<Consent> {
   /**
    * Two character ISO_3166-1 (alpha-2) country code keyed to the minimum age of consent.
    */
-  
   public LocalizedIntegers countryMinimumAgeForSelfConsent = new LocalizedIntegers();
 
-  
   public Integer defaultMinimumAgeForSelfConsent;
 
-  
   public EmailPlus emailPlus = new EmailPlus();
 
   public UUID id;
@@ -48,12 +42,10 @@ public class Consent implements Buildable<Consent> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public boolean multipleValuesAllowed;
 
   public String name;
 
-  
   public List<String> values = new ArrayList<>();
 
   @JacksonConstructor
@@ -125,8 +117,7 @@ public class Consent implements Buildable<Consent> {
   }
 
   public static class EmailPlus extends Enableable {
-    
-    public UUID emailTemplateId;
+      public UUID emailTemplateId;
 
     public int maximumTimeToSendEmailInHours = 48;
 

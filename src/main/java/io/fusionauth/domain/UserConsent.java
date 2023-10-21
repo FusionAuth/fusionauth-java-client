@@ -26,8 +26,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
-
 /**
  * Models a User consent.
  *
@@ -48,12 +46,10 @@ public class UserConsent implements Buildable<UserConsent> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public ConsentStatus status;
 
   public UUID userId;
 
-  
   public List<String> values = new ArrayList<>();
 
   public UserConsent(UserConsent userConsent) {

@@ -9,12 +9,10 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * @author Brett Guy
  */
 public class TenantAccessControlConfiguration implements Buildable<TenantAccessControlConfiguration> {
-  
   public UUID uiIPAccessControlListId;
 
   @JacksonConstructor

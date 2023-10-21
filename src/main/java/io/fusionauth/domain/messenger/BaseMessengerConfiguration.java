@@ -24,8 +24,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 
-
-
 /**
  * @author Brett Guy
  */
@@ -34,7 +32,6 @@ import com.inversoft.json.ToString;
 public abstract class BaseMessengerConfiguration  {
   public final Map<String, Object> data = new HashMap<>();
 
-  
   public boolean debug;
 
   public UUID id;
@@ -45,7 +42,6 @@ public abstract class BaseMessengerConfiguration  {
 
   public String name;
 
-  
   public String transport = MessengerTransport.SMS;
 
   @Override

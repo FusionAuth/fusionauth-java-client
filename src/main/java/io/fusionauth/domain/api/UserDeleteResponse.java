@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 package io.fusionauth.domain.api;
 
 import java.util.List;
-
-import com.inversoft.json.JacksonConstructor;
+import java.util.UUID;
 
 /**
  * User API bulk response object.
@@ -31,16 +30,5 @@ public class UserDeleteResponse {
 
   public int total;
 
-  public List<String> userIds;
-
-  @JacksonConstructor
-  public UserDeleteResponse() {
-  }
-
-  public UserDeleteResponse(List<String> userIds, int total, boolean hardDelete, boolean dryRun) {
-    this.userIds = userIds;
-    this.total = total;
-    this.hardDelete = hardDelete;
-    this.dryRun = dryRun;
-  }
+  public List<UUID> userIds;
 }

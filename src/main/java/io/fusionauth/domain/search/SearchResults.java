@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import java.util.List;
  * @author Brian Pontarelli
  */
 public class SearchResults<T> {
+  public String nextResults;
+
   public List<T> results;
 
   public long total;
@@ -35,5 +37,11 @@ public class SearchResults<T> {
   public SearchResults(List<T> results, long total) {
     this.results = results;
     this.total = total;
+  }
+
+  public SearchResults(List<T> results, long total, String nextResults) {
+    this.results = results;
+    this.total = total;
+    this.nextResults = nextResults;
   }
 }

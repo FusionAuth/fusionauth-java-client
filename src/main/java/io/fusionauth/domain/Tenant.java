@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.connector.BaseConnectorConfiguration;
 import io.fusionauth.domain.connector.ConnectorPolicy;
 import io.fusionauth.domain.util.Normalizer;
@@ -31,33 +29,24 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Tenant implements Buildable<Tenant> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
-  
   public TenantAccessControlConfiguration accessControlConfiguration = new TenantAccessControlConfiguration();
 
-  
   public TenantCaptchaConfiguration captchaConfiguration = new TenantCaptchaConfiguration();
 
-  
   public boolean configured;
 
   public List<ConnectorPolicy> connectorPolicies = new ArrayList<>();
 
-  
   public EmailConfiguration emailConfiguration = new EmailConfiguration();
 
-  
   public EventConfiguration eventConfiguration = new EventConfiguration();
 
-  
   public ExternalIdentifierConfiguration externalIdentifierConfiguration = new ExternalIdentifierConfiguration();
 
-  
   public FailedAuthenticationConfiguration failedAuthenticationConfiguration = new FailedAuthenticationConfiguration();
 
-  
   public FamilyConfiguration familyConfiguration = new FamilyConfiguration();
 
-  
   public TenantFormConfiguration formConfiguration = new TenantFormConfiguration();
 
   /**
@@ -66,17 +55,14 @@ public class Tenant implements Buildable<Tenant> {
    * <p>
    * Default is 60 minutes.
    */
-  
   public int httpSessionMaxInactiveInterval = 3600;
 
   public UUID id;
 
   public ZonedDateTime insertInstant;
 
-  
   public String issuer;
 
-  
   @JsonIgnoreProperties("enabled")
   public JWTConfiguration jwtConfiguration = new JWTConfiguration();
 
@@ -84,59 +70,44 @@ public class Tenant implements Buildable<Tenant> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
   public TenantLoginConfiguration loginConfiguration = new TenantLoginConfiguration();
 
   /**
    * Logout redirect URL when calling the <code>/oauth2/logout</code> endpoint. If this the
    * <code>Application.oauthConfiguration.logoutURL</code> is defined it will be used instead.
    */
-  
   public URI logoutURL;
 
-  
   public MaximumPasswordAge maximumPasswordAge = new MaximumPasswordAge();
 
-  
   public MinimumPasswordAge minimumPasswordAge = new MinimumPasswordAge();
 
-  
   public TenantMultiFactorConfiguration multiFactorConfiguration = new TenantMultiFactorConfiguration();
 
   public String name;
 
   public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
 
-  
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
-  
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
-  
   public TenantRateLimitConfiguration rateLimitConfiguration = new TenantRateLimitConfiguration();
 
-  
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
 
-  
   public TenantSCIMServerConfiguration scimServerConfiguration = new TenantSCIMServerConfiguration();
 
-  
   public TenantSSOConfiguration ssoConfiguration = new TenantSSOConfiguration();
 
-  
   public ObjectState state;
 
   public UUID themeId;
 
-  
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
 
-  
   public TenantUsernameConfiguration usernameConfiguration = new TenantUsernameConfiguration();
 
-  
   public TenantWebAuthnConfiguration webAuthnConfiguration = new TenantWebAuthnConfiguration();
 
   @JacksonConstructor

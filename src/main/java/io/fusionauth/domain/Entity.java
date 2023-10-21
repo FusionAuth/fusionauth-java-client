@@ -24,7 +24,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
-
 /**
  * Models an entity that a user can be granted permissions to. Or an entity that can be granted permissions to another entity.
  *

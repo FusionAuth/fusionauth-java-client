@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.CORSConfiguration;
 import io.fusionauth.domain.RequiresCORSConfiguration;
@@ -24,21 +23,16 @@ public class AppleIdentityProvider extends BaseIdentityProvider<AppleApplication
 
   public static final URI JWKS_URI = URI.create("https://appleid.apple.com/auth/keys");
 
-  
   public String bundleId;
 
-  
   public String buttonText = "Sign in with Apple";
 
   public UUID keyId;
 
-  
   public String scope;
 
-  
   public String servicesId;
 
-  
   public String teamId;
 
   @Override

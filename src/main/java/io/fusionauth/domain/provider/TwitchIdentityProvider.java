@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -16,16 +15,12 @@ import io.fusionauth.domain.Buildable;
  * @author Brett Pontarelli
  */
 public class TwitchIdentityProvider extends BaseIdentityProvider<TwitchApplicationConfiguration> implements Buildable<TwitchIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Twitch";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public String scope = "openid user:read:email";
 
   public TwitchIdentityProvider() {

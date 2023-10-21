@@ -28,8 +28,6 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.trim;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
@@ -42,14 +40,12 @@ import static io.fusionauth.domain.util.Normalizer.trimToNull;
 public class UserRegistration implements Buildable<UserRegistration> {
   public final Map<String, Object> data;
 
-  
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   /**
    * @deprecated tokens are now stored in the Identity Provider Link. See the /api/identity-provider/link API.
    */
   @Deprecated
-  
   public final Map<String, String> tokens;
 
   public UUID applicationId;
@@ -76,6 +72,8 @@ public class UserRegistration implements Buildable<UserRegistration> {
 
   public boolean verified;
 
+  public ZonedDateTime verifiedInstant;
+
   public UserRegistration() {
     this.data = new LinkedHashMap<>();
     this.tokens = new LinkedHashMap<>();
@@ -100,6 +98,7 @@ public class UserRegistration implements Buildable<UserRegistration> {
     this.username = userRegistration.username;
     this.usernameStatus = userRegistration.usernameStatus;
     this.verified = userRegistration.verified;
+    this.verifiedInstant = userRegistration.verifiedInstant;
 
     this.data = new LinkedHashMap<>();
     if (userRegistration.data != null) {
@@ -130,12 +129,13 @@ public class UserRegistration implements Buildable<UserRegistration> {
            Objects.equals(cleanSpeakId, that.cleanSpeakId) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
-           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(timezone, that.timezone) &&
            Objects.equals(username, that.username) &&
-           usernameStatus == that.usernameStatus;
+           usernameStatus == that.usernameStatus &&
+           Objects.equals(verifiedInstant, that.verifiedInstant);
   }
 
   /**
@@ -149,7 +149,22 @@ public class UserRegistration implements Buildable<UserRegistration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, preferredLanguages, tokens, applicationId, authenticationToken, cleanSpeakId, id, insertInstant, lastUpdateInstant, lastLoginInstant, roles, timezone, username, usernameStatus, verified);
+    return Objects.hash(data,
+                        preferredLanguages,
+                        tokens,
+                        applicationId,
+                        authenticationToken,
+                        cleanSpeakId,
+                        id,
+                        insertInstant,
+                        lastLoginInstant,
+                        lastUpdateInstant,
+                        roles,
+                        timezone,
+                        username,
+                        usernameStatus,
+                        verified,
+                        verifiedInstant);
   }
 
   public void normalize() {

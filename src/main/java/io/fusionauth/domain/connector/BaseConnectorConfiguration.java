@@ -12,8 +12,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
 
-
-
 /**
  * Models a connector.
  *
@@ -26,7 +24,6 @@ public abstract class BaseConnectorConfiguration  {
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  
   public boolean debug;
 
   public UUID id;

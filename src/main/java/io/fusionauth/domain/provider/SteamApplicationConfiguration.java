@@ -18,26 +18,20 @@ package io.fusionauth.domain.provider;
 import java.util.Objects;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 
 /**
  * @author Brett Pontarelli
  */
 public class SteamApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration implements Buildable<SteamApplicationConfiguration> {
-  
   public SteamAPIMode apiMode;
 
-  
   public String buttonText;
 
-  
   public String client_id;
 
-  
   public String scope;
 
-  
   public String webAPIKey;
 
   @Override

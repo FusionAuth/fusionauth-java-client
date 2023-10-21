@@ -21,7 +21,6 @@ import java.util.Properties;
 import java.util.UUID;
 
 import com.inversoft.json.ToString;
-
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.util.Normalizer;
 
@@ -31,24 +30,18 @@ import io.fusionauth.domain.util.Normalizer;
  * @author Daniel DeGroff
  */
 public class GoogleIdentityProvider extends BaseIdentityProvider<GoogleApplicationConfiguration> implements Buildable<GoogleIdentityProvider>, SupportsPostBindings {
-  
   public String buttonText = "Login with Google";
 
-  
   public String client_id;
 
-  
   public String client_secret;
 
-  
   public IdentityProviderLoginMethod loginMethod;
 
-  
   public GoogleIdentityProviderProperties properties = new GoogleIdentityProviderProperties(
       "# Omit the data- prefix\nauto_prompt=true\nauto_select=false\ncancel_on_tap_outside=false\ncontext=signin\nitp_support=true",
       "# Omit the data- prefix\nlogo_alignment=left\nshape=rectangular\nsize=large\ntext=signin_with\ntheme=outline\ntype=standard");
 
-  
   public String scope;
 
   @Override

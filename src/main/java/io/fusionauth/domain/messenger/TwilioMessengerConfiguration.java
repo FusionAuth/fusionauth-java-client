@@ -9,24 +9,18 @@ import java.util.Objects;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brett Guy
  */
 public class TwilioMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<TwilioMessengerConfiguration> {
-  
   public String accountSID;
 
-  
   public String authToken;
 
-  
   public String fromPhoneNumber;
 
-  
   public String messagingServiceSid;
 
-  
   public URI url;
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ public class UserDeleteRequest extends BaseEventRequest implements Buildable<Use
   public boolean dryRun;
 
   public boolean hardDelete;
+
+  public int limit = 10_000;
 
   public String query;
 

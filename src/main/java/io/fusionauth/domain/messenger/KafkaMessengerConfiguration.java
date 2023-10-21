@@ -21,15 +21,12 @@ import java.util.TreeMap;
 
 import io.fusionauth.domain.Buildable;
 
-
 /**
  * @author Brett Guy
  */
 public class KafkaMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<KafkaMessengerConfiguration> {
-  
   public String defaultTopic;
 
-  
   public Map<String, String> producer = new TreeMap<>();
 
   @Override

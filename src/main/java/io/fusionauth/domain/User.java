@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-
-
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
@@ -47,7 +45,6 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Seth Musselman
  */
 public class User extends SecureIdentity implements Buildable<User>, Tenantable {
-  
   public final List<Locale> preferredLanguages = new ArrayList<>();
 
   private final List<GroupMember> memberships = new ArrayList<>();
@@ -88,7 +85,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public ZoneId timezone;
 
-  
   public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
 
   @JacksonConstructor
@@ -132,6 +128,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.username = other.username;
     this.usernameStatus = other.usernameStatus;
     this.verified = other.verified;
+    this.verifiedInstant = other.verifiedInstant;
 
     if (other.data != null) {
       this.data.putAll(other.data);

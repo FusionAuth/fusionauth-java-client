@@ -22,30 +22,22 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.HTTPHeaders;
 
-
 /**
  * @author Brett Guy
  */
 public class GenericMessengerConfiguration extends BaseMessengerConfiguration implements Buildable<GenericMessengerConfiguration> {
-  
   public Integer connectTimeout;
 
-  
   public HTTPHeaders headers = new HTTPHeaders();
 
-  
   public String httpAuthenticationPassword;
 
-  
   public String httpAuthenticationUsername;
 
-  
   public Integer readTimeout;
 
-  
   public String sslCertificate;
 
-  
   public URI url;
 
   @Override

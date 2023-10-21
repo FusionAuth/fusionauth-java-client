@@ -23,29 +23,22 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.HTTPHeaders;
 
-
 /**
  * Models a generic connector.
  *
  * @author Trevor Smith
  */
 public class GenericConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<GenericConnectorConfiguration> {
-  
   public URI authenticationURL;
 
-  
   public int connectTimeout;
 
-  
   public HTTPHeaders headers = new HTTPHeaders();
 
-  
   public String httpAuthenticationPassword;
 
-  
   public String httpAuthenticationUsername;
 
-  
   public int readTimeout;
 
   public UUID sslCertificateKeyId;
