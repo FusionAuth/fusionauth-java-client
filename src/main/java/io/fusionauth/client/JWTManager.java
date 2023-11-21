@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.client;
 
@@ -92,6 +92,12 @@ public class JWTManager {
     }
 
     return true;
+  }
+
+  public static void reset() {
+    revokedByApplication.clear();
+    revokedByUser.clear();
+    revokedRefreshTokens.clear();
   }
 
   public static void revokeByApplication(UUID applicationId, int durationsInSeconds) {
