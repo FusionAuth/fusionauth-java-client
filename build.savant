@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 fusionauthJWTVersion = "5.2.4"
-jacksonVersion = "2.15.2"
+jacksonVersion = "2.15.3"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
 restifyVersion = "4.1.2"
