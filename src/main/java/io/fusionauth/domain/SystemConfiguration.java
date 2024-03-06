@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -11,7 +23,6 @@ import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.internal.annotation.InternalUse;
 
 /**
  * @author Brian Pontarelli
@@ -23,8 +34,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
    * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
    * cookies.
    */
-  @InternalUse
-  public String cookieEncryptionKey;
+ public String cookieEncryptionKey;
 
   public CORSConfiguration corsConfiguration = new CORSConfiguration();
 
@@ -40,7 +50,29 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public ZoneId reportTimezone;
 
+  public SystemTrustedProxyConfiguration trustedProxyConfiguration = new SystemTrustedProxyConfiguration();
+
   public UIConfiguration uiConfiguration = new UIConfiguration();
+
+  @JacksonConstructor
+  public SystemConfiguration() {
+  }
+
+  public SystemConfiguration(SystemConfiguration other) {
+    this.auditLogConfiguration = new AuditLogConfiguration(other.auditLogConfiguration);
+    this.cookieEncryptionKey = other.cookieEncryptionKey;
+    this.corsConfiguration = new CORSConfiguration(other.corsConfiguration);
+    if (other.data != null) {
+      this.data.putAll(other.data);
+    }
+    this.eventLogConfiguration = new EventLogConfiguration(other.eventLogConfiguration);
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.loginRecordConfiguration = new LoginRecordConfiguration(other.loginRecordConfiguration);
+    this.reportTimezone = other.reportTimezone;
+    this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
+    this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -59,13 +91,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
+           Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, uiConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, trustedProxyConfiguration, reportTimezone, uiConfiguration);
   }
 
   public void normalize() {
@@ -74,6 +107,10 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     }
     if (corsConfiguration != null) {
       corsConfiguration.normalize();
+    }
+
+    if (trustedProxyConfiguration != null) {
+      trustedProxyConfiguration.normalize();
     }
   }
 
@@ -89,6 +126,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public static class AuditLogConfiguration {
     public DeleteConfiguration delete = new DeleteConfiguration(365);
+
+    @JacksonConstructor
+    public AuditLogConfiguration() {
+    }
+
+    public AuditLogConfiguration(AuditLogConfiguration other) {
+      this.delete = new DeleteConfiguration(other.delete);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -118,6 +163,11 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
     @JacksonConstructor
     public DeleteConfiguration() {
+    }
+
+    public DeleteConfiguration(DeleteConfiguration other) {
+      this.enabled = other.enabled;
+      this.numberOfDaysToRetain = other.numberOfDaysToRetain;
     }
 
     public DeleteConfiguration(int numberOfDaysToRetain) {
@@ -153,6 +203,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
   public static class EventLogConfiguration {
     public int numberToRetain = 10_000;
 
+    @JacksonConstructor
+    public EventLogConfiguration() {
+    }
+
+    public EventLogConfiguration(EventLogConfiguration other) {
+      this.numberToRetain = other.numberToRetain;
+    }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) {
@@ -178,6 +236,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public static class LoginRecordConfiguration {
     public DeleteConfiguration delete = new DeleteConfiguration(365);
+
+    @JacksonConstructor
+    public LoginRecordConfiguration() {
+    }
+
+    public LoginRecordConfiguration(LoginRecordConfiguration other) {
+      this.delete = new DeleteConfiguration(other.delete);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -208,6 +274,16 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     public String logoURL;
 
     public String menuFontColor;
+
+    @JacksonConstructor
+    public UIConfiguration() {
+    }
+
+    public UIConfiguration(UIConfiguration other) {
+      this.headerColor = other.headerColor;
+      this.logoURL = other.logoURL;
+      this.menuFontColor = other.menuFontColor;
+    }
 
     @Override
     public boolean equals(Object o) {

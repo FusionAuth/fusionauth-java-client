@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,31 +15,29 @@
  */
 package io.fusionauth.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.util.Normalizer;
 
 /**
- * Password Encryption Scheme Configuration
- *
  * @author Daniel DeGroff
  */
-public class PasswordEncryptionConfiguration implements Buildable<PasswordEncryptionConfiguration> {
-  public String encryptionScheme;
+public class SystemTrustedProxyConfiguration {
+  public SystemTrustedProxyConfigurationPolicy trustPolicy = SystemTrustedProxyConfigurationPolicy.All;
 
-  public int encryptionSchemeFactor;
-
-  public boolean modifyEncryptionSchemeOnLogin;
+  public List<String> trusted = new ArrayList<>();
 
   @JacksonConstructor
-  public PasswordEncryptionConfiguration() {
+  public SystemTrustedProxyConfiguration() {
   }
 
-  public PasswordEncryptionConfiguration(PasswordEncryptionConfiguration other) {
-    this.encryptionScheme = other.encryptionScheme;
-    this.encryptionSchemeFactor = other.encryptionSchemeFactor;
-    this.modifyEncryptionSchemeOnLogin = other.modifyEncryptionSchemeOnLogin;
+  public SystemTrustedProxyConfiguration(SystemTrustedProxyConfiguration other) {
+    this.trustPolicy = other.trustPolicy;
+    this.trusted.addAll(other.trusted);
   }
 
   @Override
@@ -50,15 +48,17 @@ public class PasswordEncryptionConfiguration implements Buildable<PasswordEncryp
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PasswordEncryptionConfiguration that = (PasswordEncryptionConfiguration) o;
-    return modifyEncryptionSchemeOnLogin == that.modifyEncryptionSchemeOnLogin &&
-           Objects.equals(encryptionScheme, that.encryptionScheme) &&
-           Objects.equals(encryptionSchemeFactor, that.encryptionSchemeFactor);
+    SystemTrustedProxyConfiguration that = (SystemTrustedProxyConfiguration) o;
+    return trustPolicy == that.trustPolicy && Objects.equals(trusted, that.trusted);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(encryptionScheme, encryptionSchemeFactor, modifyEncryptionSchemeOnLogin);
+    return Objects.hash(trustPolicy, trusted);
+  }
+
+  public void normalize() {
+    Normalizer.removeEmpty(trusted);
   }
 
   @Override

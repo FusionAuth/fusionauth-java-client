@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -21,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.lineReturns;
+import static io.fusionauth.domain.util.Normalizer.trim;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
 import static java.util.Arrays.asList;
 
@@ -151,6 +164,7 @@ public class Theme implements Buildable<Theme> {
                      templates.accountWebAuthnAdd,
                      templates.accountWebAuthnDelete,
                      templates.accountWebAuthnIndex,
+                     templates.confirmationRequired,
                      templates.emailComplete,
                      templates.emailSent,
                      templates.emailVerificationRequired,
@@ -245,6 +259,7 @@ public class Theme implements Buildable<Theme> {
         "accountWebAuthnAdd",
         "accountWebAuthnDelete",
         "accountWebAuthnIndex",
+        "confirmationRequired",
         "emailComplete",
         "emailSent",
         "emailVerificationRequired",
@@ -298,6 +313,8 @@ public class Theme implements Buildable<Theme> {
     public String accountWebAuthnDelete;
 
     public String accountWebAuthnIndex;
+
+    public String confirmationRequired;
 
     public String emailComplete;
 
@@ -383,6 +400,7 @@ public class Theme implements Buildable<Theme> {
       this.accountWebAuthnAdd = other.accountWebAuthnAdd;
       this.accountWebAuthnDelete = other.accountWebAuthnDelete;
       this.accountWebAuthnIndex = other.accountWebAuthnIndex;
+      this.confirmationRequired = other.confirmationRequired;
       this.emailComplete = other.emailComplete;
       this.emailSent = other.emailSent;
       this.emailVerificationRequired = other.emailVerificationRequired;
@@ -438,6 +456,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(accountWebAuthnAdd, that.accountWebAuthnAdd) &&
              Objects.equals(accountWebAuthnDelete, that.accountWebAuthnDelete) &&
              Objects.equals(accountWebAuthnIndex, that.accountWebAuthnIndex) &&
+             Objects.equals(confirmationRequired, that.confirmationRequired) &&
              Objects.equals(emailComplete, that.emailComplete) &&
              Objects.equals(emailSent, that.emailSent) &&
              Objects.equals(emailVerificationRequired, that.emailVerificationRequired) &&
@@ -507,6 +526,7 @@ public class Theme implements Buildable<Theme> {
           accountWebAuthnAdd,
           accountWebAuthnDelete,
           accountWebAuthnIndex,
+          confirmationRequired,
           emailComplete,
           emailSent,
           emailVerificationRequired,
@@ -555,6 +575,7 @@ public class Theme implements Buildable<Theme> {
       accountWebAuthnAdd = lineReturns(trimToNull(accountWebAuthnAdd));
       accountWebAuthnDelete = lineReturns(trimToNull(accountWebAuthnDelete));
       accountWebAuthnIndex = lineReturns(trimToNull(accountWebAuthnIndex));
+      confirmationRequired = lineReturns(trim(confirmationRequired));
       emailComplete = lineReturns(trimToNull(emailComplete));
       emailSent = lineReturns(trimToNull(emailSent));
       emailVerificationRequired = lineReturns(trimToNull(emailVerificationRequired));

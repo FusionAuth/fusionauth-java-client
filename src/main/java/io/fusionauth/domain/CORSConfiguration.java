@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.HTTPMethod;
 
@@ -42,6 +43,21 @@ public class CORSConfiguration extends Enableable implements Buildable<CORSConfi
   public List<String> exposedHeaders = new ArrayList<>();
 
   public int preflightMaxAgeInSeconds;
+
+  @JacksonConstructor
+  public CORSConfiguration() {
+  }
+
+  public CORSConfiguration(CORSConfiguration other) {
+    this.allowCredentials = other.allowCredentials;
+    this.allowedHeaders.addAll(other.allowedHeaders);
+    this.allowedMethods.addAll(other.allowedMethods);
+    this.allowedOrigins.addAll(other.allowedOrigins);
+    this.debug = other.debug;
+    this.enabled = other.enabled;
+    this.exposedHeaders.addAll(other.exposedHeaders);
+    this.preflightMaxAgeInSeconds = other.preflightMaxAgeInSeconds;
+  }
 
   @Override
   public boolean equals(Object o) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -155,13 +155,6 @@ public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2App
   @Override
   public boolean postRequestEnabled() {
     return postRequest;
-  }
-
-  public SAMLv2IdentityProvider secure() {
-    domains.clear();
-    emailClaim = null;
-    usernameClaim = null;
-    return this;
   }
 
   @Override

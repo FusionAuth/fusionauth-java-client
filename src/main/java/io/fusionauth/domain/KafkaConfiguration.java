@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.inversoft.json.ToString;
 public class KafkaConfiguration extends Enableable implements Buildable<KafkaConfiguration>, Integration {
   public String defaultTopic;
 
+  // List of potentially sensitive configurations https://kafka.apache.org/documentation/#security_configclients
   public Map<String, String> producer = new TreeMap<>();
 
   @Override
@@ -39,8 +40,8 @@ public class KafkaConfiguration extends Enableable implements Buildable<KafkaCon
     }
     KafkaConfiguration that = (KafkaConfiguration) o;
     return super.equals(o) &&
-        Objects.equals(defaultTopic, that.defaultTopic) &&
-        Objects.equals(producer, that.producer);
+           Objects.equals(defaultTopic, that.defaultTopic) &&
+           Objects.equals(producer, that.producer);
   }
 
   @Override
