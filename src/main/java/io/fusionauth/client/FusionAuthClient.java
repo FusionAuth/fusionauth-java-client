@@ -523,8 +523,8 @@ public class FusionAuthClient {
    * @param request The request object that contains all the information used to create the user comment.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> commentOnUser(UserCommentRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<UserCommentResponse, Errors> commentOnUser(UserCommentRequest request) {
+    return start(UserCommentResponse.class, Errors.class)
         .uri("/api/user/comment")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
