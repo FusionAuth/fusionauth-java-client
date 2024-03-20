@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ public class RegistrationResponse {
   public UserRegistration registration;
 
   public String registrationVerificationId;
+
+  public String registrationVerificationOneTimeCode;
 
   public String token;
 

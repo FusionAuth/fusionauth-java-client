@@ -34,6 +34,8 @@ public class UserResponse {
 
   public Map<UUID, String> registrationVerificationIds;
 
+  public Map<UUID, String> registrationVerificationOneTimeCodes;
+
   public String token;
 
   public ZonedDateTime tokenExpirationInstant;
