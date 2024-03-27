@@ -125,7 +125,7 @@ public class Application implements Buildable<Application>, Tenantable {
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
     }
-    this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).toList());
+    this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).collect(Collectors.toList()));
     this.data.putAll(other.data);
     this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
     this.externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
