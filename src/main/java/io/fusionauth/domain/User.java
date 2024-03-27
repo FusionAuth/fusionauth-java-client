@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
- * The global view of a User. This object contains all global information about the user including birth date, registration information
+ * The global view of a User. This object contains all global information about the user including birthdate, registration information
  * preferred languages, global attributes, etc.
  *
  * @author Seth Musselman

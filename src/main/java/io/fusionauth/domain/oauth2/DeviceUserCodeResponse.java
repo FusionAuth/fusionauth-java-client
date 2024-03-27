@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ public class DeviceUserCodeResponse implements Buildable<DeviceUserCodeResponse>
   public Integer expiresIn;
 
   public PendingIdPLink pendingIdPLink;
+
+  public String scope;
 
   public UUID tenantId;
 

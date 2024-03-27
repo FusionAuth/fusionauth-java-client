@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,11 @@ import io.fusionauth.domain.User;
 public class UserResponse {
   public String emailVerificationId;
 
+  public String emailVerificationOneTimeCode;
+
   public Map<UUID, String> registrationVerificationIds;
+
+  public Map<UUID, String> registrationVerificationOneTimeCodes;
 
   public String token;
 

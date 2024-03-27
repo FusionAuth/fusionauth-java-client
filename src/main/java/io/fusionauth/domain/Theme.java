@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -21,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.lineReturns;
+import static io.fusionauth.domain.util.Normalizer.trim;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
 import static java.util.Arrays.asList;
 
@@ -151,6 +164,7 @@ public class Theme implements Buildable<Theme> {
                      templates.accountWebAuthnAdd,
                      templates.accountWebAuthnDelete,
                      templates.accountWebAuthnIndex,
+                     templates.confirmationRequired,
                      templates.emailComplete,
                      templates.emailSent,
                      templates.emailVerificationRequired,
@@ -162,6 +176,7 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2ChildRegistrationNotAllowed,
                      templates.oauth2ChildRegistrationNotAllowedComplete,
                      templates.oauth2CompleteRegistration,
+                     templates.oauth2Consent,
                      templates.oauth2Device,
                      templates.oauth2DeviceComplete,
                      templates.oauth2Error,
@@ -245,6 +260,7 @@ public class Theme implements Buildable<Theme> {
         "accountWebAuthnAdd",
         "accountWebAuthnDelete",
         "accountWebAuthnIndex",
+        "confirmationRequired",
         "emailComplete",
         "emailSent",
         "emailVerificationRequired",
@@ -256,6 +272,7 @@ public class Theme implements Buildable<Theme> {
         "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete",
         "oauth2CompleteRegistration",
+        "oauth2Consent",
         "oauth2Device",
         "oauth2DeviceComplete",
         "oauth2Error",
@@ -299,6 +316,8 @@ public class Theme implements Buildable<Theme> {
 
     public String accountWebAuthnIndex;
 
+    public String confirmationRequired;
+
     public String emailComplete;
 
     public String emailSent;
@@ -320,6 +339,8 @@ public class Theme implements Buildable<Theme> {
     public String oauth2ChildRegistrationNotAllowedComplete;
 
     public String oauth2CompleteRegistration;
+
+    public String oauth2Consent;
 
     public String oauth2Device;
 
@@ -383,6 +404,7 @@ public class Theme implements Buildable<Theme> {
       this.accountWebAuthnAdd = other.accountWebAuthnAdd;
       this.accountWebAuthnDelete = other.accountWebAuthnDelete;
       this.accountWebAuthnIndex = other.accountWebAuthnIndex;
+      this.confirmationRequired = other.confirmationRequired;
       this.emailComplete = other.emailComplete;
       this.emailSent = other.emailSent;
       this.emailVerificationRequired = other.emailVerificationRequired;
@@ -394,6 +416,7 @@ public class Theme implements Buildable<Theme> {
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
+      this.oauth2Consent = other.oauth2Consent;
       this.oauth2Device = other.oauth2Device;
       this.oauth2DeviceComplete = other.oauth2DeviceComplete;
       this.oauth2Error = other.oauth2Error;
@@ -438,6 +461,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(accountWebAuthnAdd, that.accountWebAuthnAdd) &&
              Objects.equals(accountWebAuthnDelete, that.accountWebAuthnDelete) &&
              Objects.equals(accountWebAuthnIndex, that.accountWebAuthnIndex) &&
+             Objects.equals(confirmationRequired, that.confirmationRequired) &&
              Objects.equals(emailComplete, that.emailComplete) &&
              Objects.equals(emailSent, that.emailSent) &&
              Objects.equals(emailVerificationRequired, that.emailVerificationRequired) &&
@@ -449,6 +473,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
              Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
              Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
+             Objects.equals(oauth2Consent, that.oauth2Consent) &&
              Objects.equals(oauth2Device, that.oauth2Device) &&
              Objects.equals(oauth2DeviceComplete, that.oauth2DeviceComplete) &&
              Objects.equals(oauth2Error, that.oauth2Error) &&
@@ -507,6 +532,7 @@ public class Theme implements Buildable<Theme> {
           accountWebAuthnAdd,
           accountWebAuthnDelete,
           accountWebAuthnIndex,
+          confirmationRequired,
           emailComplete,
           emailSent,
           emailVerificationRequired,
@@ -518,6 +544,7 @@ public class Theme implements Buildable<Theme> {
           oauth2ChildRegistrationNotAllowed,
           oauth2ChildRegistrationNotAllowedComplete,
           oauth2CompleteRegistration,
+          oauth2Consent,
           oauth2Device,
           oauth2DeviceComplete,
           oauth2Error,
@@ -555,6 +582,7 @@ public class Theme implements Buildable<Theme> {
       accountWebAuthnAdd = lineReturns(trimToNull(accountWebAuthnAdd));
       accountWebAuthnDelete = lineReturns(trimToNull(accountWebAuthnDelete));
       accountWebAuthnIndex = lineReturns(trimToNull(accountWebAuthnIndex));
+      confirmationRequired = lineReturns(trim(confirmationRequired));
       emailComplete = lineReturns(trimToNull(emailComplete));
       emailSent = lineReturns(trimToNull(emailSent));
       emailVerificationRequired = lineReturns(trimToNull(emailVerificationRequired));
@@ -566,6 +594,7 @@ public class Theme implements Buildable<Theme> {
       oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
       oauth2ChildRegistrationNotAllowedComplete = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowedComplete));
       oauth2CompleteRegistration = lineReturns(trimToNull(oauth2CompleteRegistration));
+      oauth2Consent = lineReturns(trimToNull(oauth2Consent));
       oauth2Device = lineReturns(trimToNull(oauth2Device));
       oauth2DeviceComplete = lineReturns(trimToNull(oauth2DeviceComplete));
       oauth2Error = lineReturns(trimToNull(oauth2Error));

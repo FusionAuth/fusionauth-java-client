@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -452,7 +452,25 @@ public enum LambdaType {
       "\n" +
       "    // Happy coding! Reconcile the User here.\n" +
       "    console.info('Hello World!');\n" +
-      "}");
+      "}"),
+
+  UserInfoPopulate("populate", "" +
+      //language=JavaScript
+      "// Using the user and registration parameters along with the JWT provided on the request add additional values to the userinfo response.\n" +
+      "function populate(response, user, registration, jwt) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(user)); \n" +
+      "\n" +
+      "  // Happy coding! Populate your userinfo response here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
+      "}\n");
   // @formatter:on
 
   private final String example;

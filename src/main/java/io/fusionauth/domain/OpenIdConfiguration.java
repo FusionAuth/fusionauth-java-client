@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> response_types_supported = new ArrayList<>(Arrays.asList("code", "id_token", "token id_token"));
 
-  public List<String> scopes_supported = new ArrayList<>(Arrays.asList("openid", "offline_access"));
+  public List<String> scopes_supported = new ArrayList<>(Arrays.asList("openid", "offline_access", "email", "phone", "profile"));
 
   public List<String> subject_types_supported = new ArrayList<>(Collections.singletonList("public"));
 

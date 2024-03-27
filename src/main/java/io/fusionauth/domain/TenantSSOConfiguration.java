@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ public class TenantSSOConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), deviceTrustTimeToLiveInSeconds);
+    return Objects.hash(deviceTrustTimeToLiveInSeconds);
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,5 +20,9 @@ package io.fusionauth.domain;
  */
 public enum LambdaEngineType {
   GraalJS,
+  /**
+   * This engine was removed in 1.49.0. This value remains for backwards compatibility.
+   */
+  @Deprecated
   Nashorn
 }
