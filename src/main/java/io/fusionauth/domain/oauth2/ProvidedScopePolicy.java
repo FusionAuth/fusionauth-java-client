@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.Requirable;
 
 /**
- * The policy for provided scope handling
+ * The handling policy for scopes provided by FusionAuth
  *
  * @author Spencer Witt
  */

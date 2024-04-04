@@ -28,7 +28,8 @@ public enum OAuthScopeConsentMode {
   AlwaysPrompt,
   /**
    * A user's previous permission grant decision will be remembered. The user will not be prompted again
-   * unless there are new required scopes that require consent.
+   * unless the request contains scopes with no previous consent decision, or a previously rejected scope
+   * is now required.
    */
   RememberDecision,
   /**

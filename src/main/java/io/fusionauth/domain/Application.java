@@ -125,7 +125,6 @@ public class Application implements Buildable<Application>, Tenantable {
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
     }
-    this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).collect(Collectors.toList()));
     this.data.putAll(other.data);
     this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
     this.externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
@@ -144,6 +143,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.registrationDeletePolicy = new ApplicationRegistrationDeletePolicy(other.registrationDeletePolicy);
     this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
     this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
+    this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).collect(Collectors.toList()));
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
@@ -191,7 +191,6 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(accessControlConfiguration, that.accessControlConfiguration) &&
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
-           Objects.equals(scopes, that.scopes) &&
            Objects.equals(data, that.data) &&
            Objects.equals(emailConfiguration, that.emailConfiguration) &&
            Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
@@ -210,6 +209,7 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
+           Objects.equals(scopes, that.scopes) &&
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
@@ -256,7 +256,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, scopes, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -266,8 +266,6 @@ public class Application implements Buildable<Application>, Tenantable {
       cleanSpeakConfiguration.normalize();
     }
 
-    scopes.forEach(ApplicationOAuthScope::normalize);
-
     if (oauthConfiguration != null) {
       oauthConfiguration.normalize();
     }
@@ -276,6 +274,8 @@ public class Application implements Buildable<Application>, Tenantable {
     jwtConfiguration.refreshTokenRevocationPolicy = null;
 
     roles.forEach(ApplicationRole::normalize);
+
+    scopes.forEach(ApplicationOAuthScope::normalize);
 
     if (multiFactorConfiguration.loginPolicy == null) {
       multiFactorConfiguration.trustPolicy = null;
