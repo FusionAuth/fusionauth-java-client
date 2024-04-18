@@ -456,8 +456,8 @@ public enum LambdaType {
 
   UserInfoPopulate("populate", "" +
       //language=JavaScript
-      "// Using the user and registration parameters along with the JWT provided on the request add additional values to the userinfo response.\n" +
-      "function populate(response, user, registration, jwt) {\n" +
+      "// Using the user and registration parameters along with the JWT provided on the request add additional values to the userInfo response.\n" +
+      "function populate(userInfo, user, registration, jwt) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -466,7 +466,7 @@ public enum LambdaType {
       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
       "  //  console.info(JSON.stringify(user)); \n" +
       "\n" +
-      "  // Happy coding! Populate your userinfo response here.\n" +
+      "  // Happy coding! Populate your userInfo response here.\n" +
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +
