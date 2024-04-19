@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,21 @@
 package io.fusionauth.domain.api;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.search.ApplicationSearchCriteria;
+import io.fusionauth.domain.ApplicationOAuthScope;
 
 /**
- * Search request for Applications
+ * The Application Scope API response.
  *
  * @author Spencer Witt
  */
-public class ApplicationSearchRequest extends ExpandableRequest implements Buildable<ApplicationSearchRequest> {
-  public ApplicationSearchCriteria search = new ApplicationSearchCriteria();
+public class ApplicationOAuthScopeResponse {
+  public ApplicationOAuthScope scope;
 
   @JacksonConstructor
-  public ApplicationSearchRequest() {
+  public ApplicationOAuthScopeResponse() {
   }
 
-  public ApplicationSearchRequest(ApplicationSearchCriteria search) {
-    this.search = search;
+  public ApplicationOAuthScopeResponse(ApplicationOAuthScope scope) {
+    this.scope = scope;
   }
 }

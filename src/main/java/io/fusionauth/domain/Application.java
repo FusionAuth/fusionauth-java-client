@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -82,6 +94,10 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public SAMLv2Configuration samlv2Configuration = new SAMLv2Configuration();
 
+  // Do not include the application Id for individual scopes when returning as part of the full application
+  @JsonIgnoreProperties("applicationId")
+  public List<ApplicationOAuthScope> scopes = new ArrayList<>();
+
   public ObjectState state;
 
   public UUID tenantId;
@@ -127,6 +143,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.registrationDeletePolicy = new ApplicationRegistrationDeletePolicy(other.registrationDeletePolicy);
     this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
     this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
+    this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).collect(Collectors.toList()));
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
@@ -192,6 +209,7 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
+           Objects.equals(scopes, that.scopes) &&
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
@@ -208,6 +226,12 @@ public class Application implements Buildable<Application>, Tenantable {
   public void setActive(boolean active) {
     this.active = active;
     state = active ? ObjectState.Active : ObjectState.Inactive;
+  }
+
+  public ApplicationOAuthScope getOAuthScope(String name) {
+    return scopes.stream()
+                 .filter(s -> s.name.equals(name))
+                 .findFirst().orElse(null);
   }
 
   public ApplicationRole getRole(String name) {
@@ -232,7 +256,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -251,6 +275,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     roles.forEach(ApplicationRole::normalize);
 
+    scopes.forEach(ApplicationOAuthScope::normalize);
+
     if (multiFactorConfiguration.loginPolicy == null) {
       multiFactorConfiguration.trustPolicy = null;
     }
@@ -261,6 +287,11 @@ public class Application implements Buildable<Application>, Tenantable {
       oauthConfiguration.clientSecret = null;
     }
 
+    return this;
+  }
+
+  public Application sortOAuthScopes() {
+    scopes.sort(ApplicationOAuthScope::compareTo);
     return this;
   }
 
@@ -419,6 +450,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public UUID selfServiceRegistrationValidationId;
 
+    public UUID userinfoPopulateId;
+
     @JacksonConstructor
     public LambdaConfiguration() {
     }
@@ -428,6 +461,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.idTokenPopulateId = other.idTokenPopulateId;
       this.samlv2PopulateId = other.samlv2PopulateId;
       this.selfServiceRegistrationValidationId = other.selfServiceRegistrationValidationId;
+      this.userinfoPopulateId = other.userinfoPopulateId;
     }
 
     @Override
@@ -442,12 +476,13 @@ public class Application implements Buildable<Application>, Tenantable {
       return Objects.equals(accessTokenPopulateId, that.accessTokenPopulateId) &&
              Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
              Objects.equals(samlv2PopulateId, that.samlv2PopulateId) &&
-             Objects.equals(selfServiceRegistrationValidationId, that.selfServiceRegistrationValidationId);
+             Objects.equals(selfServiceRegistrationValidationId, that.selfServiceRegistrationValidationId) &&
+             Objects.equals(userinfoPopulateId, that.userinfoPopulateId);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId, selfServiceRegistrationValidationId);
+      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId, selfServiceRegistrationValidationId, userinfoPopulateId);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,6 +74,7 @@ public class OAuthError implements OAuthResponse {
     access_token_unavailable_for_processing,
     access_token_failed_processing,
     access_token_invalid,
+    access_token_required,
 
     refresh_token_not_found,
     refresh_token_type_not_supported,
@@ -137,7 +138,10 @@ public class OAuthError implements OAuthResponse {
     change_password_expired,
     change_password_validation,
 
-    unknown
+    unknown,
+    missing_required_scope,
+    unknown_scope,
+    consent_canceled
   }
 
   public enum OAuthErrorType {
@@ -153,6 +157,7 @@ public class OAuthError implements OAuthResponse {
     server_error,
     unsupported_grant_type,
     unsupported_response_type,
+    access_denied,
 
     // RFC 6749 does not account for these states, so we invented them.
     change_password_required,

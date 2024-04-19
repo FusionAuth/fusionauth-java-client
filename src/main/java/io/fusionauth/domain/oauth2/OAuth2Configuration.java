@@ -50,6 +50,8 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public String clientSecret;
 
+  public OAuthScopeConsentMode consentMode = OAuthScopeConsentMode.AlwaysPrompt;
+
   public boolean debug;
 
   public URI deviceVerificationURL;
@@ -69,6 +71,10 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public ProofKeyForCodeExchangePolicy proofKeyForCodeExchangePolicy = ProofKeyForCodeExchangePolicy.NotRequired;
 
+  public ProvidedScopePolicy providedScopePolicy = new ProvidedScopePolicy();
+
+  public OAuthApplicationRelationship relationship = OAuthApplicationRelationship.FirstParty;
+
   /**
    * @deprecated use {@link #clientAuthenticationPolicy} instead.
    */
@@ -77,6 +83,10 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   public boolean requireRegistration;
 
+  public OAuthScopeHandlingPolicy scopeHandlingPolicy = OAuthScopeHandlingPolicy.Strict;
+
+  public UnknownScopePolicy unknownScopePolicy = UnknownScopePolicy.Reject;
+
   @JacksonConstructor
   public OAuth2Configuration() {
   }
@@ -84,19 +94,24 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public OAuth2Configuration(OAuth2Configuration other) {
     this.authorizedOriginURLs.addAll(other.authorizedOriginURLs);
     this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
+    this.authorizedURLValidationPolicy = other.authorizedURLValidationPolicy;
     this.clientAuthenticationPolicy = other.clientAuthenticationPolicy;
     this.clientId = other.clientId;
     this.clientSecret = other.clientSecret;
+    this.consentMode = other.consentMode;
     this.debug = other.debug;
     this.deviceVerificationURL = other.deviceVerificationURL;
     this.enabledGrants.addAll(other.enabledGrants);
     this.generateRefreshTokens = other.generateRefreshTokens;
     this.logoutBehavior = other.logoutBehavior;
     this.logoutURL = other.logoutURL;
+    this.providedScopePolicy = new ProvidedScopePolicy(other.providedScopePolicy);
     this.proofKeyForCodeExchangePolicy = other.proofKeyForCodeExchangePolicy;
+    this.relationship = other.relationship;
     this.requireClientAuthentication = other.requireClientAuthentication;
     this.requireRegistration = other.requireRegistration;
-    this.authorizedURLValidationPolicy = other.authorizedURLValidationPolicy;
+    this.scopeHandlingPolicy = other.scopeHandlingPolicy;
+    this.unknownScopePolicy = other.unknownScopePolicy;
   }
 
   public OAuth2Configuration(String clientId, String clientSecret) {
@@ -123,11 +138,16 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
            Objects.equals(clientAuthenticationPolicy, that.clientAuthenticationPolicy) &&
            Objects.equals(clientId, that.clientId) &&
            Objects.equals(clientSecret, that.clientSecret) &&
+           Objects.equals(consentMode, that.consentMode) &&
            Objects.equals(deviceVerificationURL, that.deviceVerificationURL) &&
            Objects.equals(enabledGrants, that.enabledGrants) &&
            Objects.equals(logoutBehavior, that.logoutBehavior) &&
            Objects.equals(logoutURL, that.logoutURL) &&
-           Objects.equals(proofKeyForCodeExchangePolicy, that.proofKeyForCodeExchangePolicy);
+           Objects.equals(providedScopePolicy, that.providedScopePolicy) &&
+           Objects.equals(proofKeyForCodeExchangePolicy, that.proofKeyForCodeExchangePolicy) &&
+           Objects.equals(relationship, that.relationship) &&
+           Objects.equals(scopeHandlingPolicy, that.scopeHandlingPolicy) &&
+           Objects.equals(unknownScopePolicy, that.unknownScopePolicy);
   }
 
   /**
@@ -143,7 +163,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, authorizedURLValidationPolicy, clientAuthenticationPolicy, clientId, clientSecret, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, proofKeyForCodeExchangePolicy, requireClientAuthentication, requireRegistration);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, authorizedURLValidationPolicy, clientAuthenticationPolicy, clientId, clientSecret, consentMode, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, providedScopePolicy, proofKeyForCodeExchangePolicy, relationship, requireClientAuthentication, requireRegistration, scopeHandlingPolicy, unknownScopePolicy);
   }
 
   public void normalize() {

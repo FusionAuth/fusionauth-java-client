@@ -176,6 +176,7 @@ public class Theme implements Buildable<Theme> {
                      templates.oauth2ChildRegistrationNotAllowed,
                      templates.oauth2ChildRegistrationNotAllowedComplete,
                      templates.oauth2CompleteRegistration,
+                     templates.oauth2Consent,
                      templates.oauth2Device,
                      templates.oauth2DeviceComplete,
                      templates.oauth2Error,
@@ -271,6 +272,7 @@ public class Theme implements Buildable<Theme> {
         "oauth2ChildRegistrationNotAllowed",
         "oauth2ChildRegistrationNotAllowedComplete",
         "oauth2CompleteRegistration",
+        "oauth2Consent",
         "oauth2Device",
         "oauth2DeviceComplete",
         "oauth2Error",
@@ -337,6 +339,8 @@ public class Theme implements Buildable<Theme> {
     public String oauth2ChildRegistrationNotAllowedComplete;
 
     public String oauth2CompleteRegistration;
+
+    public String oauth2Consent;
 
     public String oauth2Device;
 
@@ -412,6 +416,7 @@ public class Theme implements Buildable<Theme> {
       this.oauth2ChildRegistrationNotAllowed = other.oauth2ChildRegistrationNotAllowed;
       this.oauth2ChildRegistrationNotAllowedComplete = other.oauth2ChildRegistrationNotAllowedComplete;
       this.oauth2CompleteRegistration = other.oauth2CompleteRegistration;
+      this.oauth2Consent = other.oauth2Consent;
       this.oauth2Device = other.oauth2Device;
       this.oauth2DeviceComplete = other.oauth2DeviceComplete;
       this.oauth2Error = other.oauth2Error;
@@ -468,6 +473,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(oauth2ChildRegistrationNotAllowed, that.oauth2ChildRegistrationNotAllowed) &&
              Objects.equals(oauth2ChildRegistrationNotAllowedComplete, that.oauth2ChildRegistrationNotAllowedComplete) &&
              Objects.equals(oauth2CompleteRegistration, that.oauth2CompleteRegistration) &&
+             Objects.equals(oauth2Consent, that.oauth2Consent) &&
              Objects.equals(oauth2Device, that.oauth2Device) &&
              Objects.equals(oauth2DeviceComplete, that.oauth2DeviceComplete) &&
              Objects.equals(oauth2Error, that.oauth2Error) &&
@@ -538,6 +544,7 @@ public class Theme implements Buildable<Theme> {
           oauth2ChildRegistrationNotAllowed,
           oauth2ChildRegistrationNotAllowedComplete,
           oauth2CompleteRegistration,
+          oauth2Consent,
           oauth2Device,
           oauth2DeviceComplete,
           oauth2Error,
@@ -587,6 +594,7 @@ public class Theme implements Buildable<Theme> {
       oauth2ChildRegistrationNotAllowed = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowed));
       oauth2ChildRegistrationNotAllowedComplete = lineReturns(trimToNull(oauth2ChildRegistrationNotAllowedComplete));
       oauth2CompleteRegistration = lineReturns(trimToNull(oauth2CompleteRegistration));
+      oauth2Consent = lineReturns(trimToNull(oauth2Consent));
       oauth2Device = lineReturns(trimToNull(oauth2Device));
       oauth2DeviceComplete = lineReturns(trimToNull(oauth2DeviceComplete));
       oauth2Error = lineReturns(trimToNull(oauth2Error));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import io.fusionauth.domain.search.SearchResults;
  *
  * @author Spencer Witt
  */
-public class ApplicationSearchResponse {
+public class ApplicationSearchResponse extends ExpandableResponse {
   public List<Application> applications;
 
   public long total;

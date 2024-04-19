@@ -13,25 +13,26 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api;
-
-import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.search.ApplicationSearchCriteria;
+package io.fusionauth.domain.oauth2;
 
 /**
- * Search request for Applications
+ * Policy for handling unknown OAuth scopes in the request
  *
  * @author Spencer Witt
  */
-public class ApplicationSearchRequest extends ExpandableRequest implements Buildable<ApplicationSearchRequest> {
-  public ApplicationSearchCriteria search = new ApplicationSearchCriteria();
+public enum UnknownScopePolicy {
+  /**
+   * Unknown scopes are allowed and passed through the OAuth workflow
+   */
+  Allow,
 
-  @JacksonConstructor
-  public ApplicationSearchRequest() {
-  }
+  /**
+   * Unknown scopes will be removed from the OAuth workflow
+   */
+  Remove,
 
-  public ApplicationSearchRequest(ApplicationSearchCriteria search) {
-    this.search = search;
-  }
+  /**
+   * Unknown scopes will be rejected and cause the OAuth workflow to fail
+   */
+  Reject
 }

@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.reactor;
 
@@ -20,6 +32,12 @@ public class ReactorStatus {
   public ReactorFeatureStatus advancedLambdas = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus advancedMultiFactorAuthentication = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus advancedOAuthScopes = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus advancedOAuthScopesCustomScopes = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus advancedOAuthScopesThirdPartyApplications = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus advancedRegistration = ReactorFeatureStatus.UNKNOWN;
 
@@ -62,6 +80,9 @@ public class ReactorStatus {
     applicationThemes = other.applicationThemes;
     breachedPasswordDetection = other.breachedPasswordDetection;
     connectors = other.connectors;
+    advancedOAuthScopes = other.advancedOAuthScopes;
+    advancedOAuthScopesCustomScopes = other.advancedOAuthScopesCustomScopes;
+    advancedOAuthScopesThirdPartyApplications = other.advancedOAuthScopesThirdPartyApplications;
     entityManagement = other.entityManagement;
     expiration = other.expiration;
     licenseAttributes.putAll(other.licenseAttributes);
@@ -90,6 +111,9 @@ public class ReactorStatus {
            applicationThemes == that.applicationThemes &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
+           advancedOAuthScopes == that.advancedOAuthScopes &&
+           advancedOAuthScopesCustomScopes == that.advancedOAuthScopesCustomScopes &&
+           advancedOAuthScopesThirdPartyApplications == that.advancedOAuthScopesThirdPartyApplications &&
            entityManagement == that.entityManagement &&
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
@@ -111,6 +135,9 @@ public class ReactorStatus {
                         applicationThemes,
                         breachedPasswordDetection,
                         connectors,
+                        advancedOAuthScopes,
+                        advancedOAuthScopesCustomScopes,
+                        advancedOAuthScopesThirdPartyApplications,
                         entityManagement,
                         expiration,
                         licensed,
