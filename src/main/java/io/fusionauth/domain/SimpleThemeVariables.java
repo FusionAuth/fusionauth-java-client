@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain;
 
+import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -27,7 +28,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   public String alertFontColor;
 
-  public String backgroundImageURL;
+  public URI backgroundImageURL;
 
   public String backgroundSize;
 
@@ -69,7 +70,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   public String logoImageSize;
 
-  public String logoImageURL;
+  public URI logoImageURL;
 
   public String monoFontColor;
 
