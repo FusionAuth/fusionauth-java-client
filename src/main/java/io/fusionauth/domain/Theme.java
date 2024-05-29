@@ -41,6 +41,8 @@ import static java.util.Arrays.asList;
  * @author Trevor Smith
  */
 public class Theme implements Buildable<Theme> {
+  public static final UUID FUSIONAUTH_SIMPLE_THEME_ID = UUID.fromString("3c717291-5d83-4014-bd51-97c76475dc86");
+
   public static final UUID FUSIONAUTH_THEME_ID = UUID.fromString("75a068fd-e94b-451a-9aeb-3ddb9a3b5987");
 
   public Map<String, Object> data = new HashMap<>();
@@ -61,6 +63,10 @@ public class Theme implements Buildable<Theme> {
 
   public Templates templates;
 
+  public ThemeType type = ThemeType.advanced;
+
+  public SimpleThemeVariables variables;
+
   public Theme() {
   }
 
@@ -72,7 +78,9 @@ public class Theme implements Buildable<Theme> {
     this.lastUpdateInstant = theme.lastUpdateInstant;
     this.localizedMessages.putAll(theme.localizedMessages);
     this.name = theme.name;
+    this.variables = theme.variables;
     this.stylesheet = theme.stylesheet;
+    this.type = theme.type;
     if (theme.templates != null) {
       this.templates = new Templates(theme.templates);
     }
@@ -102,8 +110,10 @@ public class Theme implements Buildable<Theme> {
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(localizedMessages, that.localizedMessages) &&
            Objects.equals(name, that.name) &&
+           Objects.equals(variables, that.variables) &&
            Objects.equals(stylesheet, that.stylesheet) &&
-           Objects.equals(templates, that.templates);
+           Objects.equals(templates, that.templates) &&
+           Objects.equals(type, that.type);
   }
 
   /**
@@ -135,7 +145,7 @@ public class Theme implements Buildable<Theme> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, defaultMessages, id, insertInstant, lastUpdateInstant, localizedMessages, name, stylesheet, templates);
+    return Objects.hash(data, defaultMessages, id, insertInstant, lastUpdateInstant, localizedMessages, name, variables, stylesheet, templates, type);
   }
 
   /**
@@ -152,7 +162,9 @@ public class Theme implements Buildable<Theme> {
 
   @JsonIgnore
   public boolean missingTemplate() {
-    if (templates == null) {
+    if (ThemeType.simple.equals(type)) {
+      return false;
+    } else if (templates == null) {
       return true;
     }
 
