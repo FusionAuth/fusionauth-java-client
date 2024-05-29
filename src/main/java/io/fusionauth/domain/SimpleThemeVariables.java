@@ -27,7 +27,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   public String alertFontColor;
 
-  public String backgroundImageUrl;
+  public String backgroundImageURL;
 
   public String backgroundSize;
 
@@ -69,7 +69,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   public String logoImageSize;
 
-  public String logoImageUrl;
+  public String logoImageURL;
 
   public String monoFontColor;
 
@@ -98,7 +98,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
     SimpleThemeVariables that = (SimpleThemeVariables) o;
     return Objects.equals(alertBackgroundColor, that.alertBackgroundColor) &&
            Objects.equals(alertFontColor, that.alertFontColor) &&
-           Objects.equals(backgroundImageUrl, that.backgroundImageUrl) &&
+           Objects.equals(backgroundImageURL, that.backgroundImageURL) &&
            Objects.equals(backgroundSize, that.backgroundSize) &&
            Objects.equals(borderRadius, that.borderRadius) &&
            Objects.equals(deleteButtonColor, that.deleteButtonColor) &&
@@ -119,7 +119,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
            Objects.equals(linkTextColor, that.linkTextColor) &&
            Objects.equals(linkTextFocusColor, that.linkTextFocusColor) &&
            Objects.equals(logoImageSize, that.logoImageSize) &&
-           Objects.equals(logoImageUrl, that.logoImageUrl) &&
+           Objects.equals(logoImageURL, that.logoImageURL) &&
            Objects.equals(monoFontColor, that.monoFontColor) &&
            Objects.equals(monoFontFamily, that.monoFontFamily) &&
            Objects.equals(pageBackgroundColor, that.pageBackgroundColor) &&
@@ -132,10 +132,10 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(alertBackgroundColor, alertFontColor, backgroundImageUrl, backgroundSize, borderRadius, deleteButtonColor,
+    return Objects.hash(alertBackgroundColor, alertFontColor, backgroundImageURL, backgroundSize, borderRadius, deleteButtonColor,
                         deleteButtonTextColor, deleteButtonTextFocusColor, deleteButtonFocusColor, errorFontColor, errorIconColor, fontColor, fontFamily,
                         footerDisplay, iconBackgroundColor, iconColor, infoIconColor, inputBackgroundColor, inputIconColor, inputTextColor, linkTextColor,
-                        linkTextFocusColor, logoImageSize, logoImageUrl, monoFontColor, monoFontFamily, pageBackgroundColor,
+                        linkTextFocusColor, logoImageSize, logoImageURL, monoFontColor, monoFontFamily, pageBackgroundColor,
                         panelBackgroundColor, primaryButtonColor, primaryButtonFocusColor, primaryButtonTextColor, primaryButtonTextFocusColor);
   }
 }
