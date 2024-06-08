@@ -77,16 +77,23 @@ jobs:
           echo "${{ env.PASSWORD }}" | gpg --batch --yes --passphrase-fd 0 --import /tmp/key.asc
           rm /tmp/key.asc
 
-      - name: release to svn
+      - name: setup maven
         shell: bash -l {0}
-        run: devsetup -o maven -n
+        run: |
+          ~/dev/inversoft/fusionauth/fusionauth-developer/setup.sh -o maven -n
+          export KEY_NAME="FusionAuth Platform Team"
+          export PASSPHRASE="${{ env.PASSWORD }}"
+          export OSSRH_USERNAME=""
+          export OSSRH_PASSWORD=""
+          export BREWDIR="/usr"
+          envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer//setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
 
-      # - name: release to svn
-      #   if: inputs.command == 'release'
-      #   shell: bash -l {0}
-      #   run: sb release
+      - name: release to svn
+        if: inputs.command == 'release'
+        shell: bash -l {0}
+        run: sb release
 
-      # - name: publish to maven
-      #   if: inputs.command == 'publish'
-      #   shell: bash -l {0}
-      #   run: sb publish
+      - name: publish to maven
+        if: inputs.command == 'publish'
+        shell: bash -l {0}
+        run: sb publish
