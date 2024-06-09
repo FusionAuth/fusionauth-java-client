@@ -81,16 +81,15 @@ jobs:
           mkdir -p ~/.gnupg
           echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
 
-      - name: setup maven
+      - name: configure maven settings.xml
         shell: bash -l {0}
         run: |
-          ~/dev/inversoft/fusionauth/fusionauth-developer/setup.sh -o maven -n
           export KEY_NAME="FusionAuth Platform Team"
           export PASSPHRASE="${{ env.PRIV_KEY_PASSWORD }}"
           export OSSRH_USERNAME="${{ env.OSSRH_USERNAME }}"
           export OSSRH_PASSWORD="${{ env.OSSRH_PASSWORD }}"
           export BREWDIR="/usr"
-          envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer//setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
+          envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer/setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
 
       - name: release to svn
         if: inputs.command == 'release'
