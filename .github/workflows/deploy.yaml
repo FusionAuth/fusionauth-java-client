@@ -73,18 +73,22 @@ jobs:
       - name: import gpg key
         run: |
           export GPG_TTY=$(tty)
-          echo "${{ env.PRIVATE_KEY_B64 }}" | base64 -d > /tmp/key.asc
-          echo "${{ env.PASSWORD }}" | gpg --batch --yes --passphrase-fd 0 --import /tmp/key.asc
+          echo "${{ env.PRIV_KEY_B64 }}" | base64 -d > /tmp/key.asc
+          echo "${{ env.PRIV_KEY_PASSWORD }}" | gpg --batch --yes --passphrase-fd 0 --import /tmp/key.asc
           rm /tmp/key.asc
+
+          # We need this to prevent 'gpg: signing failed: Timeout' error during 'sb publish'
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
 
       - name: setup maven
         shell: bash -l {0}
         run: |
           ~/dev/inversoft/fusionauth/fusionauth-developer/setup.sh -o maven -n
           export KEY_NAME="FusionAuth Platform Team"
-          export PASSPHRASE="${{ env.PASSWORD }}"
-          export OSSRH_USERNAME=""
-          export OSSRH_PASSWORD=""
+          export PASSPHRASE="${{ env.PRIV_KEY_PASSWORD }}"
+          export OSSRH_USERNAME="${{ env.OSSRH_USERNAME }}"
+          export OSSRH_PASSWORD="${{ env.OSSRH_PASSWORD }}"
           export BREWDIR="/usr"
           envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer//setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
 
@@ -96,4 +100,6 @@ jobs:
       - name: publish to maven
         if: inputs.command == 'publish'
         shell: bash -l {0}
-        run: sb publish
+        run: |
+          export GPG_TTY=$(tty)
+          sb publish
