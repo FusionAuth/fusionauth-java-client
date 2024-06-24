@@ -129,6 +129,7 @@ import io.fusionauth.domain.api.ReactorMetricsResponse;
 import io.fusionauth.domain.api.ReactorRequest;
 import io.fusionauth.domain.api.ReactorResponse;
 import io.fusionauth.domain.api.ReindexRequest;
+import io.fusionauth.domain.api.StatusResponse;
 import io.fusionauth.domain.api.SystemConfigurationRequest;
 import io.fusionauth.domain.api.SystemConfigurationResponse;
 import io.fusionauth.domain.api.TenantDeleteRequest;
@@ -3785,6 +3786,42 @@ public class FusionAuthClient {
   public ClientResponse<SystemConfigurationResponse, Void> retrieveSystemConfiguration() {
     return start(SystemConfigurationResponse.class, Void.TYPE)
         .uri("/api/system-configuration")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the FusionAuth system health. This API will return 200 if the system is healthy, and 500 if the system is un-healthy.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Void> retrieveSystemHealth() {
+    return startAnonymous(Void.TYPE, Void.TYPE)
+        .uri("/api/health")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the FusionAuth system status. This request is anonymous and does not require an API key. When an API key is not provided the response will contain a single value in the JSON response indicating the current health check.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<StatusResponse, Void> retrieveSystemStatus() {
+    return startAnonymous(StatusResponse.class, Void.TYPE)
+        .uri("/api/status")
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the FusionAuth system status using an API key. Using an API key will cause the response to include the product version, health checks and various runtime metrics.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<StatusResponse, Void> retrieveSystemStatusUsingAPIKey() {
+    return start(StatusResponse.class, Void.TYPE)
+        .uri("/api/status")
         .get()
         .go();
   }
