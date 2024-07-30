@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,10 @@ public class GroupMember implements Buildable<GroupMember> {
 
   public ZonedDateTime insertInstant;
 
+  /**
+   * Deprecated since 1.52.0 (Aug 2024). Planned removal by end of 2024
+   */
+  @Deprecated
   public User user;
 
   public UUID userId;
