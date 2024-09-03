@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import com.inversoft.json.ToString;
  * @author Rob Davis
  */
 public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfiguration> {
+  public UUID loginValidationId;
+
   public UUID scimEnterpriseUserRequestConverterId;
 
   public UUID scimEnterpriseUserResponseConverterId;
@@ -42,6 +44,7 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
   }
 
   public TenantLambdaConfiguration(TenantLambdaConfiguration other) {
+    this.loginValidationId = other.loginValidationId;
     this.scimEnterpriseUserRequestConverterId = other.scimEnterpriseUserRequestConverterId;
     this.scimEnterpriseUserResponseConverterId = other.scimEnterpriseUserResponseConverterId;
     this.scimGroupRequestConverterId = other.scimGroupRequestConverterId;
@@ -59,7 +62,8 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
       return false;
     }
     TenantLambdaConfiguration that = (TenantLambdaConfiguration) o;
-    return Objects.equals(scimEnterpriseUserRequestConverterId, that.scimEnterpriseUserRequestConverterId) &&
+    return Objects.equals(loginValidationId, that.loginValidationId) &&
+           Objects.equals(scimEnterpriseUserRequestConverterId, that.scimEnterpriseUserRequestConverterId) &&
            Objects.equals(scimEnterpriseUserResponseConverterId, that.scimEnterpriseUserResponseConverterId) &&
            Objects.equals(scimGroupRequestConverterId, that.scimGroupRequestConverterId) &&
            Objects.equals(scimGroupResponseConverterId, that.scimGroupResponseConverterId) &&
@@ -69,7 +73,8 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
 
   @Override
   public int hashCode() {
-    return Objects.hash(scimEnterpriseUserRequestConverterId,
+    return Objects.hash(loginValidationId,
+                        scimEnterpriseUserRequestConverterId,
                         scimEnterpriseUserResponseConverterId,
                         scimGroupRequestConverterId,
                         scimGroupResponseConverterId,

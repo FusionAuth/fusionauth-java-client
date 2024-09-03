@@ -54,6 +54,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public UIConfiguration uiConfiguration = new UIConfiguration();
 
+  public WebhookEventLogConfiguration webhookEventLogConfiguration = new WebhookEventLogConfiguration();
+
   @JacksonConstructor
   public SystemConfiguration() {
   }
@@ -72,6 +74,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.reportTimezone = other.reportTimezone;
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
+    this.webhookEventLogConfiguration = new WebhookEventLogConfiguration(other.webhookEventLogConfiguration);
   }
 
   @Override
@@ -93,12 +96,13 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
-           Objects.equals(uiConfiguration, that.uiConfiguration);
+           Objects.equals(uiConfiguration, that.uiConfiguration) &&
+           Objects.equals(webhookEventLogConfiguration, that.webhookEventLogConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, trustedProxyConfiguration, reportTimezone, uiConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {

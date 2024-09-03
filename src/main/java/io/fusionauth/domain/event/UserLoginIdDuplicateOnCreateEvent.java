@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -28,40 +27,33 @@ import io.fusionauth.domain.User;
  *
  * @author Daniel DeGroff
  */
-public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
+public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
   public String duplicateEmail;
 
   public String duplicateUsername;
 
   public User existing;
 
-  public User user;
-
   @JacksonConstructor
   public UserLoginIdDuplicateOnCreateEvent() {
   }
 
   public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
-    super(info);
+    super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
     this.existing = existing;
-    this.user = user;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
     if (!super.equals(o)) {
       return false;
     }
     UserLoginIdDuplicateOnCreateEvent that = (UserLoginIdDuplicateOnCreateEvent) o;
-    return Objects.equals(duplicateEmail, that.duplicateEmail) && Objects.equals(duplicateUsername, that.duplicateUsername) && Objects.equals(existing, that.existing) && Objects.equals(user, that.user);
+    return Objects.equals(duplicateEmail, that.duplicateEmail) &&
+           Objects.equals(duplicateUsername, that.duplicateUsername) &&
+           Objects.equals(existing, that.existing);
   }
 
   @Override
@@ -71,11 +63,6 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseEvent implements Buil
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), duplicateEmail, duplicateUsername, existing, user);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), duplicateEmail, duplicateUsername, existing);
   }
 }

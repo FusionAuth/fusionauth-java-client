@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +19,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.UserLoginFailedReason;
+import io.fusionauth.domain.UserLoginFailedReasonCode;
 
 /**
  * Models the User Login Failed Event.
  *
  * @author Daniel DeGroff
  */
-public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLoginFailedEvent> {
+public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<UserLoginFailedEvent> {
   public UUID applicationId;
 
   public String authenticationType;
@@ -37,14 +38,26 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
   @Deprecated
   public String ipAddress;
 
-  public User user;
+  public UserLoginFailedReason reason = new UserLoginFailedReason(UserLoginFailedReasonCode.Credentials);
 
   @JacksonConstructor
   public UserLoginFailedEvent() {
   }
 
+  @Deprecated // Eligible for removal in 2025
   public UserLoginFailedEvent(EventInfo info, UUID applicationId, String authenticationType, User user) {
-    super(info);
+    super(info, user);
+    this.applicationId = applicationId;
+    this.authenticationType = authenticationType;
+
+    // Maintain the old JSON format
+    if (info != null && info.ipAddress != null) {
+      ipAddress = info.ipAddress;
+    }
+  }
+
+  public UserLoginFailedEvent(EventInfo info, UUID applicationId, String authenticationType, UserLoginFailedReason reason, User user) {
+    super(info, user);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
     this.user = user;
@@ -53,22 +66,20 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
     if (info != null && info.ipAddress != null) {
       ipAddress = info.ipAddress;
     }
+
+    this.reason = reason;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (!super.equals(o)) {
       return false;
     }
     UserLoginFailedEvent that = (UserLoginFailedEvent) o;
-    return super.equals(o) &&
-           Objects.equals(applicationId, that.applicationId) &&
+    return Objects.equals(applicationId, that.applicationId) &&
            Objects.equals(authenticationType, that.authenticationType) &&
            Objects.equals(ipAddress, that.ipAddress) &&
-           Objects.equals(user, that.user);
+           Objects.equals(reason, that.reason);
   }
 
   @Override
@@ -78,11 +89,6 @@ public class UserLoginFailedEvent extends BaseEvent implements Buildable<UserLog
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, ipAddress, user);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, ipAddress, reason);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.fusionauth.domain.event;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -51,7 +52,21 @@ public class UserLoginSuspiciousEvent extends UserLoginSuccessEvent {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (!super.equals(o)) {
+      return false;
+    }
+    UserLoginSuspiciousEvent that = (UserLoginSuspiciousEvent) o;
+    return Objects.equals(threatsDetected, that.threatsDetected);
+  }
+
+  @Override
   public EventType getType() {
     return EventType.UserLoginSuspicious;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), threatsDetected);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -38,29 +37,20 @@ public class TestEvent extends BaseEvent implements Buildable<TestEvent> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (!super.equals(o)) {
       return false;
     }
     TestEvent that = (TestEvent) o;
-    return super.equals(o) &&
-        Objects.equals(message, that.message);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), message);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.equals(message, that.message);
   }
 
   @Override
   public EventType getType() {
     return EventType.Test;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), message);
   }
 }

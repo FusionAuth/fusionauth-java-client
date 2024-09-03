@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 
@@ -28,7 +27,7 @@ import io.fusionauth.domain.EventInfo;
  *
  * @author Daniel DeGroff
  */
-public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEvent> {
+public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEvent>, ObjectIdentifiable {
   public UUID applicationId;
 
   public String original;
@@ -46,20 +45,14 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
   public JWTRefreshEvent(EventInfo info, UUID applicationId, String token, String original, String refreshToken, UUID userId) {
     super(info);
     this.applicationId = applicationId;
-    this.token = token;
     this.original = original;
     this.refreshToken = refreshToken;
+    this.token = token;
     this.userId = userId;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof JWTRefreshEvent)) {
-      return false;
-    }
     if (!super.equals(o)) {
       return false;
     }
@@ -72,6 +65,16 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
   }
 
   @Override
+  public UUID getLinkedObjectId() {
+    return userId;
+  }
+
+  @Override
+  public void setLinkedObjectId(UUID linkedObjectId) {
+    // needs a setter for the deserializer.
+  }
+
+  @Override
   public EventType getType() {
     return EventType.JWTRefresh;
   }
@@ -79,10 +82,5 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), applicationId, original, refreshToken, token, userId);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
   }
 }

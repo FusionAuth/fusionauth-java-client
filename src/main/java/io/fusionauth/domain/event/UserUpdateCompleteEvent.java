@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -28,32 +27,25 @@ import io.fusionauth.domain.User;
  *
  * @author Daniel DeGroff
  */
-public class UserUpdateCompleteEvent extends BaseEvent implements Buildable<UserUpdateCompleteEvent>, NonTransactionalEvent {
+public class UserUpdateCompleteEvent extends BaseUserEvent implements Buildable<UserUpdateCompleteEvent>, NonTransactionalEvent {
   public User original;
-
-  public User user;
 
   @JacksonConstructor
   public UserUpdateCompleteEvent() {
   }
 
   public UserUpdateCompleteEvent(EventInfo info, User original, User user) {
-    super(info);
+    super(info, user);
     this.original = original;
-    this.user = user;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (!super.equals(o)) {
       return false;
     }
     UserUpdateCompleteEvent that = (UserUpdateCompleteEvent) o;
-    return super.equals(o) &&
-           Objects.equals(user, that.user) && Objects.equals(original, that.original);
+    return Objects.equals(original, that.original);
   }
 
   @Override
@@ -63,11 +55,6 @@ public class UserUpdateCompleteEvent extends BaseEvent implements Buildable<User
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), user, original);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), original);
   }
 }

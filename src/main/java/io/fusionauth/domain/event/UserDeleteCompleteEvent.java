@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
-import java.util.Objects;
-
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -31,43 +28,18 @@ import io.fusionauth.domain.User;
  *
  * @author Daniel DeGroff
  */
-public class UserDeleteCompleteEvent extends BaseEvent implements Buildable<UserDeleteCompleteEvent>, NonTransactionalEvent {
-  public User user;
+public class UserDeleteCompleteEvent extends BaseUserEvent implements Buildable<UserDeleteCompleteEvent>, NonTransactionalEvent {
 
   @JacksonConstructor
   public UserDeleteCompleteEvent() {
   }
 
   public UserDeleteCompleteEvent(EventInfo info, User user) {
-    super(info);
-    this.user = user;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    UserDeleteCompleteEvent that = (UserDeleteCompleteEvent) o;
-    return super.equals(o) &&
-           Objects.equals(user, that.user);
+    super(info, user);
   }
 
   @Override
   public EventType getType() {
     return EventType.UserDeleteComplete;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), user);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventLog;
 
@@ -40,12 +39,6 @@ public class EventLogCreateEvent extends BaseEvent implements Buildable<EventLog
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
     if (!super.equals(o)) {
       return false;
     }
@@ -61,10 +54,5 @@ public class EventLogCreateEvent extends BaseEvent implements Buildable<EventLog
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), eventLog);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
   }
 }

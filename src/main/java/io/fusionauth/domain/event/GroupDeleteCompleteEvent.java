@@ -1,12 +1,21 @@
 /*
- * Copyright (c) 2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.event;
 
-import java.util.Objects;
-
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.Group;
@@ -16,43 +25,17 @@ import io.fusionauth.domain.Group;
  *
  * @author Daniel DeGroff
  */
-public class GroupDeleteCompleteEvent extends BaseEvent implements Buildable<GroupDeleteCompleteEvent>, NonTransactionalEvent {
-  public Group group;
-
+public class GroupDeleteCompleteEvent extends BaseGroupEvent implements Buildable<GroupDeleteCompleteEvent>, NonTransactionalEvent {
   @JacksonConstructor
   public GroupDeleteCompleteEvent() {
   }
 
   public GroupDeleteCompleteEvent(EventInfo info, Group group) {
-    super(info);
-    this.group = group;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    GroupDeleteCompleteEvent that = (GroupDeleteCompleteEvent) o;
-    return super.equals(o) &&
-           Objects.equals(group, that.group);
+    super(info, group);
   }
 
   @Override
   public EventType getType() {
     return EventType.GroupDeleteComplete;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), group);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
   }
 }

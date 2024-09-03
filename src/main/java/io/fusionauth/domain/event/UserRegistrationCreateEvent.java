@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.event;
 
@@ -7,7 +19,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -18,37 +29,29 @@ import io.fusionauth.domain.UserRegistration;
  *
  * @author Daniel DeGroff
  */
-public class UserRegistrationCreateEvent extends BaseEvent implements Buildable<UserRegistrationCreateEvent> {
+public class UserRegistrationCreateEvent extends BaseUserEvent implements Buildable<UserRegistrationCreateEvent> {
   public UUID applicationId;
 
   public UserRegistration registration;
-
-  public User user;
 
   @JacksonConstructor
   public UserRegistrationCreateEvent() {
   }
 
   public UserRegistrationCreateEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
-    super(info);
+    super(info, user);
     this.applicationId = applicationId;
     this.registration = registration;
-    this.user = user;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (!super.equals(o)) {
       return false;
     }
     UserRegistrationCreateEvent that = (UserRegistrationCreateEvent) o;
-    return super.equals(o) &&
-           Objects.equals(applicationId, that.applicationId) &&
-           Objects.equals(registration, that.registration) &&
-           Objects.equals(user, that.user);
+    return Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(registration, that.registration);
   }
 
   @Override
@@ -58,11 +61,6 @@ public class UserRegistrationCreateEvent extends BaseEvent implements Buildable<
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, registration, user);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), applicationId, registration);
   }
 }

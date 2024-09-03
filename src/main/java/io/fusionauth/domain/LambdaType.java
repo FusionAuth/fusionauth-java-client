@@ -20,7 +20,7 @@ package io.fusionauth.domain;
  *
  * @author Brian Pontarelli
  */
-@SuppressWarnings("JSUnusedLocalSymbols")
+@SuppressWarnings("ALL")
 public enum LambdaType {
   // @formatter:off
   JWTPopulate("populate", "" +
@@ -470,7 +470,33 @@ public enum LambdaType {
       "\n" +
       "  console.info('Hello World!');" +
       "\n" +
-      "}\n");
+      "}\n"),
+
+  LoginValidation("validate", "" +
+       //language=JavaScript
+       "// Validate the login request by optionally setting errors in the result.\n" +
+       "function validate(result, user, registration, context) {\n" +
+       "  // Use the provided user, registration and context arguments to perform additional validation.\n" +
+       "  // - To fail a login request, add one or more field or general errors to the result.\n" +
+       "  //    The error schema can be found in the FusionAuth API documentation.\n" +
+       "  //    - https://fusionauth.io/docs/apis/errors\n" +
+       "  // \n"+
+       "  // Below is an example validation that will reject a login request when an email domain is\n" +
+       "  // equal to acme.com and the authentication type is not PASSWORD.\n"+
+       "  // \n"+
+       "  //  if (user.email && user.email.endsWith(\"@acme.com\") && context.authenticationType !== \"PASSWORD\") {\n"+
+       "  //    result.errors.generalErrors = [{\n"+
+       "  //      code: \"[LoginRestricted]\",\n" +
+       "  //      message: \"Your account is restricted.\"\n" +
+       "  //    }];\n"+
+       "  //  }\n"+
+       "  // \n"+
+       "\n" +
+       "  // Happy coding! Populate your login validation lambda here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
+       "}\n");
   // @formatter:on
 
   private final String example;

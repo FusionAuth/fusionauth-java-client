@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.Objects;
+
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -26,19 +27,25 @@ import io.fusionauth.domain.User;
  *
  * @author Daniel DeGroff
  */
-public class UserEmailUpdateEvent extends BaseEvent implements Buildable<UserEmailUpdateEvent>, NonTransactionalEvent {
+public class UserEmailUpdateEvent extends BaseUserEvent implements Buildable<UserEmailUpdateEvent>, NonTransactionalEvent {
   public String previousEmail;
 
-  public User user;
-
   public UserEmailUpdateEvent(EventInfo info, String previousEmail, User user) {
-    super(info);
+    super(info, user);
     this.previousEmail = previousEmail;
-    this.user = user;
   }
 
   @JacksonConstructor
   public UserEmailUpdateEvent() {
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!super.equals(o)) {
+      return false;
+    }
+    UserEmailUpdateEvent that = (UserEmailUpdateEvent) o;
+    return Objects.equals(previousEmail, that.previousEmail);
   }
 
   @Override
@@ -47,7 +54,7 @@ public class UserEmailUpdateEvent extends BaseEvent implements Buildable<UserEma
   }
 
   @Override
-  public String toString() {
-    return ToString.toString(this);
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), previousEmail);
   }
 }

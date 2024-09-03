@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.IdentityProviderLink;
@@ -29,34 +28,25 @@ import io.fusionauth.domain.User;
  *
  * @author Rob Davis
  */
-public class UserIdentityProviderUnlinkEvent extends BaseEvent implements Buildable<UserIdentityProviderUnlinkEvent>, NonTransactionalEvent {
+public class UserIdentityProviderUnlinkEvent extends BaseUserEvent implements Buildable<UserIdentityProviderUnlinkEvent>, NonTransactionalEvent {
   public IdentityProviderLink identityProviderLink;
-
-  public User user;
 
   @JacksonConstructor
   public UserIdentityProviderUnlinkEvent() {
   }
 
   public UserIdentityProviderUnlinkEvent(EventInfo info, IdentityProviderLink identityProviderLink, User user) {
-    super(info);
+    super(info, user);
     this.identityProviderLink = identityProviderLink;
-    this.user = user;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
     if (!super.equals(o)) {
       return false;
     }
     UserIdentityProviderUnlinkEvent that = (UserIdentityProviderUnlinkEvent) o;
-    return Objects.equals(identityProviderLink, that.identityProviderLink) && Objects.equals(user, that.user);
+    return Objects.equals(identityProviderLink, that.identityProviderLink);
   }
 
   @Override
@@ -66,11 +56,6 @@ public class UserIdentityProviderUnlinkEvent extends BaseEvent implements Builda
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), identityProviderLink, user);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), identityProviderLink);
   }
 }

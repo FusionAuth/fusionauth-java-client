@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.event;
 
@@ -13,7 +25,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.email.Email;
@@ -23,7 +34,7 @@ import io.fusionauth.domain.email.Email;
  *
  * @author Brian Pontarelli
  */
-public class UserActionEvent extends BaseEvent implements Buildable<UserActionEvent> {
+public class UserActionEvent extends BaseEvent implements Buildable<UserActionEvent>, ObjectIdentifiable {
   public static ZonedDateTime Infinite = ZonedDateTime.ofInstant(Instant.ofEpochMilli(Long.MAX_VALUE), ZoneOffset.UTC);
 
   public final List<UUID> applicationIds = new ArrayList<>();
@@ -123,32 +134,38 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof UserActionEvent)) {
+    if (!super.equals(o)) {
       return false;
     }
     UserActionEvent that = (UserActionEvent) o;
-    return super.equals(o) &&
-           Objects.equals(actionId, that.actionId) &&
-           Objects.equals(notifyUser, that.notifyUser) &&
-           Objects.equals(emailedUser, that.emailedUser) &&
-           Objects.equals(applicationIds, that.applicationIds) &&
+    return Objects.equals(applicationIds, that.applicationIds) &&
            Objects.equals(action, that.action) &&
+           Objects.equals(actionId, that.actionId) &&
            Objects.equals(actioneeUserId, that.actioneeUserId) &&
            Objects.equals(actionerUserId, that.actionerUserId) &&
            Objects.equals(comment, that.comment) &&
            Objects.equals(email, that.email) &&
+           Objects.equals(emailedUser, that.emailedUser) &&
            Objects.equals(expiry, that.expiry) &&
            Objects.equals(localizedAction, that.localizedAction) &&
            Objects.equals(localizedDuration, that.localizedDuration) &&
            Objects.equals(localizedOption, that.localizedOption) &&
            Objects.equals(localizedReason, that.localizedReason) &&
+           Objects.equals(notifyUser, that.notifyUser) &&
            Objects.equals(option, that.option) &&
            Objects.equals(phase, that.phase) &&
            Objects.equals(reason, that.reason) &&
            Objects.equals(reasonCode, that.reasonCode);
+  }
+
+  @Override
+  public UUID getLinkedObjectId() {
+    return actioneeUserId;
+  }
+
+  @Override
+  public void setLinkedObjectId(UUID linkedObjectId) {
+    // needs a setter for the deserializer.
   }
 
   @Override
@@ -161,10 +178,5 @@ public class UserActionEvent extends BaseEvent implements Buildable<UserActionEv
     return Objects.hash(super.hashCode(), actionId, applicationIds, action, actioneeUserId, actionerUserId, comment, email, expiry,
                         localizedAction, localizedDuration, localizedOption, localizedReason, notifyUser, option, emailedUser,
                         phase, reason, reasonCode);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
   }
 }

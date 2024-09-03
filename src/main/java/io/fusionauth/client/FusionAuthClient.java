@@ -171,6 +171,10 @@ import io.fusionauth.domain.api.WebAuthnRegisterStartRequest;
 import io.fusionauth.domain.api.WebAuthnRegisterStartResponse;
 import io.fusionauth.domain.api.WebAuthnStartRequest;
 import io.fusionauth.domain.api.WebAuthnStartResponse;
+import io.fusionauth.domain.api.WebhookAttemptLogResponse;
+import io.fusionauth.domain.api.WebhookEventLogResponse;
+import io.fusionauth.domain.api.WebhookEventLogSearchRequest;
+import io.fusionauth.domain.api.WebhookEventLogSearchResponse;
 import io.fusionauth.domain.api.WebhookRequest;
 import io.fusionauth.domain.api.WebhookResponse;
 import io.fusionauth.domain.api.WebhookSearchRequest;
@@ -4327,6 +4331,34 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves a single webhook attempt log for the given Id.
+   *
+   * @param webhookAttemptLogId The Id of the webhook attempt log to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookAttemptLogResponse, Errors> retrieveWebhookAttemptLog(UUID webhookAttemptLogId) {
+    return start(WebhookAttemptLogResponse.class, Errors.class)
+        .uri("/api/system/webhook-attempt-log")
+        .urlSegment(webhookAttemptLogId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves a single webhook event log for the given Id.
+   *
+   * @param webhookEventLogId The Id of the webhook event log to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookEventLogResponse, Errors> retrieveWebhookEventLog(UUID webhookEventLogId) {
+    return start(WebhookEventLogResponse.class, Errors.class)
+        .uri("/api/system/webhook-event-log")
+        .urlSegment(webhookEventLogId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves all the webhooks.
    *
    * @return The ClientResponse object.
@@ -4803,6 +4835,20 @@ public class FusionAuthClient {
   public ClientResponse<SearchResponse, Errors> searchUsersByQueryString(SearchRequest request) {
     return start(SearchResponse.class, Errors.class)
         .uri("/api/user/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches the webhook event logs with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookEventLogSearchResponse, Errors> searchWebhookEventLogs(WebhookEventLogSearchRequest request) {
+    return start(WebhookEventLogSearchResponse.class, Errors.class)
+        .uri("/api/system/webhook-event-log/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
