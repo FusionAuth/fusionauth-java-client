@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.error.Errors;
+import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
 /**
@@ -32,6 +33,10 @@ public class UserLoginFailedReason implements Buildable<UserLoginFailedReason> {
   public UUID lambdaId;
 
   public Errors lambdaResult;
+
+  @JacksonConstructor
+  public UserLoginFailedReason() {
+  }
 
   public UserLoginFailedReason(String code) {
     this.code = code;
