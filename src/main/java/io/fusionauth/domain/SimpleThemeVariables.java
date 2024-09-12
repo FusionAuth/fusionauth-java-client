@@ -88,6 +88,44 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
 
   public String primaryButtonTextFocusColor;
 
+  public SimpleThemeVariables() {
+  }
+
+  public SimpleThemeVariables(SimpleThemeVariables other) {
+    this.alertBackgroundColor = other.alertBackgroundColor;
+    this.alertFontColor = other.alertFontColor;
+    this.backgroundImageURL = other.backgroundImageURL;
+    this.backgroundSize = other.backgroundSize;
+    this.borderRadius = other.borderRadius;
+    this.deleteButtonColor = other.deleteButtonColor;
+    this.deleteButtonFocusColor = other.deleteButtonFocusColor;
+    this.deleteButtonTextColor = other.deleteButtonTextColor;
+    this.deleteButtonTextFocusColor = other.deleteButtonTextFocusColor;
+    this.errorFontColor = other.errorFontColor;
+    this.errorIconColor = other.errorIconColor;
+    this.fontColor = other.fontColor;
+    this.fontFamily = other.fontFamily;
+    this.footerDisplay = other.footerDisplay;
+    this.iconBackgroundColor = other.iconBackgroundColor;
+    this.iconColor = other.iconColor;
+    this.infoIconColor = other.infoIconColor;
+    this.inputBackgroundColor = other.inputBackgroundColor;
+    this.inputIconColor = other.inputIconColor;
+    this.inputTextColor = other.inputTextColor;
+    this.linkTextColor = other.linkTextColor;
+    this.linkTextFocusColor = other.linkTextFocusColor;
+    this.logoImageSize = other.logoImageSize;
+    this.logoImageURL = other.logoImageURL;
+    this.monoFontColor = other.monoFontColor;
+    this.monoFontFamily = other.monoFontFamily;
+    this.pageBackgroundColor = other.pageBackgroundColor;
+    this.panelBackgroundColor = other.panelBackgroundColor;
+    this.primaryButtonColor = other.primaryButtonColor;
+    this.primaryButtonFocusColor = other.primaryButtonFocusColor;
+    this.primaryButtonTextColor = other.primaryButtonTextColor;
+    this.primaryButtonTextFocusColor = other.primaryButtonTextFocusColor;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
