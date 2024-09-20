@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.IdentityTypes;
 
 /**
  * Login API request object.
@@ -34,6 +37,8 @@ public class LoginRequest extends BaseLoginRequest implements Buildable<LoginReq
   public String password;
 
   public String twoFactorTrustId;
+
+  public List<IdentityTypes> types = new ArrayList<>();
 
   @JacksonConstructor
   public LoginRequest() {

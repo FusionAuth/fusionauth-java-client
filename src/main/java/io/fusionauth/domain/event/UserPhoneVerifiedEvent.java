@@ -13,42 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.passwordless;
+package io.fusionauth.domain.event;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.api.BaseLoginRequest;
+import io.fusionauth.domain.User;
 
 /**
- * @author Daniel DeGroff
+ * Models the User Phone Verify Event.
+ *
+ * @author Trevor Smith
  */
-public class PasswordlessLoginRequest extends BaseLoginRequest implements Buildable<PasswordlessLoginRequest> {
-  public String code;
-
-  public String oneTimeCode;
-
-  public String twoFactorTrustId;
-
+public class UserPhoneVerifiedEvent extends BaseUserEvent implements Buildable<UserPhoneVerifiedEvent> {
   @JacksonConstructor
-  public PasswordlessLoginRequest() {
+  public UserPhoneVerifiedEvent() {
   }
 
-  public PasswordlessLoginRequest(String code) {
-    this.code = code;
+  public UserPhoneVerifiedEvent(EventInfo info, User user) {
+    super(info, user);
   }
 
-  public PasswordlessLoginRequest(String code, String ipAddress) {
-    this.code = code;
-
-    if (ipAddress != null) {
-      eventInfo = eventInfo != null ? eventInfo : new EventInfo();
-      eventInfo.ipAddress = ipAddress;
-    }
-  }
-
-  public PasswordlessLoginRequest(EventInfo eventInfo, String code) {
-    super(eventInfo);
-    this.code = code;
+  @Override
+  public EventType getType() {
+    return EventType.UserPhoneVerified;
   }
 }

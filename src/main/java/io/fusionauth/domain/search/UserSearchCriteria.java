@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import io.fusionauth.domain.Buildable;
  * @author Brian Pontarelli
  */
 public class UserSearchCriteria extends BaseElasticSearchCriteria implements Buildable<UserSearchCriteria> {
-  public static final Set<String> SortableFields = new LinkedHashSet<>(Arrays.asList("birthDate",
+  public final static Set<String> SortableFields = new LinkedHashSet<>(Arrays.asList("birthDate",
                                                                                      "email",
                                                                                      "fullName",
                                                                                      "id",

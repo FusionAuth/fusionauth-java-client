@@ -191,6 +191,17 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);
   }
 
+  public String getDataForIdentityType(IdentityTypes identityType) {
+    if (identityType.equals(IdentityTypes.email)) {
+      return email;
+    } else if (identityType.equals(IdentityTypes.phoneNumber)) {
+      return mobilePhone;
+    } else if (identityType.equals(IdentityTypes.username)) {
+      return username;
+    }
+    throw new IllegalArgumentException(String.format("Unknown identityType [%s]", identityType));
+  }
+
   public GroupMember getGroupMemberForGroup(UUID id) {
     return getMemberships().stream()
                            .filter(m -> m.id.equals(id))

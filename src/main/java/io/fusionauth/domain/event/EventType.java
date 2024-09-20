@@ -84,6 +84,8 @@ public enum EventType {
 
   UserEmailVerified("user.email.verified"),
 
+  UserPhoneVerified("user.phone.verified"),
+
   UserIdentityProviderLink("user.identity-provider.link"),
 
   UserIdentityProviderUnlink("user.identity-provider.unlink"),

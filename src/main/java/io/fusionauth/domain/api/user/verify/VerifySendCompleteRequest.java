@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,22 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.passwordless;
+package io.fusionauth.domain.api.user.verify;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseEventRequest;
 
-/**
- * @author Daniel DeGroff
- */
-public class PasswordlessStartResponse implements Buildable<PasswordlessStartResponse> {
-  public String code;
+public class VerifySendCompleteRequest extends BaseEventRequest {
+  public final String verificationId;
 
   public String oneTimeCode;
 
+  public VerifySendCompleteRequest(String verificationId) {
+    this.verificationId = verificationId;
+  }
+
   @JacksonConstructor
-  public PasswordlessStartResponse() {
-  }
-
-  public PasswordlessStartResponse(String code) {
-    this.code = code;
-  }
-
-  public PasswordlessStartResponse(String code, String oneTimeCode) {
-    this.code = code;
-    this.oneTimeCode = oneTimeCode;
+  private VerifySendCompleteRequest() {
+    this.verificationId = null;
   }
 }

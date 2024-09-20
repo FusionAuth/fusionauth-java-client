@@ -102,6 +102,8 @@ public class Tenant implements Buildable<Tenant> {
 
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
+  public TenantPasswordlessSMSMethod passwordlessSMSMethod = new TenantPasswordlessSMSMethod();
+
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
   public TenantRateLimitConfiguration rateLimitConfiguration = new TenantRateLimitConfiguration();
@@ -109,6 +111,8 @@ public class Tenant implements Buildable<Tenant> {
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
 
   public TenantSCIMServerConfiguration scimServerConfiguration = new TenantSCIMServerConfiguration();
+
+  public SMSConfiguration smsConfiguration = new SMSConfiguration();
 
   public TenantSSOConfiguration ssoConfiguration = new TenantSSOConfiguration();
 
@@ -132,6 +136,7 @@ public class Tenant implements Buildable<Tenant> {
     this.connectorPolicies.addAll(other.connectorPolicies.stream().map(ConnectorPolicy::new).collect(Collectors.toList()));
     this.data.putAll(other.data);
     this.emailConfiguration = new EmailConfiguration(other.emailConfiguration);
+    this.smsConfiguration = new SMSConfiguration(other.smsConfiguration);
     this.eventConfiguration = new EventConfiguration(other.eventConfiguration);
     this.externalIdentifierConfiguration = new ExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
     this.failedAuthenticationConfiguration = new FailedAuthenticationConfiguration(other.failedAuthenticationConfiguration);
@@ -154,6 +159,7 @@ public class Tenant implements Buildable<Tenant> {
     this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
+    this.passwordlessSMSMethod = new TenantPasswordlessSMSMethod(other.passwordlessSMSMethod);
     this.rateLimitConfiguration = new TenantRateLimitConfiguration(other.rateLimitConfiguration);
     this.registrationConfiguration = new TenantRegistrationConfiguration(other.registrationConfiguration);
     this.scimServerConfiguration = new TenantSCIMServerConfiguration(other.scimServerConfiguration);
@@ -180,6 +186,7 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(data, tenant.data) &&
            Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
+           Objects.equals(smsConfiguration, tenant.smsConfiguration) &&
            Objects.equals(eventConfiguration, tenant.eventConfiguration) &&
            Objects.equals(externalIdentifierConfiguration, tenant.externalIdentifierConfiguration) &&
            Objects.equals(failedAuthenticationConfiguration, tenant.failedAuthenticationConfiguration) &&
@@ -200,6 +207,7 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(name, tenant.name) &&
            Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
+           Objects.equals(passwordlessSMSMethod, tenant.passwordlessSMSMethod) &&
            Objects.equals(rateLimitConfiguration, tenant.rateLimitConfiguration) &&
            Objects.equals(registrationConfiguration, tenant.registrationConfiguration) &&
            Objects.equals(scimServerConfiguration, tenant.scimServerConfiguration) &&
@@ -223,6 +231,7 @@ public class Tenant implements Buildable<Tenant> {
                         connectorPolicies,
                         data,
                         emailConfiguration,
+                        smsConfiguration,
                         eventConfiguration,
                         externalIdentifierConfiguration,
                         failedAuthenticationConfiguration,
@@ -243,6 +252,7 @@ public class Tenant implements Buildable<Tenant> {
                         name,
                         passwordEncryptionConfiguration,
                         passwordValidationRules,
+                        passwordlessSMSMethod,
                         rateLimitConfiguration,
                         registrationConfiguration,
                         scimServerConfiguration,
