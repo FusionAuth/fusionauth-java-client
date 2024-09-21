@@ -22,7 +22,6 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.IdentityTypes;
 
 /**
  * Login API request object.
@@ -38,7 +37,7 @@ public class LoginRequest extends BaseLoginRequest implements Buildable<LoginReq
 
   public String twoFactorTrustId;
 
-  public List<IdentityTypes> types = new ArrayList<>();
+  public List<String> types = new ArrayList<>();
 
   @JacksonConstructor
   public LoginRequest() {

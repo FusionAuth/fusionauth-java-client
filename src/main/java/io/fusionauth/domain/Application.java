@@ -98,7 +98,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  // TODO: Issue #1 - can we share the same class like this with the tenant?
+  // TODO: Issue #1 : Brady Review : can we share the same class like this with the tenant?
   public SMSConfiguration smsConfiguration = new SMSConfiguration();
 
   public ObjectState state;

@@ -15,25 +15,20 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
-import java.util.Arrays;import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import com.inversoft.json.ToString;
-import io.fusionauth.domain.IdentityTypes;
 
 public class VerifyStartRequest {
   public final String loginId;
 
-  public final IdentityTypes loginType;
+  public final String loginType;
 
   public UUID applicationId;
 
-  public CodeTypes codeType;
+  public String codeType;
 
-  public VerifyStartRequest(String loginId, IdentityTypes loginType) {
+  public VerifyStartRequest(String loginId, String loginType) {
     this.loginId = loginId;
     this.loginType = loginType;
   }
@@ -42,59 +37,5 @@ public class VerifyStartRequest {
   private VerifyStartRequest() {
     loginId = null;
     loginType = null;
-  }
-
-  public static class CodeTypes {
-    public static final CodeTypes clickable = new CodeTypes("clickable");
-
-    public static final CodeTypes shortCode = new CodeTypes("shortCode");
-
-    private static final HashSet<CodeTypes> values = new HashSet<>(
-        Arrays.asList(
-            CodeTypes.clickable,
-            CodeTypes.shortCode
-        )
-    );
-
-    private final String value;
-
-    private CodeTypes(String value) {
-      this.value = value;
-    }
-
-    @JacksonConstructor
-    private CodeTypes() {
-      this.value = null;
-    }
-
-    public static Collection<CodeTypes> values() {
-      return values;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof CodeTypes)) {
-        return false;
-      }
-      CodeTypes codeTypes = (CodeTypes) o;
-      return Objects.equals(value, codeTypes.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(value);
-    }
-
-    public boolean isValid() {
-      return values.contains(this);
-    }
-
-    @Override
-    public String toString() {
-      return ToString.toString(this);
-    }
   }
 }
