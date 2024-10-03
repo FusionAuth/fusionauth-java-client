@@ -22,20 +22,20 @@ import com.inversoft.json.JacksonConstructor;
 public class VerifyStartRequest {
   public final String loginId;
 
-  public final String loginType;
+  public final String loginIdType;
 
   public UUID applicationId;
 
-  public String codeType;
+  public String verificationStrategy;
 
-  public VerifyStartRequest(String loginId, String loginType) {
+  public VerifyStartRequest(String loginId, String loginIdType) {
     this.loginId = loginId;
-    this.loginType = loginType;
+    this.loginIdType = loginIdType;
   }
 
   @JacksonConstructor
   private VerifyStartRequest() {
     loginId = null;
-    loginType = null;
+    loginIdType = null;
   }
 }

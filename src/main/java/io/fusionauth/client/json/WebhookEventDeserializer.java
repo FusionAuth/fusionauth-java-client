@@ -4,6 +4,7 @@
 package io.fusionauth.client.json;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,10 @@ public class WebhookEventDeserializer extends StdDeserializer<BaseEvent> {
     // Assuming all of our events following this naming schema '{EventType}Event'
     String className = BaseEvent.class.getPackage().getName() + "." + eventType.name() + "Event";
     try {
-      return (BaseEvent) Class.forName(className).getConstructor().newInstance();
+      Constructor<?> constructor = Class.forName(className).getDeclaredConstructor();
+      // the default constructor for an event can be private
+      constructor.setAccessible(true);
+      return (BaseEvent) constructor.newInstance();
     } catch (Exception e) {
       throw new IllegalStateException("Unexpected type [" + eventType + "]. This is a FusionAuth bug, could not instantiate class [" + className + "].");
     }

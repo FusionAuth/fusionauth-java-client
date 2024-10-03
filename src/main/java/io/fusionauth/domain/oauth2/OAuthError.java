@@ -81,6 +81,7 @@ public class OAuthError implements OAuthResponse {
 
     // Invalid request parameters
     invalid_client_id,
+    invalid_expires_in,
     invalid_user_credentials,
     invalid_grant_type,
     invalid_origin,

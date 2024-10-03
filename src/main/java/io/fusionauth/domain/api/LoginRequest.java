@@ -31,13 +31,13 @@ import io.fusionauth.domain.EventInfo;
 public class LoginRequest extends BaseLoginRequest implements Buildable<LoginRequest> {
   public String loginId;
 
+  public List<String> loginIdTypes = new ArrayList<>();
+
   public String oneTimePassword;
 
   public String password;
 
   public String twoFactorTrustId;
-
-  public List<String> types = new ArrayList<>();
 
   @JacksonConstructor
   public LoginRequest() {

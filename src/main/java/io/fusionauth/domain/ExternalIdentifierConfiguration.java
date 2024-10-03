@@ -70,10 +70,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int setupPasswordIdTimeToLiveInSeconds = 86400;
 
-  public SecureGeneratorConfiguration smsVerificationIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
-
-  public SecureGeneratorConfiguration smsVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomAlphaNumeric);
-
   public int smsVerificationTimeToLiveInSeconds = 86400;
 
   public int trustTokenTimeToLiveInSeconds = 180;
@@ -119,8 +115,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.setupPasswordIdGenerator = new SecureGeneratorConfiguration(other.setupPasswordIdGenerator);
     this.setupPasswordIdTimeToLiveInSeconds = other.setupPasswordIdTimeToLiveInSeconds;
     this.smsVerificationTimeToLiveInSeconds = other.smsVerificationTimeToLiveInSeconds;
-    this.smsVerificationIdGenerator = other.smsVerificationIdGenerator;
-    this.smsVerificationOneTimeCodeGenerator = other.smsVerificationOneTimeCodeGenerator;
     this.trustTokenTimeToLiveInSeconds = other.trustTokenTimeToLiveInSeconds;
     this.twoFactorIdTimeToLiveInSeconds = other.twoFactorIdTimeToLiveInSeconds;
     this.twoFactorOneTimeCodeIdGenerator = new SecureGeneratorConfiguration(other.twoFactorOneTimeCodeIdGenerator);

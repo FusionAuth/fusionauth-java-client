@@ -98,8 +98,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  // TODO: Issue #1 : Brady Review : can we share the same class like this with the tenant?
-  public SMSConfiguration smsConfiguration = new SMSConfiguration();
+  // TODO : ENG-1 : Brent : do we want an ApplicationSMSConfiguration ?
 
   public ObjectState state;
 
@@ -147,7 +146,6 @@ public class Application implements Buildable<Application>, Tenantable {
     this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
     this.samlv2Configuration = new SAMLv2Configuration(other.samlv2Configuration);
     this.scopes.addAll(other.scopes.stream().map(ApplicationOAuthScope::new).collect(Collectors.toList()));
-    this.smsConfiguration = new SMSConfiguration(other.smsConfiguration);
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
@@ -213,7 +211,6 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
            Objects.equals(samlv2Configuration, that.samlv2Configuration) &&
-           Objects.equals(smsConfiguration, that.smsConfiguration) &&
            Objects.equals(scopes, that.scopes) &&
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
@@ -261,7 +258,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, smsConfiguration, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -645,6 +642,7 @@ public class Application implements Buildable<Application>, Tenantable {
       return ToString.toString(this);
     }
 
+    // TODO : ENG-1 : Brady - this overlaps with the IdentityType enumeration
     public enum LoginIdType {
       email,
       username

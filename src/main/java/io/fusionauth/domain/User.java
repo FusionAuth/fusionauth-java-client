@@ -192,14 +192,16 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public String getDataForIdentityType(IdentityTypes identityType) {
-    if (identityType.equals(IdentityTypes.email)) {
-      return email;
-    } else if (identityType.equals(IdentityTypes.phoneNumber)) {
-      return mobilePhone;
-    } else if (identityType.equals(IdentityTypes.username)) {
-      return username;
+    switch (identityType) {
+      case email:
+        return email;
+      case phoneNumber:
+        return mobilePhone;
+      case username:
+        return username;
+      default:
+        throw new IllegalArgumentException("unknown identity type: " + identityType);
     }
-    throw new IllegalArgumentException(String.format("Unknown identityType [%s]", identityType));
   }
 
   public GroupMember getGroupMemberForGroup(UUID id) {
@@ -352,6 +354,21 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     salt = null;
     twoFactor.secure();
     return this;
+  }
+
+  public void setDataForIdentityType(IdentityTypes identityType, String loginId) {
+    switch (identityType) {
+      case email:
+        email = loginId;
+        break;
+      case phoneNumber:
+        mobilePhone = loginId;
+        break;
+      case username:
+        username = loginId;
+      default:
+        throw new IllegalArgumentException("unknown identity type: " + identityType);
+    }
   }
 
   public User sort() {

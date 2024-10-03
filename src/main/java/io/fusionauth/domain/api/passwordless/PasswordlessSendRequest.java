@@ -33,8 +33,6 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
 
   public Map<String, Object> state;
 
-  public String transport;
-
   @JacksonConstructor
   public PasswordlessSendRequest() {
   }

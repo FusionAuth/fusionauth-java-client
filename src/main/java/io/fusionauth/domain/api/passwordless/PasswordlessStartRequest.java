@@ -27,12 +27,13 @@ import io.fusionauth.domain.Buildable;
 public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequest> {
   public UUID applicationId;
 
-  public String codeType;
+  public String loginStrategy;
 
   public String loginId;
 
-  public String loginType;
+  public String loginIdType;
 
+  // TODO : ENG-1 : add state to verification api
   public Map<String, Object> state;
 
   @JacksonConstructor
