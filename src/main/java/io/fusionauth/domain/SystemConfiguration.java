@@ -54,6 +54,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public UIConfiguration uiConfiguration = new UIConfiguration();
 
+  public UsageDataConfiguration usageDataConfiguration = new UsageDataConfiguration();
+
   public WebhookEventLogConfiguration webhookEventLogConfiguration = new WebhookEventLogConfiguration();
 
   @JacksonConstructor
@@ -74,6 +76,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.reportTimezone = other.reportTimezone;
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
+    this.usageDataConfiguration = new UsageDataConfiguration(other.usageDataConfiguration);
     this.webhookEventLogConfiguration = new WebhookEventLogConfiguration(other.webhookEventLogConfiguration);
   }
 
@@ -97,12 +100,13 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration) &&
+           Objects.equals(usageDataConfiguration, that.usageDataConfiguration) &&
            Objects.equals(webhookEventLogConfiguration, that.webhookEventLogConfiguration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {
