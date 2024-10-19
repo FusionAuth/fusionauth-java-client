@@ -16,6 +16,8 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,10 +27,23 @@ import io.fusionauth.domain.connector.BaseConnectorConfiguration;
  * @author Daniel DeGroff
  */
 public class SecureIdentity {
+  // TODO : ENG-1695 : Brady : This causes UAT.post_noPassword_has_email_and_phone to fail because the identities are never serialized
+  //                           with the event. We need to only ignore identities, when serializing to the DB from the UserMapper code path.
+  //                           Maybe we can 1) remove @ExcludeFromJSONColumn and 2) tweak the FusionAuthAPIOnlyJacksonModule going into
+  //                           DatabaseObjectMapperProvider such that
+  //                           it handles what @ExcludeFromJSONColumn does but only when it's not an event
+  // TODO : ENG-1695 : Daniel : I think this is fixed via ENG-1822.
+  //                            I made this change, although I need to review ENG-1822 to ensure I complete it, but this fixes this change
+  //                            fixes UAT.post_noPassword_has_email_and_phone.
+  public final List<UserIdentity> identities = new ArrayList<>();
+
   public ZonedDateTime breachedPasswordLastCheckedInstant;
 
   public BreachedPasswordStatus breachedPasswordStatus;
 
+  // TODO : ENG-1 : Daniel Review : Should we move this to User if it exists in the user table?
+  //               It probably doesn't hurt to leave it here if we want to do that.
+  // Legacy field, this will represent the connector from the first identity, most likely email.
   public UUID connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
   public String encryptionScheme;
@@ -78,11 +93,13 @@ public class SecureIdentity {
            Objects.equals(encryptionScheme, that.encryptionScheme) &&
            Objects.equals(factor, that.factor) &&
            Objects.equals(id, that.id) &&
+           Objects.equals(identities, that.identities) &&
            Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
            Objects.equals(password, that.password) &&
            passwordChangeReason == that.passwordChangeReason &&
            Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
            Objects.equals(salt, that.salt) &&
+           // TODO : ENG-1 : Daniel : Cleanup, make sure this is ok.
            Objects.equals(uniqueUsername, that.uniqueUsername) &&
            Objects.equals(username, that.username) &&
            usernameStatus == that.usernameStatus &&
@@ -97,6 +114,7 @@ public class SecureIdentity {
                         encryptionScheme,
                         factor,
                         id,
+                        identities,
                         lastLoginInstant,
                         password,
                         passwordChangeReason,

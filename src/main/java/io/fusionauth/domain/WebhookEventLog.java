@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.event.EventRequest;
 import io.fusionauth.domain.event.EventType;
 
 /**
@@ -42,7 +41,7 @@ public class WebhookEventLog implements Buildable<WebhookEventLog> {
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  public EventRequest event;
+  public String event;
 
   public WebhookEventResult eventResult = WebhookEventResult.Running;
 

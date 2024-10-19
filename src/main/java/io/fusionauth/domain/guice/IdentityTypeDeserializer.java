@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,23 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.guice;
+
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import io.fusionauth.domain.IdentityType;
 
 /**
+ * Deserialize an IdentityType.
+ *
  * @author Daniel DeGroff
  */
-public enum VerificationStrategy {
-  ClickableLink,
-  FormField;
-
-  public static VerificationStrategy safeValueOf(String value) {
-    if (value == null) {
-      return null;
-    }
-
-    try {
-      return VerificationStrategy.valueOf(value);
-    } catch (Exception e) {
-      return null;
-    }
+public class IdentityTypeDeserializer extends JsonDeserializer<IdentityType> {
+  @Override
+  public IdentityType deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    return IdentityType.of(p.getText());
   }
 }

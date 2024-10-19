@@ -642,7 +642,8 @@ public class Application implements Buildable<Application>, Tenantable {
       return ToString.toString(this);
     }
 
-    // TODO : ENG-1 : Brady - this overlaps with the IdentityType enumeration
+    // Note that this is only used for basic self-service registration to indicate email or username.
+    //      This is separate from IdentityType.
     public enum LoginIdType {
       email,
       username

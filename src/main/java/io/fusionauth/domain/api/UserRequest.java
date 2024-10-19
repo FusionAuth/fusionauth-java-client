@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +43,7 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
 
   public User user;
 
-  public List<String> verificationIds;
+  public List<String> verificationIds = new ArrayList<>();
 
   @JacksonConstructor
   public UserRequest() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ public class DisplayableRawLogin extends RawLogin implements Buildable<Displayab
 
   public String loginId;
 
+  public String loginIdType;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,12 +48,13 @@ public class DisplayableRawLogin extends RawLogin implements Buildable<Displayab
            Objects.equals(ipAddress, rawLogin.ipAddress) &&
            Objects.equals(location, rawLogin.location) &&
            Objects.equals(loginId, rawLogin.loginId) &&
+           Objects.equals(loginIdType, rawLogin.loginIdType) &&
            Objects.equals(userId, rawLogin.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, applicationName, instant, ipAddress, location, loginId, userId);
+    return Objects.hash(applicationId, applicationName, instant, ipAddress, location, loginId, loginIdType, userId);
   }
 
   @Override

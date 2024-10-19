@@ -21,6 +21,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
+import static io.fusionauth.domain.util.Normalizer.trimToNull;
 
 /**
  * The global view of a User. This object contains all global information about the user including birthdate, registration information
@@ -110,7 +112,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.lastLoginInstant = other.lastLoginInstant;
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.lastName = other.lastName;
-    this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
+    this.identities.addAll(other.identities.stream().map(UserIdentity::new).collect(Collectors.toCollection(ArrayList::new)));
+    this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toCollection(ArrayList::new)));
     this.middleName = other.middleName;
     this.mobilePhone = other.mobilePhone;
     this.parentEmail = other.parentEmail;
@@ -119,7 +122,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.passwordChangeRequired = other.passwordChangeRequired;
     this.passwordLastUpdateInstant = other.passwordLastUpdateInstant;
     this.preferredLanguages.addAll(other.preferredLanguages);
-    this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toList()));
+    this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toCollection(ArrayList::new)));
     this.salt = other.salt;
     this.tenantId = other.tenantId;
     this.timezone = other.timezone;
@@ -191,19 +194,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);
   }
 
-  public String getDataForIdentityType(IdentityTypes identityType) {
-    switch (identityType) {
-      case email:
-        return email;
-      case phoneNumber:
-        return mobilePhone;
-      case username:
-        return username;
-      default:
-        throw new IllegalArgumentException("unknown identity type: " + identityType);
-    }
-  }
-
   public GroupMember getGroupMemberForGroup(UUID id) {
     return getMemberships().stream()
                            .filter(m -> m.id.equals(id))
@@ -212,10 +202,11 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
-   * @return return a single identity value preferring email over username.
+   * @return return a single identity value preferring email to username.
    */
   @JsonIgnore
   public String getLogin() {
+    // TODO : ENG-1 : Daniel : Is this still the correct code? We could yank this from the User object since we should now be looking through one to many identities of type email.
     return email == null ? uniqueUsername : email;
   }
 
@@ -277,7 +268,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone, twoFactor);
+    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data,
+                        email,
+                        expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone, twoFactor);
   }
 
   /**
@@ -286,6 +279,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    * @return an email address or null if no email address is found.
    */
   public String lookupEmail() {
+    // TODO : ENG-1 : Daniel : Is this still the correct code? We could yank this from the User object since we should now be looking through one to many identities of type email.
     if (email != null) {
       return email;
     } else if (data.containsKey("email")) {
@@ -315,7 +309,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   public void normalize() {
     Normalizer.removeEmpty(data);
+    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service?
     email = toLowerCase(trim(email));
+    identities.forEach(UserIdentity::normalize);
     encryptionScheme = trim(encryptionScheme);
     firstName = trim(firstName);
     fullName = trim(fullName);
@@ -326,10 +322,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
     preferredLanguages.removeIf(l -> l.toString().equals(""));
-    username = trim(username);
-    if (username != null && username.length() == 0) {
-      username = null;
-    }
+    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service?
+    username = trimToNull(username);
 
     // Clear out groups that don't have groupId
     memberships.removeIf(m -> m.groupId == null);
@@ -340,6 +334,57 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public void removeMembershipById(UUID groupId) {
     memberships.removeIf(m -> m.groupId.equals(groupId));
+  }
+
+  @JsonIgnore
+  public UserIdentity resolveIdentity(String loginId, List<IdentityType> loginIdTypes) {
+    if (loginIdTypes == null || loginIdTypes.isEmpty()) {
+      loginIdTypes = Arrays.asList(IdentityType.email, IdentityType.username);
+    }
+
+    for (IdentityType type : loginIdTypes) {
+      UserIdentity result = identities.stream()
+                                      .filter(i -> i.type.is(type))
+                                      // TODO : ENG-1757 : Brady : We need to properly canonicalize loginId here. lowerCase was added to get our existing
+                                      //                           connector tests passing
+                                      .filter(i -> i.value.equals(loginId.toLowerCase()))
+                                      .findFirst()
+                                      .orElse(null);
+
+      if (result != null) {
+        return result;
+      }
+    }
+
+    return null;
+  }
+
+  @JsonIgnore
+  public UserIdentity resolveIdentity(String loginId, String loginIdType) {
+    if (loginId == null || loginIdType == null) {
+      return null;
+    }
+
+    return identities.stream()
+                     .filter(i -> i.type.is(loginIdType))
+                     .filter(i -> i.value.equals(loginId))
+                     .findFirst()
+                     .orElse(null);
+  }
+
+  @JsonIgnore
+  public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
+    return resolveIdentity(loginId, loginIdType != null ? loginIdType.name : null);
+  }
+
+  @JsonIgnore
+  public UserIdentity resolvePrimaryIdentity(IdentityType loginIdType) {
+    return identities.stream()
+                     // TODO: ENG-1800 : Daniel : Finish this
+                     .filter(i -> i.primary)
+                     .filter(i -> i.type.is(loginIdType))
+                     .findFirst()
+                     .orElse(null);
   }
 
   /**
@@ -356,22 +401,10 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return this;
   }
 
-  public void setDataForIdentityType(IdentityTypes identityType, String loginId) {
-    switch (identityType) {
-      case email:
-        email = loginId;
-        break;
-      case phoneNumber:
-        mobilePhone = loginId;
-        break;
-      case username:
-        username = loginId;
-      default:
-        throw new IllegalArgumentException("unknown identity type: " + identityType);
-    }
-  }
-
   public User sort() {
+    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> insertInstant)
+                                   .thenComparing(i -> i.type)
+                                   .thenComparing(i -> i.value));
     this.registrations.sort(Comparator.comparing(ur -> ur.applicationId));
     return this;
   }

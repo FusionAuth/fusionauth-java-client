@@ -37,6 +37,7 @@ import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
+import io.fusionauth.domain.guice.FusionAuthJacksonModule;
 import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.ApplicationOAuthScopeRequest;
 import io.fusionauth.domain.api.ApplicationOAuthScopeResponse;
@@ -260,7 +261,8 @@ public class FusionAuthClient {
                                                                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                                                                     .configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
                                                                     .configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
-                                                                    .registerModule(new JacksonModule());
+                                                                    .registerModule(new JacksonModule())
+                                                                    .registerModule(new FusionAuthJacksonModule());
 
   private final String apiKey;
 
