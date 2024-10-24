@@ -15,12 +15,16 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
+/**
+ * @author Brady Wied
+ */
 public class VerifyStartResponse {
-  public final String verificationId;
-
   public String oneTimeCode;
 
-  public VerifyStartResponse(String verificationId) {
+  public String verificationId;
+
+  public VerifyStartResponse(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
     this.verificationId = verificationId;
   }
 }

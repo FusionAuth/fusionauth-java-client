@@ -28,11 +28,10 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 /**
  * @author Daniel DeGroff
  */
-// jackson
 public class UserIdentity implements Buildable<UserIdentity> {
   // we don't need DB generated IDs in API responses
   @JsonIgnore
-  public long id;
+  public Long id;
 
   public ZonedDateTime insertInstant;
 
@@ -101,16 +100,40 @@ public class UserIdentity implements Buildable<UserIdentity> {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof UserIdentity)) {
       return false;
     }
     UserIdentity that = (UserIdentity) o;
-    return id == that.id && primary == that.primary && verified == that.verified && Objects.equals(insertInstant, that.insertInstant) && Objects.equals(lastLoginInstant, that.lastLoginInstant) && Objects.equals(lastUpdateInstant, that.lastUpdateInstant) && moderationStatus == that.moderationStatus && Objects.equals(tenantId, that.tenantId) && Objects.equals(type, that.type) && Objects.equals(uniqueValue, that.uniqueValue) && Objects.equals(userId, that.userId) && Objects.equals(value, that.value) && Objects.equals(verifiedInstant, that.verifiedInstant);
+    return Objects.equals(id, that.id) &&
+           primary == that.primary &&
+           verified == that.verified &&
+           Objects.equals(insertInstant, that.insertInstant) &&
+           Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
+           Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           moderationStatus == that.moderationStatus &&
+           Objects.equals(tenantId, that.tenantId) &&
+           Objects.equals(type, that.type) &&
+           Objects.equals(uniqueValue, that.uniqueValue) &&
+           Objects.equals(userId, that.userId) &&
+           Objects.equals(value, that.value) &&
+           Objects.equals(verifiedInstant, that.verifiedInstant);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, insertInstant, lastLoginInstant, lastUpdateInstant, moderationStatus, primary, tenantId, type, uniqueValue, userId, value, verified, verifiedInstant);
+    return Objects.hash(id,
+                        insertInstant,
+                        lastLoginInstant,
+                        lastUpdateInstant,
+                        moderationStatus,
+                        primary,
+                        tenantId,
+                        type,
+                        uniqueValue,
+                        userId,
+                        value,
+                        verified,
+                        verifiedInstant);
   }
 
   public void normalize() {

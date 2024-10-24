@@ -37,7 +37,7 @@ import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
-import io.fusionauth.domain.guice.FusionAuthJacksonModule;
+import io.fusionauth.client.json.FusionAuthJacksonModule;
 import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.ApplicationOAuthScopeRequest;
 import io.fusionauth.domain.api.ApplicationOAuthScopeResponse;

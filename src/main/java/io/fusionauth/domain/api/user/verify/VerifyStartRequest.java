@@ -17,25 +17,17 @@ package io.fusionauth.domain.api.user.verify;
 
 import java.util.UUID;
 
-import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.api.BaseEventRequest;
 
-public class VerifyStartRequest {
-  public final String loginId;
-
-  public final String loginIdType;
-
+/**
+ * @author Brady Wied
+ */
+public class VerifyStartRequest extends BaseEventRequest {
   public UUID applicationId;
 
+  public String loginId;
+
+  public String loginIdType;
+
   public String verificationStrategy;
-
-  public VerifyStartRequest(String loginId, String loginIdType) {
-    this.loginId = loginId;
-    this.loginIdType = loginIdType;
-  }
-
-  @JacksonConstructor
-  private VerifyStartRequest() {
-    loginId = null;
-    loginIdType = null;
-  }
 }

@@ -15,20 +15,13 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
-import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.api.BaseEventRequest;
 
+/**
+ * @author Brady Wied
+ */
 public class VerifySendCompleteRequest extends BaseEventRequest {
-  public final String verificationId;
-
   public String oneTimeCode;
 
-  public VerifySendCompleteRequest(String verificationId) {
-    this.verificationId = verificationId;
-  }
-
-  @JacksonConstructor
-  private VerifySendCompleteRequest() {
-    this.verificationId = null;
-  }
+  public String verificationId;
 }

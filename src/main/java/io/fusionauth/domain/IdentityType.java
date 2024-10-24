@@ -34,7 +34,7 @@ public class IdentityType implements Comparable<IdentityType> {
   public String name;
 
   public IdentityType(IdentityType other) {
-    this.name = other.name;
+    this.name = other != null ? other.name : null;
   }
 
   private IdentityType(String name) {

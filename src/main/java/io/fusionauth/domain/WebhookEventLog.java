@@ -41,7 +41,7 @@ public class WebhookEventLog implements Buildable<WebhookEventLog> {
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  public String event;
+  public Map<String, Object> event;
 
   public WebhookEventResult eventResult = WebhookEventResult.Running;
 
