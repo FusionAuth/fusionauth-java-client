@@ -15,10 +15,7 @@
  */
 package io.fusionauth.domain;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -27,10 +24,6 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class TenantIdentityConfiguration implements Buildable<TenantIdentityConfiguration> {
-  // TODO : ENG-1826 : Likely going to remove this prior to ship.
-  //        ENG-1825 : Maybe add this in full later once we have a concrete use.
-  public Set<String> enabledTypes = new TreeSet<>(Arrays.asList("email", "username"));
-
   // TODO : ENG-1 : Daniel : Could we fix this by adding an API version concept to know when to use the new strategy?
   public TenantIdentityConfigurationMode mode = TenantIdentityConfigurationMode.Compatible;
 
@@ -39,7 +32,6 @@ public class TenantIdentityConfiguration implements Buildable<TenantIdentityConf
   }
 
   public TenantIdentityConfiguration(TenantIdentityConfiguration other) {
-    this.enabledTypes = new TreeSet<>(other.enabledTypes);
     this.mode = other.mode;
   }
 
@@ -52,12 +44,12 @@ public class TenantIdentityConfiguration implements Buildable<TenantIdentityConf
       return false;
     }
     TenantIdentityConfiguration that = (TenantIdentityConfiguration) o;
-    return Objects.equals(enabledTypes, that.enabledTypes) && mode == that.mode;
+    return mode == that.mode;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabledTypes, mode);
+    return Objects.hashCode(mode);
   }
 
   @Override

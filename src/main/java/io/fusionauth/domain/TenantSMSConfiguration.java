@@ -26,11 +26,11 @@ import com.inversoft.json.JacksonConstructor;
  * @author Brady Wied
  */
 public class TenantSMSConfiguration implements Buildable<TenantSMSConfiguration> {
-  public UUID messengerId; // TODO : ENG-1 : Brent - validate MessengerType not kafka.  write test of deleting messenger
+  public UUID messengerId;
 
   public UUID passwordlessTemplateId;
 
-  public VerificationStrategy verificationStrategy;
+  public VerificationStrategy verificationStrategy = VerificationStrategy.ClickableLink;
 
   public UUID verificationTemplateId;
 
@@ -58,10 +58,10 @@ public class TenantSMSConfiguration implements Buildable<TenantSMSConfiguration>
     }
     TenantSMSConfiguration that = (TenantSMSConfiguration) o;
     return verifyPhoneNumber == that.verifyPhoneNumber &&
-      Objects.equals(messengerId, that.messengerId) &&
-      Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
-      verificationStrategy == that.verificationStrategy &&
-      Objects.equals(verificationTemplateId, that.verificationTemplateId) ;
+           Objects.equals(messengerId, that.messengerId) &&
+           Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
+           verificationStrategy == that.verificationStrategy &&
+           Objects.equals(verificationTemplateId, that.verificationTemplateId);
   }
 
   @Override
