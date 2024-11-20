@@ -72,8 +72,18 @@ public class SecureIdentity {
 
   public ContentStatus usernameStatus = ContentStatus.ACTIVE;
 
+  /**
+   * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.55.0, use the verified
+   * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verified}
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.55.0")
   public boolean verified;
 
+  /**
+   * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.55.0, use the verifiedInstant
+   * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verifiedInstant}
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.55.0")
   public ZonedDateTime verifiedInstant;
 
   @Override

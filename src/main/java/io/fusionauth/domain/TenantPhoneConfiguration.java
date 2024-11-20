@@ -21,11 +21,11 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 
 /**
- * Hold SMS configuration for passwordless and verification cases.
+ * Hold tenant phone configuration for passwordless and verification cases.
  *
  * @author Brady Wied
  */
-public class TenantSMSConfiguration implements Buildable<TenantSMSConfiguration> {
+public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfiguration> {
   public UUID messengerId;
 
   public UUID passwordlessTemplateId;
@@ -37,10 +37,10 @@ public class TenantSMSConfiguration implements Buildable<TenantSMSConfiguration>
   public boolean verifyPhoneNumber;
 
   @JacksonConstructor
-  public TenantSMSConfiguration() {
+  public TenantPhoneConfiguration() {
   }
 
-  public TenantSMSConfiguration(TenantSMSConfiguration other) {
+  public TenantPhoneConfiguration(TenantPhoneConfiguration other) {
     messengerId = other.messengerId;
     passwordlessTemplateId = other.passwordlessTemplateId;
     verifyPhoneNumber = other.verifyPhoneNumber;
@@ -53,10 +53,10 @@ public class TenantSMSConfiguration implements Buildable<TenantSMSConfiguration>
     if (this == o) {
       return true;
     }
-    if (!(o instanceof TenantSMSConfiguration)) {
+    if (!(o instanceof TenantPhoneConfiguration)) {
       return false;
     }
-    TenantSMSConfiguration that = (TenantSMSConfiguration) o;
+    TenantPhoneConfiguration that = (TenantPhoneConfiguration) o;
     return verifyPhoneNumber == that.verifyPhoneNumber &&
            Objects.equals(messengerId, that.messengerId) &&
            Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&

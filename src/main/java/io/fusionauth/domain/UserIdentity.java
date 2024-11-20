@@ -75,6 +75,8 @@ public class UserIdentity implements Buildable<UserIdentity> {
 
   public ZonedDateTime verifiedInstant;
 
+  public IdentityVerifiedReason verifiedReason;
+
   public UserIdentity(UserIdentity other) {
     this.id = other.id;
     this.insertInstant = other.insertInstant;
@@ -88,6 +90,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
     this.userId = other.userId;
     this.value = other.value;
     this.verified = other.verified;
+    this.verifiedReason = other.verifiedReason;
     this.verifiedInstant = other.verifiedInstant;
   }
 
@@ -107,6 +110,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
     return Objects.equals(id, that.id) &&
            primary == that.primary &&
            verified == that.verified &&
+           verifiedReason == that.verifiedReason &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
@@ -133,6 +137,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
                         userId,
                         value,
                         verified,
+                        verifiedReason,
                         verifiedInstant);
   }
 

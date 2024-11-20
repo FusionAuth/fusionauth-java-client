@@ -24,7 +24,6 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class TenantIdentityConfiguration implements Buildable<TenantIdentityConfiguration> {
-  // TODO : ENG-1 : Daniel : Could we fix this by adding an API version concept to know when to use the new strategy?
   public TenantIdentityConfigurationMode mode = TenantIdentityConfigurationMode.Compatible;
 
   @JacksonConstructor
