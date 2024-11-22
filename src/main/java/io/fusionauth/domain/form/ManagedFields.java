@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,6 +84,33 @@ public final class ManagedFields {
                            .with(f -> f.type = FormDataType.email)
                            .with(f -> f.data.put("leftAddon", "user"))
                            .with(f -> f.name = "[Admin User] email"));
+
+    map.put("identities.email",
+            new FormField().with(f -> f.key = "identities.email")
+                           .with(f -> f.confirm = false)
+                           .with(f -> f.control = FormControl.text)
+                           .with(f -> f.required = false)
+                           .with(f -> f.type = FormDataType.email)
+                           .with(f -> f.data.put("leftAddon", "user"))
+                           .with(f -> f.name = "[Admin User] identities.email"));
+
+    map.put("identities.phoneNumber",
+            new FormField().with(f -> f.key = "identities.phoneNumber")
+                           .with(f -> f.confirm = false)
+                           .with(f -> f.control = FormControl.text)
+                           .with(f -> f.required = false)
+                           .with(f -> f.type = FormDataType.phoneNumber)
+                           .with(f -> f.data.put("leftAddon", "phone"))
+                           .with(f -> f.name = "[Admin User] identities.phoneNumber"));
+
+    map.put("identities.username",
+            new FormField().with(f -> f.key = "identities.username")
+                           .with(f -> f.confirm = false)
+                           .with(f -> f.control = FormControl.text)
+                           .with(f -> f.required = false)
+                           .with(f -> f.type = FormDataType.string)
+                           .with(f -> f.data.put("leftAddon", "user"))
+                           .with(f -> f.name = "[Admin User] identities.username"));
 
     map.put("user.firstName",
             new FormField().with(f -> f.key = "user.firstName")
