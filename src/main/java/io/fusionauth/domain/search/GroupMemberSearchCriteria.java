@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import io.fusionauth.domain.Buildable;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 
 /**
@@ -27,7 +28,7 @@ import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
  *
  * @author Daniel DeGroff
  */
-public class GroupMemberSearchCriteria extends BaseSearchCriteria {
+public class GroupMemberSearchCriteria extends BaseSearchCriteria implements Buildable<GroupMemberSearchCriteria> {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
   public UUID groupId;
