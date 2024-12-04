@@ -27,13 +27,7 @@ import io.fusionauth.domain.connector.BaseConnectorConfiguration;
  * @author Daniel DeGroff
  */
 public class SecureIdentity {
-  // TODO : ENG-1695 : Brady : This causes UAT.post_noPassword_has_email_and_phone to fail because the identities are never serialized
-  //                           with the event. We need to only ignore identities, when serializing to the DB from the UserMapper code path.
-  //                           Maybe we can 1) remove @ExcludeFromJSONColumn and 2) tweak the FusionAuthAPIOnlyJacksonModule going into
-  //                           DatabaseObjectMapperProvider such that
-  //                           it handles what @ExcludeFromJSONColumn does but only when it's not an event
-  // TODO : ENG-1695 : Daniel : I think this is fixed via ENG-1822.
-  //                            I made this change, although I need to review ENG-1822 to ensure I complete it, but this fixes this change
+  // TODO : ENG-1822 : Daniel : I made this change, although I need to review ENG-1822 to ensure I complete it, but this fixes this change
   //                            fixes UAT.post_noPassword_has_email_and_phone.
   public final List<UserIdentity> identities = new ArrayList<>();
 
@@ -70,14 +64,14 @@ public class SecureIdentity {
   // When unique usernames are enabled, this value may be different than 'uniqueUsername' and in that case will represent the base username the user selected.
   public String username;
 
-  public ContentStatus usernameStatus = ContentStatus.ACTIVE;
+  public ContentStatus usernameStatus;
 
   /**
    * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.56.0, use the verified
    * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verified}
    */
   @Deprecated // JDK 8 compatible/client library (since = "1.56.0")
-  public boolean verified;
+  public Boolean verified;
 
   /**
    * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.56.0, use the verifiedInstant

@@ -24,34 +24,34 @@ public enum IdentityVerifiedReason {
   /**
    * Identity is a legacy identity (before multiple identity support)
    */
-  Unknown,
+  Unknown, // 0
   /**
    * Verification was skipped due to the `skipVerification` parameter
    */
-  Skipped,
+  Skipped, // 1
   /**
    * Identity was created via an identity provider or a connector
    */
-  Trusted,
+  Trusted, // 2
   /**
    * We don't know how to verify this identity type
    */
-  Unverifiable,
+  Unverifiable, // 3
   /**
    * Happened implicitly by sending a set password or passwordless message that can only be
    * acted on if the user proves control of the identity.
    */
-  Implicit,
+  Implicit, // 4
   /**
    * No verification has been performed yet
    */
-  Pending,
+  Pending, // 5
   /**
    * Verification was performed by FusionAuth
    */
-  Completed,
+  Completed, // 6
   /**
    * Tenant policy did not require verifying this identity
    */
-  Disabled
+  Disabled // 7
 }

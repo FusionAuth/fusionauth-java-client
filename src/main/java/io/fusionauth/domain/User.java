@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 import static io.fusionauth.domain.util.Normalizer.trimToNull;
 
 /**
- * The global view of a User. This object contains all global information about the user including birthdate, registration information
+ * The public, global view of a User. This object contains all global information about the user including birthdate, registration information
  * preferred languages, global attributes, etc.
  *
  * @author Seth Musselman
@@ -309,8 +310,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   public void normalize() {
     Normalizer.removeEmpty(data);
-    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service?
-    email = toLowerCase(trim(email));
+    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service? We might also want to remove any identity with an empty value?
+    email = toLowerCase(trimToNull(email));
     identities.forEach(UserIdentity::normalize);
     encryptionScheme = trim(encryptionScheme);
     firstName = trim(firstName);
@@ -402,7 +403,13 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public User sort() {
-    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> insertInstant)
+    // use same timestamp for all rows without an insert instant
+    ZonedDateTime now = ZonedDateTime.now();
+    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> Optional.ofNullable(i.insertInstant)
+                                                                                        // if we don't have one, assuming it's about
+                                                                                        // to be inserted, which would put at the the 'bottom'
+                                                                                        // of the list, is sensible
+                                                                                        .orElse(now))
                                    .thenComparing(i -> i.type)
                                    .thenComparing(i -> i.value));
     this.registrations.sort(Comparator.comparing(ur -> ur.applicationId));

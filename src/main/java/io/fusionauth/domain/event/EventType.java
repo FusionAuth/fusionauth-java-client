@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * @author Brian Pontarelli
  */
 public enum EventType {
+  // Be careful, these, despite the eventName, are ordinal based in the DB. Always add to the end.
+  
   JWTPublicKeyUpdate("jwt.public-key.update"),
 
   // TODO : 2.0 : Rename -> refresh-token.revoke
@@ -84,8 +86,6 @@ public enum EventType {
 
   UserEmailVerified("user.email.verified"),
 
-  IdentityVerified("identity.verified"),
-
   UserIdentityProviderLink("user.identity-provider.link"),
 
   UserIdentityProviderUnlink("user.identity-provider.unlink"),
@@ -136,7 +136,9 @@ public enum EventType {
 
   UserUpdateComplete("user.update.complete"),
 
-  Test("test");
+  Test("test"),
+
+  IdentityVerified("identity.verified");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -168,6 +170,7 @@ public enum EventType {
                          EventType.GroupMemberUpdateComplete,
                          EventType.GroupUpdate,
                          EventType.GroupUpdateComplete,
+                         EventType.IdentityVerified,
                          EventType.UserAction,
                          EventType.UserBulkCreate,
                          EventType.UserCreate,
