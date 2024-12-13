@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
@@ -23,12 +24,14 @@ import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
- * Models an event where a user is being created with an "in-use" login Id (email or username).
+ * Models an event where a user is being created with an "in-use" login Id (email, username, or other identities).
  *
  * @author Daniel DeGroff
  */
 public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
   public String duplicateEmail;
+
+  public List<IdentityInfo> duplicateIdentities;
 
   public String duplicateUsername;
 
@@ -38,10 +41,11 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
   public UserLoginIdDuplicateOnCreateEvent() {
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities, User existing, User user) {
     super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
+    this.duplicateIdentities = duplicateIdentities;
     this.existing = existing;
   }
 
@@ -52,6 +56,7 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
     }
     UserLoginIdDuplicateOnCreateEvent that = (UserLoginIdDuplicateOnCreateEvent) o;
     return Objects.equals(duplicateEmail, that.duplicateEmail) &&
+           Objects.equals(duplicateIdentities, that.duplicateIdentities) &&
            Objects.equals(duplicateUsername, that.duplicateUsername) &&
            Objects.equals(existing, that.existing);
   }
@@ -63,6 +68,6 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), duplicateEmail, duplicateUsername, existing);
+    return Objects.hash(super.hashCode(), duplicateEmail, duplicateIdentities, duplicateUsername, existing);
   }
 }

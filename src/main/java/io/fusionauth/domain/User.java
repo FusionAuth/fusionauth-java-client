@@ -21,7 +21,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,7 +86,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   public UUID tenantId;
 
   public ZoneId timezone;
-
+  
   public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
 
   @JacksonConstructor
@@ -195,19 +194,11 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);
   }
 
-  public GroupMember getGroupMemberForGroup(UUID id) {
-    return getMemberships().stream()
-                           .filter(m -> m.id.equals(id))
-                           .findFirst()
-                           .orElse(null);
-  }
-
   /**
    * @return return a single identity value preferring email to username.
    */
   @JsonIgnore
   public String getLogin() {
-    // TODO : ENG-1 : Daniel : Is this still the correct code? We could yank this from the User object since we should now be looking through one to many identities of type email.
     return email == null ? uniqueUsername : email;
   }
 
@@ -280,7 +271,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    * @return an email address or null if no email address is found.
    */
   public String lookupEmail() {
-    // TODO : ENG-1 : Daniel : Is this still the correct code? We could yank this from the User object since we should now be looking through one to many identities of type email.
     if (email != null) {
       return email;
     } else if (data.containsKey("email")) {
@@ -331,51 +321,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
     // Normalize the registrations
     getRegistrations().forEach(UserRegistration::normalize);
-  }
-
-  public void removeMembershipById(UUID groupId) {
-    memberships.removeIf(m -> m.groupId.equals(groupId));
-  }
-
-  @JsonIgnore
-  public UserIdentity resolveIdentity(String loginId, List<IdentityType> loginIdTypes) {
-    if (loginIdTypes == null || loginIdTypes.isEmpty()) {
-      loginIdTypes = Arrays.asList(IdentityType.email, IdentityType.username);
-    }
-
-    for (IdentityType type : loginIdTypes) {
-      UserIdentity result = identities.stream()
-                                      .filter(i -> i.type.is(type))
-                                      // TODO : ENG-1757 : Brady : We need to properly canonicalize loginId here. lowerCase was added to get our existing
-                                      //                           connector tests passing
-                                      .filter(i -> i.value.equals(loginId.toLowerCase()))
-                                      .findFirst()
-                                      .orElse(null);
-
-      if (result != null) {
-        return result;
-      }
-    }
-
-    return null;
-  }
-
-  @JsonIgnore
-  public UserIdentity resolveIdentity(String loginId, String loginIdType) {
-    if (loginId == null || loginIdType == null) {
-      return null;
-    }
-
-    return identities.stream()
-                     .filter(i -> i.type.is(loginIdType))
-                     .filter(i -> i.value.equals(loginId))
-                     .findFirst()
-                     .orElse(null);
-  }
-
-  @JsonIgnore
-  public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
-    return resolveIdentity(loginId, loginIdType != null ? loginIdType.name : null);
   }
 
   @JsonIgnore

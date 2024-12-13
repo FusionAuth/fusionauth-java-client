@@ -18,6 +18,7 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
@@ -59,5 +60,38 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), user);
+  }
+
+  public static class IdentityInfo {
+    public final String type;
+    public final String value;
+
+    @JacksonConstructor
+    public IdentityInfo() {
+      // Jackson will set values for these, but final fields are still good
+      this.type = null;
+      this.value = null;
+    }
+
+    public IdentityInfo(String type, String value) {
+      this.type = type;
+      this.value = value;
+    }
+
+    @Override public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof IdentityInfo)) {
+        return false;
+      }
+      IdentityInfo that = (IdentityInfo) o;
+      return Objects.equals(type, that.type) && Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(type, value);
+    }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.List;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
@@ -29,8 +30,8 @@ public class UserLoginIdDuplicateOnUpdateEvent extends UserLoginIdDuplicateOnCre
   public UserLoginIdDuplicateOnUpdateEvent() {
   }
 
-  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
-    super(info, duplicateEmail, duplicateUsername, existing, user);
+  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities, User existing, User user) {
+    super(info, duplicateEmail, duplicateUsername, duplicateIdentities, existing, user);
   }
 
   @Override

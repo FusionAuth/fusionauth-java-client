@@ -22,36 +22,32 @@ package io.fusionauth.domain;
  */
 public enum IdentityVerifiedReason {
   /**
-   * Identity is a legacy identity (before multiple identity support)
-   */
-  Unknown, // 0
-  /**
    * Verification was skipped due to the `skipVerification` parameter
    */
-  Skipped, // 1
+  Skipped, // 0
   /**
    * Identity was created via an identity provider or a connector
    */
-  Trusted, // 2
+  Trusted, // 1
   /**
    * We don't know how to verify this identity type
    */
-  Unverifiable, // 3
+  Unverifiable, // 2
   /**
    * Happened implicitly by sending a set password or passwordless message that can only be
    * acted on if the user proves control of the identity.
    */
-  Implicit, // 4
+  Implicit, // 3
   /**
    * No verification has been performed yet
    */
-  Pending, // 5
+  Pending, // 4
   /**
    * Verification was performed by FusionAuth
    */
-  Completed, // 6
+  Completed, // 5
   /**
    * Tenant policy did not require verifying this identity
    */
-  Disabled // 7
+  Disabled // 6
 }
