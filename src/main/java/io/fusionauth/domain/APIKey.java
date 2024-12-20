@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import com.inversoft.json.ToString;
  * @author sanjay
  */
 public class APIKey implements Buildable<APIKey> {
+  public ZonedDateTime expirationInstant;
+
   public UUID id;
 
   public ZonedDateTime insertInstant;
@@ -68,6 +70,7 @@ public class APIKey implements Buildable<APIKey> {
     }
     APIKey apiKey = (APIKey) o;
     return keyManager == apiKey.keyManager &&
+           Objects.equals(expirationInstant, apiKey.expirationInstant) &&
            Objects.equals(id, apiKey.id) &&
            Objects.equals(insertInstant, apiKey.insertInstant) &&
            Objects.equals(ipAccessControlListId, apiKey.ipAccessControlListId) &&
@@ -80,7 +83,7 @@ public class APIKey implements Buildable<APIKey> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, insertInstant, ipAccessControlListId, key, keyManager, lastUpdateInstant, metaData, permissions, tenantId);
+    return Objects.hash(expirationInstant, id, insertInstant, ipAccessControlListId, key, keyManager, lastUpdateInstant, metaData, permissions, tenantId);
   }
 
   public void normalize() {

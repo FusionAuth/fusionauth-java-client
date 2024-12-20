@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ public class RefreshTokenRevocationPolicy implements Buildable<RefreshTokenRevoc
 
   public boolean onMultiFactorEnable;
 
+  public boolean onOneTimeTokenReuse;
+
   public boolean onPasswordChanged;
 
   @JacksonConstructor
@@ -38,6 +40,7 @@ public class RefreshTokenRevocationPolicy implements Buildable<RefreshTokenRevoc
     this.onLoginPrevented = other.onLoginPrevented;
     this.onMultiFactorEnable = other.onMultiFactorEnable;
     this.onPasswordChanged = other.onPasswordChanged;
+    this.onOneTimeTokenReuse = other.onOneTimeTokenReuse;
   }
 
   public RefreshTokenRevocationPolicy(boolean onLoginPrevented, boolean onPasswordChanged) {
@@ -54,12 +57,12 @@ public class RefreshTokenRevocationPolicy implements Buildable<RefreshTokenRevoc
       return false;
     }
     RefreshTokenRevocationPolicy that = (RefreshTokenRevocationPolicy) o;
-    return onLoginPrevented == that.onLoginPrevented && onMultiFactorEnable == that.onMultiFactorEnable && onPasswordChanged == that.onPasswordChanged;
+    return onLoginPrevented == that.onLoginPrevented && onMultiFactorEnable == that.onMultiFactorEnable && onPasswordChanged == that.onPasswordChanged && onOneTimeTokenReuse == that.onOneTimeTokenReuse;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(onLoginPrevented, onMultiFactorEnable, onPasswordChanged);
+    return Objects.hash(onLoginPrevented, onMultiFactorEnable, onPasswordChanged, onOneTimeTokenReuse);
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
 
   public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy = RefreshTokenExpirationPolicy.Fixed;
 
+  public RefreshTokenOneTimeUseConfiguration refreshTokenOneTimeUseConfiguration = new RefreshTokenOneTimeUseConfiguration();
+
   /**
    * This can only be set at the tenant level.
    */
@@ -71,6 +73,7 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     this.idTokenKeyId = other.idTokenKeyId;
     this.refreshTokenExpirationPolicy = other.refreshTokenExpirationPolicy;
     this.refreshTokenRevocationPolicy = new RefreshTokenRevocationPolicy(other.refreshTokenRevocationPolicy);
+    this.refreshTokenOneTimeUseConfiguration = new RefreshTokenOneTimeUseConfiguration(other.refreshTokenOneTimeUseConfiguration);
     this.refreshTokenSlidingWindowConfiguration = new RefreshTokenSlidingWindowConfiguration(other.refreshTokenSlidingWindowConfiguration);
     this.refreshTokenTimeToLiveInMinutes = other.refreshTokenTimeToLiveInMinutes;
     this.refreshTokenUsagePolicy = other.refreshTokenUsagePolicy;
@@ -93,6 +96,7 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
            Objects.equals(idTokenKeyId, that.idTokenKeyId) &&
            refreshTokenExpirationPolicy == that.refreshTokenExpirationPolicy &&
            Objects.equals(refreshTokenRevocationPolicy, that.refreshTokenRevocationPolicy) &&
+           Objects.equals(refreshTokenOneTimeUseConfiguration, that.refreshTokenOneTimeUseConfiguration) &&
            Objects.equals(refreshTokenSlidingWindowConfiguration, that.refreshTokenSlidingWindowConfiguration) &&
            refreshTokenTimeToLiveInMinutes == that.refreshTokenTimeToLiveInMinutes &&
            refreshTokenUsagePolicy == that.refreshTokenUsagePolicy &&
@@ -106,6 +110,7 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
                         idTokenKeyId,
                         refreshTokenExpirationPolicy,
                         refreshTokenRevocationPolicy,
+                        refreshTokenOneTimeUseConfiguration,
                         refreshTokenSlidingWindowConfiguration,
                         refreshTokenTimeToLiveInMinutes,
                         refreshTokenUsagePolicy,
