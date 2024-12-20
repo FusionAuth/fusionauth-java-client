@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof RefreshToken)) {
       return false;
     }
     RefreshToken that = (RefreshToken) o;
