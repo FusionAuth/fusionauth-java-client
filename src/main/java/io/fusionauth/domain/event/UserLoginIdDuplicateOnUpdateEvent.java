@@ -16,9 +16,10 @@
 package io.fusionauth.domain.event;
 
 import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * Models an event where a user is being updated and tries to use an "in-use" login Id (email or username).
@@ -30,7 +31,8 @@ public class UserLoginIdDuplicateOnUpdateEvent extends UserLoginIdDuplicateOnCre
   public UserLoginIdDuplicateOnUpdateEvent() {
   }
 
-  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities, User existing, User user) {
+  public UserLoginIdDuplicateOnUpdateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities,
+                                           User existing, User user) {
     super(info, duplicateEmail, duplicateUsername, duplicateIdentities, existing, user);
   }
 

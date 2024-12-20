@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,7 +31,15 @@ import com.inversoft.json.ToString;
  * @author Brian Pontarelli
  */
 public class Lambda implements Buildable<Lambda> {
+  // TODO : ENG-2074 : Brady : Not yet configurable via API
+  @JsonIgnore
+  public APIVersion apiVersion = APIVersion.V1;
+
   public String body;
+
+  // TODO : ENG-2074 : Brady : Not yet configurable via API
+  @JsonIgnore
+  public Map<String, Object> data = new LinkedHashMap<>();
 
   public boolean debug;
 
@@ -59,6 +69,7 @@ public class Lambda implements Buildable<Lambda> {
   }
 
   public Lambda(Lambda lambda) {
+    this.apiVersion = lambda.apiVersion;
     this.body = lambda.body;
     this.name = lambda.name;
     this.debug = lambda.debug;
@@ -80,6 +91,7 @@ public class Lambda implements Buildable<Lambda> {
     }
     Lambda lambda = (Lambda) o;
     return debug == lambda.debug &&
+           apiVersion == lambda.apiVersion &&
            enabled == lambda.enabled &&
            Objects.equals(body, lambda.body) &&
            engineType == lambda.engineType &&
@@ -92,7 +104,7 @@ public class Lambda implements Buildable<Lambda> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(body, debug, enabled, engineType, id, insertInstant, lastUpdateInstant, name, type);
+    return Objects.hash(body, apiVersion, debug, enabled, engineType, id, insertInstant, lastUpdateInstant, name, type);
   }
 
   public String toString() {

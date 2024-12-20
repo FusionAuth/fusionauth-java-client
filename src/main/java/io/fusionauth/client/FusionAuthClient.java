@@ -34,6 +34,7 @@ import com.inversoft.rest.FormDataBodyHandler;
 import com.inversoft.rest.JSONBodyHandler;
 import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
+import io.fusionauth.domain.APIVersion;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
@@ -251,6 +252,7 @@ import io.fusionauth.domain.provider.IdentityProviderType;
  */
 @SuppressWarnings("unused")
 public class FusionAuthClient {
+  public static String API_VERSION_HEADER = "X-FusionAuth-API-Version";
   public static String TENANT_ID_HEADER = "X-FusionAuth-TenantId";
 
   public static final ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
@@ -265,6 +267,8 @@ public class FusionAuthClient {
                                                                     .registerModule(new FusionAuthJacksonModule());
 
   private final String apiKey;
+
+  public final APIVersion apiVersion;
 
   private final String baseURL;
 
@@ -281,19 +285,20 @@ public class FusionAuthClient {
   }
 
   public FusionAuthClient(String apiKey, String baseURL, String tenantId) {
-    this(apiKey, baseURL, 2000, 2000, tenantId);
+    this(apiKey, baseURL, 2000, 2000, tenantId, APIVersion.V1);
   }
 
   public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout) {
-    this(apiKey, baseURL, connectTimeout, readTimeout, null);
+    this(apiKey, baseURL, connectTimeout, readTimeout, null, APIVersion.V1);
   }
 
-  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId) {
-    this(apiKey, baseURL, connectTimeout, readTimeout, tenantId, null);
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, APIVersion apiVersion) {
+    this(apiKey, baseURL, connectTimeout, readTimeout, tenantId, null, apiVersion);
   }
 
-  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, ObjectMapper objectMapper) {
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, ObjectMapper objectMapper, APIVersion apiVersion) {
     this.apiKey = apiKey;
+    this.apiVersion = apiVersion;
     this.baseURL = baseURL;
     this.connectTimeout = connectTimeout;
     this.readTimeout = readTimeout;
@@ -315,7 +320,7 @@ public class FusionAuthClient {
       return this;
     }
 
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString());
+    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString(), apiVersion);
   }
 
   /**
@@ -326,7 +331,7 @@ public class FusionAuthClient {
   * @return the new FusionAuthClient
   */
   public FusionAuthClient setObjectMapper(ObjectMapper objectMapper) {
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper);
+    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper, apiVersion);
   }
 
   /**
@@ -5726,6 +5731,8 @@ public class FusionAuthClient {
     if (tenantId != null) {
       client.header(TENANT_ID_HEADER, tenantId);
     }
+
+    client.header(API_VERSION_HEADER, apiVersion.version);
 
     return client;
   }

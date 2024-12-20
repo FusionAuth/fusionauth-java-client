@@ -18,10 +18,10 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.TwoFactorMethod;
-import io.fusionauth.domain.User;
 
 /**
  * Model a user event when a two-factor method has been added.

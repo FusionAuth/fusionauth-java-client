@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.EventInfo;
 
 /**
  * Base class for all {@link User}-related events.
@@ -35,7 +35,10 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
 
   public BaseUserEvent(EventInfo info, User user) {
     super(info);
-    this.user = user;
+    this.user = null;
+    if (user != null) {
+      this.user = new User(user).secure().sort();
+    }
   }
 
   @Override
@@ -64,6 +67,7 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
 
   public static class IdentityInfo {
     public final String type;
+
     public final String value;
 
     @JacksonConstructor
@@ -78,7 +82,8 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
       this.value = value;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
       if (this == o) {
         return true;
       }
