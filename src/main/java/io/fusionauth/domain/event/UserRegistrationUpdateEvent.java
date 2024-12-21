@@ -19,9 +19,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 
 /**
@@ -40,7 +40,8 @@ public class UserRegistrationUpdateEvent extends BaseUserEvent implements Builda
   public UserRegistrationUpdateEvent() {
   }
 
-  public UserRegistrationUpdateEvent(EventInfo info, UUID applicationId, UserRegistration original, UserRegistration registration, User user) {
+  public UserRegistrationUpdateEvent(EventInfo info, UUID applicationId, UserRegistration original, UserRegistration registration,
+                                     User user) {
     super(info, user);
     this.applicationId = applicationId;
     this.original = original;

@@ -23,9 +23,9 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.jwt.RefreshToken;
 
 /**
@@ -53,15 +53,19 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
     super(info);
     this.applicationId = applicationId;
     this.applicationTimeToLiveInSeconds.put(applicationId, timeToLiveInSeconds);
-    this.user = user;
-    this.userId = user == null ? null : user.id;
+    if (user != null) {
+      this.user = new User(user).secure().sort();
+      this.userId = user.id;
+    }
   }
 
   public JWTRefreshTokenRevokeEvent(EventInfo info, User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
     super(info);
     this.applicationTimeToLiveInSeconds.putAll(applicationTimeToLiveInSeconds);
-    this.user = user;
-    this.userId = user == null ? null : user.id;
+    if (user != null) {
+      this.user = new User(user).secure().sort();
+      this.userId = user.id;
+    }
   }
 
   public List<UUID> applicationIds() {

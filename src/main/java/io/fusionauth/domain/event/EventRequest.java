@@ -17,10 +17,10 @@ package io.fusionauth.domain.event;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.client.json.WebhookEventDeserializer;
+import io.fusionauth.domain.APIVersion;
 
 /**
  * Container for the event information. This is the JSON that is sent from FusionAuth to webhooks.
@@ -28,10 +28,10 @@ import io.fusionauth.client.json.WebhookEventDeserializer;
  * @author Brian Pontarelli
  */
 public class EventRequest {
-  // TODO : ENG-1822 : Can we delete this if we aren't going to use it an longer?
-  //                   Some tests still use it, maybe we should only bind it ot the TestObjectMapper?
-  //                   See one usage: UserActionTest.post_noPassword_has_email_and_phone
-  @JsonDeserialize(using = WebhookEventDeserializer.class)
+  // this is tracked in the header, only in here to communicate between header<->serializer
+  @JsonIgnore
+  public APIVersion apiVersion = APIVersion.V1;
+
   public BaseEvent event;
 
   @JacksonConstructor

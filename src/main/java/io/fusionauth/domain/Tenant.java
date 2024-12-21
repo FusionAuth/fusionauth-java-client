@@ -71,8 +71,6 @@ public class Tenant implements Buildable<Tenant> {
 
   public UUID id;
 
-  public TenantIdentityConfiguration identityConfiguration = new TenantIdentityConfiguration();
-
   public ZonedDateTime insertInstant;
 
   public String issuer;
@@ -143,7 +141,6 @@ public class Tenant implements Buildable<Tenant> {
     this.formConfiguration = new TenantFormConfiguration(other.formConfiguration);
     this.httpSessionMaxInactiveInterval = other.httpSessionMaxInactiveInterval;
     this.id = other.id;
-    this.identityConfiguration = new TenantIdentityConfiguration(other.identityConfiguration);
     this.insertInstant = other.insertInstant;
     this.accessControlConfiguration = new TenantAccessControlConfiguration(other.accessControlConfiguration);
     this.issuer = other.issuer;
@@ -192,7 +189,6 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(familyConfiguration, tenant.familyConfiguration) &&
            Objects.equals(formConfiguration, tenant.formConfiguration) &&
            Objects.equals(id, tenant.id) &&
-           Objects.equals(identityConfiguration, tenant.identityConfiguration) &&
            Objects.equals(insertInstant, tenant.insertInstant) &&
            Objects.equals(accessControlConfiguration, tenant.accessControlConfiguration) &&
            Objects.equals(issuer, tenant.issuer) &&
@@ -238,7 +234,6 @@ public class Tenant implements Buildable<Tenant> {
                         formConfiguration,
                         httpSessionMaxInactiveInterval,
                         id,
-                        identityConfiguration,
                         insertInstant,
                         accessControlConfiguration,
                         issuer,

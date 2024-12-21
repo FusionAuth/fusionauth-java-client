@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
 
 /**
  * Models an event where a user is being created with an "in-use" login Id (email, username, or other identities).
@@ -41,12 +41,13 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
   public UserLoginIdDuplicateOnCreateEvent() {
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities, User existing, User user) {
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities,
+                                           User existing, User user) {
     super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
     this.duplicateIdentities = duplicateIdentities;
-    this.existing = existing;
+    this.existing = new User(existing).secure().sort();
   }
 
   @Override

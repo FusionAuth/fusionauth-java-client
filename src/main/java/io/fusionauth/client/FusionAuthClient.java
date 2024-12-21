@@ -34,6 +34,7 @@ import com.inversoft.rest.FormDataBodyHandler;
 import com.inversoft.rest.JSONBodyHandler;
 import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
+import io.fusionauth.domain.APIVersion;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
@@ -230,6 +231,9 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.api.user.verify.VerifyStartRequest;
+import io.fusionauth.domain.api.user.verify.VerifyStartResponse;
+import io.fusionauth.domain.api.user.verify.VerifySendCompleteRequest;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.DeviceApprovalResponse;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
@@ -251,6 +255,7 @@ import io.fusionauth.domain.provider.IdentityProviderType;
  */
 @SuppressWarnings("unused")
 public class FusionAuthClient {
+  public static String API_VERSION_HEADER = "X-FusionAuth-API-Version";
   public static String TENANT_ID_HEADER = "X-FusionAuth-TenantId";
 
   public static final ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
@@ -265,6 +270,8 @@ public class FusionAuthClient {
                                                                     .registerModule(new FusionAuthJacksonModule());
 
   private final String apiKey;
+
+  public final APIVersion apiVersion;
 
   private final String baseURL;
 
@@ -281,19 +288,20 @@ public class FusionAuthClient {
   }
 
   public FusionAuthClient(String apiKey, String baseURL, String tenantId) {
-    this(apiKey, baseURL, 2000, 2000, tenantId);
+    this(apiKey, baseURL, 2000, 2000, tenantId, APIVersion.V1);
   }
 
   public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout) {
-    this(apiKey, baseURL, connectTimeout, readTimeout, null);
+    this(apiKey, baseURL, connectTimeout, readTimeout, null, APIVersion.V1);
   }
 
-  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId) {
-    this(apiKey, baseURL, connectTimeout, readTimeout, tenantId, null);
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, APIVersion apiVersion) {
+    this(apiKey, baseURL, connectTimeout, readTimeout, tenantId, null, apiVersion);
   }
 
-  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, ObjectMapper objectMapper) {
+  public FusionAuthClient(String apiKey, String baseURL, int connectTimeout, int readTimeout, String tenantId, ObjectMapper objectMapper, APIVersion apiVersion) {
     this.apiKey = apiKey;
+    this.apiVersion = apiVersion;
     this.baseURL = baseURL;
     this.connectTimeout = connectTimeout;
     this.readTimeout = readTimeout;
@@ -315,7 +323,7 @@ public class FusionAuthClient {
       return this;
     }
 
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString());
+    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString(), apiVersion);
   }
 
   /**
@@ -326,7 +334,7 @@ public class FusionAuthClient {
   * @return the new FusionAuthClient
   */
   public FusionAuthClient setObjectMapper(ObjectMapper objectMapper) {
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper);
+    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper, apiVersion);
   }
 
   /**
@@ -535,6 +543,20 @@ public class FusionAuthClient {
   public ClientResponse<UserCommentResponse, Errors> commentOnUser(UserCommentRequest request) {
     return start(UserCommentResponse.class, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Completes verification of an identity using verification codes from the Verify Start API.
+   *
+   * @param request The identity verify complete request that contains all the information used to verify the identity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> completeVerifyIdentity(VerifySendCompleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
@@ -4978,6 +5000,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Send a verification code using the appropriate transport for the identity type being verified.
+   *
+   * @param request The identity verify send request that contains all the information used send the code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendVerifyIdentity(VerifySendCompleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
    *
    * @param request The third-party login request that contains information from the third-party login
@@ -5021,6 +5057,21 @@ public class FusionAuthClient {
   public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
     return start(TwoFactorStartResponse.class, Errors.class)
         .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a verification of an identity by generating a code. This code can be sent to the User using the Verify Send API
+   * Verification Code API or using a mechanism outside of FusionAuth. The verification is completed by using the Verify Complete API with this code.
+   *
+   * @param request The identity verify start request that contains all the information used to begin the request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<VerifyStartResponse, Errors> startVerifyIdentity(VerifyStartRequest request) {
+    return start(VerifyStartResponse.class, Errors.class)
+        .uri("/api/identity/verify/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
@@ -5726,6 +5777,8 @@ public class FusionAuthClient {
     if (tenantId != null) {
       client.header(TENANT_ID_HEADER, tenantId);
     }
+
+    client.header(API_VERSION_HEADER, apiVersion.version);
 
     return client;
   }

@@ -18,9 +18,9 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
 
 /**
  * Models an event where a user's email is updated outside of a forgot / change password workflow.

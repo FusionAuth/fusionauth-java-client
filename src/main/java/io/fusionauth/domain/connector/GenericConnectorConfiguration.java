@@ -19,7 +19,9 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.APIVersion;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.HTTPHeaders;
 
@@ -29,6 +31,10 @@ import io.fusionauth.domain.HTTPHeaders;
  * @author Trevor Smith
  */
 public class GenericConnectorConfiguration extends BaseConnectorConfiguration implements Buildable<GenericConnectorConfiguration> {
+  // TODO : ENG-2074 : Brady : Not yet configurable via API
+  @JsonIgnore
+  public APIVersion apiVersion = APIVersion.V1;
+
   public URI authenticationURL;
 
   public int connectTimeout;
@@ -57,6 +63,7 @@ public class GenericConnectorConfiguration extends BaseConnectorConfiguration im
     GenericConnectorConfiguration that = (GenericConnectorConfiguration) o;
     return connectTimeout == that.connectTimeout &&
            readTimeout == that.readTimeout &&
+           apiVersion == that.apiVersion &&
            Objects.equals(authenticationURL, that.authenticationURL) &&
            Objects.equals(headers, that.headers) &&
            Objects.equals(httpAuthenticationPassword, that.httpAuthenticationPassword) &&
@@ -71,7 +78,7 @@ public class GenericConnectorConfiguration extends BaseConnectorConfiguration im
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), authenticationURL, connectTimeout, headers, httpAuthenticationPassword, httpAuthenticationUsername, readTimeout, sslCertificateKeyId);
+    return Objects.hash(super.hashCode(), authenticationURL, apiVersion, connectTimeout, headers, httpAuthenticationPassword, httpAuthenticationUsername, readTimeout, sslCertificateKeyId);
   }
 
   @Override

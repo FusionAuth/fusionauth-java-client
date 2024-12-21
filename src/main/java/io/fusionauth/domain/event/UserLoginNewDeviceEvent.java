@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package io.fusionauth.domain.event;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
+import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
 
 /**
@@ -33,7 +33,8 @@ public class UserLoginNewDeviceEvent extends UserLoginSuccessEvent {
     super();
   }
 
-  public UserLoginNewDeviceEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
+  public UserLoginNewDeviceEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider,
+                                 User user) {
     super(info, applicationId, authenticationType, identityProvider, user);
   }
 

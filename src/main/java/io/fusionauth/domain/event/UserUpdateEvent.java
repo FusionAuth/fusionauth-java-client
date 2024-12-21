@@ -18,9 +18,9 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.User;
 
 /**
  * Models the User Update Event.
@@ -36,7 +36,7 @@ public class UserUpdateEvent extends BaseUserEvent implements Buildable<UserUpda
 
   public UserUpdateEvent(EventInfo info, User original, User user) {
     super(info, user);
-    this.original = original;
+    this.original = new User(original).secure().sort();
   }
 
   @Override
