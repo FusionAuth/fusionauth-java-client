@@ -16,8 +16,6 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,10 +34,6 @@ public class Lambda implements Buildable<Lambda> {
   public APIVersion apiVersion = APIVersion.V1;
 
   public String body;
-
-  // TODO : ENG-2074 : Brady : Not yet configurable via API
-  @JsonIgnore
-  public Map<String, Object> data = new LinkedHashMap<>();
 
   public boolean debug;
 
