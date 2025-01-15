@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.event.EventType;
@@ -37,10 +36,6 @@ import io.fusionauth.domain.util.Normalizer;
  * @author Brian Pontarelli
  */
 public class Webhook implements Buildable<Webhook> {
-  // TODO : ENG-2074 : Brady : Not yet configurable via API
-  @JsonIgnore
-  public APIVersion apiVersion = APIVersion.V1;
-
   public Integer connectTimeout;
 
   public Map<String, Object> data = new LinkedHashMap<>();
@@ -81,7 +76,6 @@ public class Webhook implements Buildable<Webhook> {
   }
 
   public Webhook(Webhook other) {
-    this.apiVersion = other.apiVersion;
     this.connectTimeout = other.connectTimeout;
     this.data.putAll(other.data);
     this.description = other.description;
@@ -111,7 +105,6 @@ public class Webhook implements Buildable<Webhook> {
     }
     Webhook webhook = (Webhook) o;
     return global == webhook.global &&
-           apiVersion == webhook.apiVersion &&
            Objects.equals(connectTimeout, webhook.connectTimeout) &&
            Objects.equals(data, webhook.data) && Objects.equals(description, webhook.description) &&
            Objects.equals(eventsEnabled, webhook.eventsEnabled) && Objects.equals(headers, webhook.headers) &&
@@ -129,7 +122,7 @@ public class Webhook implements Buildable<Webhook> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(apiVersion, connectTimeout, data, description, eventsEnabled, global, headers, httpAuthenticationPassword, httpAuthenticationUsername, id, insertInstant, lastUpdateInstant, readTimeout, signatureConfiguration, sslCertificate, sslCertificateKeyId, tenantIds, url);
+    return Objects.hash(connectTimeout, data, description, eventsEnabled, global, headers, httpAuthenticationPassword, httpAuthenticationUsername, id, insertInstant, lastUpdateInstant, readTimeout, signatureConfiguration, sslCertificate, sslCertificateKeyId, tenantIds, url);
   }
 
   public void normalize() {

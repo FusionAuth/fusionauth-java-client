@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,8 @@ package io.fusionauth.domain.event;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.APIVersion;
 
 /**
  * Container for the event information. This is the JSON that is sent from FusionAuth to webhooks.
@@ -28,10 +26,6 @@ import io.fusionauth.domain.APIVersion;
  * @author Brian Pontarelli
  */
 public class EventRequest {
-  // this is tracked in the header, only in here to communicate between header<->serializer
-  @JsonIgnore
-  public APIVersion apiVersion = APIVersion.V1;
-
   public BaseEvent event;
 
   @JacksonConstructor

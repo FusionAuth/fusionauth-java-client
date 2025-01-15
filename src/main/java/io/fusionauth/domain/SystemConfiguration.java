@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
@@ -40,10 +39,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
   public CORSConfiguration corsConfiguration = new CORSConfiguration();
 
   public Map<String, Object> data = new HashMap<>();
-
-  // TODO : ENG-2074 : Brady : Not yet configurable via API
-  @JsonIgnore
-  public APIVersion defaultAPIVersion = APIVersion.V1;
 
   public EventLogConfiguration eventLogConfiguration = new EventLogConfiguration();
 
@@ -71,7 +66,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.auditLogConfiguration = new AuditLogConfiguration(other.auditLogConfiguration);
     this.cookieEncryptionKey = other.cookieEncryptionKey;
     this.corsConfiguration = new CORSConfiguration(other.corsConfiguration);
-    this.defaultAPIVersion = other.defaultAPIVersion;
     if (other.data != null) {
       this.data.putAll(other.data);
     }
@@ -99,7 +93,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
            Objects.equals(corsConfiguration, that.corsConfiguration) &&
            Objects.equals(data, that.data) &&
-           Objects.equals(defaultAPIVersion, that.defaultAPIVersion) &&
            Objects.equals(eventLogConfiguration, that.eventLogConfiguration) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
@@ -113,7 +106,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, defaultAPIVersion, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {
