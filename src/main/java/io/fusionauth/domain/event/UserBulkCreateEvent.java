@@ -17,12 +17,11 @@ package io.fusionauth.domain.event;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 
 /**
  * Models the User Bulk Create Event.
@@ -38,8 +37,7 @@ public class UserBulkCreateEvent extends BaseEvent implements Buildable<UserBulk
 
   public UserBulkCreateEvent(EventInfo info, List<User> users) {
     super(info);
-    this.users = users.stream().map(u -> new User(u).secure().sort())
-                      .collect(Collectors.toList());
+    this.users = users;
   }
 
   @Override

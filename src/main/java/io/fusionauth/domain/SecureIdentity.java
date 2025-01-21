@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class SecureIdentity {
   // When unique usernames are enabled, this value may be different than 'uniqueUsername' and in that case will represent the base username the user selected.
   public String username;
 
-  public ContentStatus usernameStatus;
+  public ContentStatus usernameStatus = ContentStatus.ACTIVE;
 
   /**
    * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.56.0, use the verified

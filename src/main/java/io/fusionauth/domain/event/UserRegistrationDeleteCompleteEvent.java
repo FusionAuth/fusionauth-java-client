@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 
 /**
@@ -42,6 +42,7 @@ public class UserRegistrationDeleteCompleteEvent extends BaseUserEvent implement
 
   public UserRegistrationDeleteCompleteEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
     super(info, user);
+    this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.registration = registration;
   }

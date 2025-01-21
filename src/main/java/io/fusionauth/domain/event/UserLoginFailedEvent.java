@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserLoginFailedReason;
 import io.fusionauth.domain.UserLoginFailedReasonCode;
 
@@ -60,7 +60,6 @@ public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<Use
     super(info, user);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
-    this.user = user;
 
     // Maintain the old JSON format
     if (info != null && info.ipAddress != null) {

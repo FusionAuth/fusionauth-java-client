@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.jwt.RefreshToken;
 
 /**
@@ -35,37 +35,34 @@ import io.fusionauth.domain.jwt.RefreshToken;
  * @author Brian Pontarelli
  */
 public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<JWTRefreshTokenRevokeEvent>, ObjectIdentifiable {
+  public final User user;
+
   public UUID applicationId;
 
   public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>();
 
   public RefreshToken refreshToken;
 
-  public User user;
-
   public UUID userId;
-
-  @JacksonConstructor
-  public JWTRefreshTokenRevokeEvent() {
-  }
 
   public JWTRefreshTokenRevokeEvent(EventInfo info, User user, UUID applicationId, int timeToLiveInSeconds) {
     super(info);
     this.applicationId = applicationId;
     this.applicationTimeToLiveInSeconds.put(applicationId, timeToLiveInSeconds);
-    if (user != null) {
-      this.user = new User(user).secure().sort();
-      this.userId = user.id;
-    }
+    this.user = user != null ? new User(user).secure().sort() : null;
+    this.userId = user == null ? null : user.id;
   }
 
   public JWTRefreshTokenRevokeEvent(EventInfo info, User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
     super(info);
     this.applicationTimeToLiveInSeconds.putAll(applicationTimeToLiveInSeconds);
-    if (user != null) {
-      this.user = new User(user).secure().sort();
-      this.userId = user.id;
-    }
+    this.user = user != null ? new User(user).secure().sort() : null;
+    this.userId = user == null ? null : user.id;
+  }
+
+  @JacksonConstructor
+  public JWTRefreshTokenRevokeEvent() {
+    user = null;
   }
 
   public List<UUID> applicationIds() {

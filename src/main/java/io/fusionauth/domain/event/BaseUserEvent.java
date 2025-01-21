@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 
 /**
  * Base class for all {@link User}-related events.
@@ -28,17 +28,16 @@ import io.fusionauth.domain.EventInfo;
  * @author Spencer Witt
  */
 public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifiable {
-  public User user;
+  public final User user;
 
+  @JacksonConstructor
   public BaseUserEvent() {
+    user = null;
   }
 
   public BaseUserEvent(EventInfo info, User user) {
     super(info);
-    this.user = null;
-    if (user != null) {
-      this.user = new User(user).secure().sort();
-    }
+    this.user = user != null ? new User(user).secure().sort() : null;
   }
 
   @Override

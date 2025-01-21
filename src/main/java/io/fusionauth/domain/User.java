@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -86,7 +87,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   public UUID tenantId;
 
   public ZoneId timezone;
-  
+
   public UserTwoFactorConfiguration twoFactor = new UserTwoFactorConfiguration();
 
   @JacksonConstructor
@@ -240,6 +241,17 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
+   * Whether the user contains a primary identity of the type
+   *
+   * @param identityType type to check
+   * @return true if exists, false if not
+   */
+  public boolean hasIdentityType(IdentityType identityType) {
+    return identities.stream()
+                     .anyMatch(ui -> ui.type.is(identityType));
+  }
+
+  /**
    * Return true if user data is provided for this user or any registrations.
    *
    * @return true if user data exists.
@@ -323,6 +335,108 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     getRegistrations().forEach(UserRegistration::normalize);
   }
 
+  /**
+   * Removes identities of the specified type
+   *
+   * @param identityType identity type to remove
+   */
+  public void removeIdentitiesOfType(IdentityType identityType) {
+    identities.removeIf(i -> i.type.is(identityType));
+  }
+
+  public void removeMembershipById(UUID groupId) {
+    memberships.removeIf(m -> m.groupId.equals(groupId));
+  }
+
+  /**
+   * Replaces identities in the identities collection, by type, with the supplied identities.
+   * Any existing identities on the User that are not of the same type will be left alone
+   *
+   * @param replacementIdentities identities that should overwrite what is currently on the user
+   */
+  public void replaceIdentities(List<UserIdentity> replacementIdentities) {
+    Set<IdentityType> replaceTypes = replacementIdentities.stream()
+                                                          .map(i -> i.type)
+                                                          .collect(Collectors.toSet());
+
+    // first, remove the existing identities that our replacements will cover. we want to do this
+    // first since we may have multiple replacements of the same type and we don't want to step on each other
+    identities.removeIf(existing -> replaceTypes.contains(existing.type));
+
+    // now we can add our replacements
+    identities.addAll(replacementIdentities);
+  }
+
+  /**
+   * @return email identity if it exists, if not, username if it exists, otherwise the first identity in the collection
+   */
+  public UserIdentity resolveFirstIdentity() {
+    return Optional.ofNullable(resolveLegacyIdentity())
+                   .orElse(identities.stream()
+                                     .findFirst()
+                                     .orElse(null));
+  }
+
+  public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
+    return resolveIdentity(loginId, loginIdType != null ? List.of(loginIdType) : null);
+  }
+
+  public UserIdentity resolveIdentity(String loginId, List<IdentityType> loginIdTypes) {
+    if (loginIdTypes == null || loginIdTypes.isEmpty()) {
+      loginIdTypes = Arrays.asList(IdentityType.email, IdentityType.username);
+    }
+
+    for (IdentityType type : loginIdTypes) {
+      UserIdentity result = identities.stream()
+                                      .filter(i -> i.type.is(type))
+                                      // TODO : ENG-1757 : Brady : We need to properly canonicalize loginId here. lowerCase was added to get our existing
+                                      //                           connector tests passing
+                                      .filter(i -> i.value.equals(loginId.toLowerCase()))
+                                      .findFirst()
+                                      .orElse(null);
+
+      if (result != null) {
+        return result;
+      }
+    }
+
+    return null;
+  }
+
+  public UserIdentity resolveIdentity(String loginId, String loginIdType) {
+    if (loginId == null) {
+      return null;
+    }
+
+    // null is OK, method we are calling will default to legacy email, username behavior
+    List<IdentityType> identityTypes = loginIdType == null ? null : List.of(IdentityType.of(loginIdType));
+
+    return resolveIdentity(loginId, identityTypes);
+  }
+
+  /**
+   * @return email identity if it exists, if not, username if it exists, otherwise null
+   */
+  public UserIdentity resolveLegacyIdentity() {
+    return resolvePrimaryIdentity(IdentityType.email, IdentityType.username);
+  }
+
+  /**
+   * Resolves the first (of the types provided) matching primary identity based
+   *
+   * @param loginIdTypes types to match
+   * @return First matching or null or none match
+   */
+  public UserIdentity resolvePrimaryIdentity(IdentityType... loginIdTypes) {
+    for (IdentityType loginIdType : loginIdTypes) {
+      var result = resolvePrimaryIdentity(loginIdType);
+      if (result != null) {
+        return result;
+      }
+    }
+    return null;
+  }
+
   @JsonIgnore
   public UserIdentity resolvePrimaryIdentity(IdentityType loginIdType) {
     return identities.stream()
@@ -331,6 +445,11 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
                      .filter(i -> i.type.is(loginIdType))
                      .findFirst()
                      .orElse(null);
+  }
+
+  public List<UserIdentity> retrieveIdentitiesOfType(IdentityType identityType) {
+    return identities.stream().filter(i -> i.type.is(identityType))
+                     .toList();
   }
 
   /**

@@ -19,9 +19,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 import io.fusionauth.domain.provider.BaseIdentityProvider;
 import static io.fusionauth.domain.connector.BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
@@ -49,8 +49,7 @@ public class UserLoginSuccessEvent extends BaseUserEvent implements Buildable<Us
   public UserLoginSuccessEvent() {
   }
 
-  public UserLoginSuccessEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider,
-                               User user) {
+  public UserLoginSuccessEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider, User user) {
     super(info, user);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;

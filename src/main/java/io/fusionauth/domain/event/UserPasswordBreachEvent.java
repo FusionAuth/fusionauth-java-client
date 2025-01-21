@@ -16,9 +16,9 @@
 package io.fusionauth.domain.event;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.User;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.User;
 
 /**
  * Models the User Password Breach Event.
