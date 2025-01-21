@@ -378,15 +378,20 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
-    return resolveIdentity(loginId, loginIdType != null ? List.of(loginIdType) : null);
-  }
-
-  public UserIdentity resolveIdentity(String loginId, List<IdentityType> loginIdTypes) {
-    if (loginIdTypes == null || loginIdTypes.isEmpty()) {
-      loginIdTypes = Arrays.asList(IdentityType.email, IdentityType.username);
+    List<IdentityType> identityTypes = null;
+    if (loginIdType != null) {
+      identityTypes = Arrays.asList(loginIdType);
     }
 
-    for (IdentityType type : loginIdTypes) {
+    return resolveIdentity(loginId, identityTypes);
+  }
+
+  public UserIdentity resolveIdentity(String loginId, List<IdentityType> identityTypes) {
+    if (identityTypes == null || identityTypes.isEmpty()) {
+      identityTypes = Arrays.asList(IdentityType.email, IdentityType.username);
+    }
+
+    for (IdentityType type : identityTypes) {
       UserIdentity result = identities.stream()
                                       .filter(i -> i.type.is(type))
                                       // TODO : ENG-1757 : Brady : We need to properly canonicalize loginId here. lowerCase was added to get our existing
@@ -409,7 +414,10 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     }
 
     // null is OK, method we are calling will default to legacy email, username behavior
-    List<IdentityType> identityTypes = loginIdType == null ? null : List.of(IdentityType.of(loginIdType));
+    List<IdentityType> identityTypes = null;
+    if (loginIdType != null) {
+      identityTypes = Arrays.asList(IdentityType.of(loginIdType));
+    }
 
     return resolveIdentity(loginId, identityTypes);
   }
@@ -429,7 +437,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   public UserIdentity resolvePrimaryIdentity(IdentityType... loginIdTypes) {
     for (IdentityType loginIdType : loginIdTypes) {
-      var result = resolvePrimaryIdentity(loginIdType);
+      UserIdentity result = resolvePrimaryIdentity(loginIdType);
       if (result != null) {
         return result;
       }
@@ -449,7 +457,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public List<UserIdentity> retrieveIdentitiesOfType(IdentityType identityType) {
     return identities.stream().filter(i -> i.type.is(identityType))
-                     .toList();
+                     .collect(Collectors.toList());
   }
 
   /**
