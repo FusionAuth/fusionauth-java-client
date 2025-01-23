@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,16 @@ import io.fusionauth.domain.User;
  * @author Spencer Witt
  */
 public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifiable {
-  public User user;
+  public final User user;
 
+  @JacksonConstructor
   public BaseUserEvent() {
+    user = null;
   }
 
   public BaseUserEvent(EventInfo info, User user) {
     super(info);
-    this.user = user;
+    this.user = user != null ? new User(user).secure().sort() : null;
   }
 
   @Override
@@ -64,6 +66,7 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
 
   public static class IdentityInfo {
     public final String type;
+
     public final String value;
 
     @JacksonConstructor
@@ -78,7 +81,8 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
       this.value = value;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
       if (this == o) {
         return true;
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,24 +29,26 @@ import io.fusionauth.domain.User;
  * @author Daniel DeGroff
  */
 public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
+  public final User existing;
+
   public String duplicateEmail;
 
   public List<IdentityInfo> duplicateIdentities;
 
   public String duplicateUsername;
 
-  public User existing;
-
   @JacksonConstructor
   public UserLoginIdDuplicateOnCreateEvent() {
+    this.existing = null;
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities, User existing, User user) {
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities,
+                                           User existing, User user) {
     super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
     this.duplicateIdentities = duplicateIdentities;
-    this.existing = existing;
+    this.existing = new User(existing).secure().sort();
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<Use
     super(info, user);
     this.applicationId = applicationId;
     this.authenticationType = authenticationType;
-    this.user = user;
 
     // Maintain the old JSON format
     if (info != null && info.ipAddress != null) {

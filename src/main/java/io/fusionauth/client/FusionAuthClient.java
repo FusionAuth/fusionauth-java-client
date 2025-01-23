@@ -230,6 +230,9 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.api.user.verify.VerifyStartRequest;
+import io.fusionauth.domain.api.user.verify.VerifyStartResponse;
+import io.fusionauth.domain.api.user.verify.VerifySendCompleteRequest;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.DeviceApprovalResponse;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
@@ -535,6 +538,20 @@ public class FusionAuthClient {
   public ClientResponse<UserCommentResponse, Errors> commentOnUser(UserCommentRequest request) {
     return start(UserCommentResponse.class, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Completes verification of an identity using verification codes from the Verify Start API.
+   *
+   * @param request The identity verify complete request that contains all the information used to verify the identity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> completeVerifyIdentity(VerifySendCompleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
@@ -4978,6 +4995,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Send a verification code using the appropriate transport for the identity type being verified.
+   *
+   * @param request The identity verify send request that contains all the information used send the code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendVerifyIdentity(VerifySendCompleteRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
    *
    * @param request The third-party login request that contains information from the third-party login
@@ -5021,6 +5052,21 @@ public class FusionAuthClient {
   public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
     return start(TwoFactorStartResponse.class, Errors.class)
         .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a verification of an identity by generating a code. This code can be sent to the User using the Verify Send API
+   * Verification Code API or using a mechanism outside of FusionAuth. The verification is completed by using the Verify Complete API with this code.
+   *
+   * @param request The identity verify start request that contains all the information used to begin the request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<VerifyStartResponse, Errors> startVerifyIdentity(VerifyStartRequest request) {
+    return start(VerifyStartResponse.class, Errors.class)
+        .uri("/api/identity/verify/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
