@@ -34,15 +34,23 @@ public class UserRegistrationDeleteEvent extends BaseUserEvent implements Builda
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationDeleteEvent() {
-  }
-
+  /**
+   * Construct a new event, indicating that registration deletion is about to be committed to the DB
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param registration  registration that was completed
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationDeleteEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
     super(info, user);
     this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationDeleteEvent() {
   }
 
   @Override

@@ -34,15 +34,23 @@ public class UserRegistrationCreateEvent extends BaseUserEvent implements Builda
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationCreateEvent() {
-  }
-
+  /**
+   * Construct a new event, indicating that registration creation is about to be committed to the DB
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param registration  registration that is being created
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationCreateEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
     super(info, user);
     this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationCreateEvent() {
   }
 
   @Override

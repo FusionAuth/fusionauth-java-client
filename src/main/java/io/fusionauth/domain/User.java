@@ -241,7 +241,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
-   * Whether the user contains a primary identity of the type
+   * Whether the user contains an identity of the type
    *
    * @param identityType type to check
    * @return true if exists, false if not
@@ -377,6 +377,13 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
                                      .orElse(null));
   }
 
+  /**
+   * Resolves the identity based on the parameters
+   *
+   * @param loginId     loginId to lookup. Could be an email address, username
+   * @param loginIdType identity type describing what loginId is
+   * @return matching identity (or null if no matching identity exists)
+   */
   public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
     List<IdentityType> identityTypes = null;
     if (loginIdType != null) {
@@ -386,6 +393,13 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return resolveIdentity(loginId, identityTypes);
   }
 
+  /**
+   * Resolves the identity based on the parameters
+   *
+   * @param loginId       loginId to lookup. Could be an email address, username
+   * @param identityTypes identity types describing what loginId could represent. If null or empty, default of email, username will be used
+   * @return First identity that matches the provided loginId/value and identityType in order (or null if no matching identity exists)
+   */
   public UserIdentity resolveIdentity(String loginId, List<IdentityType> identityTypes) {
     if (identityTypes == null || identityTypes.isEmpty()) {
       identityTypes = Arrays.asList(IdentityType.email, IdentityType.username);
@@ -408,20 +422,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return null;
   }
 
-  public UserIdentity resolveIdentity(String loginId, String loginIdType) {
-    if (loginId == null) {
-      return null;
-    }
-
-    // null is OK, method we are calling will default to legacy email, username behavior
-    List<IdentityType> identityTypes = null;
-    if (loginIdType != null) {
-      identityTypes = Arrays.asList(IdentityType.of(loginIdType));
-    }
-
-    return resolveIdentity(loginId, identityTypes);
-  }
-
   /**
    * @return email identity if it exists, if not, username if it exists, otherwise null
    */
@@ -430,10 +430,10 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
-   * Resolves the first (of the types provided) matching primary identity based
+   * Resolves the first (of the types provided) matching primary identity
    *
    * @param loginIdTypes types to match
-   * @return First matching or null or none match
+   * @return First matching or null if none match
    */
   public UserIdentity resolvePrimaryIdentity(IdentityType... loginIdTypes) {
     for (IdentityType loginIdType : loginIdTypes) {
@@ -455,6 +455,12 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
                      .orElse(null);
   }
 
+  /**
+   * Retrieve all identities that match the supplied type
+   *
+   * @param identityType type to check
+   * @return list of matching identities
+   */
   public List<UserIdentity> retrieveIdentitiesOfType(IdentityType identityType) {
     return identities.stream().filter(i -> i.type.is(identityType))
                      .collect(Collectors.toList());

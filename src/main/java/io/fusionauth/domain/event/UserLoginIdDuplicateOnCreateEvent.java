@@ -29,16 +29,17 @@ import io.fusionauth.domain.User;
  * @author Daniel DeGroff
  */
 public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
+  public final User existing;
+
   public String duplicateEmail;
 
   public List<IdentityInfo> duplicateIdentities;
 
   public String duplicateUsername;
 
-  public User existing;
-
   @JacksonConstructor
   public UserLoginIdDuplicateOnCreateEvent() {
+    this.existing = null;
   }
 
   public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities,

@@ -28,10 +28,11 @@ import io.fusionauth.domain.User;
  * @author Brian Pontarelli
  */
 public class UserUpdateEvent extends BaseUserEvent implements Buildable<UserUpdateEvent> {
-  public User original;
+  public final User original;
 
   @JacksonConstructor
   public UserUpdateEvent() {
+    this.original = null;
   }
 
   public UserUpdateEvent(EventInfo info, User original, User user) {

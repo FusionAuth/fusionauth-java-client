@@ -38,10 +38,14 @@ public class UserRegistrationUpdateCompleteEvent extends BaseUserEvent implement
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationUpdateCompleteEvent() {
-  }
-
+  /**
+   * Construct a new event, indicating that a registration update is complete
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param registration  registration that was updated
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationUpdateCompleteEvent(EventInfo info, UUID applicationId, UserRegistration original, UserRegistration registration,
                                              User user) {
     super(info, user);
@@ -49,6 +53,10 @@ public class UserRegistrationUpdateCompleteEvent extends BaseUserEvent implement
     this.applicationId = applicationId;
     this.original = original;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationUpdateCompleteEvent() {
   }
 
   @Override

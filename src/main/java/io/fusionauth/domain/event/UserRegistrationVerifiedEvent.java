@@ -34,15 +34,23 @@ public class UserRegistrationVerifiedEvent extends BaseUserEvent implements Buil
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationVerifiedEvent() {
-  }
-
+  /**
+   * Construct a new event, indicating that a registration verification is about to be committed to the DB
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param registration  registration that was verified
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationVerifiedEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
     super(info, user);
     this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationVerifiedEvent() {
   }
 
   @Override
