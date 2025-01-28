@@ -84,6 +84,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public String parentEmail;
 
+  public String phoneNumber;
+
   public UUID tenantId;
 
   public ZoneId timezone;
@@ -122,6 +124,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.passwordChangeReason = other.passwordChangeReason;
     this.passwordChangeRequired = other.passwordChangeRequired;
     this.passwordLastUpdateInstant = other.passwordLastUpdateInstant;
+    this.phoneNumber = other.phoneNumber;
     this.preferredLanguages.addAll(other.preferredLanguages);
     this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toCollection(ArrayList::new)));
     this.salt = other.salt;
@@ -181,6 +184,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
            Objects.equals(middleName, user.middleName) &&
            Objects.equals(mobilePhone, user.mobilePhone) &&
            Objects.equals(parentEmail, user.parentEmail) &&
+           Objects.equals(phoneNumber, user.phoneNumber) &&
            Objects.equals(twoFactor, user.twoFactor) &&
            Objects.equals(tenantId, user.tenantId) &&
            Objects.equals(timezone, user.timezone);
@@ -273,8 +277,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data,
-                        email,
-                        expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone, twoFactor);
+                        email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, phoneNumber, tenantId, timezone, twoFactor);
   }
 
   /**
@@ -322,6 +325,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
+    phoneNumber = trimToNull(phoneNumber);
     Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
     preferredLanguages.removeIf(l -> l.toString().equals(""));
@@ -485,7 +489,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     ZonedDateTime now = ZonedDateTime.now();
     this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> Optional.ofNullable(i.insertInstant)
                                                                                         // if we don't have one, assuming it's about
-                                                                                        // to be inserted, which would put at the the 'bottom'
+                                                                                        // to be inserted, which would put it at the 'bottom'
                                                                                         // of the list, is sensible
                                                                                         .orElse(now))
                                    .thenComparing(i -> i.type)
