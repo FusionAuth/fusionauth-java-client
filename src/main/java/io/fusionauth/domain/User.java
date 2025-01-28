@@ -325,7 +325,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
-    // TODO : ENG-1757 : canonicalize phoneNumber
     phoneNumber = trimToNull(phoneNumber);
     Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
