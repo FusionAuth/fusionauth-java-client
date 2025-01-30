@@ -33,9 +33,9 @@ public enum WebhookEventResult {
    * @return Return all available results in displayable order.
    */
   public static List<WebhookEventResult> allResults() {
-    return Arrays.asList(WebhookEventResult.Failed,
+    return Arrays.asList(WebhookEventResult.Succeeded,
                          WebhookEventResult.Running,
-                         WebhookEventResult.Succeeded);
+                         WebhookEventResult.Failed);
 
   }
 }
