@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   @SuppressWarnings("SpellCheckingInspection")
   public boolean frontchannel_logout_supported = true;
 
-  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code"));
+  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code", "client_credentials"));
 
   public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"));
 

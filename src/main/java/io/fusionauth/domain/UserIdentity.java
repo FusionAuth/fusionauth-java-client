@@ -153,6 +153,8 @@ public class UserIdentity implements Buildable<UserIdentity> {
   }
 
   /**
+   * Note that it is ok if the verifiedReason is null, in this case, verification is required when verified is false.
+   *
    * @return false if identity is either verified or verification does not matter. true if verification needs to be performed
    */
   public boolean verificationRequired() {

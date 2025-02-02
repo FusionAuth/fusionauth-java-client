@@ -437,15 +437,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public User sort() {
-    // use same timestamp for all rows without an insert instant
-    ZonedDateTime now = ZonedDateTime.now();
-    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> Optional.ofNullable(i.insertInstant)
-                                                                                        // if we don't have one, assuming it's about
-                                                                                        // to be inserted, which would put it at the 'bottom'
-                                                                                        // of the list, is sensible
-                                                                                        .orElse(now))
-                                   .thenComparing(i -> i.type)
-                                   .thenComparing(i -> i.value));
+    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> i.insertInstant, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.type, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.value, Comparator.nullsLast(Comparator.naturalOrder())));
     this.registrations.sort(Comparator.comparing(ur -> ur.applicationId));
     return this;
   }
