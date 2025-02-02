@@ -30,14 +30,14 @@ import io.fusionauth.domain.User;
 public class UserUpdateEvent extends BaseUserEvent implements Buildable<UserUpdateEvent> {
   public final User original;
 
-  @JacksonConstructor
-  public UserUpdateEvent() {
-    this.original = null;
-  }
-
   public UserUpdateEvent(EventInfo info, User original, User user) {
     super(info, user);
     this.original = new User(original).secure().sort();
+  }
+
+  @JacksonConstructor
+  private UserUpdateEvent() {
+    this.original = null;
   }
 
   @Override
