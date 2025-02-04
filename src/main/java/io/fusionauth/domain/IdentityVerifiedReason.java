@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,4 +50,6 @@ public enum IdentityVerifiedReason {
    * Tenant policy did not require verifying this identity
    */
   Disabled // 6
+
+  // TODO : ENG-1800 : Do we need an 'administrative' reason? See /api/user/verify-email which is called by /ajax/user/verify-email
 }

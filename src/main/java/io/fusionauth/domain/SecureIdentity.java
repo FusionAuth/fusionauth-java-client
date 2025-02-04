@@ -71,7 +71,7 @@ public class SecureIdentity {
    * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verified}
    */
   @Deprecated // JDK 8 compatible/client library (since = "1.56.0")
-  public Boolean verified;
+  public boolean verified;
 
   /**
    * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.56.0, use the verifiedInstant

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,14 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
 
 /**
  * @author Daniel DeGroff
  */
 public class UserIdentity implements Buildable<UserIdentity> {
+  public String displayValue;
+
   // we don't need DB generated IDs in API responses
   @JsonIgnore
   public Long id;
@@ -46,13 +47,13 @@ public class UserIdentity implements Buildable<UserIdentity> {
   //                         through the CleanSpeak integration.
   public ContentStatus moderationStatus;
 
-  // TODO : ENG-1800 : We should probably leave this set to false, but for now enabling to simplify "look up enabled" checks.
-  public boolean primary = true;
-
   // TODO : ENG-1787 : Brady if you think we need this, we need a public object.
   //                This is a internal only object and is not accessible to fusionauth-java-client.
   //                Anything in io.fusionauth.api.domain is private and not accessible via fusionauth-java-client.
 //  public UserIdentityStatus status;
+
+  // TODO : ENG-1800 : We should probably leave this set to false, but for now enabling to simplify "look up enabled" checks.
+  public boolean primary = true;
 
   // TODO : ENG-1 : Daniel : Assuming this is being returned on the User object so this is redundant. But it is in the schema, so we could either not
   //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
@@ -60,8 +61,6 @@ public class UserIdentity implements Buildable<UserIdentity> {
   public UUID tenantId;
 
   public IdentityType type;
-
-  public String uniqueValue;
 
   // TODO : ENG-1 : Daniel : Assuming this is being returned on the User object so this is redundant. But it is in the schema, so we could either not
   //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
@@ -86,7 +85,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
     this.primary = other.primary;
     this.type = new IdentityType(other.type);
     this.tenantId = other.tenantId;
-    this.uniqueValue = other.uniqueValue;
+    this.displayValue = other.displayValue;
     this.userId = other.userId;
     this.value = other.value;
     this.verified = other.verified;
@@ -117,7 +116,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
            moderationStatus == that.moderationStatus &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(type, that.type) &&
-           Objects.equals(uniqueValue, that.uniqueValue) &&
+           Objects.equals(displayValue, that.displayValue) &&
            Objects.equals(userId, that.userId) &&
            Objects.equals(value, that.value) &&
            Objects.equals(verifiedInstant, that.verifiedInstant);
@@ -133,7 +132,7 @@ public class UserIdentity implements Buildable<UserIdentity> {
                         primary,
                         tenantId,
                         type,
-                        uniqueValue,
+                        displayValue,
                         userId,
                         value,
                         verified,
@@ -142,17 +141,9 @@ public class UserIdentity implements Buildable<UserIdentity> {
   }
 
   public void normalize() {
-    // TODO : ENG-1 : Daniel : Should we move this to the service? This is here for backwards compatibility, or parity with prior behavior.
     value = trim(value);
-    if (type == IdentityType.email) {
-      value = toLowerCase(value);
-    } else if (type == IdentityType.username) {
-      if (value != null && value.length() == 0) {
-        value = null;
-      }
-    } else if (type == IdentityType.phoneNumber) {
-      // TODO : ENG-1 : I don't think I want to normalize this because this should fail validation instead.
-//      value = PhoneNumberTools.safeToE164format(value);
+    if (value != null && value.length() == 0) {
+      value = null;
     }
   }
 
@@ -162,6 +153,8 @@ public class UserIdentity implements Buildable<UserIdentity> {
   }
 
   /**
+   * Note that it is ok if the verifiedReason is null, in this case, verification is required when verified is false.
+   *
    * @return false if identity is either verified or verification does not matter. true if verification needs to be performed
    */
   public boolean verificationRequired() {

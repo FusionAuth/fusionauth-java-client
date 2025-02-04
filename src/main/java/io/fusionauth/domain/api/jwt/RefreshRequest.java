@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import io.fusionauth.domain.api.BaseEventRequest;
 public class RefreshRequest extends BaseEventRequest implements Buildable<RefreshRequest> {
   public String refreshToken;
 
-  // TODO : ENG-1 : Daniel : Is this ok, needs to be documented, tested and reviewed.
+  // TODO : ENG-1731 : Daniel : Is this ok, needs to be documented, tested and reviewed.
   // Optional reduced TTL
   public Integer timeToLiveInSeconds;
 

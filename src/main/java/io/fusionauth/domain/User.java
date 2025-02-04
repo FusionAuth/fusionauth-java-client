@@ -21,7 +21,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -315,7 +314,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   public void normalize() {
     Normalizer.removeEmpty(data);
-    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service? We might also want to remove any identity with an empty value?
     email = toLowerCase(trimToNull(email));
     identities.forEach(UserIdentity::normalize);
     encryptionScheme = trim(encryptionScheme);
@@ -329,7 +327,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
     preferredLanguages.removeIf(l -> l.toString().equals(""));
-    // TODO : ENG-1 : Daniel : Should we keep this or move it into the service?
     username = trimToNull(username);
 
     // Clear out groups that don't have groupId
@@ -379,51 +376,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
                    .orElse(identities.stream()
                                      .findFirst()
                                      .orElse(null));
-  }
-
-  /**
-   * Resolves the identity based on the parameters
-   *
-   * @param loginId     loginId to lookup. Could be an email address, username
-   * @param loginIdType identity type describing what loginId is
-   * @return matching identity (or null if no matching identity exists)
-   */
-  public UserIdentity resolveIdentity(String loginId, IdentityType loginIdType) {
-    List<IdentityType> identityTypes = null;
-    if (loginIdType != null) {
-      identityTypes = Arrays.asList(loginIdType);
-    }
-
-    return resolveIdentity(loginId, identityTypes);
-  }
-
-  /**
-   * Resolves the identity based on the parameters
-   *
-   * @param loginId       loginId to lookup. Could be an email address, username
-   * @param identityTypes identity types describing what loginId could represent. If null or empty, default of email, username will be used
-   * @return First identity that matches the provided loginId/value and identityType in order (or null if no matching identity exists)
-   */
-  public UserIdentity resolveIdentity(String loginId, List<IdentityType> identityTypes) {
-    if (identityTypes == null || identityTypes.isEmpty()) {
-      identityTypes = Arrays.asList(IdentityType.email, IdentityType.username);
-    }
-
-    for (IdentityType type : identityTypes) {
-      UserIdentity result = identities.stream()
-                                      .filter(i -> i.type.is(type))
-                                      // TODO : ENG-1757 : Brady : We need to properly canonicalize loginId here. lowerCase was added to get our existing
-                                      //                           connector tests passing
-                                      .filter(i -> i.value.equals(loginId.toLowerCase()))
-                                      .findFirst()
-                                      .orElse(null);
-
-      if (result != null) {
-        return result;
-      }
-    }
-
-    return null;
   }
 
   /**
@@ -485,15 +437,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public User sort() {
-    // use same timestamp for all rows without an insert instant
-    ZonedDateTime now = ZonedDateTime.now();
-    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> Optional.ofNullable(i.insertInstant)
-                                                                                        // if we don't have one, assuming it's about
-                                                                                        // to be inserted, which would put it at the 'bottom'
-                                                                                        // of the list, is sensible
-                                                                                        .orElse(now))
-                                   .thenComparing(i -> i.type)
-                                   .thenComparing(i -> i.value));
+    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> i.insertInstant, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.type, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.value, Comparator.nullsLast(Comparator.naturalOrder())));
     this.registrations.sort(Comparator.comparing(ur -> ur.applicationId));
     return this;
   }
