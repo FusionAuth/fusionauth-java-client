@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  // TODO : ENG-1 : Brent : do we want an ApplicationPhoneConfiguration ?
+  // TODO : ENG-1734 : Brent : do we want an ApplicationPhoneConfiguration ?
 
   public ObjectState state;
 
