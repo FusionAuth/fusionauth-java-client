@@ -35,6 +35,8 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
 
   public List<IdentityInfo> duplicateIdentities;
 
+  public String duplicatePhoneNumber;
+
   public String duplicateUsername;
 
   @JacksonConstructor
@@ -42,11 +44,13 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
     this.existing = null;
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, List<IdentityInfo> duplicateIdentities,
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, String duplicatePhoneNumber,
+                                           List<IdentityInfo> duplicateIdentities,
                                            User existing, User user) {
     super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
+    this.duplicatePhoneNumber = duplicatePhoneNumber;
     this.duplicateIdentities = duplicateIdentities;
     this.existing = new User(existing).secure().sort();
   }
@@ -59,6 +63,7 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
     UserLoginIdDuplicateOnCreateEvent that = (UserLoginIdDuplicateOnCreateEvent) o;
     return Objects.equals(duplicateEmail, that.duplicateEmail) &&
            Objects.equals(duplicateIdentities, that.duplicateIdentities) &&
+           Objects.equals(duplicatePhoneNumber, that.duplicatePhoneNumber) &&
            Objects.equals(duplicateUsername, that.duplicateUsername) &&
            Objects.equals(existing, that.existing);
   }
@@ -70,6 +75,6 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), duplicateEmail, duplicateIdentities, duplicateUsername, existing);
+    return Objects.hash(super.hashCode(), duplicateEmail, duplicateIdentities, duplicatePhoneNumber, duplicateUsername, existing);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,6 +85,15 @@ public final class ManagedFields {
                            .with(f -> f.data.put("leftAddon", "user"))
                            .with(f -> f.name = "[Admin User] email"));
 
+    map.put("user.phoneNumber",
+            new FormField().with(f -> f.key = "user.phoneNumber")
+                           .with(f -> f.confirm = false)
+                           .with(f -> f.control = FormControl.text)
+                           .with(f -> f.required = false)
+                           .with(f -> f.type = FormDataType.phoneNumber)
+                           .with(f -> f.data.put("leftAddon", "mobile"))
+                           .with(f -> f.name = "[Admin User] phoneNumber"));
+
     map.put("identities.email",
             new FormField().with(f -> f.key = "identities.email")
                            .with(f -> f.confirm = false)
@@ -100,7 +109,7 @@ public final class ManagedFields {
                            .with(f -> f.control = FormControl.text)
                            .with(f -> f.required = false)
                            .with(f -> f.type = FormDataType.phoneNumber)
-                           .with(f -> f.data.put("leftAddon", "phone"))
+                           .with(f -> f.data.put("leftAddon", "mobile"))
                            .with(f -> f.name = "[Admin User] identities.phoneNumber"));
 
     map.put("identities.username",
