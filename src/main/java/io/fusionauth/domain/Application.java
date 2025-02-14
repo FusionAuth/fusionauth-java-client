@@ -642,10 +642,11 @@ public class Application implements Buildable<Application>, Tenantable {
       return ToString.toString(this);
     }
 
-    // Note that this is only used for basic self-service registration to indicate email or username.
+    // Note that this is only used for basic self-service registration to indicate email, phoneNumber, or username.
     //      This is separate from IdentityType.
     public enum LoginIdType {
       email,
+      phoneNumber,
       username
     }
 
