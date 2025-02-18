@@ -646,6 +646,7 @@ public class Application implements Buildable<Application>, Tenantable {
     //      This is separate from IdentityType.
     public enum LoginIdType {
       email,
+      phoneNumber,
       username
     }
 
