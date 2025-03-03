@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,10 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   public UUID passwordlessTemplateId;
 
+  public PhoneUnverifiedOptions unverified = new PhoneUnverifiedOptions();
+
+  public UUID verificationCompleteTemplateId;
+
   public VerificationStrategy verificationStrategy = VerificationStrategy.ClickableLink;
 
   public UUID verificationTemplateId;
@@ -43,9 +47,11 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
   public TenantPhoneConfiguration(TenantPhoneConfiguration other) {
     messengerId = other.messengerId;
     passwordlessTemplateId = other.passwordlessTemplateId;
-    verifyPhoneNumber = other.verifyPhoneNumber;
-    verificationTemplateId = other.verificationTemplateId;
+    unverified = new PhoneUnverifiedOptions(other.unverified);
+    verificationCompleteTemplateId = other.verificationCompleteTemplateId;
     verificationStrategy = other.verificationStrategy;
+    verificationTemplateId = other.verificationTemplateId;
+    verifyPhoneNumber = other.verifyPhoneNumber;
   }
 
   @Override
@@ -57,15 +63,17 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
       return false;
     }
     TenantPhoneConfiguration that = (TenantPhoneConfiguration) o;
-    return verifyPhoneNumber == that.verifyPhoneNumber &&
-           Objects.equals(messengerId, that.messengerId) &&
+    return Objects.equals(messengerId, that.messengerId) &&
            Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
+           Objects.equals(unverified, that.unverified) &&
+           Objects.equals(verificationCompleteTemplateId, that.verificationCompleteTemplateId) &&
            verificationStrategy == that.verificationStrategy &&
-           Objects.equals(verificationTemplateId, that.verificationTemplateId);
+           Objects.equals(verificationTemplateId, that.verificationTemplateId) &&
+           verifyPhoneNumber == that.verifyPhoneNumber;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(messengerId, passwordlessTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
+    return Objects.hash(messengerId, passwordlessTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
   }
 }
