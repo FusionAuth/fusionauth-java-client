@@ -34,7 +34,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   public UUID verificationCompleteTemplateId;
 
-  public VerificationStrategy verificationStrategy = VerificationStrategy.ClickableLink;
+  public VerificationStrategy verificationStrategy = VerificationStrategy.FormField;
 
   public UUID verificationTemplateId;
 
