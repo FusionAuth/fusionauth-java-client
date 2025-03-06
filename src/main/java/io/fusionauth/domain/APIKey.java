@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,12 +48,35 @@ public class APIKey implements Buildable<APIKey> {
 
   public APIKeyMetaData metaData;
 
+  public String name;
+
   public APIKeyPermissions permissions;
+
+  public boolean retrievable = true;
 
   public UUID tenantId;
 
   public APIKey(String key) {
     this.key = key;
+  }
+
+  public APIKey(APIKey other) {
+    this.expirationInstant = other.expirationInstant;
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.ipAccessControlListId = other.ipAccessControlListId;
+    this.key = other.key;
+    this.keyManager = other.keyManager;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    if (other.metaData != null) {
+      this.metaData = new APIKeyMetaData(other.metaData.attributes);
+    }
+    this.name = other.name;
+    if (other.permissions != null) {
+      this.permissions = new APIKeyPermissions(other.permissions.endpoints);
+    }
+    this.retrievable = other.retrievable;
+    this.tenantId = other.tenantId;
   }
 
   @JacksonConstructor
@@ -70,6 +93,7 @@ public class APIKey implements Buildable<APIKey> {
     }
     APIKey apiKey = (APIKey) o;
     return keyManager == apiKey.keyManager &&
+           retrievable == apiKey.retrievable &&
            Objects.equals(expirationInstant, apiKey.expirationInstant) &&
            Objects.equals(id, apiKey.id) &&
            Objects.equals(insertInstant, apiKey.insertInstant) &&
@@ -77,19 +101,25 @@ public class APIKey implements Buildable<APIKey> {
            Objects.equals(key, apiKey.key) &&
            Objects.equals(lastUpdateInstant, apiKey.lastUpdateInstant) &&
            Objects.equals(metaData, apiKey.metaData) &&
+           Objects.equals(name, apiKey.name) &&
            Objects.equals(permissions, apiKey.permissions) &&
            Objects.equals(tenantId, apiKey.tenantId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(expirationInstant, id, insertInstant, ipAccessControlListId, key, keyManager, lastUpdateInstant, metaData, permissions, tenantId);
+    return Objects.hash(expirationInstant, id, insertInstant, ipAccessControlListId, key, keyManager, lastUpdateInstant, metaData, name, permissions, retrievable, tenantId);
   }
 
   public void normalize() {
     if (permissions != null) {
       permissions.endpoints.remove("/api/api-key");
     }
+  }
+
+  public APIKey secure() {
+    this.key = null;
+    return this;
   }
 
   @Override
