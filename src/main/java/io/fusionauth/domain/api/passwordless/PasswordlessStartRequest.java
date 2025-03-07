@@ -33,7 +33,7 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
 
   public String loginIdType;
 
-  // TODO : ENG-1 : add state to verification api
+  
   public Map<String, Object> state;
 
   @JacksonConstructor

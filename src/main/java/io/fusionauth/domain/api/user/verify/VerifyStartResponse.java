@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
+import com.inversoft.json.JacksonConstructor;
+
 /**
  * @author Brady Wied
  */
@@ -26,5 +28,9 @@ public class VerifyStartResponse {
   public VerifyStartResponse(String oneTimeCode, String verificationId) {
     this.oneTimeCode = oneTimeCode;
     this.verificationId = verificationId;
+  }
+
+  @JacksonConstructor
+  private VerifyStartResponse() {
   }
 }

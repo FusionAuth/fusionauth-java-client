@@ -17,10 +17,12 @@ package io.fusionauth.domain.api.user.verify;
 
 import java.util.UUID;
 
+import io.fusionauth.domain.Buildable;
+
 /**
  * @author Brady Wied
  */
-public class VerifyStartRequest {
+public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
   public UUID applicationId;
 
   public String loginId;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -304,6 +304,7 @@ public class Theme implements Buildable<Theme> {
         "passwordComplete",
         "passwordForgot",
         "passwordSent",
+        "phoneNumberVerificationRequired",
         "registrationComplete",
         "registrationSent",
         "registrationVerificationRequired",
@@ -392,6 +393,8 @@ public class Theme implements Buildable<Theme> {
 
     public String passwordSent;
 
+    public String phoneNumberVerificationRequired;
+
     public String registrationComplete;
 
     public String registrationSent;
@@ -448,6 +451,7 @@ public class Theme implements Buildable<Theme> {
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
       this.passwordSent = other.passwordSent;
+      this.phoneNumberVerificationRequired = other.phoneNumberVerificationRequired;
       this.registrationComplete = other.registrationComplete;
       this.registrationSent = other.registrationSent;
       this.registrationVerificationRequired = other.registrationVerificationRequired;
@@ -505,6 +509,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
              Objects.equals(passwordSent, that.passwordSent) &&
+             Objects.equals(phoneNumberVerificationRequired, that.phoneNumberVerificationRequired) &&
              Objects.equals(registrationComplete, that.registrationComplete) &&
              Objects.equals(registrationSent, that.registrationSent) &&
              Objects.equals(registrationVerificationRequired, that.registrationVerificationRequired) &&
@@ -576,6 +581,7 @@ public class Theme implements Buildable<Theme> {
           passwordComplete,
           passwordForgot,
           passwordSent,
+          phoneNumberVerificationRequired,
           registrationComplete,
           registrationSent,
           registrationVerificationRequired,
@@ -626,6 +632,7 @@ public class Theme implements Buildable<Theme> {
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));
       passwordSent = lineReturns(trimToNull(passwordSent));
+      phoneNumberVerificationRequired = lineReturns(trimToNull(phoneNumberVerificationRequired));
       registrationComplete = lineReturns(trimToNull(registrationComplete));
       registrationSent = lineReturns(trimToNull(registrationSent));
       registrationVerificationRequired = lineReturns(trimToNull(registrationVerificationRequired));
