@@ -208,6 +208,7 @@ public class Theme implements Buildable<Theme> {
                      templates.passwordComplete,
                      templates.passwordForgot,
                      templates.passwordSent,
+                     templates.phoneNumberVerificationRequired,
                      templates.registrationComplete,
                      templates.registrationSent,
                      templates.registrationVerificationRequired,
