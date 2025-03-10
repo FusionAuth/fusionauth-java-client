@@ -67,6 +67,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+
+    <maven-dependency-plugin.version>3.7.1</maven-dependency-plugin.version>
   </properties>
 
   <dependencies>
@@ -137,6 +139,26 @@
   </dependencies>
 
   <build>
+  <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${maven-dependency-plugin.version}</version>
+        <configuration>
+          <ignoreNonCompile>true</ignoreNonCompile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>dependencies-analyze-only</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </pluginManagement>
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
@@ -173,6 +195,25 @@
     </plugin>
   </plugins>
   </build>
+
+  <reporting>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <configuration>
+        <ignoreNonCompile>true</ignoreNonCompile>
+      </configuration>
+      <reportSets>
+        <reportSet>
+          <reports>
+            <report>analyze-report</report>
+          </reports>
+        </reportSet>
+      </reportSets>
+    </plugin>
+  </plugins>
+  </reporting>
 
   <profiles>
     <profile>
