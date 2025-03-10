@@ -67,6 +67,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+
+    <license-maven-plugin.version>2.4.0</license-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -137,10 +139,40 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${license-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>download-licenses</id>
+              <goals>
+                <goal>download-licenses</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>aggregate-download-licenses</id>
+              <goals>
+                <goal>aggregate-download-licenses</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>create-third-party-licenses-report</id>
+              <goals>
+                <goal>third-party-report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-surefire-plugin</artifactId>
+      <version>3.3.1</version>
       <configuration>
         <skipTests>true</skipTests>
       </configuration>
@@ -173,6 +205,15 @@
     </plugin>
   </plugins>
   </build>
+
+  <reporting>
+  <plugins>
+  <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>license-maven-plugin</artifactId>
+  </plugin>
+  </plugins>
+  </reporting>
 
   <profiles>
     <profile>
