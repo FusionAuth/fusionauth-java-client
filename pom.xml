@@ -67,13 +67,75 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+
+    <!-- why not ${project.version} ? -->
+    <fusionauth.version>5.2.4</fusionauth.version>
+
+    <jackson.version>2.15.4</jackson.version>
+    <testng.version>7.5.1</testng.version>
+
+    <!-- I'm not including inversoft since the number of versions suggests there's a bom -->
+
+    <!-- it looks like we can't inherit either <properties> or <pluginManagement> from parent pom. :-( -->
+    <!-- we also can't load the values using the 'properties-maven-plugin' plugin either. -->
+
+    <!-- maven dependencies -->
+    <!-- this project doesn't require all of them -->
+    <maven.version>3.8 7</maven.version> <!-- 3.6.3 on Ubuntu 22.04? -->
+    <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+    <maven-artifact-transfer.version>0.13.1</maven-artifact-transfer.version>
+    <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+    <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
+    <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-dependency-plugin.version>3.7.1</maven-dependency-plugin.version>
+    <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+    <maven-doap-plugin.version>1.2</maven-doap-plugin.version>
+    <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+    <maven-failsafe-plugin.version>3.3.1</maven-failsafe-plugin.version>
+    <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+    <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+    <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version>
+    <maven-jdeps-plugin.version>3.1.2</maven-jdeps-plugin.version>
+    <maven-jxr-plugin.version>3.4.0</maven-jxr-plugin.version>
+    <maven-linkcheck-plugin.version>1.2</maven-linkcheck-plugin.version>
+    <maven-pmd-plugin.version>3.24.0</maven-pmd-plugin.version>
+    <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
+    <maven-scm-plugin.version>2.1.0</maven-scm-plugin.version>
+    <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+    <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
+    <maven-surefire-report-plugin.version>3.3.1</maven-surefire-report-plugin.version>
+
+    <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+    <error-prone.version>2.29.2</error-prone.version>
+    <owasp-dependency-check.version>10.0.3</owasp-dependency-check.version>
+
+    <apache-rat-plugin.version>0.16.1</apache-rat-plugin.version>
+
+    <jdepend-maven-plugin.version>2.1</jdepend-maven-plugin.version>
+    <license-maven-plugin.version>2.4.0</license-maven-plugin.version>
+    <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
+
+    <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
+
+    <maven-project-info-reports-plugin.version>3.6.2</maven-project-info-reports-plugin.version>
+
+    <maven-reporting-api.version>3.1.1</maven-reporting-api.version>
+
+    <!-- I'm sure there's a way to refer to a consistent directory... -->
+    <checkstyle.config.location>${env.HOME}/.config/checkstyle/modified_google_checks.xml</checkstyle.config.location>
+    <checkstyle.suppressions.location>${env.HOME}/.config/checkstyle/checkstyle-suppressions.xml</checkstyle.suppressions.location>
+
+    <!-- for report generation -->
+    <doxia.version>1.11.1</doxia.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.15.4</version>
+      <version>${jackson.version}</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -81,7 +143,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.15.4</version>
+      <version>${jackson.version}</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -89,7 +151,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.15.4</version>
+      <version>${jackson.version}</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -121,7 +183,7 @@
     <dependency>
       <groupId>io.fusionauth</groupId>
       <artifactId>fusionauth-jwt</artifactId>
-      <version>5.2.4</version>
+      <version>${fusionauth.version}</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -129,7 +191,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.5.1</version>
+      <version>${testng.version}</version>
       <type>jar</type>
       <scope>test</scope>
       <optional>false</optional>
@@ -137,6 +199,497 @@
   </dependencies>
 
   <build>
+  <pluginManagement>
+  <!-- this should provide default configuration and executions -->
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-clean-plugin</artifactId>
+      <version>${maven-clean-plugin.version}</version>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>${maven-compiler-plugin.version}</version>
+      <configuration>
+        <compilerId>javac</compilerId>
+        <fork>true</fork>
+        <meminitial>256m</meminitial>
+        <maxmem>1024m</maxmem>
+        <encoding>${project.build.sourceEncoding}</encoding>
+        <!-- only useful in Java 11+ (I think...) -->
+        <!-- these should be dash-J-dash-dash -->
+        <!--
+        <compilerArgs>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+          <arg>-J-add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+          <arg>-J-add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+          <arg>-J-add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+          <arg>-XDcompilePolicy=simple</arg>
+          <arg>-Xlint:all</arg>
+          <arg>-Xplugin:ErrorProne -Xep:AssertEqualsArgumentOrderChecker:WARN -Xep:DefaultCharset:WARN -Xep:EqualsIncompatibleType:WARN -Xep:ImmutableEnumChecker:WARN -Xep:MissingOverride:WARN -Xep:RemoveUnusedImports:WARN -Xep:StreamResourceLeak:WARN -Xep:ThreadLocalUsage:WARN -Xep:UnusedException:WARN -Xep:UnnecessaryParentheses:WARN -XepDisableWarningsInGeneratedCode -XepExcludedPaths:.*/generated-sources/.* </arg>
+          <arg>-parameters</arg>
+        </compilerArgs>
+        <annotationProcessorPaths>
+          <path>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_core</artifactId>
+            <version>${error-prone.version}</version>
+          </path>
+        </annotationProcessorPaths>
+        -->
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>${maven-dependency-plugin.version}</version>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-enforcer-plugin</artifactId>
+      <version>${maven-enforcer-plugin.version}</version>
+      <executions>
+        <execution>
+          <id>enforce-maven</id>
+          <goals>
+            <goal>enforce</goal>
+          </goals>
+          <configuration>
+            <rules>
+              <requireMavenVersion>
+                <version>[${maven.version},)</version>
+              </requireMavenVersion>
+            </rules>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <!-- do not use 3.5.1: transitive dependencies of docletArtifact are not added to
+           docletpath, version 3.5.1 resolves this issue. https://issues.apache.org/jira/browse/  MJAVADOC-742 -->
+      <version>${maven-javadoc-plugin.version}</version>
+      <executions>
+        <!--
+        <execution>
+            <id>attach-sources</id>
+            <goals>
+                <goal>jar</goal>
+                <goal>test-jar</goal>
+            </goals>
+        </execution>
+        -->
+        <execution>
+          <id>aggregate</id>
+          <goals>
+            <goal>aggregate</goal>
+          </goals>
+          <phase>site</phase>
+          <configuration>
+            <!-- Specific configuration for the aggregate report -->
+          </configuration>
+        </execution>
+        <execution>
+          <id>resource-bundles</id>
+          <phase>package</phase>
+          <goals>
+            <!-- produce source artifact for main project sources -->
+            <goal>resource-bundle</goal>
+
+            <!-- produce source artifact for project test sources -->
+            <goal>test-resource-bundle</goal>
+          </goals>
+          <configuration>
+            <detectOfflineLinks>false</detectOfflineLinks>
+          </configuration>
+        </execution>
+      </executions>
+      <configuration>
+        <quiet>true</quiet>
+        <useStandardDocletOptions>true</useStandardDocletOptions>
+        <!-- this lets us use markdown in our javadoc - it will be standard in Java 2x -->
+        <!--
+        <doclet>org.jdrupes.mdoclet.MDoclet</doclet>
+        <docletArtifacts>
+          <docletArtifact>
+            <groupId>org.jdrupes.mdoclet</groupId>
+            <artifactId>doclet</artifactId>
+            <version>4.2.0</version>
+          </docletArtifact>
+          <docletArtifact>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>0.64.8</version>
+          </docletArtifact>
+        </docletArtifacts>
+        -->
+        <!--  Note: additionalDependencies are added to the -classpath, not the docletpath -->
+        <additionalDependencies>
+        </additionalDependencies>
+        <!-- this is only required once java modules are enabled -->
+        <!-- these should be dash-J-dash-dash -->
+        <!--
+        <additionalJOptions>
+          <additionalJOption>-J-add-exports=jdk.compiler/com.sun.tools.doclint=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.toolkit=ALL-UNNAMED</additionalJOption>
+          <additionalJOption>-J-add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</additionalJOption>
+        </additionalJOptions>
+        -->
+        <detectLinks>false</detectLinks>
+        <links>
+          <!--
+          <link>https://docs.oracle.com/en/java/javase/${maven.compiler.target}/docs/api/</link>
+          -->
+          <!-- <link>https://docs.oracle.com/en/java/javase/${maven.compiler.target}/docs/api/java.base/</link> -->
+
+          <!-- named modules -->
+          <!-- <link>https://javadoc.io/doc/jakarta.activation/jakarta.activation-api/${activation-api.version}</link> -->
+          <!-- <link>https://javadoc.io/doc/jakarta.annotation/jakarta.annotation-api/${annotation-api.version}/</link> -->
+          <!-- <link>https://javadoc.io/doc/jakarta.persistence/jakarta.persistence-api/${persistence-api.version}/</link> -->
+          <!-- <link>https://javadoc.io/doc/jakarta.xml.bind/jakarta.xml.bind-api/${xml.bind-api.version}/</link> -->
+
+          <!-- <link>https://javadoc.io/doc/org.jooq/jooq/${joojooqq.version}/</link> -->
+
+          <!--
+          <link>https://javadoc.io/doc/org.slf4j/slf4j-api/${slf4j.version}/</link>
+
+          - testing -
+          <link>https://javadoc.io/doc/org.junit.jupiter/junit-jupiter-api/5.10.3/</link>
+          <link>https://javadoc.io/doc/junit/junit/4.13.2/</link> - for org.junit.rules.TestRule -
+
+          <link>https://javadoc.io/doc/org.hamcrest/hamcrest/${hamcrest.version}</link>
+          <link>https://javadoc.io/doc/org.hamcrest/hamcrest-core/${hamcrest.version}</link>
+          <link>https://javadoc.io/doc/org.mockito/mockito-core/${mockito.version}/</link>
+          <link>https://javadoc.io/doc/org.mockito/mockito-junit-jupiter/${mockito.version}/</link>
+
+          - test containers and docker -
+          <link>https://javadoc.io/doc/com.github.docker-java/docker-java-api/${docker-java-api.version}</link>
+          <link>https://javadoc.io/doc/org.testcontainers/testcontainers/${testcontainers.version}/</link>
+          <link>https://javadoc.io/doc/org.testcontainers/junit-jupiter/${testcontainers.version}/</link>
+
+          <link>https://javadoc.io/doc/org.testcontainers/database-commons/${testcontainers.version}/</link>
+          <link>https://javadoc.io/doc/org.testcontainers/jdbc/${testcontainers.version}/</link>
+          <link>https://javadoc.io/doc/org.testcontainers/postgresql/${testcontainers.version}/</link>
+
+          - spring -
+          <link>https://javadoc.io/doc/org.springframework/spring-aop/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-beans/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-context/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-core/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-expression/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-jcl/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-jdbc/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-test/${springframework.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework/spring-tx/${springframework.version}/</link>
+
+          - spring boot -
+          <link>https://javadoc.io/doc/org.springframework.boot/spring-boot-autoconfigure/${spring-boot.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework.boot/spring-boot-test/${spring-boot.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework.boot/spring-boot-test-autoconfigure/${spring-boot.version}/</link>
+          <link>https://javadoc.io/doc/org.springframework.boot/spring-boot-testcontainers/${spring-boot.version}/</link>
+
+          - jooq -
+          <link>https://javadoc.io/doc/org.jooq/jooq/${jooq.version}/</link>
+          <link>https://javadoc.io/doc/org.flywaydb/flyway-core/${flyway.version}/</link>
+          <link>https://javadoc.io/doc/org.flywaydb/flyway-database-postgresql/${flyway.version}/</link>
+          -->
+
+          <!-- jackson -->
+          <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/${jackson.version}/</link>
+          <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/${jackson.version}/</link>
+          <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
+          <link>https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-toml/${jackson.version}/</link>
+
+          <!--
+          <link>https://javadoc.io/doc/org.apache.commons/commons-compress/1.24.0/</link>
+          <link>https://javadoc.io/doc/org.apache.commons/commons-lang3/3.13.0</link>
+
+          <link>https://javadoc.io/doc/org.jetbrains/annotations/${jetbrains.version}/</link>
+
+          - test scope -
+          <link>https://javadoc.io/doc/com.google.errorprone/error_prone_annotations/2.21.1/</link>
+          <link>https://javadoc.io/doc/com.jayway.jsonpath/json-path/2.9.0/</link>
+          <link>https://javadoc.io/doc/commons-codec/commons-codec/1.16.1/</link>
+          <link>https://javadoc.io/doc/commons-logging/commons-logging/1.2/</link>
+          - <link>https://javadoc.io/doc/org.xml/xmlunit-core/2.9.1</link> -
+          <link>https://javadoc.io/doc/org.yaml/snakeyaml/2.2/</link>
+          -->
+        </links>
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jxr-plugin</artifactId>
+      <version>${maven-jxr-plugin.version}</version>
+      <configuration>
+        <linkJavadoc>true</linkJavadoc>
+        <!-- <javadocDir>${javadoc.output.directory}</javadocDir> -->
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <!-- skip CMD -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-pmd-plugin</artifactId>
+      <version>${maven-pmd-plugin.version}</version>
+      <configuration>
+        <linkXRef>true</linkXRef>
+        <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+        <minimumTokens>100</minimumTokens>
+        <targetJdk>${maven.compiler.target}</targetJdk>
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.rat</groupId>
+      <artifactId>apache-rat-plugin</artifactId>
+      <version>${apache-rat-plugin.version}</version>
+      <configuration>
+        <excludes>
+          <exclude>README.md</exclude>
+          <exclude>README-DEV.md</exclude>
+          <exclude>.github/**</exclude>
+        </excludes>
+        <licenses>
+          <license>
+            <family>FusionAuth</family>
+            <!-- see also SPDX licenses -->
+            <copyright>
+              <owner>FusionAuth</owner>
+            </copyright>
+          </license>
+        </licenses>
+        <families>
+          <family>
+            <id>FusionAuth</id>
+            <name>FusionAuth</name>
+          </family>
+        </families>
+        <approvedLicenses>
+          <id>FusionAuth</id>
+        </approvedLicenses>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>
+              check
+            </goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-plugin</artifactId>
+        <version>${maven-scm-plugin.version}</version>
+        <configuration>
+          <connectionType>developerConnection</connectionType>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${maven-site-plugin.version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <!--
+        <executions>
+            <execution>
+                <id>attach-sources</id>
+                <phase>verify</phase>
+                <goals>
+                    <goal>jar-no-fork</goal>
+                </goals>
+            </execution>
+        </executions>
+        -->
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>${license-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>download-licenses</id>
+            <phase>package</phase>
+            <goals>
+              <goal>download-licenses</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>aggregate-download-licenses</id>
+            <phase>package</phase>
+            <goals>
+              <goal>aggregate-download-licenses</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>create-third-party-licenses-report</id>
+            <phase>package</phase>
+            <goals>
+              <goal>third-party-report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-project-info-reports-plugin</artifactId>
+      <version>${maven-project-info-reports-plugin.version}</version>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>versions-maven-plugin</artifactId>
+      <version>${versions-maven-plugin.version}</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>display-dependency-updates</goal>
+            <goal>display-plugin-updates</goal>
+            <goal>display-property-updates</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jdeps-plugin</artifactId>
+      <version>${maven-jdeps-plugin.version}</version>
+      <executions>
+        <execution>
+          <goals>
+            <goal>jdkinternals</goal> <!-- verify main classes -->
+            <goal>test-jdkinternals</goal> <!-- verify test classes -->
+          </goals>
+        </execution>
+      </executions>
+      <configuration>
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-doap-plugin</artifactId>
+      <version>${maven-doap-plugin.version}</version>
+      <configuration>
+        <doapOptions>
+          <!-- Default values -->
+          <bugDatabase>${project.issueManagement.url}</bugDatabase>
+          <category>library</category>
+          <created>${project.inceptionYear}-01-01</created>
+          <description>${project.description}</description>
+          <downloadPage>\${project.distributionManagement.downloadUrl}</downloadPage>
+          <homepage>${project.url}</homepage>
+          <license>\$\{project.licenses[0].url}</license>
+          <mailingList>${project.url}/mail-lists.html</mailingList>
+          <name>${project.name}</name>
+          <programmingLanguage>Java</programmingLanguage>
+          <!-- <scmAnonymousConnection>${project.scm.connection}</scmAnonymousConnection> -->
+          <!-- <scmDeveloperConnection>${project.scm.developerConnection}</scmDeveloperConnection> -->
+          <shortdesc>${project.description}</shortdesc>
+          <vendor>${project.organization.name}</vendor>
+          ...
+        </doapOptions>
+      </configuration>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>generate</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-linkcheck-plugin</artifactId>
+      <version>${maven-linkcheck-plugin.version}</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>linkcheck</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>jdepend-maven-plugin</artifactId>
+      <version>${jdepend-maven-plugin.version}</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>generate</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.cyclonedx</groupId>
+      <artifactId>cyclonedx-maven-plugin</artifactId>
+      <version>${cyclonedx-maven-plugin.version}</version>
+      <configuration>
+        <projectType>library</projectType>
+        <schemaVersion>1.6</schemaVersion>
+        <includeBomSerialNumber>true</includeBomSerialNumber>
+        <includeCompileScope>true</includeCompileScope>
+        <includeProvidedScope>true</includeProvidedScope>
+        <includeRuntimeScope>true</includeRuntimeScope>
+        <includeSystemScope>true</includeSystemScope>
+        <includeTestScope>false</includeTestScope>
+        <includeLicenseText>false</includeLicenseText>
+        <outputReactorProjects>true</outputReactorProjects>
+        <outputFormat>all</outputFormat>
+        <outputName>bom</outputName>
+        <outputDirectory>${project.build.directory}</outputDirectory><!-- usually target, if not redefined in pom.xml -->
+        <verbose>false</verbose><!-- = ${cyclonedx.verbose} -->
+      </configuration>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>makeAggregateBom</goal>
+            <goal>makePackageBom</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+  </pluginManagement>
+
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
@@ -170,6 +723,44 @@
           </goals>
         </execution>
       </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jdeps-plugin</artifactId>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>versions-maven-plugin</artifactId>
+    </plugin>
+
+    <!-- disabled for now -->
+    <!--
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-doap-plugin</artifactId>
+    </plugin>
+    -->
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-linkcheck-plugin</artifactId>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>jdepend-maven-plugin</artifactId>
+    </plugin>
+
+    <plugin>
+      <groupId>org.cyclonedx</groupId>
+      <artifactId>cyclonedx-maven-plugin</artifactId>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.rat</groupId>
+      <artifactId>apache-rat-plugin</artifactId>
     </plugin>
   </plugins>
   </build>
@@ -211,6 +802,201 @@
         </plugins>
       </build>
     </profile>
-  </profiles>
 
+
+    <profile>
+      <id>build-site</id>
+      <activation>
+        <property>
+          <name>packaging</name>
+          <value>pom</value>
+        </property>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jxr-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+
+      <reporting>
+        <!-- this should provide resultSets but not configuration or execution -->
+        <!-- multiple reports can be supported by using different profiles -->
+        <plugins>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>aggregate</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+          </plugin>
+
+          <!--
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>checkstyle-aggregate</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          -->
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <configuration>
+              <ignoreNonCompile>true</ignoreNonCompile>
+            </configuration>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>analyze-report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <id>aggregate</id>
+                <inherited>false</inherited>
+                <reports>
+                  <report>aggregate</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports><!-- select reports -->
+                  <report>index</report>
+                  <report>ci-management</report>
+                  <report>dependencies</report>
+                  <report>dependency-info</report>
+                  <report>dependency-management</report>
+                  <report>distribution-management</report>
+                  <report>issue-management</report>
+                  <report>licenses</report>
+                  <!-- <report>mailing-lists</report> -->
+                  <report>modules</report>
+                  <report>plugin-management</report>
+                  <report>plugins</report>
+                  <report>scm</report>
+                  <report>summary</report>
+                  <report>team</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>dependency-updates-report</report>
+                  <report>plugin-updates-report</report>
+                  <report>property-updates-report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <!--
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jxr-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <id>aggregate</id>
+                <reports>
+                  <report>aggregate</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          -->
+
+          <plugin>
+            <!-- skip CMD -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <id>aggregate</id>
+                <reports>
+                  <report>aggregate-pmd</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-linkcheck-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jdepend-maven-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+  </profiles>
 </project>
