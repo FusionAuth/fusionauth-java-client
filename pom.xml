@@ -67,6 +67,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+
+    <maven-pmd-plugin.version>3.24.0</maven-pmd-plugin.version>
   </properties>
 
   <dependencies>
@@ -137,6 +139,32 @@
   </dependencies>
 
   <build>
+  <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${maven-pmd-plugin.version}</version>
+        <configuration>
+          <linkXRef>true</linkXRef>
+          <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+          <minimumTokens>100</minimumTokens>
+          <targetJdk>${maven.compiler.target}</targetJdk>
+        </configuration>
+        <executions>
+          <execution>
+            <id>pmd checks</id>
+            <goals>
+              <goal>
+                pmd
+              </goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </pluginManagement>
+
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
@@ -173,6 +201,15 @@
     </plugin>
   </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <profiles>
     <profile>
