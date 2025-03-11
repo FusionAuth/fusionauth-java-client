@@ -16,12 +16,11 @@
 package io.fusionauth.domain.api.user.verify;
 
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
  * Verify Send API request object.
  */
-public class VerifySendRequest extends BaseEventRequest implements Buildable<VerifySendRequest> {
+public class VerifySendRequest implements Buildable<VerifySendRequest> {
   public String oneTimeCode;
 
   public String verificationId;
