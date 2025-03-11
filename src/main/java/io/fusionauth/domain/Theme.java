@@ -208,7 +208,7 @@ public class Theme implements Buildable<Theme> {
                      templates.passwordComplete,
                      templates.passwordForgot,
                      templates.passwordSent,
-                     templates.phoneNumberVerificationRequired,
+                     templates.phoneVerificationRequired,
                      templates.registrationComplete,
                      templates.registrationSent,
                      templates.registrationVerificationRequired,
@@ -305,7 +305,7 @@ public class Theme implements Buildable<Theme> {
         "passwordComplete",
         "passwordForgot",
         "passwordSent",
-        "phoneNumberVerificationRequired",
+        "phoneVerificationRequired",
         "registrationComplete",
         "registrationSent",
         "registrationVerificationRequired",
@@ -394,7 +394,7 @@ public class Theme implements Buildable<Theme> {
 
     public String passwordSent;
 
-    public String phoneNumberVerificationRequired;
+    public String phoneVerificationRequired;
 
     public String registrationComplete;
 
@@ -452,7 +452,7 @@ public class Theme implements Buildable<Theme> {
       this.passwordComplete = other.passwordComplete;
       this.passwordForgot = other.passwordForgot;
       this.passwordSent = other.passwordSent;
-      this.phoneNumberVerificationRequired = other.phoneNumberVerificationRequired;
+      this.phoneVerificationRequired = other.phoneVerificationRequired;
       this.registrationComplete = other.registrationComplete;
       this.registrationSent = other.registrationSent;
       this.registrationVerificationRequired = other.registrationVerificationRequired;
@@ -510,7 +510,7 @@ public class Theme implements Buildable<Theme> {
              Objects.equals(passwordComplete, that.passwordComplete) &&
              Objects.equals(passwordForgot, that.passwordForgot) &&
              Objects.equals(passwordSent, that.passwordSent) &&
-             Objects.equals(phoneNumberVerificationRequired, that.phoneNumberVerificationRequired) &&
+             Objects.equals(phoneVerificationRequired, that.phoneVerificationRequired) &&
              Objects.equals(registrationComplete, that.registrationComplete) &&
              Objects.equals(registrationSent, that.registrationSent) &&
              Objects.equals(registrationVerificationRequired, that.registrationVerificationRequired) &&
@@ -582,7 +582,7 @@ public class Theme implements Buildable<Theme> {
           passwordComplete,
           passwordForgot,
           passwordSent,
-          phoneNumberVerificationRequired,
+          phoneVerificationRequired,
           registrationComplete,
           registrationSent,
           registrationVerificationRequired,
@@ -633,7 +633,7 @@ public class Theme implements Buildable<Theme> {
       passwordComplete = lineReturns(trimToNull(passwordComplete));
       passwordForgot = lineReturns(trimToNull(passwordForgot));
       passwordSent = lineReturns(trimToNull(passwordSent));
-      phoneNumberVerificationRequired = lineReturns(trimToNull(phoneNumberVerificationRequired));
+      phoneVerificationRequired = lineReturns(trimToNull(phoneVerificationRequired));
       registrationComplete = lineReturns(trimToNull(registrationComplete));
       registrationSent = lineReturns(trimToNull(registrationSent));
       registrationVerificationRequired = lineReturns(trimToNull(registrationVerificationRequired));

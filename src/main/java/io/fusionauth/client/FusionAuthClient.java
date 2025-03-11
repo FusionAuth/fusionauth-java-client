@@ -230,9 +230,10 @@ import io.fusionauth.domain.api.user.VerifyEmailRequest;
 import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
+import io.fusionauth.domain.api.user.verify.VerifyCompleteRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartResponse;
-import io.fusionauth.domain.api.user.verify.VerifySendCompleteRequest;
+import io.fusionauth.domain.api.user.verify.VerifySendRequest;
 import io.fusionauth.domain.oauth2.AccessToken;
 import io.fusionauth.domain.oauth2.DeviceApprovalResponse;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
@@ -549,7 +550,7 @@ public class FusionAuthClient {
    * @param request The identity verify complete request that contains all the information used to verify the identity.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> completeVerifyIdentity(VerifySendCompleteRequest request) {
+  public ClientResponse<Void, Errors> completeVerifyIdentity(VerifyCompleteRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/identity/verify/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
@@ -5000,7 +5001,7 @@ public class FusionAuthClient {
    * @param request The identity verify send request that contains all the information used send the code.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> sendVerifyIdentity(VerifySendCompleteRequest request) {
+  public ClientResponse<Void, Errors> sendVerifyIdentity(VerifySendRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/identity/verify/send")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))

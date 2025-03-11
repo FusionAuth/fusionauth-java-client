@@ -19,9 +19,9 @@ import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
- * @author Brady Wied
+ * Verify Send API request object.
  */
-public class VerifySendCompleteRequest extends BaseEventRequest implements Buildable<VerifySendCompleteRequest> {
+public class VerifySendRequest extends BaseEventRequest implements Buildable<VerifySendRequest> {
   public String oneTimeCode;
 
   public String verificationId;
