@@ -51,5 +51,5 @@ public enum IdentityVerifiedReason {
    */
   Disabled // 6
 
-  // TODO : ENG-1800 : Do we need an 'administrative' reason? See /api/user/verify-email which is called by /ajax/user/verify-email
+  
 }

@@ -98,7 +98,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  // TODO : ENG-1734 : Brent : do we want an ApplicationPhoneConfiguration ?
+  
 
   public ObjectState state;
 

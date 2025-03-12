@@ -15,19 +15,14 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
-import java.util.UUID;
-
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
- * @author Brady Wied
+ * Verify Complete API request object.
  */
-public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
-  public UUID applicationId;
+public class VerifyCompleteRequest extends BaseEventRequest implements Buildable<VerifyCompleteRequest> {
+  public String oneTimeCode;
 
-  public String loginId;
-
-  public String loginIdType;
-
-  public String verificationStrategy;
+  public String verificationId;
 }

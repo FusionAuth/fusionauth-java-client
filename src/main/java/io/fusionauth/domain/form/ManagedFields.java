@@ -94,6 +94,7 @@ public final class ManagedFields {
                            .with(f -> f.data.put("leftAddon", "mobile"))
                            .with(f -> f.name = "[Admin User] phoneNumber"));
 
+    
     map.put("identities.email",
             new FormField().with(f -> f.key = "identities.email")
                            .with(f -> f.confirm = false)

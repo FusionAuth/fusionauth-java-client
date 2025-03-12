@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
-import io.fusionauth.domain.api.BaseEventRequest;
+import io.fusionauth.domain.Buildable;
 
 /**
- * @author Brady Wied
+ * Verify Send API request object.
  */
-public class VerifySendCompleteRequest extends BaseEventRequest {
+public class VerifySendRequest implements Buildable<VerifySendRequest> {
   public String oneTimeCode;
 
   public String verificationId;

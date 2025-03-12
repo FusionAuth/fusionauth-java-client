@@ -40,29 +40,29 @@ public class UserIdentity implements Buildable<UserIdentity> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  // TODO : ENG-1 : Daniel : This is the old "public ContentStatus usernameStatus = ContentStatus.ACTIVE;" value from SecureIdentity.
+  
   //                         I think this still has value because we can filter and moderate usernames. But perhaps only valuable for that type?
   //                         So it seems like this should be nullable, and perhaps renamed to moderationStatus, contentStatus? Not sure
   //                         we want to limit it to usernames, although that would be the primary use, and perhaps the only thing that is supported
   //                         through the CleanSpeak integration.
   public ContentStatus moderationStatus;
 
-  // TODO : ENG-1787 : Brady if you think we need this, we need a public object.
+  
   //                This is a internal only object and is not accessible to fusionauth-java-client.
   //                Anything in io.fusionauth.api.domain is private and not accessible via fusionauth-java-client.
 //  public UserIdentityStatus status;
 
-  // TODO : ENG-1800 : We should probably leave this set to false, but for now enabling to simplify "look up enabled" checks.
+  
   public boolean primary = true;
 
-  // TODO : ENG-1 : Daniel : Assuming this is being returned on the User object so this is redundant. But it is in the schema, so we could either not
+  
   //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
   @JsonIgnore
   public UUID tenantId;
 
   public IdentityType type;
 
-  // TODO : ENG-1 : Daniel : Assuming this is being returned on the User object so this is redundant. But it is in the schema, so we could either not
+  
   //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
   @JsonIgnore
   public UUID userId;

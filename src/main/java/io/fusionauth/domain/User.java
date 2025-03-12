@@ -203,7 +203,13 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   @JsonIgnore
   public String getLogin() {
-    return email == null ? uniqueUsername : email;
+    if (email != null) {
+      return email;
+    }
+    if (uniqueUsername != null) {
+      return uniqueUsername;
+    }
+    return phoneNumber;
   }
 
   public List<GroupMember> getMemberships() {
@@ -404,7 +410,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   @JsonIgnore
   public UserIdentity resolvePrimaryIdentity(IdentityType loginIdType) {
     return identities.stream()
-                     // TODO: ENG-1800 : Daniel : Finish this
+                     
                      .filter(i -> i.primary)
                      .filter(i -> i.type.is(loginIdType))
                      .findFirst()

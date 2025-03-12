@@ -28,7 +28,7 @@ import io.fusionauth.client.json.WebhookEventDeserializer;
  * @author Brian Pontarelli
  */
 public class EventRequest {
-  // TODO : ENG-1822 : Can we delete this if we aren't going to use it an longer?
+  
   //                   Some tests still use it, maybe we should only bind it ot the TestObjectMapper?
   //                   See one usage: UserActionTest.post_noPassword_has_email_and_phone
   @JsonDeserialize(using = WebhookEventDeserializer.class)
