@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,12 @@ import com.inversoft.json.ToString;
  * @author Brett Pontarelli
  */
 public class TenantSSOConfiguration {
+  public boolean allowAccessTokenBootstrap = false;
+
   public int deviceTrustTimeToLiveInSeconds = 365 * 24 * 60 * 60;
 
   public TenantSSOConfiguration(TenantSSOConfiguration other) {
+    this.allowAccessTokenBootstrap = other.allowAccessTokenBootstrap;
     this.deviceTrustTimeToLiveInSeconds = other.deviceTrustTimeToLiveInSeconds;
   }
 
@@ -43,12 +46,12 @@ public class TenantSSOConfiguration {
       return false;
     }
     TenantSSOConfiguration that = (TenantSSOConfiguration) o;
-    return deviceTrustTimeToLiveInSeconds == that.deviceTrustTimeToLiveInSeconds;
+    return allowAccessTokenBootstrap == that.allowAccessTokenBootstrap && deviceTrustTimeToLiveInSeconds == that.deviceTrustTimeToLiveInSeconds;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deviceTrustTimeToLiveInSeconds);
+    return Objects.hash(allowAccessTokenBootstrap, deviceTrustTimeToLiveInSeconds);
   }
 
   @Override
