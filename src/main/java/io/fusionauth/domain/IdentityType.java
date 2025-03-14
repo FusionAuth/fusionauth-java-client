@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import java.util.Objects;
 public class IdentityType implements Comparable<IdentityType> {
   public static Map<String, IdentityType> Provided = new HashMap<>(3);
 
-  public static IdentityType email = IdentityType.of("email");
+  public static IdentityType email = new IdentityType("email");
 
-  public static IdentityType phoneNumber = IdentityType.of("phoneNumber");
+  public static IdentityType phoneNumber = new IdentityType("phoneNumber");
 
-  public static IdentityType username = IdentityType.of("username");
+  public static IdentityType username = new IdentityType("username");
 
   public String name;
 
@@ -46,12 +46,8 @@ public class IdentityType implements Comparable<IdentityType> {
       return null;
     }
 
-    IdentityType result = Provided.get(name);
-    if (result == null) {
-      return new IdentityType(name);
-    }
-
-    return result;
+    // returns null if not a Provided type
+    return Provided.get(name);
   }
 
   @Override
