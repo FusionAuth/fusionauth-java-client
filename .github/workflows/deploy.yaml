@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 8
           java-package: jre
 
       - name: install savant
@@ -47,7 +47,7 @@ jobs:
           echo "${SAVANT_PATH}" >> $GITHUB_PATH
           mkdir -p ~/.savant/plugins
           cat << EOF > ~/.savant/plugins/org.savantbuild.plugin.java.properties
-          17=${JAVA_HOME}
+          1.8=${JAVA_HOME}
           EOF
 
       - name: compile
