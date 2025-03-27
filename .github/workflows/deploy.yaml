@@ -36,14 +36,14 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-          java-package: jre
+          java-package: jdk
 
       - name: setup java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
-          java-package: jre
+          java-package: jdk
 
       - name: install savant
         run: |
