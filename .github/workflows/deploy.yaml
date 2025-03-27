@@ -38,6 +38,13 @@ jobs:
           java-version: 8
           java-package: jre
 
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          java-package: jre
+
       - name: install savant
         run: |
           curl -O https://repository.savantbuild.org/org/savantbuild/savant-core/2.0.0/savant-2.0.0.tar.gz
