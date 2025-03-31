@@ -35,7 +35,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   @SuppressWarnings("SpellCheckingInspection")
   public boolean backchannel_logout_supported = false;
 
-  public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "picture", "preferred_username", "roles", "sub"));
+  public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "phone_number_verified", "picture", "preferred_username", "roles", "sub"));
 
   public String device_authorization_endpoint = "%s/oauth2/device_authorize";
 
