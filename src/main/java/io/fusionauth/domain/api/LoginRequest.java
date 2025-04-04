@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +65,14 @@ public class LoginRequest extends BaseLoginRequest implements Buildable<LoginReq
     super(eventInfo);
     this.applicationId = applicationId;
     this.loginId = loginId;
+    this.password = password;
+  }
+
+  public LoginRequest(EventInfo eventInfo, UUID applicationId, String loginId, List<String> loginIdTypes, String password) {
+    super(eventInfo);
+    this.applicationId = applicationId;
+    this.loginId = loginId;
+    this.loginIdTypes = loginIdTypes;
     this.password = password;
   }
 }
