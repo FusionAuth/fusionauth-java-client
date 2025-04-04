@@ -587,6 +587,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public Requirable preferredLanguages = new Requirable();
 
+    public boolean requirePassword = true;
+
     public RegistrationType type = RegistrationType.basic;
 
     @JacksonConstructor
@@ -605,6 +607,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.middleName = new Requirable(other.middleName);
       this.mobilePhone = new Requirable(other.mobilePhone);
       this.preferredLanguages = new Requirable(other.preferredLanguages);
+      this.requirePassword = other.requirePassword;
       this.type = other.type;
     }
 
@@ -630,12 +633,13 @@ public class Application implements Buildable<Application>, Tenantable {
              Objects.equals(middleName, that.middleName) &&
              Objects.equals(mobilePhone, that.mobilePhone) &&
              Objects.equals(preferredLanguages, that.preferredLanguages) &&
+             requirePassword == that.requirePassword &&
              type == that.type;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, preferredLanguages, type);
+      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, preferredLanguages, requirePassword, type);
     }
 
     public String toString() {
