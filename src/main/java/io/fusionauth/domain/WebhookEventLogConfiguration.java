@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,15 @@ import io.fusionauth.domain.SystemConfiguration.DeleteConfiguration;
  *
  * @author Spencer Witt
  */
-public class WebhookEventLogConfiguration {
-  public DeleteConfiguration delete = new DeleteConfiguration(30);
+public class WebhookEventLogConfiguration extends Enableable {
+  public DeleteConfiguration delete = new DeleteConfiguration(30, true);
 
   @JacksonConstructor
   public WebhookEventLogConfiguration() {
   }
 
   public WebhookEventLogConfiguration(WebhookEventLogConfiguration other) {
+    this.enabled = other.enabled;
     this.delete = new DeleteConfiguration(other.delete);
   }
 
@@ -42,16 +43,21 @@ public class WebhookEventLogConfiguration {
     if (this == o) {
       return true;
     }
+    // @formatter:off
     if (!(o instanceof WebhookEventLogConfiguration)) {
+      return false;
+    }
+    if (!super.equals(o)) {
       return false;
     }
     WebhookEventLogConfiguration that = (WebhookEventLogConfiguration) o;
     return Objects.equals(delete, that.delete);
+    // @formatter:on
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(delete);
+    return Objects.hash(super.hashCode(), delete);
   }
 
   @Override
