@@ -99,12 +99,34 @@ jobs:
       - name: configure maven settings.xml
         if: inputs.command == 'release' || inputs.command == 'publish'
         run: |
-          export KEY_NAME="FusionAuth Platform Team"
-          export PASSPHRASE="${{ env.PRIV_KEY_PASSWORD }}"
-          export OSSRH_USERNAME="${{ env.OSSRH_USERNAME }}"
-          export OSSRH_PASSWORD="${{ env.OSSRH_PASSWORD }}"
-          export BREWDIR="/usr"
-          envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer/setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
+          mkdir -p ~/.m2
+          cat << EOF > ~/.m2/settings.xml
+          <settings>
+            <servers>
+              <server>
+                <id>ossrh</id>
+                <username>${{ env.OSSRH_USERNAME }}</username>
+                <password>${{ env.OSSRH_PASSWORD }}</password>
+              </server>
+            </servers>
+            <profiles>
+              <profile>
+                <id>ossrh</id>
+                <activation>
+                  <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                  <gpg.executable>/usr/bin/gpg</gpg.executable>
+                  <gpg.keyname>FusionAuth Platform Team</gpg.keyname>
+                  <gpg.passphrase>${{ env.PRIV_KEY_PASSWORD }}</gpg.passphrase>
+                </properties>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>ossrh</activeProfile>
+            </activeProfiles>
+          </settings>
+          EOF
 
       - name: release to svn
         if: inputs.command == 'release'
