@@ -67,7 +67,7 @@ jobs:
         if: inputs.command == 'release' || inputs.command == 'publish'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::752443094709:role/github-actions
+          role-to-assume: arn:aws:iam::752443094709:role/gha-fusionauth-java-client
           role-session-name: aws-auth-action
           aws-region: us-west-2
 
