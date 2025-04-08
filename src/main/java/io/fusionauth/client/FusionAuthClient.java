@@ -2387,6 +2387,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates, via PATCH, the Entity with the given Id.
+   *
+   * @param entityId The Id of the Entity Type to update.
+   * @param request The request that contains just the new Entity information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityResponse, Errors> patchEntity(UUID entityId, Map<String, Object> request) {
+    return start(EntityResponse.class, Errors.class)
+        .uri("/api/entity")
+        .urlSegment(entityId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the Entity Type with the given Id.
    *
    * @param entityTypeId The Id of the Entity Type to update.
@@ -2403,6 +2419,57 @@ public class FusionAuthClient {
   }
 
   /**
+   * Patches the permission with the given Id for the entity type.
+   *
+   * @param entityTypeId The Id of the entityType that the permission belongs to.
+   * @param permissionId The Id of the permission to patch.
+   * @param request The request that contains the new permission information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeResponse, Errors> patchEntityTypePermission(UUID entityTypeId, UUID permissionId, Map<String, Object> request) {
+    return start(EntityTypeResponse.class, Errors.class)
+        .uri("/api/entity/type")
+        .urlSegment(entityTypeId)
+        .urlSegment("permission")
+        .urlSegment(permissionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Patches the form with the given Id.
+   *
+   * @param formId The Id of the form to patch.
+   * @param request The request object that contains the new form information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FormResponse, Errors> patchForm(UUID formId, Map<String, Object> request) {
+    return start(FormResponse.class, Errors.class)
+        .uri("/api/form")
+        .urlSegment(formId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Patches the form field with the given Id.
+   *
+   * @param fieldId The Id of the form field to patch.
+   * @param request The request object that contains the new form field information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FormFieldResponse, Errors> patchFormField(UUID fieldId, Map<String, Object> request) {
+    return start(FormFieldResponse.class, Errors.class)
+        .uri("/api/form/field")
+        .urlSegment(fieldId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the group with the given Id.
    *
    * @param groupId The Id of the group to update.
@@ -2413,6 +2480,22 @@ public class FusionAuthClient {
     return start(GroupResponse.class, Errors.class)
         .uri("/api/group")
         .urlSegment(groupId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Update the IP Access Control List with the given Id.
+   *
+   * @param accessControlListId The Id of the IP Access Control List to patch.
+   * @param request The request that contains the new IP Access Control List information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListResponse, Errors> patchIPAccessControlList(UUID accessControlListId, Map<String, Object> request) {
+    return start(IPAccessControlListResponse.class, Errors.class)
+        .uri("/api/ip-acl")
+        .urlSegment(accessControlListId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .patch()
         .go();
@@ -2636,6 +2719,22 @@ public class FusionAuthClient {
     return start(UserConsentResponse.class, Errors.class)
         .uri("/api/user/consent")
         .urlSegment(userConsentId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Patches the webhook with the given Id.
+   *
+   * @param webhookId The Id of the webhook to update.
+   * @param request The request that contains the new webhook information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookResponse, Errors> patchWebhook(UUID webhookId, Map<String, Object> request) {
+    return start(WebhookResponse.class, Errors.class)
+        .uri("/api/webhook")
+        .urlSegment(webhookId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .patch()
         .go();
@@ -5260,6 +5359,22 @@ public class FusionAuthClient {
         .urlSegment(entityTypeId)
         .urlSegment("permission")
         .urlSegment(permissionId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates a family with a given Id.
+   *
+   * @param familyId The Id of the family to update.
+   * @param request The request object that contains all the new family information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<FamilyResponse, Errors> updateFamily(UUID familyId, FamilyRequest request) {
+    return start(FamilyResponse.class, Errors.class)
+        .uri("/api/user/family")
+        .urlSegment(familyId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .put()
         .go();

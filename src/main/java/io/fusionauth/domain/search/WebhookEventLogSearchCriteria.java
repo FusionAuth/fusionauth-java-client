@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
  */
 package io.fusionauth.domain.search;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +37,7 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
 public class WebhookEventLogSearchCriteria extends BaseSearchCriteria implements Buildable<WebhookEventLogSearchCriteria> {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  public ZonedDateTime end;
+  public ZonedDateTime end = ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
 
   public String event;
 
@@ -43,7 +45,7 @@ public class WebhookEventLogSearchCriteria extends BaseSearchCriteria implements
 
   public EventType eventType;
 
-  public ZonedDateTime start;
+  public ZonedDateTime start = ZonedDateTime.now(ZoneOffset.UTC).minusHours(1).truncatedTo(ChronoUnit.MINUTES);
 
   @JacksonConstructor
   public WebhookEventLogSearchCriteria() {
@@ -67,7 +69,7 @@ public class WebhookEventLogSearchCriteria extends BaseSearchCriteria implements
 
   @Override
   protected String defaultOrderBy() {
-    return "sequence DESC";
+    return "insertInstant DESC";
   }
 
   static {

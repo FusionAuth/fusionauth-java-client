@@ -1,10 +1,4 @@
-# Run locally with act:
-#
-# act pull_request [--input command=[command]] \
-#  --platform fusionauth-standard=[ecr-repo-name]/fusionauth-standard:latest] \
-#  --workflows ./.github/workflows/deploy.yaml \
-#  --env-file <(aws configure export-credentials --profile [aws-profile] --format env)
-
+---
 name: Deploy
 
 on:
@@ -26,39 +20,59 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
-  build:
-    if: |
-      github.event_name == 'pull_request' ||
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch' && inputs.command == 'build'
-    runs-on: fusionauth-standard
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: /usr/bin/bash -l -e -o pipefail {0}
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 8
+          java-package: jdk
+
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          java-package: jdk
+
+      - name: install savant
+        run: |
+          curl -O https://repository.savantbuild.org/org/savantbuild/savant-core/2.0.0/savant-2.0.0.tar.gz
+          tar xzvf savant-2.0.0.tar.gz
+          savant-2.0.0/bin/sb --version
+          SAVANT_PATH=$(realpath -s "./savant-2.0.0/bin")
+          echo "${SAVANT_PATH}" >> $GITHUB_PATH
+          mkdir -p ~/.savant/plugins
+          cat << EOF > ~/.savant/plugins/org.savantbuild.plugin.java.properties
+          1.8=${JAVA_HOME}
+          EOF
 
       - name: compile
-        shell: bash -l {0}
         run: sb compile
 
-  deploy:
-    if: |
-      github.event_name == 'workflow_dispatch' &&
-      (inputs.command == 'release' || inputs.command == 'publish')
-    runs-on: fusionauth-standard
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      ### Everything below this line will only run on a workflow_dispatch
 
       - name: set aws credentials
+        if: inputs.command == 'release' || inputs.command == 'publish'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::752443094709:role/github-actions
+          role-to-assume: arn:aws:iam::752443094709:role/gha-fusionauth-java-client
           role-session-name: aws-auth-action
           aws-region: us-west-2
 
       - name: get secret
+        if: inputs.command == 'release' || inputs.command == 'publish'
         run: |
           while IFS=$'\t' read -r key value; do
             echo "::add-mask::${value}"
@@ -71,6 +85,7 @@ jobs:
             jq -r 'to_entries[] | [.key, .value] | @tsv')
 
       - name: import gpg key
+        if: inputs.command == 'release' || inputs.command == 'publish'
         run: |
           export GPG_TTY=$(tty)
           echo "${{ env.PRIV_KEY_B64 }}" | base64 -d > /tmp/key.asc
@@ -82,23 +97,43 @@ jobs:
           echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
 
       - name: configure maven settings.xml
-        shell: bash -l {0}
+        if: inputs.command == 'release' || inputs.command == 'publish'
         run: |
-          export KEY_NAME="FusionAuth Platform Team"
-          export PASSPHRASE="${{ env.PRIV_KEY_PASSWORD }}"
-          export OSSRH_USERNAME="${{ env.OSSRH_USERNAME }}"
-          export OSSRH_PASSWORD="${{ env.OSSRH_PASSWORD }}"
-          export BREWDIR="/usr"
-          envsubst < ~/dev/inversoft/fusionauth/fusionauth-developer/setup/modules/files/maven/settings.xml > ~/.m2/settings.xml
+          mkdir -p ~/.m2
+          cat << EOF > ~/.m2/settings.xml
+          <settings>
+            <servers>
+              <server>
+                <id>ossrh</id>
+                <username>${{ env.OSSRH_USERNAME }}</username>
+                <password>${{ env.OSSRH_PASSWORD }}</password>
+              </server>
+            </servers>
+            <profiles>
+              <profile>
+                <id>ossrh</id>
+                <activation>
+                  <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                  <gpg.executable>/usr/bin/gpg</gpg.executable>
+                  <gpg.keyname>FusionAuth Platform Team</gpg.keyname>
+                  <gpg.passphrase>${{ env.PRIV_KEY_PASSWORD }}</gpg.passphrase>
+                </properties>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>ossrh</activeProfile>
+            </activeProfiles>
+          </settings>
+          EOF
 
       - name: release to svn
         if: inputs.command == 'release'
-        shell: bash -l {0}
         run: sb release
 
       - name: publish to maven
         if: inputs.command == 'publish'
-        shell: bash -l {0}
         run: |
           export GPG_TTY=$(tty)
           sb publish

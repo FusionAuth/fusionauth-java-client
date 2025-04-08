@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -179,6 +179,11 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     }
 
     public DeleteConfiguration(int numberOfDaysToRetain) {
+      this.numberOfDaysToRetain = numberOfDaysToRetain;
+    }
+
+    public DeleteConfiguration(int numberOfDaysToRetain, boolean enabled) {
+      this.enabled = enabled;
       this.numberOfDaysToRetain = numberOfDaysToRetain;
     }
 
