@@ -92,7 +92,7 @@ public final class ManagedFields {
                            .with(f -> f.required = false)
                            .with(f -> f.type = FormDataType.phoneNumber)
                            .with(f -> f.data.put("leftAddon", "mobile"))
-                           .with(f -> f.name = "[Admin User] phoneNumber"));
+                           .with(f -> f.name = "[Admin User] phone number"));
 
     
     map.put("identities.email",
