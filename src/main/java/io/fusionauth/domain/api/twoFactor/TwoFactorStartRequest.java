@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api.twoFactor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,6 +32,8 @@ public class TwoFactorStartRequest implements Buildable<TwoFactorStartRequest> {
   public String code;
 
   public String loginId;
+
+  public List<String> loginIdTypes = new ArrayList<>();
 
   public Map<String, Object> state;
 
