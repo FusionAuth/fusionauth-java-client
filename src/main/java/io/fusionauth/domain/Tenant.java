@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,6 +100,8 @@ public class Tenant implements Buildable<Tenant> {
 
   public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
 
+  public boolean passwordEnabled = true;
+
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
@@ -154,6 +156,7 @@ public class Tenant implements Buildable<Tenant> {
     this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
     this.name = other.name;
     this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
+    this.passwordEnabled = other.passwordEnabled;
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.phoneConfiguration = new TenantPhoneConfiguration(other.phoneConfiguration);
@@ -179,6 +182,7 @@ public class Tenant implements Buildable<Tenant> {
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
+           passwordEnabled == tenant.passwordEnabled &&
            Objects.equals(captchaConfiguration, tenant.captchaConfiguration) &&
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(data, tenant.data) &&
@@ -245,6 +249,7 @@ public class Tenant implements Buildable<Tenant> {
                         maximumPasswordAge,
                         minimumPasswordAge,
                         name,
+                        passwordEnabled,
                         passwordEncryptionConfiguration,
                         passwordValidationRules,
                         phoneConfiguration,
