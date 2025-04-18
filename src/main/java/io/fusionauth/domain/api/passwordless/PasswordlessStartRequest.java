@@ -15,11 +15,12 @@
  */
 package io.fusionauth.domain.api.passwordless;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
-import io.fusionauth.domain.Application.RegistrationConfiguration.LoginIdType;
 import io.fusionauth.domain.Buildable;
 
 /**
@@ -30,7 +31,7 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
 
   public String loginId;
 
-  public String loginIdType;
+  public List<String> loginIdTypes = new ArrayList<>();
 
   public String loginStrategy;
 
@@ -40,12 +41,11 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
   @JacksonConstructor
   public PasswordlessStartRequest() {
   }
-
-  @SuppressWarnings("unused")
-  public PasswordlessStartRequest(UUID applicationId, String loginId, LoginIdType loginIdType, Map<String, Object> state) {
+  
+  public PasswordlessStartRequest(UUID applicationId, String loginId, List<String> loginIdTypes, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
-    this.loginIdType = loginIdType.toString();
+    this.loginIdTypes = loginIdTypes;
     this.state = state;
   }
 }
