@@ -40,19 +40,6 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
   /**
    * Construct a passwordless send request using a code from the Start API
    *
-   * @param applicationId application id
-   * @param code          code from the start API
-   * @deprecated application Ids supplied with codes are ignored. Use the {@link #PasswordlessSendRequest(String)} constructor instead.
-   */
-  @Deprecated
-  public PasswordlessSendRequest(UUID applicationId, String code) {
-    this.applicationId = applicationId;
-    this.code = code;
-  }
-
-  /**
-   * Construct a passwordless send request using a code from the Start API
-   *
    * @param code code from the start API
    */
   public PasswordlessSendRequest(String code) {
@@ -65,7 +52,7 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
    * @param applicationId application id
    * @param loginId       login id of user
    * @param code          passwordless code
-   * @deprecated Passwordless send is done either with a loginId or code, but not both. See {@link #PasswordlessSendRequest(UUID, String)}
+   * @deprecated Passwordless send is done either with a loginId or code, but not both. See {@link #PasswordlessSendRequest(String)}
    * or {@link #PasswordlessSendRequest(UUID, String, Map)}.
    */
   @Deprecated
