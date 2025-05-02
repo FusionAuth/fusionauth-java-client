@@ -348,6 +348,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Activates the FusionAuth Reactor using a license Id and optionally a license text (for air-gapped deployments)
    *
@@ -361,6 +362,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Adds a user to an existing family. The family Id must be specified.
    *
@@ -376,6 +378,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Approve a device grant.
    *
@@ -397,6 +400,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Cancels the user action.
    *
@@ -412,6 +416,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Changes a user's password using the change password Id. This usually occurs after an email has been sent to the user
    * and they clicked on a link to reset their password.
@@ -431,6 +436,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Changes a user's password using their identity (loginId and password). Using a loginId instead of the changePasswordId
    * bypasses the email verification and allows a password to be changed directly without first calling the #forgotPassword
@@ -446,6 +452,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Check to see if the user must obtain a Trust Token Id in order to complete a change password request.
    * When a user has enabled Two-Factor authentication, before you are allowed to use the Change Password API to change
@@ -463,6 +470,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Check to see if the user must obtain a Trust Token Id in order to complete a change password request.
    * When a user has enabled Two-Factor authentication, before you are allowed to use the Change Password API to change
@@ -480,6 +488,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Check to see if the user must obtain a Trust Request Id in order to complete a change password request.
    * When a user has enabled Two-Factor authentication, before you are allowed to use the Change Password API to change
@@ -497,6 +506,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Make a Client Credentials grant request to obtain an access token.
    *
@@ -519,6 +529,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Adds a comment to the user's account.
    *
@@ -532,6 +543,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Completes verification of an identity using verification codes from the Verify Start API.
    *
@@ -545,6 +557,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge without logging the user in
    *
@@ -558,6 +571,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Complete a WebAuthn authentication ceremony by validating the signature against the previously generated challenge and then login the user in
    *
@@ -571,6 +585,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Complete a WebAuthn registration ceremony by validating the client request and saving the new credential
    *
@@ -584,6 +599,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an API key. You can optionally specify a unique Id for the key, if not provided one will be generated.
    * an API key can only be created with equal or lesser authority. An API key cannot create another API key unless it is granted 
@@ -603,6 +619,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an application. You can optionally specify an Id for the application, if not provided one will be generated.
    *
@@ -618,6 +635,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a new role for an application. You must specify the Id of the application you are creating the role for.
    * You can optionally specify an Id for the role inside the ApplicationRole object itself, if not provided one will be generated.
@@ -637,6 +655,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an audit log with the message and user name (usually an email). Audit logs should be written anytime you
    * make changes to the FusionAuth database. When using the FusionAuth App web interface, any changes are automatically
@@ -652,6 +671,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a connector.  You can optionally specify an Id for the connector, if not provided one will be generated.
    *
@@ -667,6 +687,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a user consent type. You can optionally specify an Id for the consent type, if not provided one will be generated.
    *
@@ -682,6 +703,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an email template. You can optionally specify an Id for the template, if not provided one will be generated.
    *
@@ -697,6 +719,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an Entity. You can optionally specify an Id for the Entity. If not provided one will be generated.
    *
@@ -712,6 +735,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a Entity Type. You can optionally specify an Id for the Entity Type, if not provided one will be generated.
    *
@@ -727,6 +751,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a new permission for an entity type. You must specify the Id of the entity type you are creating the permission for.
    * You can optionally specify an Id for the permission inside the EntityTypePermission object itself, if not provided one will be generated.
@@ -746,6 +771,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a family with the user Id in the request as the owner and sole member of the family. You can optionally specify an Id for the
    * family, if not provided one will be generated.
@@ -762,6 +788,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a form.  You can optionally specify an Id for the form, if not provided one will be generated.
    *
@@ -777,6 +804,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a form field.  You can optionally specify an Id for the form, if not provided one will be generated.
    *
@@ -792,6 +820,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a group. You can optionally specify an Id for the group, if not provided one will be generated.
    *
@@ -807,6 +836,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a member in a group.
    *
@@ -820,6 +850,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an IP Access Control List. You can optionally specify an Id on this create request, if one is not provided one will be generated.
    *
@@ -835,6 +866,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an identity provider. You can optionally specify an Id for the identity provider, if not provided one will be generated.
    *
@@ -850,6 +882,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a Lambda. You can optionally specify an Id for the lambda, if not provided one will be generated.
    *
@@ -865,6 +898,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates an message template. You can optionally specify an Id for the template, if not provided one will be generated.
    *
@@ -880,6 +914,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a messenger.  You can optionally specify an Id for the messenger, if not provided one will be generated.
    *
@@ -895,6 +930,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a new custom OAuth scope for an application. You must specify the Id of the application you are creating the scope for.
    * You can optionally specify an Id for the OAuth scope on the URL, if not provided one will be generated.
@@ -914,6 +950,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a tenant. You can optionally specify an Id for the tenant, if not provided one will be generated.
    *
@@ -929,6 +966,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a Theme. You can optionally specify an Id for the theme, if not provided one will be generated.
    *
@@ -944,6 +982,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a user. You can optionally specify an Id for the user, if not provided one will be generated.
    *
@@ -959,6 +998,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a user action. This action cannot be taken on a user until this call successfully returns. Anytime after
    * that the user action can be applied to any user.
@@ -975,6 +1015,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a user reason. This user action reason cannot be used when actioning a user until this call completes
    * successfully. Anytime after that the user action reason can be used.
@@ -991,6 +1032,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a single User consent.
    *
@@ -1006,6 +1048,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Link an external user from a 3rd party identity provider to a FusionAuth user.
    *
@@ -1019,6 +1062,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Creates a webhook. You can optionally specify an Id for the webhook, if not provided one will be generated.
    *
@@ -1034,6 +1078,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Deactivates the application with the given Id.
    *
@@ -1047,6 +1092,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deactivates the FusionAuth Reactor.
    *
@@ -1058,6 +1104,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deactivates the user with the given Id.
    *
@@ -1071,6 +1118,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deactivates the user action with the given Id.
    *
@@ -1084,6 +1132,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deactivates the users with the given ids.
    *
@@ -1101,6 +1150,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deactivates the users with the given ids.
    *
@@ -1116,6 +1166,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the API key for the given Id.
    *
@@ -1129,6 +1180,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Hard deletes an application. This is a dangerous operation and should not be used in most circumstances. This will
    * delete the application, any registrations for that application, metrics and reports for the application, all the
@@ -1146,6 +1198,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Hard deletes an application role. This is a dangerous operation and should not be used in most circumstances. This
    * permanently removes the given role from all users that had it.
@@ -1163,6 +1216,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the connector for the given Id.
    *
@@ -1176,6 +1230,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the consent for the given Id.
    *
@@ -1189,6 +1244,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the email template for the given Id.
    *
@@ -1202,6 +1258,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the Entity for the given Id.
    *
@@ -1215,6 +1272,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes an Entity Grant for the given User or Entity.
    *
@@ -1233,6 +1291,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the Entity Type for the given Id.
    *
@@ -1246,6 +1305,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Hard deletes a permission. This is a dangerous operation and should not be used in most circumstances. This
    * permanently removes the given permission from all grants that had it.
@@ -1263,6 +1323,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the form for the given Id.
    *
@@ -1276,6 +1337,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the form field for the given Id.
    *
@@ -1289,6 +1351,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the group for the given Id.
    *
@@ -1302,6 +1365,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Removes users as members of a group.
    *
@@ -1315,6 +1379,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the IP Access Control List for the given Id.
    *
@@ -1328,6 +1393,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the identity provider for the given Id.
    *
@@ -1341,6 +1407,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the key for the given Id.
    *
@@ -1354,6 +1421,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the lambda for the given Id.
    *
@@ -1367,6 +1435,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the message template for the given Id.
    *
@@ -1380,6 +1449,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the messenger for the given Id.
    *
@@ -1393,6 +1463,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Hard deletes a custom OAuth scope.
    * OAuth workflows that are still requesting the deleted OAuth scope may fail depending on the application's unknown scope policy.
@@ -1410,6 +1481,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user registration for the given user and application.
    *
@@ -1425,6 +1497,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user registration for the given user and application along with the given JSON body that contains the event information.
    *
@@ -1442,6 +1515,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the tenant based on the given Id on the URL. This permanently deletes all information, metrics, reports and data associated
    * with the tenant and everything under the tenant (applications, users, etc).
@@ -1456,6 +1530,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the tenant for the given Id asynchronously.
    * This method is helpful if you do not want to wait for the delete operation to complete.
@@ -1471,6 +1546,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the tenant based on the given request (sent to the API as JSON). This permanently deletes all information, metrics, reports and data associated
    * with the tenant and everything under the tenant (applications, users, etc).
@@ -1487,6 +1563,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the theme for the given Id.
    *
@@ -1500,6 +1577,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user for the given Id. This permanently deletes all information, metrics, reports and data associated
    * with the user.
@@ -1515,6 +1593,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user action for the given Id. This permanently deletes the user action and also any history and logs of
    * the action being applied to any users.
@@ -1530,6 +1609,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user action reason for the given Id.
    *
@@ -1543,6 +1623,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Remove an existing link that has been made from a 3rd party identity provider to a FusionAuth user.
    *
@@ -1560,6 +1641,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the user based on the given request (sent to the API as JSON). This permanently deletes all information, metrics, reports and data associated
    * with the user.
@@ -1576,6 +1658,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the users with the given ids, or users matching the provided JSON query or queryString.
    * The order of preference is ids, query and then queryString, it is recommended to only provide one of the three for the request.
@@ -1595,6 +1678,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the users with the given ids, or users matching the provided JSON query or queryString.
    * The order of preference is ids, query and then queryString, it is recommended to only provide one of the three for the request.
@@ -1612,6 +1696,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the WebAuthn credential for the given Id.
    *
@@ -1625,6 +1710,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Deletes the webhook for the given Id.
    *
@@ -1638,6 +1724,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Disable two-factor authentication for a user.
    *
@@ -1655,6 +1742,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Disable two-factor authentication for a user using a JSON body rather than URL parameters.
    *
@@ -1670,6 +1758,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Enable two-factor authentication for a user.
    *
@@ -1685,6 +1774,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Exchanges an OAuth authorization code for an access token.
    * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint for an access token.
@@ -1709,6 +1799,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Exchanges an OAuth authorization code and code_verifier for an access token.
    * Makes a request to the Token endpoint to exchange the authorization code returned from the Authorize endpoint and a code_verifier for an access token.
@@ -1735,6 +1826,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Exchange a Refresh Token for an Access Token.
    * If you will be using the Refresh Token Grant, you will make a request to the Token endpoint to exchange the user’s refresh token for an access token.
@@ -1761,6 +1853,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Exchange a refresh token for a new JWT.
    *
@@ -1774,6 +1867,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Exchange User Credentials for a Token.
    * If you will be using the Resource Owner Password Credential Grant, you will make a request to the Token endpoint to exchange the user’s email and password for an access token.
@@ -1802,6 +1896,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Begins the forgot password sequence, which kicks off an email to the user so that they can reset their password.
    *
@@ -1815,6 +1910,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Generate a new Email Verification Id to be used with the Verify Email API. This API will not attempt to send an
    * email to the User. This API may be used to collect the verificationId for use with a third party system.
@@ -1830,6 +1926,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Generate a new RSA or EC key pair or an HMAC secret.
    *
@@ -1845,6 +1942,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Generate a new Application Registration Verification Id to be used with the Verify Registration API. This API will not attempt to send an
    * email to the User. This API may be used to collect the verificationId for use with a third party system.
@@ -1862,6 +1960,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Generate two-factor recovery codes for a user. Generating two-factor recovery codes will invalidate any existing recovery codes. 
    *
@@ -1875,6 +1974,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Generate a Two Factor secret that can be used to enable Two Factor authentication for a User. The response will contain
    * both the secret and a Base32 encoded form of the secret which can be shown to a User when using a 2 Step Authentication
@@ -1888,6 +1988,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Generate a Two Factor secret that can be used to enable Two Factor authentication for a User. The response will contain
    * both the secret and a Base32 encoded form of the secret which can be shown to a User when using a 2 Step Authentication
@@ -1903,6 +2004,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Handles login via third-parties including Social login, external OAuth and OpenID Connect, and other
    * login systems.
@@ -1918,6 +2020,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Import an existing RSA or EC key pair or an HMAC secret.
    *
@@ -1933,6 +2036,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Bulk imports refresh tokens. This request performs minimal validation and runs batch inserts of refresh tokens with the
    * expectation that each token represents a user that already exists and is registered for the corresponding FusionAuth
@@ -1953,6 +2057,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Bulk imports users. This request performs minimal validation and runs batch inserts of users with the expectation
    * that each user does not yet exist and each registration corresponds to an existing FusionAuth Application. This is done to
@@ -1973,6 +2078,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Import a WebAuthn credential
    *
@@ -1986,6 +2092,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Inspect an access token issued as the result of the User based grant such as the Authorization Code Grant, Implicit Grant, the User Credentials Grant or the Refresh Grant.
    *
@@ -2003,6 +2110,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Inspect an access token issued as the result of the Client Credentials Grant.
    *
@@ -2018,6 +2126,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Issue a new access token (JWT) for the requested Application after ensuring the provided JWT is valid. A valid
    * access token is properly signed and not expired.
@@ -2041,6 +2150,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Authenticates a user to FusionAuth. 
    * <p>
@@ -2056,6 +2166,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Sends a ping to FusionAuth indicating that the user was automatically logged into an application. When using
    * FusionAuth's SSO or your own, you should call this if the user is already logged in centrally, but accesses an
@@ -2077,6 +2188,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Sends a ping to FusionAuth indicating that the user was automatically logged into an application. When using
    * FusionAuth's SSO or your own, you should call this if the user is already logged in centrally, but accesses an
@@ -2093,6 +2205,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * The Logout API is intended to be used to remove the refresh token and access token cookies if they exist on the
    * client and revoke the refresh token stored. This API does nothing if the request does not contain an access
@@ -2112,6 +2225,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * The Logout API is intended to be used to remove the refresh token and access token cookies if they exist on the
    * client and revoke the refresh token stored. This API takes the refresh token in the JSON body.
@@ -2126,6 +2240,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves the identity provider for the given domain. A 200 response code indicates the domain is managed
    * by a registered identity provider. A 404 indicates the domain is not managed.
@@ -2140,6 +2255,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Modifies a temporal user action by changing the expiration of the action and optionally adding a comment to the
    * action.
@@ -2156,6 +2272,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Complete a login request using a passwordless code
    *
@@ -2169,6 +2286,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Updates an authentication API key by given id
    *
@@ -2184,6 +2302,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Updates, via PATCH, the application with the given Id.
    *
@@ -2199,6 +2318,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the application role with the given Id for the application.
    *
@@ -2217,6 +2337,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the connector with the given Id.
    *
@@ -2232,6 +2353,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the consent with the given Id.
    *
@@ -2247,6 +2369,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the email template with the given Id.
    *
@@ -2262,6 +2385,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the Entity with the given Id.
    *
@@ -2277,6 +2401,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the Entity Type with the given Id.
    *
@@ -2292,6 +2417,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Patches the permission with the given Id for the entity type.
    *
@@ -2310,6 +2436,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Patches the form with the given Id.
    *
@@ -2325,6 +2452,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Patches the form field with the given Id.
    *
@@ -2340,6 +2468,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the group with the given Id.
    *
@@ -2355,6 +2484,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Update the IP Access Control List with the given Id.
    *
@@ -2370,6 +2500,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the identity provider with the given Id.
    *
@@ -2385,6 +2516,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the available integrations.
    *
@@ -2398,6 +2530,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the lambda with the given Id.
    *
@@ -2413,6 +2546,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the message template with the given Id.
    *
@@ -2428,6 +2562,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the messenger with the given Id.
    *
@@ -2443,6 +2578,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the custom OAuth scope with the given Id for the application.
    *
@@ -2461,6 +2597,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the registration for the user with the given Id and the application defined in the request.
    *
@@ -2476,6 +2613,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the system configuration.
    *
@@ -2489,6 +2627,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the tenant with the given Id.
    *
@@ -2504,6 +2643,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the theme with the given Id.
    *
@@ -2519,6 +2659,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the user with the given Id.
    *
@@ -2534,6 +2675,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the user action with the given Id.
    *
@@ -2549,6 +2691,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, the user action reason with the given Id.
    *
@@ -2564,6 +2707,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Updates, via PATCH, a single User consent by Id.
    *
@@ -2579,6 +2723,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Patches the webhook with the given Id.
    *
@@ -2594,6 +2739,7 @@ public class FusionAuthClient {
         .patch()
         .go();
   }
+
   /**
    * Reactivates the application with the given Id.
    *
@@ -2608,6 +2754,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Reactivates the user with the given Id.
    *
@@ -2622,6 +2769,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Reactivates the user action with the given Id.
    *
@@ -2636,6 +2784,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Reconcile a User to FusionAuth using JWT issued from another Identity Provider.
    *
@@ -2649,6 +2798,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Request a refresh of the Entity search index. This API is not generally necessary and the search index will become consistent in a
    * reasonable amount of time. There may be scenarios where you may wish to manually request an index refresh. One example may be 
@@ -2663,6 +2813,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Request a refresh of the User search index. This API is not generally necessary and the search index will become consistent in a
    * reasonable amount of time. There may be scenarios where you may wish to manually request an index refresh. One example may be 
@@ -2677,6 +2828,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Regenerates any keys that are used by the FusionAuth Reactor.
    *
@@ -2688,6 +2840,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Registers a user for an application. If you provide the User and the UserRegistration object on this request, it
    * will create the user as well as register them for the application. This is called a Full Registration. However, if
@@ -2707,6 +2860,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Requests Elasticsearch to delete and rebuild the index for FusionAuth users or entities. Be very careful when running this request as it will 
    * increase the CPU and I/O load on your database until the operation completes. Generally speaking you do not ever need to run this operation unless 
@@ -2724,6 +2878,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Removes a user from the family with the given id.
    *
@@ -2739,6 +2894,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Re-sends the verification email to the user.
    *
@@ -2752,6 +2908,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Re-sends the verification email to the user. If the Application has configured a specific email template this will be used
    * instead of the tenant configuration.
@@ -2768,6 +2925,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Re-sends the application registration verification email to the user.
    *
@@ -2783,6 +2941,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Retrieves an authentication API key for the given id
    *
@@ -2796,6 +2955,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single action log (the log of a user action that was taken on a user previously) for the given Id.
    *
@@ -2809,6 +2969,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the actions for the user with the given Id. This will return all time based actions that are active,
    * and inactive as well as non-time based actions.
@@ -2823,6 +2984,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the actions for the user with the given Id that are currently preventing the User from logging in.
    *
@@ -2837,6 +2999,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the actions for the user with the given Id that are currently active.
    * An active action means one that is time based and has not been canceled, and has not ended.
@@ -2852,6 +3015,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the application for the given Id or all the applications if the Id is null.
    *
@@ -2865,6 +3029,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the applications.
    *
@@ -2876,6 +3041,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single audit log for the given Id.
    *
@@ -2889,6 +3055,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the connector with the given Id.
    *
@@ -2902,6 +3069,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the connectors.
    *
@@ -2913,6 +3081,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Consent for the given Id.
    *
@@ -2926,6 +3095,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the consent.
    *
@@ -2937,6 +3107,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the daily active user report between the two instants. If you specify an application id, it will only
    * return the daily active counts for that application.
@@ -2955,6 +3126,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the email template for the given Id. If you don't specify the id, this will return all the email templates.
    *
@@ -2968,6 +3140,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Creates a preview of the email template provided in the request. This allows you to preview an email template that
    * hasn't been saved to the database yet. The entire email template does not need to be provided on the request. This
@@ -2983,6 +3156,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves all the email templates.
    *
@@ -2994,6 +3168,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Entity for the given Id.
    *
@@ -3007,6 +3182,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves an Entity Grant for the given Entity and User/Entity.
    *
@@ -3025,6 +3201,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Entity Type for the given Id.
    *
@@ -3038,6 +3215,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the Entity Types.
    *
@@ -3049,6 +3227,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single event log for the given Id.
    *
@@ -3062,6 +3241,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the families that a user belongs to.
    *
@@ -3075,6 +3255,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the members of a family by the unique Family Id.
    *
@@ -3088,6 +3269,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the form with the given Id.
    *
@@ -3101,6 +3283,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the form field with the given Id.
    *
@@ -3114,6 +3297,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the forms fields
    *
@@ -3125,6 +3309,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the forms.
    *
@@ -3136,6 +3321,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the group for the given Id.
    *
@@ -3149,6 +3335,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the groups.
    *
@@ -3160,6 +3347,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the IP Access Control List with the given Id.
    *
@@ -3173,6 +3361,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the identity provider for the given Id or all the identity providers if the Id is null.
    *
@@ -3186,6 +3375,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves one or more identity provider for the given type. For types such as Google, Facebook, Twitter and LinkedIn, only a single 
    * identity provider can exist. For types such as OpenID Connect and SAMLv2 more than one identity provider can be configured so this request 
@@ -3201,6 +3391,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the identity providers.
    *
@@ -3212,6 +3403,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the actions for the user with the given Id that are currently inactive.
    * An inactive action means one that is time based and has been canceled or has expired, or is not time based.
@@ -3227,6 +3419,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the applications that are currently inactive.
    *
@@ -3239,6 +3432,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the user actions that are currently inactive.
    *
@@ -3251,6 +3445,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the available integrations.
    *
@@ -3262,6 +3457,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Public Key configured for verifying JSON Web Tokens (JWT) by the key Id (kid).
    *
@@ -3275,6 +3471,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Public Key configured for verifying the JSON Web Tokens (JWT) issued by the Login API by the Application Id.
    *
@@ -3288,6 +3485,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all Public Keys configured for verifying JSON Web Tokens (JWT).
    *
@@ -3299,6 +3497,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Returns public keys used by FusionAuth to cryptographically verify JWTs using the JSON Web Key format.
    *
@@ -3310,6 +3509,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the key for the given Id.
    *
@@ -3323,6 +3523,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the keys.
    *
@@ -3334,6 +3535,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the lambda for the given Id.
    *
@@ -3347,6 +3549,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the lambdas.
    *
@@ -3358,6 +3561,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the lambdas for the provided type.
    *
@@ -3371,6 +3575,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the login report between the two instants. If you specify an application id, it will only return the
    * login counts for that application.
@@ -3389,6 +3594,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the message template for the given Id. If you don't specify the id, this will return all the message templates.
    *
@@ -3402,6 +3608,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Creates a preview of the message template provided in the request, normalized to a given locale.
    *
@@ -3415,6 +3622,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves all the message templates.
    *
@@ -3426,6 +3634,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the messenger with the given Id.
    *
@@ -3439,6 +3648,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the messengers.
    *
@@ -3450,6 +3660,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the monthly active user report between the two instants. If you specify an application id, it will only
    * return the monthly active counts for that application.
@@ -3468,6 +3679,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a custom OAuth scope.
    *
@@ -3484,6 +3696,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the Oauth2 configuration for the application for the given Application Id.
    *
@@ -3498,6 +3711,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Returns the well known OpenID Configuration JSON document
    *
@@ -3509,6 +3723,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the password validation rules for a specific tenant. This method requires a tenantId to be provided 
    * through the use of a Tenant scoped API key or an HTTP header X-FusionAuth-TenantId to specify the Tenant Id.
@@ -3523,6 +3738,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the password validation rules for a specific tenant.
    * <p>
@@ -3538,6 +3754,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the children for the given parent email address.
    *
@@ -3551,6 +3768,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a pending identity provider link. This is useful to validate a pending link and retrieve meta-data about the identity provider link.
    *
@@ -3566,6 +3784,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth Reactor metrics.
    *
@@ -3577,6 +3796,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth Reactor status.
    *
@@ -3588,6 +3808,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the last number of login records.
    *
@@ -3603,6 +3824,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single refresh token by unique Id. This is not the same thing as the string value of the refresh token. If you have that, you already have what you need.
    *
@@ -3616,6 +3838,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the refresh tokens that belong to the user with the given Id.
    *
@@ -3629,6 +3852,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user registration for the user with the given Id and the given application id.
    *
@@ -3644,6 +3868,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the registration report between the two instants. If you specify an application id, it will only return
    * the registration counts for that application.
@@ -3662,6 +3887,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve the status of a re-index process. A status code of 200 indicates the re-index is in progress, a status code of  
    * 404 indicates no re-index is in progress.
@@ -3674,6 +3900,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the system configuration.
    *
@@ -3685,6 +3912,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth system health. This API will return 200 if the system is healthy, and 500 if the system is un-healthy.
    *
@@ -3696,6 +3924,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth system status. This request is anonymous and does not require an API key. When an API key is not provided the response will contain a single value in the JSON response indicating the current health check.
    *
@@ -3707,6 +3936,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth system status using an API key. Using an API key will cause the response to include the product version, health checks and various runtime metrics.
    *
@@ -3718,6 +3948,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the tenant for the given Id.
    *
@@ -3731,6 +3962,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the tenants.
    *
@@ -3742,6 +3974,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the theme for the given Id.
    *
@@ -3755,6 +3988,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the themes.
    *
@@ -3766,6 +4000,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the totals report. This contains all the total counts for each application and the global registration
    * count.
@@ -3778,6 +4013,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve two-factor recovery codes for a user.
    *
@@ -3791,6 +4027,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a user's two-factor status.
    * <p>
@@ -3811,6 +4048,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the given Id.
    *
@@ -3824,6 +4062,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user action for the given Id. If you pass in null for the id, this will return all the user
    * actions.
@@ -3838,6 +4077,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user action reason for the given Id. If you pass in null for the id, this will return all the user
    * action reasons.
@@ -3852,6 +4092,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the user action reasons.
    *
@@ -3863,6 +4104,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the user actions.
    *
@@ -3874,6 +4116,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user by a change password Id. The intended use of this API is to retrieve a user after the forgot
    * password workflow has been initiated and you may not know the user's email or username.
@@ -3888,6 +4131,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the given email.
    *
@@ -3901,6 +4145,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the loginId. The loginId can be either the username or the email.
    *
@@ -3914,6 +4159,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the loginId, using specific loginIdTypes.
    *
@@ -3929,6 +4175,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the given username.
    *
@@ -3942,6 +4189,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user by a verificationId. The intended use of this API is to retrieve a user after the forgot
    * password workflow has been initiated and you may not know the user's email or username.
@@ -3956,6 +4204,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
    * <p>
@@ -3977,6 +4226,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
    * <p>
@@ -3996,6 +4246,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the comments for the user with the given Id.
    *
@@ -4009,6 +4260,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a single User consent by Id.
    *
@@ -4022,6 +4274,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the consents for a User.
    *
@@ -4035,6 +4288,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
    *
@@ -4048,6 +4302,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve a single Identity Provider user (link).
    *
@@ -4065,6 +4320,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieve all Identity Provider users (links) for the user. Specify the optional identityProviderId to retrieve links for a particular IdP.
    *
@@ -4080,6 +4336,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the login report between the two instants for a particular user by Id. If you specify an application id, it will only return the
    * login counts for that application.
@@ -4100,6 +4357,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the login report between the two instants for a particular user by login Id. If you specify an application id, it will only return the
    * login counts for that application.
@@ -4120,6 +4378,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the last number of login records for a user.
    *
@@ -4137,6 +4396,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the user for the given Id. This method does not use an API key, instead it uses a JSON Web Token (JWT) for authentication.
    *
@@ -4150,6 +4410,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the FusionAuth version string.
    *
@@ -4161,6 +4422,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the WebAuthn credential for the given Id.
    *
@@ -4174,6 +4436,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all WebAuthn credentials for the given user.
    *
@@ -4187,6 +4450,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the webhook for the given Id. If you pass in null for the id, this will return all the webhooks.
    *
@@ -4200,6 +4464,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single webhook attempt log for the given Id.
    *
@@ -4213,6 +4478,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves a single webhook event log for the given Id.
    *
@@ -4226,6 +4492,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves all the webhooks.
    *
@@ -4237,6 +4504,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Revokes refresh tokens.
    * <p>
@@ -4277,6 +4545,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revokes a single refresh token by the unique Id. The unique Id is not sensitive as it cannot be used to obtain another JWT.
    *
@@ -4290,6 +4559,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revokes a single refresh token by using the actual refresh token value. This refresh token value is sensitive, so  be careful with this API request.
    *
@@ -4303,6 +4573,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revoke all refresh tokens that belong to an application by applicationId.
    *
@@ -4316,6 +4587,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revoke all refresh tokens that belong to a user by user Id.
    *
@@ -4329,6 +4601,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revoke all refresh tokens that belong to a user by user Id for a specific application by applicationId.
    *
@@ -4344,6 +4617,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revokes refresh tokens using the information in the JSON body. The handling for this method is the same as the revokeRefreshToken method
    * and is based on the information you provide in the RefreshDeleteRequest object. See that method for additional information.
@@ -4358,6 +4632,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Revokes a single User consent by Id.
    *
@@ -4371,6 +4646,7 @@ public class FusionAuthClient {
         .delete()
         .go();
   }
+
   /**
    * Searches applications with the specified criteria and pagination.
    *
@@ -4384,6 +4660,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the audit logs with the specified criteria and pagination.
    *
@@ -4397,6 +4674,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches consents with the specified criteria and pagination.
    *
@@ -4410,6 +4688,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches email templates with the specified criteria and pagination.
    *
@@ -4423,6 +4702,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches entities with the specified criteria and pagination.
    *
@@ -4436,6 +4716,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves the entities for the given ids. If any Id is invalid, it is ignored.
    *
@@ -4449,6 +4730,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Searches Entity Grants with the specified criteria and pagination.
    *
@@ -4462,6 +4744,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the entity types with the specified criteria and pagination.
    *
@@ -4475,6 +4758,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the event logs with the specified criteria and pagination.
    *
@@ -4488,6 +4772,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches group members with the specified criteria and pagination.
    *
@@ -4501,6 +4786,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches groups with the specified criteria and pagination.
    *
@@ -4514,6 +4800,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the IP Access Control Lists with the specified criteria and pagination.
    *
@@ -4527,6 +4814,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches identity providers with the specified criteria and pagination.
    *
@@ -4540,6 +4828,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches keys with the specified criteria and pagination.
    *
@@ -4553,6 +4842,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches lambdas with the specified criteria and pagination.
    *
@@ -4566,6 +4856,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the login records with the specified criteria and pagination.
    *
@@ -4579,6 +4870,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches tenants with the specified criteria and pagination.
    *
@@ -4592,6 +4884,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches themes with the specified criteria and pagination.
    *
@@ -4605,6 +4898,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches user comments with the specified criteria and pagination.
    *
@@ -4618,6 +4912,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves the users for the given ids. If any Id is invalid, it is ignored.
    *
@@ -4633,6 +4928,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the users for the given ids. If any Id is invalid, it is ignored.
    *
@@ -4646,6 +4942,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Retrieves the users for the given search criteria and pagination.
    *
@@ -4660,6 +4957,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Retrieves the users for the given search criteria and pagination.
    *
@@ -4676,6 +4974,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches the webhook event logs with the specified criteria and pagination.
    *
@@ -4689,6 +4988,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Searches webhooks with the specified criteria and pagination.
    *
@@ -4702,6 +5002,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send an email using an email template id. You can optionally provide <code>requestData</code> to access key value
    * pairs in the email template.
@@ -4718,6 +5019,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Sends out an email to a parent that they need to register and create a family or need to log in and add a child to their existing family.
    *
@@ -4731,6 +5033,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a passwordless authentication code in an email to complete login.
    *
@@ -4744,6 +5047,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling.
    *
@@ -4759,6 +5063,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a Two Factor authentication code to assist in setting up Two Factor authentication or disabling.
    *
@@ -4772,6 +5077,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a Two Factor authentication code to allow the completion of Two Factor authentication.
    *
@@ -4787,6 +5093,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a Two Factor authentication code to allow the completion of Two Factor authentication.
    *
@@ -4802,6 +5109,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Send a verification code using the appropriate transport for the identity type being verified.
    *
@@ -4815,6 +5123,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
    *
@@ -4829,6 +5138,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Start a passwordless login request by generating a passwordless code. This code can be sent to the User using the Send
    * Passwordless Code API or using a mechanism outside of FusionAuth. The passwordless login is completed by using the Passwordless Login API with this code.
@@ -4843,6 +5153,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Start a Two-Factor login request by generating a two-factor identifier. This code can then be sent to the Two Factor Send 
    * API (/api/two-factor/send)in order to send a one-time use code to a user. You can also use one-time use code returned 
@@ -4861,6 +5172,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Start a verification of an identity by generating a code. This code can be sent to the User using the Verify Send API
    * Verification Code API or using a mechanism outside of FusionAuth. The verification is completed by using the Verify Complete API with this code.
@@ -4875,6 +5187,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Start a WebAuthn authentication ceremony by generating a new challenge for the user
    *
@@ -4888,6 +5201,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Start a WebAuthn registration ceremony by generating a new challenge for the user
    *
@@ -4901,6 +5215,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Complete login using a 2FA challenge
    *
@@ -4914,6 +5229,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Updates an API key by given id
    *
@@ -4929,6 +5245,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the application with the given Id.
    *
@@ -4944,6 +5261,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the application role with the given Id for the application.
    *
@@ -4962,6 +5280,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the connector with the given Id.
    *
@@ -4977,6 +5296,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the consent with the given Id.
    *
@@ -4992,6 +5312,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the email template with the given Id.
    *
@@ -5007,6 +5328,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the Entity with the given Id.
    *
@@ -5022,6 +5344,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the Entity Type with the given Id.
    *
@@ -5037,6 +5360,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the permission with the given Id for the entity type.
    *
@@ -5055,6 +5379,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates a family with a given Id.
    *
@@ -5070,6 +5395,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the form with the given Id.
    *
@@ -5085,6 +5411,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the form field with the given Id.
    *
@@ -5100,6 +5427,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the group with the given Id.
    *
@@ -5115,6 +5443,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Creates a member in a group.
    *
@@ -5128,6 +5457,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the IP Access Control List with the given Id.
    *
@@ -5143,6 +5473,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the identity provider with the given Id.
    *
@@ -5158,6 +5489,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the available integrations.
    *
@@ -5171,6 +5503,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the key with the given Id.
    *
@@ -5186,6 +5519,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the lambda with the given Id.
    *
@@ -5201,6 +5535,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the message template with the given Id.
    *
@@ -5216,6 +5551,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the messenger with the given Id.
    *
@@ -5231,6 +5567,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the OAuth scope with the given Id for the application.
    *
@@ -5249,6 +5586,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the registration for the user with the given Id and the application defined in the request.
    *
@@ -5264,6 +5602,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the system configuration.
    *
@@ -5277,6 +5616,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the tenant with the given Id.
    *
@@ -5292,6 +5632,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the theme with the given Id.
    *
@@ -5307,6 +5648,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the user with the given Id.
    *
@@ -5322,6 +5664,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the user action with the given Id.
    *
@@ -5337,6 +5680,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the user action reason with the given Id.
    *
@@ -5352,6 +5696,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates a single User consent by Id.
    *
@@ -5367,6 +5712,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Updates the webhook with the given Id.
    *
@@ -5382,6 +5728,7 @@ public class FusionAuthClient {
         .put()
         .go();
   }
+
   /**
    * Creates or updates an Entity Grant. This is when a User/Entity is granted permissions to an Entity.
    *
@@ -5398,6 +5745,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Validates the end-user provided user_code from the user-interaction of the Device Authorization Grant.
    * If you build your own activation form you should validate the user provided code prior to beginning the Authorization grant.
@@ -5414,6 +5762,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * Validates the provided JWT (encoded JWT string) to ensure the token is valid. A valid access token is properly
    * signed and not expired.
@@ -5430,6 +5779,7 @@ public class FusionAuthClient {
         .get()
         .go();
   }
+
   /**
    * It's a JWT vending machine!
    * <p>
@@ -5451,6 +5801,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Confirms a email verification. The Id given is usually from an email sent to the user.
    *
@@ -5466,6 +5817,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Confirms a user's email address. 
    * <p>
@@ -5484,6 +5836,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Administratively verify a user's email address. Use this method to bypass email verification for the user.
    * <p>
@@ -5499,6 +5852,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Confirms an application registration. The Id given is usually from an email sent to the user.
    *
@@ -5514,6 +5868,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
   /**
    * Confirms a user's registration. 
    * <p>
@@ -5532,6 +5887,7 @@ public class FusionAuthClient {
         .post()
         .go();
   }
+
 
   protected <T, U> RESTClient<T, U> start(Class<T> type, Class<U> errorType) {
     return startAnonymous(type, errorType).authorization(apiKey);
