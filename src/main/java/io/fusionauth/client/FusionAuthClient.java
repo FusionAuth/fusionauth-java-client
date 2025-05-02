@@ -3902,13 +3902,26 @@ public class FusionAuthClient {
         .go();
   }
   /**
+   * Retrieves the user for the loginId. The loginId can be either the username or the email.
+   *
+   * @param loginId The email or username of the user.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId) {
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("loginId", loginId)
+        .get()
+        .go();
+  }
+  /**
    * Retrieves the user for the loginId, using specific loginIdTypes.
    *
    * @param loginId The email or username of the user.
    * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserResponse, Errors> retrieveUserByLoginIdWithLoginIdTypes(String loginId, Collection<String> loginIdTypes) {
+  public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId, Collection<String> loginIdTypes) {
     return start(UserResponse.class, Errors.class)
         .uri("/api/user")
         .urlParameter("loginId", loginId)
