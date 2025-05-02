@@ -15,14 +15,12 @@
  */
 package io.fusionauth.domain.api.user;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.IdentityType;
 import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
@@ -88,7 +86,6 @@ public class ForgotPasswordRequest extends BaseEventRequest {
 
   public void setEmail(String email) {
     this.loginId = email;
-    this.loginIdTypes = Collections.singletonList(IdentityType.email.name);
   }
 
   public String getUsername() {
@@ -97,6 +94,5 @@ public class ForgotPasswordRequest extends BaseEventRequest {
 
   public void setUsername(String username) {
     this.loginId = username;
-    this.loginIdTypes = Collections.singletonList(IdentityType.username.name);
   }
 }
