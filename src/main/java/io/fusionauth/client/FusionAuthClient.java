@@ -4164,7 +4164,7 @@ public class FusionAuthClient {
    * Retrieves the user for the loginId, using specific loginIdTypes.
    *
    * @param loginId The email or username of the user.
-   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId, Collection<String> loginIdTypes) {
