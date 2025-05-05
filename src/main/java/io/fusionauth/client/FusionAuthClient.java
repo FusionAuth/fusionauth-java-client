@@ -4167,7 +4167,7 @@ public class FusionAuthClient {
    * @param loginIdTypes the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId, Collection<String> loginIdTypes) {
+  public ClientResponse<UserResponse, Errors> retrieveUserByLoginId(String loginId, List<String> loginIdTypes) {
     return start(UserResponse.class, Errors.class)
         .uri("/api/user")
         .urlParameter("loginId", loginId)
@@ -4390,7 +4390,7 @@ public class FusionAuthClient {
    * @param loginIdTypes the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
    * @return The ClientResponse object.
    */
-  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginId(UUID applicationId, String loginId, long start, long end, Collection<String> loginIdTypes) {
+  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginId(UUID applicationId, String loginId, long start, long end, List<String> loginIdTypes) {
     return start(LoginReportResponse.class, Errors.class)
         .uri("/api/report/login")
         .urlParameter("applicationId", applicationId)
