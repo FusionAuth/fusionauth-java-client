@@ -4164,7 +4164,7 @@ public class FusionAuthClient {
    * Retrieves the user for the loginId, using specific loginIdTypes.
    *
    * @param loginId The email or username of the user.
-   * @param loginIdTypes (Optional) the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByLoginIdWithLoginIdTypes(String loginId, List<String> loginIdTypes) {
@@ -4387,7 +4387,7 @@ public class FusionAuthClient {
    * @param loginId The userId id.
    * @param start The start instant as UTC milliseconds since Epoch.
    * @param end The end instant as UTC milliseconds since Epoch.
-   * @param loginIdTypes (Optional) the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to. Defaults to [email, username]
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginIdAndLoginIdTypes(UUID applicationId, String loginId, long start, long end, List<String> loginIdTypes) {
