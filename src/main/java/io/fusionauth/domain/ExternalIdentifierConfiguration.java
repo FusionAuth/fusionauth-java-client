@@ -50,7 +50,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int passwordlessLoginTimeToLiveInSeconds = 180;
 
-  public SecureGeneratorConfiguration passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(4, SecureGeneratorType.randomDigits);
+  public SecureGeneratorConfiguration passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
 
   public int passwordlessShortCodeLoginTimeToLiveInSeconds = 180;
 

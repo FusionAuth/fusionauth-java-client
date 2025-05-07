@@ -35,13 +35,12 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
 
   public String loginStrategy;
 
-  
   public Map<String, Object> state;
 
   @JacksonConstructor
   public PasswordlessStartRequest() {
   }
-  
+
   public PasswordlessStartRequest(UUID applicationId, String loginId, List<String> loginIdTypes, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
