@@ -52,8 +52,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public SecureGeneratorConfiguration passwordlessOneTimeCodeLoginGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
 
-  public int passwordlessShortCodeLoginTimeToLiveInSeconds = 180;
-
   public int pendingAccountLinkTimeToLiveInSeconds = 60 * 60;
 
   public SecureGeneratorConfiguration phoneVerificationIdGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
@@ -112,7 +110,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
     this.passwordlessLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginGenerator);
     this.passwordlessOneTimeCodeLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessOneTimeCodeLoginGenerator);
-    this.passwordlessShortCodeLoginTimeToLiveInSeconds = other.passwordlessShortCodeLoginTimeToLiveInSeconds;
     this.pendingAccountLinkTimeToLiveInSeconds = other.pendingAccountLinkTimeToLiveInSeconds;
     this.registrationVerificationIdGenerator = new SecureGeneratorConfiguration(other.registrationVerificationIdGenerator);
     this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
@@ -148,7 +145,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            loginIntentTimeToLiveInSeconds == that.loginIntentTimeToLiveInSeconds &&
            oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
            passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
-           passwordlessShortCodeLoginTimeToLiveInSeconds == that.passwordlessShortCodeLoginTimeToLiveInSeconds &&
            pendingAccountLinkTimeToLiveInSeconds == that.pendingAccountLinkTimeToLiveInSeconds &&
            registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
            rememberOAuthScopeConsentChoiceTimeToLiveInSeconds == that.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds &&
@@ -193,7 +189,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         passwordlessLoginGenerator,
                         passwordlessLoginTimeToLiveInSeconds,
                         passwordlessOneTimeCodeLoginGenerator,
-                        passwordlessShortCodeLoginTimeToLiveInSeconds,
                         pendingAccountLinkTimeToLiveInSeconds,
                         registrationVerificationIdGenerator,
                         registrationVerificationIdTimeToLiveInSeconds,
