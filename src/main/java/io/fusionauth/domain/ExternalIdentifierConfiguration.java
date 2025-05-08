@@ -50,7 +50,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int passwordlessLoginTimeToLiveInSeconds = 180;
 
-  public SecureGeneratorConfiguration passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
+  public SecureGeneratorConfiguration passwordlessOneTimeCodeLoginGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
 
   public int passwordlessShortCodeLoginTimeToLiveInSeconds = 180;
 
@@ -111,7 +111,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
     this.passwordlessLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginGenerator);
-    this.passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessShortCodeLoginGenerator);
+    this.passwordlessOneTimeCodeLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessOneTimeCodeLoginGenerator);
     this.passwordlessShortCodeLoginTimeToLiveInSeconds = other.passwordlessShortCodeLoginTimeToLiveInSeconds;
     this.pendingAccountLinkTimeToLiveInSeconds = other.pendingAccountLinkTimeToLiveInSeconds;
     this.registrationVerificationIdGenerator = new SecureGeneratorConfiguration(other.registrationVerificationIdGenerator);
@@ -167,7 +167,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            Objects.equals(phoneVerificationIdGenerator, that.phoneVerificationIdGenerator) &&
            Objects.equals(phoneVerificationOneTimeCodeGenerator, that.phoneVerificationOneTimeCodeGenerator) &&
            Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
-           Objects.equals(passwordlessShortCodeLoginGenerator, that.passwordlessShortCodeLoginGenerator) &&
+           Objects.equals(passwordlessOneTimeCodeLoginGenerator, that.passwordlessOneTimeCodeLoginGenerator) &&
            Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
            Objects.equals(registrationVerificationOneTimeCodeGenerator, that.registrationVerificationOneTimeCodeGenerator) &&
            Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator) &&
@@ -192,7 +192,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         oneTimePasswordTimeToLiveInSeconds,
                         passwordlessLoginGenerator,
                         passwordlessLoginTimeToLiveInSeconds,
-                        passwordlessShortCodeLoginGenerator,
+                        passwordlessOneTimeCodeLoginGenerator,
                         passwordlessShortCodeLoginTimeToLiveInSeconds,
                         pendingAccountLinkTimeToLiveInSeconds,
                         registrationVerificationIdGenerator,
