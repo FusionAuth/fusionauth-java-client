@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.api.BaseEventRequest;
 
@@ -29,7 +30,7 @@ import io.fusionauth.domain.api.BaseEventRequest;
  * @author Brian Pontarelli
  */
 @SuppressWarnings("unused")
-public class ForgotPasswordRequest extends BaseEventRequest {
+public class ForgotPasswordRequest extends BaseEventRequest implements Buildable<ForgotPasswordRequest> {
   public UUID applicationId;
 
   public String changePasswordId;
