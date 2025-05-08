@@ -4161,6 +4161,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the user for the loginId, using specific loginIdTypes.
+   *
+   * @param loginId The email or username of the user.
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, Errors> retrieveUserByLoginIdWithLoginIdTypes(String loginId, List<String> loginIdTypes) {
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("loginId", loginId)
+        .urlParameter("loginIdTypes", loginIdTypes)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the user for the given username.
    *
    * @param username The username of the user.
@@ -4359,6 +4375,29 @@ public class FusionAuthClient {
         .urlParameter("loginId", loginId)
         .urlParameter("start", start)
         .urlParameter("end", end)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the login report between the two instants for a particular user by login Id, using specific loginIdTypes. If you specify an application id, it will only return the
+   * login counts for that application.
+   *
+   * @param applicationId (Optional) The application id.
+   * @param loginId The userId id.
+   * @param start The start instant as UTC milliseconds since Epoch.
+   * @param end The end instant as UTC milliseconds since Epoch.
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginIdAndLoginIdTypes(UUID applicationId, String loginId, long start, long end, List<String> loginIdTypes) {
+    return start(LoginReportResponse.class, Errors.class)
+        .uri("/api/report/login")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("loginId", loginId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .urlParameter("loginIdTypes", loginIdTypes)
         .get()
         .go();
   }
