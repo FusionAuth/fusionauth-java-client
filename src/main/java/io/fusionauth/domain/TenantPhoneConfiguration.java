@@ -26,6 +26,8 @@ import com.inversoft.json.JacksonConstructor;
  * @author Brady Wied
  */
 public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfiguration> {
+  public UUID forgotPasswordTemplateId;
+
   public UUID messengerId;
 
   public UUID passwordlessTemplateId;
@@ -46,6 +48,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   public TenantPhoneConfiguration(TenantPhoneConfiguration other) {
     messengerId = other.messengerId;
+    forgotPasswordTemplateId = other.forgotPasswordTemplateId;
     passwordlessTemplateId = other.passwordlessTemplateId;
     unverified = new PhoneUnverifiedOptions(other.unverified);
     verificationCompleteTemplateId = other.verificationCompleteTemplateId;
@@ -64,6 +67,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
     }
     TenantPhoneConfiguration that = (TenantPhoneConfiguration) o;
     return Objects.equals(messengerId, that.messengerId) &&
+           Objects.equals(forgotPasswordTemplateId, that.forgotPasswordTemplateId) &&
            Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationCompleteTemplateId, that.verificationCompleteTemplateId) &&
@@ -74,6 +78,6 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   @Override
   public int hashCode() {
-    return Objects.hash(messengerId, passwordlessTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
+    return Objects.hash(messengerId, forgotPasswordTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,7 +36,12 @@ public class ForgotPasswordRequest extends BaseEventRequest {
 
   public String loginId;
 
+  public List<String> loginIdTypes;
+
+  @Deprecated
   public boolean sendForgotPasswordEmail = true;
+
+  public Boolean sendForgotPasswordMessage;
 
   public Map<String, Object> state;
 
@@ -57,9 +63,9 @@ public class ForgotPasswordRequest extends BaseEventRequest {
     this.loginId = loginId;
   }
 
-  public ForgotPasswordRequest(String loginId, boolean sendForgotPasswordEmail) {
+  public ForgotPasswordRequest(String loginId, boolean sendForgotPasswordMessage) {
     this.loginId = loginId;
-    this.sendForgotPasswordEmail = sendForgotPasswordEmail;
+    this.sendForgotPasswordMessage = sendForgotPasswordMessage;
   }
 
   public ForgotPasswordRequest(EventInfo eventInfo, UUID applicationId, String loginId) {
