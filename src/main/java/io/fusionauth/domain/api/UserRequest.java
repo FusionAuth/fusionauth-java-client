@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,8 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
 
   public boolean sendSetPasswordEmail;
 
+  public boolean sendSetPasswordPhone;
+
   public boolean skipVerification;
 
   public User user;
@@ -51,6 +53,7 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
 
   public UserRequest(User user) {
     this.sendSetPasswordEmail = false;
+    this.sendSetPasswordPhone = false;
     this.skipVerification = true;
     this.user = user;
   }
