@@ -48,11 +48,9 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public SecureGeneratorConfiguration passwordlessLoginGenerator = new SecureGeneratorConfiguration(32, SecureGeneratorType.randomBytes);
 
+  public SecureGeneratorConfiguration passwordlessLoginOneTimeCodeGenerator = new SecureGeneratorConfiguration(6, SecureGeneratorType.randomDigits);
+
   public int passwordlessLoginTimeToLiveInSeconds = 180;
-
-  public SecureGeneratorConfiguration passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(4, SecureGeneratorType.randomDigits);
-
-  public int passwordlessShortCodeLoginTimeToLiveInSeconds = 180;
 
   public int pendingAccountLinkTimeToLiveInSeconds = 60 * 60;
 
@@ -111,8 +109,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.oneTimePasswordTimeToLiveInSeconds = other.oneTimePasswordTimeToLiveInSeconds;
     this.passwordlessLoginTimeToLiveInSeconds = other.passwordlessLoginTimeToLiveInSeconds;
     this.passwordlessLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginGenerator);
-    this.passwordlessShortCodeLoginGenerator = new SecureGeneratorConfiguration(other.passwordlessShortCodeLoginGenerator);
-    this.passwordlessShortCodeLoginTimeToLiveInSeconds = other.passwordlessShortCodeLoginTimeToLiveInSeconds;
+    this.passwordlessLoginOneTimeCodeGenerator = new SecureGeneratorConfiguration(other.passwordlessLoginOneTimeCodeGenerator);
     this.pendingAccountLinkTimeToLiveInSeconds = other.pendingAccountLinkTimeToLiveInSeconds;
     this.registrationVerificationIdGenerator = new SecureGeneratorConfiguration(other.registrationVerificationIdGenerator);
     this.registrationVerificationIdTimeToLiveInSeconds = other.registrationVerificationIdTimeToLiveInSeconds;
@@ -148,7 +145,6 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            loginIntentTimeToLiveInSeconds == that.loginIntentTimeToLiveInSeconds &&
            oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
            passwordlessLoginTimeToLiveInSeconds == that.passwordlessLoginTimeToLiveInSeconds &&
-           passwordlessShortCodeLoginTimeToLiveInSeconds == that.passwordlessShortCodeLoginTimeToLiveInSeconds &&
            pendingAccountLinkTimeToLiveInSeconds == that.pendingAccountLinkTimeToLiveInSeconds &&
            registrationVerificationIdTimeToLiveInSeconds == that.registrationVerificationIdTimeToLiveInSeconds &&
            rememberOAuthScopeConsentChoiceTimeToLiveInSeconds == that.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds &&
@@ -167,7 +163,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            Objects.equals(phoneVerificationIdGenerator, that.phoneVerificationIdGenerator) &&
            Objects.equals(phoneVerificationOneTimeCodeGenerator, that.phoneVerificationOneTimeCodeGenerator) &&
            Objects.equals(passwordlessLoginGenerator, that.passwordlessLoginGenerator) &&
-           Objects.equals(passwordlessShortCodeLoginGenerator, that.passwordlessShortCodeLoginGenerator) &&
+           Objects.equals(passwordlessLoginOneTimeCodeGenerator, that.passwordlessLoginOneTimeCodeGenerator) &&
            Objects.equals(registrationVerificationIdGenerator, that.registrationVerificationIdGenerator) &&
            Objects.equals(registrationVerificationOneTimeCodeGenerator, that.registrationVerificationOneTimeCodeGenerator) &&
            Objects.equals(setupPasswordIdGenerator, that.setupPasswordIdGenerator) &&
@@ -192,8 +188,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         oneTimePasswordTimeToLiveInSeconds,
                         passwordlessLoginGenerator,
                         passwordlessLoginTimeToLiveInSeconds,
-                        passwordlessShortCodeLoginGenerator,
-                        passwordlessShortCodeLoginTimeToLiveInSeconds,
+                        passwordlessLoginOneTimeCodeGenerator,
                         pendingAccountLinkTimeToLiveInSeconds,
                         registrationVerificationIdGenerator,
                         registrationVerificationIdTimeToLiveInSeconds,

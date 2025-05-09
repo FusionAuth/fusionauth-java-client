@@ -30,4 +30,6 @@ public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
   public String loginIdType;
 
   public String verificationStrategy;
+
+  
 }
