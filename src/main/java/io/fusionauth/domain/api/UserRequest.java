@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.UUID;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.SendSetPasswordIdentityType;
 import io.fusionauth.domain.User;
 
 /**
@@ -37,7 +38,13 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
 
   public boolean disableDomainBlock;
 
+  /**
+   * @deprecated This field is deprecated since 1.99.9 and will be removed in a future version. Use {@link #sendSetPasswordIdentityType} instead.
+   */
+  @Deprecated
   public boolean sendSetPasswordEmail;
+
+  public SendSetPasswordIdentityType sendSetPasswordIdentityType = SendSetPasswordIdentityType.doNotSend;
 
   public boolean skipVerification;
 
@@ -51,6 +58,7 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
 
   public UserRequest(User user) {
     this.sendSetPasswordEmail = false;
+    this.sendSetPasswordIdentityType = SendSetPasswordIdentityType.doNotSend;
     this.skipVerification = true;
     this.user = user;
   }
