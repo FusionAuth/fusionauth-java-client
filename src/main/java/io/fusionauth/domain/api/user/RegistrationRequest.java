@@ -40,7 +40,7 @@ public class RegistrationRequest extends BaseEventRequest {
   @Deprecated
   public boolean sendSetPasswordEmail;
 
-  public SendSetPasswordIdentityType sendSetPasswordIdentityType = SendSetPasswordIdentityType.doNotSend;
+  public SendSetPasswordIdentityType sendSetPasswordIdentityType;
 
   public boolean skipRegistrationVerification;
 
