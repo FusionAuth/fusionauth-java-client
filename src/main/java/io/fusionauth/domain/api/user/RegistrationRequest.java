@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package io.fusionauth.domain.api.user;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
+import io.fusionauth.domain.SendSetPasswordIdentityType;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
 import io.fusionauth.domain.api.BaseEventRequest;
@@ -33,7 +34,13 @@ public class RegistrationRequest extends BaseEventRequest {
 
   public UserRegistration registration;
 
+  /**
+   * @deprecated This field is deprecated since 1.99.9 and will be removed in a future version. Use {@link #sendSetPasswordIdentityType} instead.
+   */
+  @Deprecated
   public boolean sendSetPasswordEmail;
+
+  public SendSetPasswordIdentityType sendSetPasswordIdentityType;
 
   public boolean skipRegistrationVerification;
 

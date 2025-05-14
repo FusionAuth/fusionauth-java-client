@@ -32,6 +32,8 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   public UUID passwordlessTemplateId;
 
+  public UUID setPasswordTemplateId;
+
   public PhoneUnverifiedOptions unverified = new PhoneUnverifiedOptions();
 
   public UUID verificationCompleteTemplateId;
@@ -50,6 +52,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
     messengerId = other.messengerId;
     forgotPasswordTemplateId = other.forgotPasswordTemplateId;
     passwordlessTemplateId = other.passwordlessTemplateId;
+    setPasswordTemplateId = other.setPasswordTemplateId;
     unverified = new PhoneUnverifiedOptions(other.unverified);
     verificationCompleteTemplateId = other.verificationCompleteTemplateId;
     verificationStrategy = other.verificationStrategy;
@@ -69,6 +72,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
     return Objects.equals(messengerId, that.messengerId) &&
            Objects.equals(forgotPasswordTemplateId, that.forgotPasswordTemplateId) &&
            Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
+           Objects.equals(setPasswordTemplateId, that.setPasswordTemplateId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationCompleteTemplateId, that.verificationCompleteTemplateId) &&
            verificationStrategy == that.verificationStrategy &&
@@ -78,6 +82,6 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   @Override
   public int hashCode() {
-    return Objects.hash(messengerId, forgotPasswordTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
+    return Objects.hash(messengerId, forgotPasswordTemplateId, setPasswordTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
   }
 }
