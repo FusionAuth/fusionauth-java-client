@@ -26,6 +26,8 @@ import com.inversoft.json.ToString;
  * @author Spencer Witt
  */
 public class PhoneUnverifiedOptions implements Buildable<PhoneUnverifiedOptions> {
+  public boolean allowPhoneNumberChangeWhenGated;
+
   public UnverifiedBehavior behavior = UnverifiedBehavior.Allow;
 
   @JacksonConstructor
@@ -33,6 +35,7 @@ public class PhoneUnverifiedOptions implements Buildable<PhoneUnverifiedOptions>
   }
 
   public PhoneUnverifiedOptions(PhoneUnverifiedOptions other) {
+    this.allowPhoneNumberChangeWhenGated = other.allowPhoneNumberChangeWhenGated;
     this.behavior = other.behavior;
   }
 
@@ -45,12 +48,12 @@ public class PhoneUnverifiedOptions implements Buildable<PhoneUnverifiedOptions>
       return false;
     }
     PhoneUnverifiedOptions that = (PhoneUnverifiedOptions) o;
-    return behavior == that.behavior;
+    return allowPhoneNumberChangeWhenGated == that.allowPhoneNumberChangeWhenGated && behavior == that.behavior;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(behavior);
+    return Objects.hash(allowPhoneNumberChangeWhenGated, behavior);
   }
 
   @Override

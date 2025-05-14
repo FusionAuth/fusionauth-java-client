@@ -26,13 +26,34 @@ import com.inversoft.json.JacksonConstructor;
  * @author Brady Wied
  */
 public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfiguration> {
+
   public UUID forgotPasswordTemplateId;
 
+  public UUID identityUpdateTemplateId;
+
+  public boolean implicitPhoneVerificationAllowed;
+
+  public UUID loginIdInUseOnCreateTemplateId;
+
+  public UUID loginIdInUseOnUpdateTemplateId;
+
+  public UUID loginNewDeviceTemplateId;
+
+  public UUID loginSuspiciousTemplateId;
+
   public UUID messengerId;
+
+  public UUID passwordResetSuccessTemplateId;
+
+  public UUID passwordUpdateTemplateId;
 
   public UUID passwordlessTemplateId;
 
   public UUID setPasswordTemplateId;
+
+  public UUID twoFactorMethodAddTemplateId;
+
+  public UUID twoFactorMethodRemoveTemplateId;
 
   public PhoneUnverifiedOptions unverified = new PhoneUnverifiedOptions();
 
@@ -49,15 +70,25 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
   }
 
   public TenantPhoneConfiguration(TenantPhoneConfiguration other) {
-    messengerId = other.messengerId;
-    forgotPasswordTemplateId = other.forgotPasswordTemplateId;
-    passwordlessTemplateId = other.passwordlessTemplateId;
-    setPasswordTemplateId = other.setPasswordTemplateId;
-    unverified = new PhoneUnverifiedOptions(other.unverified);
-    verificationCompleteTemplateId = other.verificationCompleteTemplateId;
-    verificationStrategy = other.verificationStrategy;
-    verificationTemplateId = other.verificationTemplateId;
-    verifyPhoneNumber = other.verifyPhoneNumber;
+    this.forgotPasswordTemplateId = other.forgotPasswordTemplateId;
+    this.identityUpdateTemplateId = other.identityUpdateTemplateId;
+    this.implicitPhoneVerificationAllowed = other.implicitPhoneVerificationAllowed;
+    this.loginIdInUseOnCreateTemplateId = other.loginIdInUseOnCreateTemplateId;
+    this.loginIdInUseOnUpdateTemplateId = other.loginIdInUseOnUpdateTemplateId;
+    this.loginNewDeviceTemplateId = other.loginNewDeviceTemplateId;
+    this.loginSuspiciousTemplateId = other.loginSuspiciousTemplateId;
+    this.messengerId = other.messengerId;
+    this.passwordResetSuccessTemplateId = other.passwordResetSuccessTemplateId;
+    this.passwordUpdateTemplateId = other.passwordUpdateTemplateId;
+    this.passwordlessTemplateId = other.passwordlessTemplateId;
+    this.setPasswordTemplateId = other.setPasswordTemplateId;
+    this.twoFactorMethodAddTemplateId = other.twoFactorMethodAddTemplateId;
+    this.twoFactorMethodRemoveTemplateId = other.twoFactorMethodRemoveTemplateId;
+    this.unverified = new PhoneUnverifiedOptions(other.unverified);
+    this.verificationCompleteTemplateId = other.verificationCompleteTemplateId;
+    this.verificationStrategy = other.verificationStrategy;
+    this.verificationTemplateId = other.verificationTemplateId;
+    this.verifyPhoneNumber = other.verifyPhoneNumber;
   }
 
   @Override
@@ -69,10 +100,21 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
       return false;
     }
     TenantPhoneConfiguration that = (TenantPhoneConfiguration) o;
-    return Objects.equals(messengerId, that.messengerId) &&
+    return implicitPhoneVerificationAllowed == that.implicitPhoneVerificationAllowed &&
+           verifyPhoneNumber == that.verifyPhoneNumber &&
            Objects.equals(forgotPasswordTemplateId, that.forgotPasswordTemplateId) &&
+           Objects.equals(identityUpdateTemplateId, that.identityUpdateTemplateId) &&
+           Objects.equals(loginIdInUseOnCreateTemplateId, that.loginIdInUseOnCreateTemplateId) &&
+           Objects.equals(loginIdInUseOnUpdateTemplateId, that.loginIdInUseOnUpdateTemplateId) &&
+           Objects.equals(loginNewDeviceTemplateId, that.loginNewDeviceTemplateId) &&
+           Objects.equals(loginSuspiciousTemplateId, that.loginSuspiciousTemplateId) &&
+           Objects.equals(messengerId, that.messengerId) &&
+           Objects.equals(passwordResetSuccessTemplateId, that.passwordResetSuccessTemplateId) &&
+           Objects.equals(passwordUpdateTemplateId, that.passwordUpdateTemplateId) &&
            Objects.equals(passwordlessTemplateId, that.passwordlessTemplateId) &&
            Objects.equals(setPasswordTemplateId, that.setPasswordTemplateId) &&
+           Objects.equals(twoFactorMethodAddTemplateId, that.twoFactorMethodAddTemplateId) &&
+           Objects.equals(twoFactorMethodRemoveTemplateId, that.twoFactorMethodRemoveTemplateId) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationCompleteTemplateId, that.verificationCompleteTemplateId) &&
            verificationStrategy == that.verificationStrategy &&
@@ -82,6 +124,6 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   @Override
   public int hashCode() {
-    return Objects.hash(messengerId, forgotPasswordTemplateId, setPasswordTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
+    return Objects.hash(forgotPasswordTemplateId, identityUpdateTemplateId, implicitPhoneVerificationAllowed, loginIdInUseOnCreateTemplateId, loginIdInUseOnUpdateTemplateId, loginNewDeviceTemplateId, loginSuspiciousTemplateId, messengerId, passwordResetSuccessTemplateId, passwordUpdateTemplateId, passwordlessTemplateId, setPasswordTemplateId, twoFactorMethodAddTemplateId, twoFactorMethodRemoveTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
   }
 }
