@@ -410,7 +410,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   @JsonIgnore
   public UserIdentity resolvePrimaryIdentity(IdentityType loginIdType) {
     return identities.stream()
-                     
                      .filter(i -> i.primary)
                      .filter(i -> i.type.is(loginIdType))
                      .findFirst()
