@@ -101,7 +101,6 @@ public class SecureIdentity {
            passwordChangeReason == that.passwordChangeReason &&
            Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
            Objects.equals(salt, that.salt) &&
-           
            Objects.equals(uniqueUsername, that.uniqueUsername) &&
            Objects.equals(username, that.username) &&
            usernameStatus == that.usernameStatus &&
