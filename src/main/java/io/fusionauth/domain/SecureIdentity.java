@@ -35,8 +35,6 @@ public class SecureIdentity {
 
   public BreachedPasswordStatus breachedPasswordStatus;
 
-  
-  //               It probably doesn't hurt to leave it here if we want to do that.
   // Legacy field, this will represent the connector from the first identity, most likely email.
   public UUID connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
@@ -103,7 +101,6 @@ public class SecureIdentity {
            passwordChangeReason == that.passwordChangeReason &&
            Objects.equals(passwordLastUpdateInstant, that.passwordLastUpdateInstant) &&
            Objects.equals(salt, that.salt) &&
-           
            Objects.equals(uniqueUsername, that.uniqueUsername) &&
            Objects.equals(username, that.username) &&
            usernameStatus == that.usernameStatus &&

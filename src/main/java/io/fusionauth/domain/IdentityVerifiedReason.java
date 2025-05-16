@@ -50,6 +50,4 @@ public enum IdentityVerifiedReason {
    * Tenant policy did not require verifying this identity
    */
   Disabled // 6
-
-  
 }
