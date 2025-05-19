@@ -40,11 +40,6 @@ public class UserIdentity implements Buildable<UserIdentity> {
 
   public ZonedDateTime lastUpdateInstant;
 
-  
-  //                         I think this still has value because we can filter and moderate usernames. But perhaps only valuable for that type?
-  //                         So it seems like this should be nullable, and perhaps renamed to moderationStatus, contentStatus? Not sure
-  //                         we want to limit it to usernames, although that would be the primary use, and perhaps the only thing that is supported
-  //                         through the CleanSpeak integration.
   public ContentStatus moderationStatus;
 
   
@@ -55,15 +50,13 @@ public class UserIdentity implements Buildable<UserIdentity> {
   
   public boolean primary = true;
 
-  
-  //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
+  // technically redundant, since currently always returned on the User Object, but may need this for future Identity API
   @JsonIgnore
   public UUID tenantId;
 
   public IdentityType type;
 
-  
-  //                         retrieve it.. but we may want it if we create an Identity API which I think we will need.
+  // technically redundant, since currently always returned on the User Object, but may need this for future Identity API
   @JsonIgnore
   public UUID userId;
 
