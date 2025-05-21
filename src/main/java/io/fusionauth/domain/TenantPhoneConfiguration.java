@@ -31,7 +31,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   public UUID identityUpdateTemplateId;
 
-  public boolean implicitPhoneVerificationAllowed;
+  public boolean implicitPhoneVerificationAllowed = true;
 
   public UUID loginIdInUseOnCreateTemplateId;
 
