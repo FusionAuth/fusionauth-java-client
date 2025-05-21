@@ -26,7 +26,6 @@ import io.fusionauth.domain.api.BaseEventRequest;
 public class RefreshRequest extends BaseEventRequest implements Buildable<RefreshRequest> {
   public String refreshToken;
 
-  
   // Optional reduced TTL
   public Integer timeToLiveInSeconds;
 
