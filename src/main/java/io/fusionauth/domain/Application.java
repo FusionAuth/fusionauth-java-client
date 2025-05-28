@@ -45,6 +45,11 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class Application implements Buildable<Application>, Tenantable {
   public static final UUID FUSIONAUTH_APP_ID = UUID.fromString("3c219e58-ed0e-4b18-ad48-f4f92793ae32");
 
+  // not sure if I think this is the best place to keep this... but we need it somewhere
+  public static final UUID ORGANIZATION_ADMIN_APP_ID = UUID.fromString("b4ee0c98-5ef5-4f61-8e12-f04ec5eb0a8a");
+
+  public static final List<UUID> DEFAULT_APPLICATION_IDS = Arrays.asList(FUSIONAUTH_APP_ID, ORGANIZATION_ADMIN_APP_ID);
+
   public ApplicationAccessControlConfiguration accessControlConfiguration = new ApplicationAccessControlConfiguration();
 
   /**
@@ -106,6 +111,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public UUID themeId;
 
+  public UniversalConfiguration universalConfiguration = new UniversalConfiguration();
+
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
   public UUID verificationEmailTemplateId;
@@ -149,6 +156,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
+    this.universalConfiguration = new UniversalConfiguration(other.universalConfiguration);
     this.unverified = new RegistrationUnverifiedOptions(other.unverified);
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
@@ -215,6 +223,7 @@ public class Application implements Buildable<Application>, Tenantable {
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
+           Objects.equals(universalConfiguration, that.universalConfiguration) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
            Objects.equals(webAuthnConfiguration, that.webAuthnConfiguration) &&
@@ -258,7 +267,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, universalConfiguration, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -888,6 +897,42 @@ public class Application implements Buildable<Application>, Tenantable {
       public String toString() {
         return ToString.toString(this);
       }
+    }
+  }
+
+  public static class UniversalConfiguration {
+
+    // List of tenants allowed to use the universal application
+      public List<UniversalApplicationTenant> applicationTenants = new ArrayList<>();
+
+    // This is a flag to indicate that all tenants can use this universal application
+    public boolean global;
+
+    // This is a flag to indicate that this application is universal and can be used by the configured application tenants
+      public boolean universal;
+
+    @JacksonConstructor
+    public UniversalConfiguration() {
+    }
+
+    public UniversalConfiguration(UniversalConfiguration other) {
+      this.applicationTenants = other.applicationTenants.stream().map(UniversalApplicationTenant::new).collect(Collectors.toList());
+      this.global = other.global;
+      this.universal = other.universal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      UniversalConfiguration that = (UniversalConfiguration) o;
+      return universal == that.universal && Objects.equals(applicationTenants, that.applicationTenants);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(applicationTenants, universal);
     }
   }
 }

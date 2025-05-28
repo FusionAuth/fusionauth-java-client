@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,6 +100,7 @@ public class OAuthError implements OAuthResponse {
     invalid_target_entity_scope,
     invalid_entity_permission_scope,
     invalid_user_id,
+    invalid_tenant_id,
 
     // Grant disabled
     grant_type_disabled,
@@ -119,6 +120,7 @@ public class OAuthError implements OAuthResponse {
     missing_user_code,
     missing_user_id,
     missing_verification_uri,
+    missing_tenant_id,
 
     login_prevented,
     not_licensed,
