@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
+import java.util.Map;
 import java.util.UUID;
 
 import io.fusionauth.domain.Buildable;
@@ -29,7 +30,7 @@ public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
 
   public String loginIdType;
 
-  public String verificationStrategy;
+  public Map<String, Object> state;
 
-  
+  public String verificationStrategy;
 }
