@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,12 @@
 package io.fusionauth.domain.api.user.verify;
 
 import java.util.Map;
-import java.util.UUID;
 
 import io.fusionauth.domain.Buildable;
 
 /**
- * @author Brady Wied
+ * Verify Complete API response object.
  */
-public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
-  public UUID applicationId;
-
-  public String loginId;
-
-  public String loginIdType;
-
+public class VerifyCompleteResponse implements Buildable<VerifyCompleteResponse> {
   public Map<String, Object> state;
-
-  public String verificationStrategy;
 }
