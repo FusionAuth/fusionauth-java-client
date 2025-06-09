@@ -49,5 +49,9 @@ public enum IdentityVerifiedReason {
   /**
    * Tenant policy did not require verifying this identity
    */
-  Disabled // 6
+  Disabled, // 6
+  /**
+   * Verification was performed by administrative action
+   */
+  Administrative // 7
 }

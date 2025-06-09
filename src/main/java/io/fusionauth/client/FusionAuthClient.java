@@ -231,6 +231,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.api.user.verify.VerifyCompleteRequest;
+import io.fusionauth.domain.api.user.verify.VerifyRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartResponse;
 import io.fusionauth.domain.api.user.verify.VerifySendRequest;
@@ -5871,6 +5872,20 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> verifyEmailAddressByUserId(VerifyEmailRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Administratively verify a user identity.
+   *
+   * @param request The identity verify request that contains information to verify the identity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> verifyIdentity(VerifyRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
