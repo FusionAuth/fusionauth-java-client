@@ -30,6 +30,8 @@ import static io.fusionauth.domain.util.Normalizer.trim;
 public class UserIdentity implements Buildable<UserIdentity> {
   public String displayValue;
 
+  // we don't need DB generated IDs in API responses
+  @JsonIgnore
   public Long id;
 
   public ZonedDateTime insertInstant;
