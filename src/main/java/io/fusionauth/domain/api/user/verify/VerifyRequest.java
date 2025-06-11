@@ -15,8 +15,6 @@
  */
 package io.fusionauth.domain.api.user.verify;
 
-import java.util.UUID;
-
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.api.BaseEventRequest;
 
@@ -24,7 +22,7 @@ import io.fusionauth.domain.api.BaseEventRequest;
  * Identity verify request. Used to administratively verify an identity.
  */
 public class VerifyRequest extends BaseEventRequest implements Buildable<VerifyRequest> {
-  public Long identityId;
+  public String loginId;
 
-  public UUID userId;
+  public String loginIdType;
 }
