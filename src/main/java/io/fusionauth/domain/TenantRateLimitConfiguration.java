@@ -17,7 +17,6 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
@@ -33,7 +32,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(5, 60);
 
-  
+  public RateLimitedRequestConfiguration sendPasswordlessPhone = new RateLimitedRequestConfiguration(5, 60);
+
   public RateLimitedRequestConfiguration sendPhoneVerification = new RateLimitedRequestConfiguration(5, 60);
 
   public RateLimitedRequestConfiguration sendRegistrationVerification = new RateLimitedRequestConfiguration(5, 60);
@@ -70,28 +70,6 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
            Objects.equals(sendPhoneVerification, that.sendPhoneVerification) &&
            Objects.equals(sendRegistrationVerification, that.sendRegistrationVerification) &&
            Objects.equals(sendTwoFactor, that.sendTwoFactor);
-  }
-
-  @JsonIgnore
-  public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
-    switch (type) {
-      case FailedLogin:
-        return failedLogin;
-      case ForgotPassword:
-        return forgotPassword;
-      case SendEmailVerification:
-        return sendEmailVerification;
-      case SendPasswordless:
-        return sendPasswordless;
-      case SendPhoneVerification:
-        return sendPhoneVerification;
-      case SendRegistrationVerification:
-        return sendRegistrationVerification;
-      case SendTwoFactor:
-        return sendTwoFactor;
-      default:
-        throw new IllegalArgumentException("Unexpected request type [" + type + "].");
-    }
   }
 
   @Override
