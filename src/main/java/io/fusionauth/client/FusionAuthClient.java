@@ -231,6 +231,7 @@ import io.fusionauth.domain.api.user.VerifyEmailResponse;
 import io.fusionauth.domain.api.user.VerifyRegistrationRequest;
 import io.fusionauth.domain.api.user.VerifyRegistrationResponse;
 import io.fusionauth.domain.api.user.verify.VerifyCompleteRequest;
+import io.fusionauth.domain.api.user.verify.VerifyCompleteResponse;
 import io.fusionauth.domain.api.user.verify.VerifyRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartRequest;
 import io.fusionauth.domain.api.user.verify.VerifyStartResponse;
@@ -551,8 +552,8 @@ public class FusionAuthClient {
    * @param request The identity verify complete request that contains all the information used to verify the identity.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> completeVerifyIdentity(VerifyCompleteRequest request) {
-    return start(Void.TYPE, Errors.class)
+  public ClientResponse<VerifyCompleteResponse, Errors> completeVerifyIdentity(VerifyCompleteRequest request) {
+    return start(VerifyCompleteResponse.class, Errors.class)
         .uri("/api/identity/verify/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
