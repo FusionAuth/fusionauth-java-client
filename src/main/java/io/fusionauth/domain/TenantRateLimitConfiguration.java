@@ -17,6 +17,7 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 
@@ -70,6 +71,38 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
            Objects.equals(sendPhoneVerification, that.sendPhoneVerification) &&
            Objects.equals(sendRegistrationVerification, that.sendRegistrationVerification) &&
            Objects.equals(sendTwoFactor, that.sendTwoFactor);
+  }
+
+  /**
+   * Retrieve the RateLimitedRequestConfiguration for the specified type.
+   *
+   * @param type type to retrieve the configuration for.
+   * @return the config
+   * @deprecated just access the configuration, on this object directly, e.g. `tenantRateLimitConfiguration.failedLogin`.
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.99.9")
+  @JsonIgnore
+  public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
+    switch (type) {
+      case FailedLogin:
+        return failedLogin;
+      case ForgotPassword:
+        return forgotPassword;
+      case SendEmailVerification:
+        return sendEmailVerification;
+      case SendPasswordless:
+        return sendPasswordless;
+      case SendPhonePasswordless:
+        return sendPasswordlessPhone;
+      case SendPhoneVerification:
+        return sendPhoneVerification;
+      case SendRegistrationVerification:
+        return sendRegistrationVerification;
+      case SendTwoFactor:
+        return sendTwoFactor;
+      default:
+        throw new IllegalArgumentException("Unexpected request type [" + type + "].");
+    }
   }
 
   @Override
