@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,15 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user.verify;
+package io.fusionauth.domain.api.identity.verify;
+
+import java.util.Map;
 
 import io.fusionauth.domain.Buildable;
-import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
- * Verify Complete API request object.
+ * Verify Complete API response object.
  */
-public class VerifyCompleteRequest extends BaseEventRequest implements Buildable<VerifyCompleteRequest> {
-  public String oneTimeCode;
-
-  public String verificationId;
+public class VerifyCompleteResponse implements Buildable<VerifyCompleteResponse> {
+  public Map<String, Object> state;
 }
