@@ -33,7 +33,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(5, 60);
 
-  
+  public RateLimitedRequestConfiguration sendPasswordlessPhone = new RateLimitedRequestConfiguration(5, 60);
+
   public RateLimitedRequestConfiguration sendPhoneVerification = new RateLimitedRequestConfiguration(5, 60);
 
   public RateLimitedRequestConfiguration sendRegistrationVerification = new RateLimitedRequestConfiguration(5, 60);
@@ -72,6 +73,14 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
            Objects.equals(sendTwoFactor, that.sendTwoFactor);
   }
 
+  /**
+   * Retrieve the RateLimitedRequestConfiguration for the specified type.
+   *
+   * @param type type to retrieve the configuration for.
+   * @return the config
+   * @deprecated just access the configuration, on this object directly, e.g. `tenantRateLimitConfiguration.failedLogin`.
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.99.9")
   @JsonIgnore
   public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
     switch (type) {
@@ -83,6 +92,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
         return sendEmailVerification;
       case SendPasswordless:
         return sendPasswordless;
+      case SendPhonePasswordless:
+        return sendPasswordlessPhone;
       case SendPhoneVerification:
         return sendPhoneVerification;
       case SendRegistrationVerification:
