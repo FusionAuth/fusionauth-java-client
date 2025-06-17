@@ -26,5 +26,6 @@ public enum RateLimitedRequestType {
   SendPasswordless,
   SendRegistrationVerification,
   SendTwoFactor,
-  SendPhoneVerification
+  SendPhoneVerification,
+  SendPhonePasswordless
 }
