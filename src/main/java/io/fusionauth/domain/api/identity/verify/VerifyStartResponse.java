@@ -13,24 +13,24 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user.verify;
+package io.fusionauth.domain.api.identity.verify;
 
-import java.util.Map;
-import java.util.UUID;
-
-import io.fusionauth.domain.Buildable;
+import com.inversoft.json.JacksonConstructor;
 
 /**
  * @author Brady Wied
  */
-public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
-  public UUID applicationId;
+public class VerifyStartResponse {
+  public String oneTimeCode;
 
-  public String loginId;
+  public String verificationId;
 
-  public String loginIdType;
+  public VerifyStartResponse(String oneTimeCode, String verificationId) {
+    this.oneTimeCode = oneTimeCode;
+    this.verificationId = verificationId;
+  }
 
-  public Map<String, Object> state;
-
-  public String verificationStrategy;
+  @JacksonConstructor
+  private VerifyStartResponse() {
+  }
 }

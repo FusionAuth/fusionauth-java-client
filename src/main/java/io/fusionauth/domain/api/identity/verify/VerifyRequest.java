@@ -13,15 +13,16 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user.verify;
-
-import java.util.Map;
+package io.fusionauth.domain.api.identity.verify;
 
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.api.BaseEventRequest;
 
 /**
- * Verify Complete API response object.
+ * Identity verify request. Used to administratively verify an identity.
  */
-public class VerifyCompleteResponse implements Buildable<VerifyCompleteResponse> {
-  public Map<String, Object> state;
+public class VerifyRequest extends BaseEventRequest implements Buildable<VerifyRequest> {
+  public String loginId;
+
+  public String loginIdType;
 }

@@ -13,24 +13,22 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.api.user.verify;
+package io.fusionauth.domain.api.identity.verify;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
 
 /**
- * @author Brady Wied
+ * Verify Send API request object.
  */
-public class VerifyStartResponse {
-  public String oneTimeCode;
-
+public class VerifySendRequest implements Buildable<VerifySendRequest> {
   public String verificationId;
 
-  public VerifyStartResponse(String oneTimeCode, String verificationId) {
-    this.oneTimeCode = oneTimeCode;
+  public VerifySendRequest(String verificationId) {
     this.verificationId = verificationId;
   }
 
   @JacksonConstructor
-  private VerifyStartResponse() {
+  public VerifySendRequest() {
   }
 }
