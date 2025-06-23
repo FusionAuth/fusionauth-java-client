@@ -15,13 +15,20 @@
  */
 package io.fusionauth.domain.api.identity.verify;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 
 /**
  * Verify Send API request object.
  */
 public class VerifySendRequest implements Buildable<VerifySendRequest> {
-  public String oneTimeCode;
-
   public String verificationId;
+
+  public VerifySendRequest(String verificationId) {
+    this.verificationId = verificationId;
+  }
+
+  @JacksonConstructor
+  public VerifySendRequest() {
+  }
 }
