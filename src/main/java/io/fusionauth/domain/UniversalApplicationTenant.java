@@ -24,19 +24,23 @@ import com.inversoft.json.JacksonConstructor;
  * @author Lyle Schemmerling
  */
 public class UniversalApplicationTenant implements Buildable<UniversalApplicationTenant> {
+  public UUID applicationId;
+
   public UUID tenantId;
 
   @JacksonConstructor
   public UniversalApplicationTenant() {
   }
 
-  public UniversalApplicationTenant(UUID tenantId) {
+  public UniversalApplicationTenant(UUID tenantId, UUID applicationId) {
     this.tenantId = tenantId;
+    this.applicationId = applicationId;
   }
 
   // copy constructor
   public UniversalApplicationTenant(UniversalApplicationTenant other) {
     this.tenantId = other.tenantId;
+    this.applicationId = other.applicationId;
   }
 
   @Override
@@ -45,11 +49,11 @@ public class UniversalApplicationTenant implements Buildable<UniversalApplicatio
       return false;
     }
     UniversalApplicationTenant that = (UniversalApplicationTenant) o;
-    return Objects.equals(tenantId, that.tenantId);
+    return Objects.equals(tenantId, that.tenantId) && Objects.equals(applicationId, that.applicationId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(tenantId);
+    return Objects.hash(tenantId, applicationId);
   }
 }

@@ -892,9 +892,6 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public static class UniversalConfiguration {
 
-    // List of tenants allowed to use the universal application
-      public List<UniversalApplicationTenant> applicationTenants = new ArrayList<>();
-
     // This is a flag to indicate that all tenants can use this universal application
     public boolean global;
 
@@ -906,7 +903,6 @@ public class Application implements Buildable<Application>, Tenantable {
     }
 
     public UniversalConfiguration(UniversalConfiguration other) {
-      this.applicationTenants = other.applicationTenants.stream().map(UniversalApplicationTenant::new).collect(Collectors.toList());
       this.global = other.global;
       this.universal = other.universal;
     }
@@ -917,12 +913,12 @@ public class Application implements Buildable<Application>, Tenantable {
         return false;
       }
       UniversalConfiguration that = (UniversalConfiguration) o;
-      return universal == that.universal && Objects.equals(applicationTenants, that.applicationTenants);
+      return global == that.global && universal == that.universal;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(applicationTenants, universal);
+      return Objects.hash(global, universal);
     }
   }
 }

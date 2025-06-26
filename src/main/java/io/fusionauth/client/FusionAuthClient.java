@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,6 +145,8 @@ import io.fusionauth.domain.api.TwoFactorDisableRequest;
 import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
 import io.fusionauth.domain.api.TwoFactorResponse;
+import io.fusionauth.domain.api.UniversalApplicationTenantsRequest;
+import io.fusionauth.domain.api.UniversalApplicationTenantsResponse;
 import io.fusionauth.domain.api.UserActionReasonRequest;
 import io.fusionauth.domain.api.UserActionReasonResponse;
 import io.fusionauth.domain.api.UserActionRequest;
@@ -983,6 +985,23 @@ public class FusionAuthClient {
   }
 
   /**
+   * Adds the application tenants for universal applications.
+   *
+   * @param applicationId The Id of the application that the role belongs to.
+   * @param request The request object that contains all the information used to create the Entity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantsResponse, Errors> createUniversalApplicationTenants(UUID applicationId, UniversalApplicationTenantsRequest request) {
+    return start(UniversalApplicationTenantsResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a user. You can optionally specify an Id for the user, if not provided one will be generated.
    *
    * @param userId (Optional) The Id for the user. If not provided a secure random UUID will be generated.
@@ -1573,6 +1592,40 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/theme")
         .urlSegment(themeId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Removes the specified tenant from the universal application tenants list.
+   *
+   * @param applicationId The Id of the application that the role belongs to.
+   * @param tenantId The Id of the tenant to delete from the universal application tenants list.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteUniversalApplicationTenant(UUID applicationId, UUID tenantId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
+        .urlSegment(tenantId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Removes the specified tenants from the universal application tenants list.
+   *
+   * @param applicationId The Id of the universal application that the tenants are linked to.
+   * @param tenantIds The Ids of the tenants to delete from the universal application tenants list.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteUniversalApplicationTenants(UUID applicationId, Collection<UUID> tenantIds) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
+        .urlParameter("tenantIds", tenantIds)
         .delete()
         .go();
   }
@@ -4044,6 +4097,21 @@ public class FusionAuthClient {
         .urlParameter("userId", userId)
         .urlParameter("applicationId", applicationId)
         .urlSegment(twoFactorTrustId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the application tenants for universal applications.
+   *
+   * @param applicationId The Id of the application that the role belongs to.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantsResponse, Errors> retrieveUniversalApplicationTenants(UUID applicationId) {
+    return start(UniversalApplicationTenantsResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
         .get()
         .go();
   }
