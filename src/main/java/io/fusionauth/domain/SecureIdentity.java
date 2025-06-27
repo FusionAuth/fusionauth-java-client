@@ -72,10 +72,8 @@ public class SecureIdentity {
   public boolean verified;
 
   /**
-   * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.56.0, use the verifiedInstant
-   * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verifiedInstant}
+   * The instant when one of a user's identities was first verified. Once this value is set, it will not change.
    */
-  @Deprecated // JDK 8 compatible/client library (since = "1.56.0")
   public ZonedDateTime verifiedInstant;
 
   @Override
