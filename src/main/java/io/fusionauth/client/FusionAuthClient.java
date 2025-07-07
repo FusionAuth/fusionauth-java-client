@@ -145,6 +145,10 @@ import io.fusionauth.domain.api.TwoFactorDisableRequest;
 import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
 import io.fusionauth.domain.api.TwoFactorResponse;
+import io.fusionauth.domain.api.UniversalApplicationTenantRequest;
+import io.fusionauth.domain.api.UniversalApplicationTenantResponse;
+import io.fusionauth.domain.api.UniversalApplicationTenantSearchRequest;
+import io.fusionauth.domain.api.UniversalApplicationTenantSearchResponse;
 import io.fusionauth.domain.api.UserActionReasonRequest;
 import io.fusionauth.domain.api.UserActionReasonResponse;
 import io.fusionauth.domain.api.UserActionRequest;
@@ -983,6 +987,25 @@ public class FusionAuthClient {
   }
 
   /**
+   * Adds the application tenants for universal applications.
+   *
+   * @param applicationId The Id of the application that the universal application tenant belongs to.
+   * @param universalApplicationTenantId (Optional) The Id of the universal application tenant.
+   * @param request The request object that contains all the information used to create the UniversalApplicationTenants.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantResponse, Errors> createUniversalApplicationTenant(UUID applicationId, UUID universalApplicationTenantId, UniversalApplicationTenantRequest request) {
+    return start(UniversalApplicationTenantResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("universal-application-tenant")
+        .urlSegment(universalApplicationTenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a user. You can optionally specify an Id for the user, if not provided one will be generated.
    *
    * @param userId (Optional) The Id for the user. If not provided a secure random UUID will be generated.
@@ -1573,6 +1596,40 @@ public class FusionAuthClient {
     return start(Void.TYPE, Errors.class)
         .uri("/api/theme")
         .urlSegment(themeId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the universal application tenant.
+   *
+   * @param applicationId The Id of the application that the UniversalApplicationTenant belongs to.
+   * @param universalApplicationTenantId The Id of the UniversalApplicationTenant to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteUniversalApplicationTenant(UUID applicationId, UUID universalApplicationTenantId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("universal-application-tenant")
+        .urlSegment(universalApplicationTenantId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Removes the specified tenants from the universal application tenants list.
+   *
+   * @param applicationId The Id of the universal application that the tenants are linked to.
+   * @param tenantIds The Ids of the tenants to delete from the universal application tenants list.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteUniversalApplicationTenants(UUID applicationId, Collection<UUID> tenantIds) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
+        .urlParameter("tenantIds", tenantIds)
         .delete()
         .go();
   }
@@ -4049,6 +4106,23 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the universal application tenant.
+   *
+   * @param applicationId The Id of the universal application that tenant is mapped to
+   * @param universalApplicationTenantId The Id of the universal application tenant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantResponse, Errors> retrieveUniversalApplicationTenant(UUID applicationId, UUID universalApplicationTenantId) {
+    return start(UniversalApplicationTenantResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("application-tenant")
+        .urlSegment(universalApplicationTenantId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the user for the given Id.
    *
    * @param userId The Id of the user.
@@ -4883,6 +4957,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches universal application tenants for the specified applicationId and with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantSearchResponse, Errors> searchUniversalApplicationTenants(UniversalApplicationTenantSearchRequest request) {
+    return start(UniversalApplicationTenantSearchResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment("universal-application-tenant")
+        .urlSegment("search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches user comments with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -5598,6 +5688,25 @@ public class FusionAuthClient {
     return start(ThemeResponse.class, Errors.class)
         .uri("/api/theme")
         .urlSegment(themeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Adds the application tenants for universal applications.
+   *
+   * @param applicationId The Id of the application that the UniversalApplicationTenant belongs to.
+   * @param universalApplicationTenantId The Id of the universal application tenant.
+   * @param request The request object that contains all the information used to create the UniversalApplicationTenant.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UniversalApplicationTenantResponse, Errors> updateUniversalApplicationTenant(UUID applicationId, UUID universalApplicationTenantId, UniversalApplicationTenantRequest request) {
+    return start(UniversalApplicationTenantResponse.class, Errors.class)
+        .uri("/api/application")
+        .urlSegment(applicationId)
+        .urlSegment("universal-application-tenant")
+        .urlSegment(universalApplicationTenantId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .put()
         .go();
