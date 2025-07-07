@@ -15,16 +15,29 @@
  */
 package io.fusionauth.domain;
 
+import java.time.ZonedDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 
 /**
+ * An object that represents the mapping between a Universal Application and a Tenant.
+ *
  * @author Lyle Schemmerling
  */
 public class UniversalApplicationTenant implements Buildable<UniversalApplicationTenant> {
   public UUID applicationId;
+
+  public Map<String, Object> data = new LinkedHashMap<>();
+
+  public UUID id;
+
+  public ZonedDateTime insertInstant;
+
+  public ZonedDateTime lastUpdateInstant;
 
   public UUID tenantId;
 
@@ -32,15 +45,14 @@ public class UniversalApplicationTenant implements Buildable<UniversalApplicatio
   public UniversalApplicationTenant() {
   }
 
-  public UniversalApplicationTenant(UUID tenantId, UUID applicationId) {
-    this.tenantId = tenantId;
-    this.applicationId = applicationId;
-  }
-
   // copy constructor
   public UniversalApplicationTenant(UniversalApplicationTenant other) {
+    this.id = other.id;
     this.tenantId = other.tenantId;
     this.applicationId = other.applicationId;
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.data = new LinkedHashMap<>(other.data);
   }
 
   @Override
@@ -49,11 +61,16 @@ public class UniversalApplicationTenant implements Buildable<UniversalApplicatio
       return false;
     }
     UniversalApplicationTenant that = (UniversalApplicationTenant) o;
-    return Objects.equals(tenantId, that.tenantId) && Objects.equals(applicationId, that.applicationId);
+    return Objects.equals(id, that.id)
+           && Objects.equals(insertInstant, that.insertInstant)
+           && Objects.equals(lastUpdateInstant, that.lastUpdateInstant)
+           && Objects.equals(applicationId, that.applicationId)
+           && Objects.equals(tenantId, that.tenantId)
+           && Objects.equals(data, that.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(tenantId, applicationId);
+    return Objects.hash(id, insertInstant, lastUpdateInstant, applicationId, tenantId, data);
   }
 }

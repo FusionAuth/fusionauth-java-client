@@ -104,7 +104,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public UUID themeId;
 
-  public UniversalConfiguration universalConfiguration = new UniversalConfiguration();
+  public UniversalApplicationConfiguration universalConfiguration = new UniversalApplicationConfiguration();
 
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
@@ -149,7 +149,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
-    this.universalConfiguration = new UniversalConfiguration(other.universalConfiguration);
+    this.universalConfiguration = new UniversalApplicationConfiguration(other.universalConfiguration);
     this.unverified = new RegistrationUnverifiedOptions(other.unverified);
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
@@ -890,35 +890,4 @@ public class Application implements Buildable<Application>, Tenantable {
     }
   }
 
-  public static class UniversalConfiguration {
-
-    // This is a flag to indicate that all tenants can use this universal application
-    public boolean global;
-
-    // This is a flag to indicate that this application is universal and can be used by the configured application tenants
-      public boolean universal;
-
-    @JacksonConstructor
-    public UniversalConfiguration() {
-    }
-
-    public UniversalConfiguration(UniversalConfiguration other) {
-      this.global = other.global;
-      this.universal = other.universal;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (o == null || getClass() != o.getClass()) {
-        return false;
-      }
-      UniversalConfiguration that = (UniversalConfiguration) o;
-      return global == that.global && universal == that.universal;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(global, universal);
-    }
-  }
 }

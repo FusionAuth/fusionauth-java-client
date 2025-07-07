@@ -15,30 +15,39 @@
  */
 package io.fusionauth.domain.api;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.UniversalApplicationTenant;
 
 /**
+ * The request object for creating or updating a Universal Application Tenant.
+ *
  * @author Lyle Schemmerling
  */
-public class UniversalApplicationTenantsRequest implements Buildable<UniversalApplicationTenantsRequest> {
-  public List<UniversalApplicationTenant> applicationTenants = new ArrayList<>();
+public class UniversalApplicationTenantRequest implements Buildable<UniversalApplicationTenantRequest> {
+  public UniversalApplicationTenant universalApplicationTenant;
+
+  @JacksonConstructor
+  public UniversalApplicationTenantRequest() {
+  }
+
+  public UniversalApplicationTenantRequest(UniversalApplicationTenant universalApplicationTenant) {
+    this.universalApplicationTenant = universalApplicationTenant;
+  }
 
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UniversalApplicationTenantsRequest that = (UniversalApplicationTenantsRequest) o;
-    return Objects.equals(applicationTenants, that.applicationTenants);
+    UniversalApplicationTenantRequest that = (UniversalApplicationTenantRequest) o;
+    return Objects.equals(universalApplicationTenant, that.universalApplicationTenant);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(applicationTenants);
+    return Objects.hashCode(universalApplicationTenant);
   }
 }
