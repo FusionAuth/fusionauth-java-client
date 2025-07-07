@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.event.EventRequest;
 import io.fusionauth.domain.event.EventType;
 
 /**
@@ -41,7 +42,7 @@ public class WebhookEventLog implements Buildable<WebhookEventLog> {
 
   public Map<String, Object> data = new LinkedHashMap<>();
 
-  public Map<String, Object> event;
+  public EventRequest event;
 
   public WebhookEventResult eventResult = WebhookEventResult.Running;
 
