@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum EventType {
   // Be careful, these, despite the eventName, are ordinal based in the DB. Always add to the end.
-  
+
   JWTPublicKeyUpdate("jwt.public-key.update"),
 
   // TODO : 2.0 : Rename -> refresh-token.revoke
@@ -138,7 +138,9 @@ public enum EventType {
 
   Test("test"),
 
-  IdentityVerified("identity.verified");
+  IdentityVerified("identity.verified"),
+
+  UserIdentityUpdate("user.identity.update");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -182,6 +184,7 @@ public enum EventType {
                          EventType.UserEmailVerified,
                          EventType.UserIdentityProviderLink,
                          EventType.UserIdentityProviderUnlink,
+                         EventType.UserIdentityUpdate,
                          EventType.UserLoginIdDuplicateOnCreate,
                          EventType.UserLoginIdDuplicateOnUpdate,
                          EventType.UserLoginFailed,
