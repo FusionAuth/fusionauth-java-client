@@ -27,8 +27,6 @@ import io.fusionauth.domain.connector.BaseConnectorConfiguration;
  * @author Daniel DeGroff
  */
 public class SecureIdentity {
-  
-  //                            fixes UAT.post_noPassword_has_email_and_phone.
   public final List<UserIdentity> identities = new ArrayList<>();
 
   public ZonedDateTime breachedPasswordLastCheckedInstant;

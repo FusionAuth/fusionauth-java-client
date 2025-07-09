@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,6 @@ import io.fusionauth.client.json.WebhookEventDeserializer;
  * @author Brian Pontarelli
  */
 public class EventRequest {
-  
-  //                   Some tests still use it, maybe we should only bind it ot the TestObjectMapper?
-  //                   See one usage: UserActionTest.post_noPassword_has_email_and_phone
   @JsonDeserialize(using = WebhookEventDeserializer.class)
   public BaseEvent event;
 
