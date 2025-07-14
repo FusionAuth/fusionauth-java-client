@@ -99,7 +99,7 @@ public class Tenant implements Buildable<Tenant> {
   public String name;
 
   public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
-  
+
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
@@ -154,7 +154,6 @@ public class Tenant implements Buildable<Tenant> {
     this.multiFactorConfiguration = new TenantMultiFactorConfiguration(other.multiFactorConfiguration);
     this.name = other.name;
     this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
-    this.passwordEnabled = other.passwordEnabled;
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
     this.phoneConfiguration = new TenantPhoneConfiguration(other.phoneConfiguration);
@@ -180,7 +179,6 @@ public class Tenant implements Buildable<Tenant> {
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
-           passwordEnabled == tenant.passwordEnabled &&
            Objects.equals(captchaConfiguration, tenant.captchaConfiguration) &&
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(data, tenant.data) &&
@@ -247,7 +245,6 @@ public class Tenant implements Buildable<Tenant> {
                         maximumPasswordAge,
                         minimumPasswordAge,
                         name,
-                        passwordEnabled,
                         passwordEncryptionConfiguration,
                         passwordValidationRules,
                         phoneConfiguration,
