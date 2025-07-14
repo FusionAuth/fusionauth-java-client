@@ -99,9 +99,7 @@ public class Tenant implements Buildable<Tenant> {
   public String name;
 
   public TenantOAuth2Configuration oauthConfiguration = new TenantOAuth2Configuration();
-
-  public boolean passwordEnabled = true;
-
+  
   public PasswordEncryptionConfiguration passwordEncryptionConfiguration = new PasswordEncryptionConfiguration();
 
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
