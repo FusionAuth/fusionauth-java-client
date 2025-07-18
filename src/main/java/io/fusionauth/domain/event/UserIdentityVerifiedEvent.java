@@ -24,11 +24,11 @@ import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
- * Models the identity verified event
+ * Models the user identity verified event
  *
  * @author Brady Wied
  */
-public class IdentityVerifiedEvent extends BaseUserEvent implements Buildable<IdentityVerifiedEvent> {
+public class UserIdentityVerifiedEvent extends BaseUserEvent implements Buildable<UserIdentityVerifiedEvent> {
   public final String loginId;
 
   public final String loginIdType;
@@ -41,14 +41,14 @@ public class IdentityVerifiedEvent extends BaseUserEvent implements Buildable<Id
    * @param loginIdType describes what loginId is
    * @param user        (Optional) user the identity was verified for.
    */
-  public IdentityVerifiedEvent(EventInfo info, String loginId, String loginIdType, User user) {
+  public UserIdentityVerifiedEvent(EventInfo info, String loginId, String loginIdType, User user) {
     super(info, user);
     this.loginId = loginId;
     this.loginIdType = loginIdType;
   }
 
   @JacksonConstructor
-  private IdentityVerifiedEvent() {
+  private UserIdentityVerifiedEvent() {
     // Jackson will set values for these, but final field are still good
     this.loginId = null;
     this.loginIdType = null;
@@ -65,7 +65,7 @@ public class IdentityVerifiedEvent extends BaseUserEvent implements Buildable<Id
     if (!super.equals(o)) {
       return false;
     }
-    IdentityVerifiedEvent that = (IdentityVerifiedEvent) o;
+    UserIdentityVerifiedEvent that = (UserIdentityVerifiedEvent) o;
     return Objects.equals(loginId, that.loginId) && Objects.equals(loginIdType, that.loginIdType);
   }
 
@@ -77,7 +77,7 @@ public class IdentityVerifiedEvent extends BaseUserEvent implements Buildable<Id
 
   @Override
   public EventType getType() {
-    return EventType.IdentityVerified;
+    return EventType.UserIdentityVerified;
   }
 
   @Override

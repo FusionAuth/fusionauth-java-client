@@ -138,7 +138,7 @@ public enum EventType {
 
   Test("test"),
 
-  IdentityVerified("identity.verified"),
+  UserIdentityVerified("user.identity.verified"),
 
   UserIdentityUpdate("user.identity.update");
 
@@ -172,7 +172,6 @@ public enum EventType {
                          EventType.GroupMemberUpdateComplete,
                          EventType.GroupUpdate,
                          EventType.GroupUpdateComplete,
-                         EventType.IdentityVerified,
                          EventType.UserAction,
                          EventType.UserBulkCreate,
                          EventType.UserCreate,
@@ -185,6 +184,7 @@ public enum EventType {
                          EventType.UserIdentityProviderLink,
                          EventType.UserIdentityProviderUnlink,
                          EventType.UserIdentityUpdate,
+                         EventType.UserIdentityVerified,
                          EventType.UserLoginIdDuplicateOnCreate,
                          EventType.UserLoginIdDuplicateOnUpdate,
                          EventType.UserLoginFailed,
