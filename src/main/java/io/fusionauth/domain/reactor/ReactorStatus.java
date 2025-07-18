@@ -57,9 +57,9 @@ public class ReactorStatus {
 
   public boolean licensed;
 
-  public ReactorFeatureStatus organizationAdminApplication = ReactorFeatureStatus.UNKNOWN;
-
   public ReactorFeatureStatus scimServer = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus tenantManagerApplication = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
@@ -91,7 +91,7 @@ public class ReactorStatus {
     expiration = other.expiration;
     licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
-    organizationAdminApplication = other.organizationAdminApplication;
+    tenantManagerApplication = other.tenantManagerApplication;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
     universalApplication = other.universalApplication;
@@ -124,7 +124,7 @@ public class ReactorStatus {
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
-           organizationAdminApplication == that.organizationAdminApplication &&
+           tenantManagerApplication == that.tenantManagerApplication &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection &&
            universalApplication == that.universalApplication &&
@@ -150,7 +150,7 @@ public class ReactorStatus {
                         expiration,
                         licensed,
                         licenseAttributes,
-                        organizationAdminApplication,
+                        tenantManagerApplication,
                         scimServer,
                         threatDetection,
                         universalApplication,
