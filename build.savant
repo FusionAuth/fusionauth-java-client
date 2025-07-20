@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ fusionauthJWTVersion = "5.2.4"
 jacksonVersion = "2.15.4"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
-restifyVersion = "4.2.1"
+restifyVersion = "4.3.0"
 testngVersion = "7.5.1"
 
 project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.58.0", licenses: ["ApacheV2_0"]) {
@@ -119,6 +119,13 @@ target(name: "idea", description: "Updates the IntelliJ IDEA module file") {
 
 target(name: "pom", description: "Updates the pom.xml file") {
   pom.update()
+
+  // Hack. I think we need to update the pom plugin to optionally remove -{integration} from versions.
+  file.copy(to: ".") {
+    fileSet(dir: ".", includePatterns: [~/pom.xml/])
+    filter(token: "-\\{integration\\}", value: "")
+  }
+  ensureFileNotChanged("pom.xml", "pom")
 }
 
 target(name: "bundle", description: "Builds the project release bundle", dependsOn: ["jar"]) {
@@ -135,4 +142,38 @@ target(name: "bundle", description: "Builds the project release bundle", depends
 
 target(name: "write-licenses", description: "Write licenses to build/licenses") {
   dependency.writeLicenses(to: "build/licenses")
+}
+
+def ensureFileNotChanged(String filename, String target) {
+  if (!cleanExecute("git",
+                    "diff",
+                    "--exit-code",
+                    filename)) {
+    fail(
+        "${filename} was changed. If this is not being run locally, run the [${target}] Savant target locally to update the file and commit/push the result.")
+  }
+}
+
+boolean cleanExecute(String... args) {
+  ProcessBuilder pb = new ProcessBuilder(args)
+  clearEnvironment(pb)
+  return execute(pb, '.')
+}
+
+boolean execute(ProcessBuilder pb, String pathname) {
+  def process = pb.inheritIO().directory(new File(pathname)).start()
+  process.consumeProcessOutput(System.out, System.err)
+  process.waitFor()
+  return process.exitValue() == 0
+}
+
+/**
+ * Clears out the RBENV variables in the environment.
+ *
+ * @param pb The ProcessBuilder to clear out.
+ */
+static def clearEnvironment(ProcessBuilder pb) {
+  pb.environment().remove("RBENV_VERSION")
+  pb.environment().remove("RBENV_DIR")
+  pb.environment().remove("RBENV_ROOT")
 }
