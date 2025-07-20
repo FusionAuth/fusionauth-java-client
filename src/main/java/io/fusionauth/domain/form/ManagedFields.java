@@ -94,34 +94,6 @@ public final class ManagedFields {
                            .with(f -> f.data.put("leftAddon", "mobile"))
                            .with(f -> f.name = "[Admin User] phone number"));
 
-    
-    map.put("identities.email",
-            new FormField().with(f -> f.key = "identities.email")
-                           .with(f -> f.confirm = false)
-                           .with(f -> f.control = FormControl.text)
-                           .with(f -> f.required = false)
-                           .with(f -> f.type = FormDataType.email)
-                           .with(f -> f.data.put("leftAddon", "user"))
-                           .with(f -> f.name = "[Admin User] identities.email"));
-
-    map.put("identities.phoneNumber",
-            new FormField().with(f -> f.key = "identities.phoneNumber")
-                           .with(f -> f.confirm = false)
-                           .with(f -> f.control = FormControl.text)
-                           .with(f -> f.required = false)
-                           .with(f -> f.type = FormDataType.phoneNumber)
-                           .with(f -> f.data.put("leftAddon", "mobile"))
-                           .with(f -> f.name = "[Admin User] identities.phoneNumber"));
-
-    map.put("identities.username",
-            new FormField().with(f -> f.key = "identities.username")
-                           .with(f -> f.confirm = false)
-                           .with(f -> f.control = FormControl.text)
-                           .with(f -> f.required = false)
-                           .with(f -> f.type = FormDataType.string)
-                           .with(f -> f.data.put("leftAddon", "user"))
-                           .with(f -> f.name = "[Admin User] identities.username"));
-
     map.put("user.firstName",
             new FormField().with(f -> f.key = "user.firstName")
                            .with(f -> f.confirm = false)
