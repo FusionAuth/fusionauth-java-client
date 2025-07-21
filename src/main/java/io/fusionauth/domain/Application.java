@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,6 +104,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public UUID themeId;
 
+  public UniversalApplicationConfiguration universalConfiguration = new UniversalApplicationConfiguration();
+
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
   public UUID verificationEmailTemplateId;
@@ -147,6 +149,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
+    this.universalConfiguration = new UniversalApplicationConfiguration(other.universalConfiguration);
     this.unverified = new RegistrationUnverifiedOptions(other.unverified);
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
@@ -213,6 +216,7 @@ public class Application implements Buildable<Application>, Tenantable {
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
+           Objects.equals(universalConfiguration, that.universalConfiguration) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
            Objects.equals(webAuthnConfiguration, that.webAuthnConfiguration) &&
@@ -256,7 +260,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, universalConfiguration, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -885,4 +889,5 @@ public class Application implements Buildable<Application>, Tenantable {
       }
     }
   }
+
 }
