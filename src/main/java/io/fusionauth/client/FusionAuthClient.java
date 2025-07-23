@@ -440,7 +440,9 @@ public class FusionAuthClient {
    * @param encodedJWT The encoded JWT (access token).
    * @param request The change password request that contains all the information used to change the password.
    * @return The ClientResponse object.
+   * @deprecated This method has been renamed to changePasswordUsingJWT, use that method instead.
    */
+  @Deprecated
   public ClientResponse<ChangePasswordResponse, Errors> changePasswordByJWT(String encodedJWT, ChangePasswordRequest request) {
     return startAnonymous(ChangePasswordResponse.class, Errors.class)
         .uri("/api/user/change-password")
@@ -461,6 +463,25 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> changePasswordByIdentity(ChangePasswordRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/change-password")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Changes a user's password using their access token (JWT) instead of the changePasswordId
+   * A common use case for this method will be if you want to allow the user to change their own password.
+   * <p>
+   * Remember to send refreshToken in the request body if you want to get a new refresh token when login using the returned oneTimePassword.
+   *
+   * @param encodedJWT The encoded JWT (access token).
+   * @param request The change password request that contains all the information used to change the password.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ChangePasswordResponse, Errors> changePasswordUsingJWT(String encodedJWT, ChangePasswordRequest request) {
+    return startAnonymous(ChangePasswordResponse.class, Errors.class)
+        .uri("/api/user/change-password")
+        .authorization("Bearer " + encodedJWT)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
