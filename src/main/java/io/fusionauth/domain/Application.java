@@ -86,8 +86,6 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public PasswordlessConfiguration passwordlessConfiguration = new PasswordlessConfiguration();
 
-  public ApplicationPhoneConfiguration phoneConfiguration = new ApplicationPhoneConfiguration();
-
   public RegistrationConfiguration registrationConfiguration = new RegistrationConfiguration();
 
   public ApplicationRegistrationDeletePolicy registrationDeletePolicy = new ApplicationRegistrationDeletePolicy();
@@ -100,13 +98,13 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  
-
   public ObjectState state;
 
   public UUID tenantId;
 
   public UUID themeId;
+
+  public UniversalApplicationConfiguration universalConfiguration = new UniversalApplicationConfiguration();
 
   public RegistrationUnverifiedOptions unverified = new RegistrationUnverifiedOptions();
 
@@ -143,7 +141,6 @@ public class Application implements Buildable<Application>, Tenantable {
     this.name = other.name;
     this.oauthConfiguration = new OAuth2Configuration(other.oauthConfiguration);
     this.passwordlessConfiguration = new PasswordlessConfiguration(other.passwordlessConfiguration);
-    this.phoneConfiguration = new ApplicationPhoneConfiguration(other.phoneConfiguration);
     this.registrationConfiguration = new RegistrationConfiguration(other.registrationConfiguration);
     this.registrationDeletePolicy = new ApplicationRegistrationDeletePolicy(other.registrationDeletePolicy);
     this.roles.addAll(other.roles.stream().map(ApplicationRole::new).collect(Collectors.toList()));
@@ -152,6 +149,7 @@ public class Application implements Buildable<Application>, Tenantable {
     this.state = other.state;
     this.tenantId = other.tenantId;
     this.themeId = other.themeId;
+    this.universalConfiguration = new UniversalApplicationConfiguration(other.universalConfiguration);
     this.unverified = new RegistrationUnverifiedOptions(other.unverified);
     this.verificationEmailTemplateId = other.verificationEmailTemplateId;
     this.verificationStrategy = other.verificationStrategy;
@@ -210,7 +208,6 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(name, that.name) &&
            Objects.equals(oauthConfiguration, that.oauthConfiguration) &&
            Objects.equals(passwordlessConfiguration, that.passwordlessConfiguration) &&
-           Objects.equals(phoneConfiguration, that.phoneConfiguration) &&
            Objects.equals(registrationConfiguration, that.registrationConfiguration) &&
            Objects.equals(registrationDeletePolicy, that.registrationDeletePolicy) &&
            Objects.equals(roles, that.roles) &&
@@ -219,6 +216,7 @@ public class Application implements Buildable<Application>, Tenantable {
            state == that.state &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(themeId, that.themeId) &&
+           Objects.equals(universalConfiguration, that.universalConfiguration) &&
            Objects.equals(unverified, that.unverified) &&
            Objects.equals(verificationEmailTemplateId, that.verificationEmailTemplateId) &&
            Objects.equals(webAuthnConfiguration, that.webAuthnConfiguration) &&
@@ -262,7 +260,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, phoneConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, universalConfiguration, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {
@@ -646,11 +644,8 @@ public class Application implements Buildable<Application>, Tenantable {
       return ToString.toString(this);
     }
 
-    // Note that this is only used for basic self-service registration to indicate email, phoneNumber, or username.
-    //      This is separate from IdentityType.
     public enum LoginIdType {
       email,
-      phoneNumber,
       username
     }
 
@@ -894,4 +889,5 @@ public class Application implements Buildable<Application>, Tenantable {
       }
     }
   }
+
 }

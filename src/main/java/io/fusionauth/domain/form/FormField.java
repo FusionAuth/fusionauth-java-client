@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2020-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2025, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain.form;
 
@@ -47,6 +59,31 @@ public class FormField implements Buildable<FormField> {
   public FormDataType type = FormDataType.string;
 
   public FormFieldValidator validator = new FormFieldValidator();
+
+  public FormField() {
+    // Default constructor
+  }
+
+  public FormField(FormField formField) {
+    this.confirm = formField.confirm;
+    this.consentId = formField.consentId;
+    this.control = formField.control;
+    this.data = new LinkedHashMap<>(formField.data);
+    this.description = formField.description;
+    this.id = formField.id;
+    this.insertInstant = formField.insertInstant;
+    this.key = formField.key;
+    this.lastUpdateInstant = formField.lastUpdateInstant;
+    this.name = formField.name;
+    this.options = new ArrayList<>(formField.options);
+    this.required = formField.required;
+    this.type = formField.type;
+    if (formField.validator != null) {
+      this.validator = new FormFieldValidator();
+      this.validator.expression = formField.validator.expression;
+      this.validator.enabled = formField.validator.enabled;
+    }
+  }
 
   @Override
   public boolean equals(Object o) {
