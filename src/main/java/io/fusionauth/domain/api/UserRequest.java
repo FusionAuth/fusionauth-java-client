@@ -44,7 +44,8 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
   @Deprecated
   public boolean sendSetPasswordEmail;
 
-  public SendSetPasswordIdentityType sendSetPasswordIdentityType;
+  // To ensure sendSetPasswordEmail still works, this needs to be null unless explicitly set in the request.
+  public SendSetPasswordIdentityType sendSetPasswordIdentityType = null;
 
   public boolean skipVerification;
 
