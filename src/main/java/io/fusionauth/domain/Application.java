@@ -100,8 +100,6 @@ public class Application implements Buildable<Application>, Tenantable {
   @JsonIgnoreProperties("applicationId")
   public List<ApplicationOAuthScope> scopes = new ArrayList<>();
 
-  
-
   public ObjectState state;
 
   public UUID tenantId;
