@@ -37,6 +37,7 @@ import com.inversoft.rest.RESTClient;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
+import io.fusionauth.client.json.FusionAuthJacksonModule;
 import io.fusionauth.domain.api.APIKeyResponse;
 import io.fusionauth.domain.api.ApplicationOAuthScopeRequest;
 import io.fusionauth.domain.api.ApplicationOAuthScopeResponse;
@@ -181,6 +182,12 @@ import io.fusionauth.domain.api.WebhookSearchRequest;
 import io.fusionauth.domain.api.WebhookSearchResponse;
 import io.fusionauth.domain.api.email.SendRequest;
 import io.fusionauth.domain.api.email.SendResponse;
+import io.fusionauth.domain.api.identity.verify.VerifyCompleteRequest;
+import io.fusionauth.domain.api.identity.verify.VerifyCompleteResponse;
+import io.fusionauth.domain.api.identity.verify.VerifyRequest;
+import io.fusionauth.domain.api.identity.verify.VerifyStartRequest;
+import io.fusionauth.domain.api.identity.verify.VerifyStartResponse;
+import io.fusionauth.domain.api.identity.verify.VerifySendRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
@@ -260,7 +267,8 @@ public class FusionAuthClient {
                                                                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                                                                     .configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
                                                                     .configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
-                                                                    .registerModule(new JacksonModule());
+                                                                    .registerModule(new JacksonModule())
+                                                                    .registerModule(new FusionAuthJacksonModule());
 
   private final String apiKey;
 
@@ -573,6 +581,20 @@ public class FusionAuthClient {
   public ClientResponse<UserCommentResponse, Errors> commentOnUser(UserCommentRequest request) {
     return start(UserCommentResponse.class, Errors.class)
         .uri("/api/user/comment")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Completes verification of an identity using verification codes from the Verify Start API.
+   *
+   * @param request The identity verify complete request that contains all the information used to verify the identity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<VerifyCompleteResponse, Errors> completeVerifyIdentity(VerifyCompleteRequest request) {
+    return start(VerifyCompleteResponse.class, Errors.class)
+        .uri("/api/identity/verify/complete")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
@@ -4181,6 +4203,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the user for the loginId, using specific loginIdTypes.
+   *
+   * @param loginId The email or username of the user.
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<UserResponse, Errors> retrieveUserByLoginIdWithLoginIdTypes(String loginId, List<String> loginIdTypes) {
+    return start(UserResponse.class, Errors.class)
+        .uri("/api/user")
+        .urlParameter("loginId", loginId)
+        .urlParameter("loginIdTypes", loginIdTypes)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves the user for the given username.
    *
    * @param username The username of the user.
@@ -4379,6 +4417,29 @@ public class FusionAuthClient {
         .urlParameter("loginId", loginId)
         .urlParameter("start", start)
         .urlParameter("end", end)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the login report between the two instants for a particular user by login Id, using specific loginIdTypes. If you specify an application id, it will only return the
+   * login counts for that application.
+   *
+   * @param applicationId (Optional) The application id.
+   * @param loginId The userId id.
+   * @param start The start instant as UTC milliseconds since Epoch.
+   * @param end The end instant as UTC milliseconds since Epoch.
+   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginIdAndLoginIdTypes(UUID applicationId, String loginId, long start, long end, List<String> loginIdTypes) {
+    return start(LoginReportResponse.class, Errors.class)
+        .uri("/api/report/login")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("loginId", loginId)
+        .urlParameter("start", start)
+        .urlParameter("end", end)
+        .urlParameter("loginIdTypes", loginIdTypes)
         .get()
         .go();
   }
@@ -5115,6 +5176,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Send a verification code using the appropriate transport for the identity type being verified.
+   *
+   * @param request The identity verify send request that contains all the information used send the code.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> sendVerifyIdentity(VerifySendRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify/send")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
    *
    * @param request The third-party login request that contains information from the third-party login
@@ -5158,6 +5233,21 @@ public class FusionAuthClient {
   public ClientResponse<TwoFactorStartResponse, Errors> startTwoFactorLogin(TwoFactorStartRequest request) {
     return start(TwoFactorStartResponse.class, Errors.class)
         .uri("/api/two-factor/start")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Start a verification of an identity by generating a code. This code can be sent to the User using the Verify Send API
+   * Verification Code API or using a mechanism outside of FusionAuth. The verification is completed by using the Verify Complete API with this code.
+   *
+   * @param request The identity verify start request that contains all the information used to begin the request.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<VerifyStartResponse, Errors> startVerifyIdentity(VerifyStartRequest request) {
+    return start(VerifyStartResponse.class, Errors.class)
+        .uri("/api/identity/verify/start")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
@@ -5823,6 +5913,20 @@ public class FusionAuthClient {
   public ClientResponse<Void, Errors> verifyEmailAddressByUserId(VerifyEmailRequest request) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/verify-email")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Administratively verify a user identity.
+   *
+   * @param request The identity verify request that contains information to verify the identity.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> verifyIdentity(VerifyRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/identity/verify")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
         .go();
