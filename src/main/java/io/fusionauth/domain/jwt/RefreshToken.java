@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,7 +121,9 @@ public class RefreshToken implements Buildable<RefreshToken> {
       return startInstant.plusSeconds(tenant.httpSessionMaxInactiveInterval).isBefore(now);
     } else {
       // Refresh Token
-      JWTConfiguration jwtConfiguration = tenant.lookupJWTConfiguration(application);
+      JWTConfiguration jwtConfiguration = application != null && application.jwtConfiguration != null && application.jwtConfiguration.enabled
+          ? application.jwtConfiguration
+          : tenant.jwtConfiguration;
 
       // if the rt expired, we're done here.
       if (startInstant.plusMinutes(jwtConfiguration.refreshTokenTimeToLiveInMinutes).isBefore(now)) {
