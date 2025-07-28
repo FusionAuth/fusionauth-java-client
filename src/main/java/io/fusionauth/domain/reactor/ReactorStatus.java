@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,11 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus scimServer = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus tenantManagerApplication = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus universalApplication = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus webAuthn = ReactorFeatureStatus.UNKNOWN;
 
@@ -87,8 +91,10 @@ public class ReactorStatus {
     expiration = other.expiration;
     licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
+    tenantManagerApplication = other.tenantManagerApplication;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
+    universalApplication = other.universalApplication;
     webAuthn = other.webAuthn;
     webAuthnPlatformAuthenticators = other.webAuthnPlatformAuthenticators;
     webAuthnRoamingAuthenticators = other.webAuthnRoamingAuthenticators;
@@ -118,8 +124,10 @@ public class ReactorStatus {
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
+           tenantManagerApplication == that.tenantManagerApplication &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection &&
+           universalApplication == that.universalApplication &&
            webAuthn == that.webAuthn &&
            webAuthnPlatformAuthenticators == that.webAuthnPlatformAuthenticators &&
            webAuthnRoamingAuthenticators == that.webAuthnRoamingAuthenticators;
@@ -142,8 +150,10 @@ public class ReactorStatus {
                         expiration,
                         licensed,
                         licenseAttributes,
+                        tenantManagerApplication,
                         scimServer,
                         threatDetection,
+                        universalApplication,
                         webAuthn,
                         webAuthnPlatformAuthenticators,
                         webAuthnRoamingAuthenticators);
