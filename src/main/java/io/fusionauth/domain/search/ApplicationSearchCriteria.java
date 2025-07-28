@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.search;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +32,8 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
  * @author Spencer Witt
  */
 public class ApplicationSearchCriteria extends BaseSearchCriteria implements Buildable<ApplicationSearchCriteria> {
+  public static final Set<String> NullableFields = new HashSet<>();
+
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
   public String name;
@@ -45,7 +48,7 @@ public class ApplicationSearchCriteria extends BaseSearchCriteria implements Bui
       orderBy = defaultOrderBy();
     }
 
-    orderBy = normalizeOrderBy(orderBy, SortableFields);
+    orderBy = normalizeOrderBy(orderBy, SortableFields, NullableFields);
     name = toSearchString(name);
     return this;
   }
@@ -61,6 +64,8 @@ public class ApplicationSearchCriteria extends BaseSearchCriteria implements Bui
   }
 
   static {
+    NullableFields.add("tenant");
+
     SortableFields.put("id", "a.id");
     SortableFields.put("insertInstant", "a.insert_instant");
     SortableFields.put("name", "a.name");
