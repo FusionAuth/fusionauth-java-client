@@ -47,6 +47,9 @@ public enum UserState {
     throw new IllegalArgumentException("Invalid status code for UserState [" + status + "]");
   }
 
+  /**
+   * This method only applies to legacy user identities before 1.99.9 and should no longer be used.
+   */
   @Deprecated
   public static UserState fromUserAndRegistration(User user, UserRegistration registration) {
     if (registration == null) {
