@@ -151,8 +151,9 @@ public class UserIdentity implements Buildable<UserIdentity> {
    * @return false if identity is either verified or verification does not matter. true if verification needs to be performed
    */
   public boolean verificationRequired() {
-    return !verified && !(IdentityVerifiedReason.Trusted.equals(verifiedReason) ||
-                          IdentityVerifiedReason.Disabled.equals(verifiedReason) ||
+    return !verified && !(IdentityVerifiedReason.Disabled.equals(verifiedReason) ||
+                          IdentityVerifiedReason.Import.equals(verifiedReason) ||
+                          IdentityVerifiedReason.Trusted.equals(verifiedReason) ||
                           IdentityVerifiedReason.Skipped.equals(verifiedReason) ||
                           IdentityVerifiedReason.Unverifiable.equals(verifiedReason));
   }

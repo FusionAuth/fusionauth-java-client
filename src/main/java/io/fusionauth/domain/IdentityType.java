@@ -20,15 +20,18 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Brady Wied
+ * Model identity types provided by FusionAuth.
  */
 public class IdentityType implements Comparable<IdentityType> {
   public static Map<String, IdentityType> Provided = new HashMap<>(3);
 
+  // type 0 in DB
   public static IdentityType email = new IdentityType("email");
 
+  // type 2 in DB
   public static IdentityType phoneNumber = new IdentityType("phoneNumber");
 
+  // type 1 in DB
   public static IdentityType username = new IdentityType("username");
 
   public String name;
