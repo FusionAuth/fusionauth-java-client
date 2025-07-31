@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,10 +47,6 @@ public enum UserState {
     throw new IllegalArgumentException("Invalid status code for UserState [" + status + "]");
   }
 
-  /**
-   * This method only applies to legacy user identities before 1.99.9 and should no longer be used.
-   */
-  @Deprecated
   public static UserState fromUserAndRegistration(User user, UserRegistration registration) {
     if (registration == null) {
       return AuthenticatedNotRegistered;

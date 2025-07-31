@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Keep track of identity types that FusionAuth provides out of the box.
+ * Model identity types provided by FusionAuth.
  */
 public class IdentityType implements Comparable<IdentityType> {
   public static Map<String, IdentityType> Provided = new HashMap<>(3);
