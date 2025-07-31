@@ -53,5 +53,10 @@ public enum IdentityVerifiedReason {
   /**
    * Verification was performed by administrative action
    */
-  Administrative // 7
+  Administrative, // 7
+
+  /**
+   * User was imported so verification was not performed by FusionAuth.
+   */
+  Import // 8
 }
