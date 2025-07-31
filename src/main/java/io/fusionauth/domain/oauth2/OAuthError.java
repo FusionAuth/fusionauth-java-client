@@ -88,6 +88,7 @@ public class OAuthError implements OAuthResponse {
     invalid_pkce_code_verifier,
     invalid_pkce_code_challenge,
     invalid_pkce_code_challenge_method,
+    invalid_prompt,
     invalid_redirect_uri,
     invalid_response_mode,
     invalid_response_type,
@@ -143,7 +144,14 @@ public class OAuthError implements OAuthResponse {
     unknown,
     missing_required_scope,
     unknown_scope,
-    consent_canceled
+    consent_canceled,
+
+    // reasons for login_required
+    authentication_required,
+    multi_factor_challenge_required,
+
+    // reasons for consent_required
+    consent_required
   }
 
   public enum OAuthErrorType {
@@ -153,6 +161,11 @@ public class OAuthError implements OAuthResponse {
     invalid_grant,
     // Described in section 5.3.3 of the OpenID Connect Core https://openid.net/specs/openid-connect-core-1_0.html#UserInfoError
     invalid_token,
+
+    // OpenID Connect Core section 3.1.2.6
+    consent_required,
+    interaction_required,
+    login_required,
 
     unauthorized_client,
     invalid_scope,
