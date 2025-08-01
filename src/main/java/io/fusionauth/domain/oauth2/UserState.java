@@ -48,7 +48,7 @@ public enum UserState {
   }
 
   /**
-   * This method only applies to legacy user identities before 1.99.9 and should no longer be used.
+   * This method only applies to legacy user identities before 1.59.0 and should no longer be used.
    */
   @Deprecated
   public static UserState fromUserAndRegistration(User user, UserRegistration registration) {

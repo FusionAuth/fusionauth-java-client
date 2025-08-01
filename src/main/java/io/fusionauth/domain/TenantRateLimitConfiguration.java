@@ -80,7 +80,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
    * @return the config
    * @deprecated just access the configuration, on this object directly, e.g. `tenantRateLimitConfiguration.failedLogin`.
    */
-  @Deprecated // JDK 8 compatible/client library (since = "1.99.9")
+  @Deprecated // JDK 8 compatible/client library (since = "1.59.0")
   @JsonIgnore
   public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
     switch (type) {

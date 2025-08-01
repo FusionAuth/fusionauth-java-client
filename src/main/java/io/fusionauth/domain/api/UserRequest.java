@@ -39,7 +39,7 @@ public class UserRequest extends BaseEventRequest implements Buildable<UserReque
   public boolean disableDomainBlock;
 
   /**
-   * @deprecated This field is deprecated since 1.99.9 and will be removed in a future version. Use {@link #sendSetPasswordIdentityType} instead.
+   * @deprecated This field is deprecated since 1.59.0 and will be removed in a future version. Use {@link #sendSetPasswordIdentityType} instead.
    */
   @Deprecated
   public boolean sendSetPasswordEmail;
