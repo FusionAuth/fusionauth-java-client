@@ -148,7 +148,11 @@ public class OAuthError implements OAuthResponse {
 
     // reasons for login_required
     authentication_required,
+    email_verification_required,
     multi_factor_challenge_required,
+    registration_missing_requirement,
+    registration_required,
+    registration_verification_required,
 
     // reasons for consent_required
     consent_required
