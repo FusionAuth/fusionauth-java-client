@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.VerificationStrategy;
 
 /**
  * @author Brady Wied
@@ -32,5 +33,5 @@ public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
 
   public Map<String, Object> state;
 
-  public String verificationStrategy;
+  public VerificationStrategy verificationStrategy;
 }
