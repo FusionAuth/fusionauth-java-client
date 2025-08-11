@@ -385,7 +385,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
-   * Retrieve all identities that match the supplied type
+   * Return all identities that match the supplied type
    *
    * @param identityType type to check
    * @return list of matching identities
