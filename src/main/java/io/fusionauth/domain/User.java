@@ -385,6 +385,17 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
+   * Retrieve all identities that match the supplied type
+   *
+   * @param identityType type to check
+   * @return list of matching identities
+   */
+  public List<UserIdentity> resolveIdentitiesOfType(IdentityType identityType) {
+    return identities.stream().filter(i -> i.type.is(identityType))
+                     .collect(Collectors.toList());
+  }
+
+  /**
    * @return email identity if it exists, if not, username if it exists, otherwise null
    */
   public UserIdentity resolveLegacyIdentity() {
@@ -414,17 +425,6 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
                      .filter(i -> i.type.is(loginIdType))
                      .findFirst()
                      .orElse(null);
-  }
-
-  /**
-   * Retrieve all identities that match the supplied type
-   *
-   * @param identityType type to check
-   * @return list of matching identities
-   */
-  public List<UserIdentity> retrieveIdentitiesOfType(IdentityType identityType) {
-    return identities.stream().filter(i -> i.type.is(identityType))
-                     .collect(Collectors.toList());
   }
 
   /**
