@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.PasswordlessStrategy;
 
 /**
  * @author Daniel DeGroff
@@ -33,7 +34,7 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
 
   public List<String> loginIdTypes = new ArrayList<>();
 
-  public String loginStrategy;
+  public PasswordlessStrategy loginStrategy;
 
   public Map<String, Object> state;
 
