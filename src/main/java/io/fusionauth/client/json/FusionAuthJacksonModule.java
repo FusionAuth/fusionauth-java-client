@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import io.fusionauth.domain.IdentityType;
  * @author Daniel DeGroff
  */
 public class FusionAuthJacksonModule extends SimpleModule {
-  private static final Version VERSION = VersionUtil.parseVersion("1.56.0", "io.fusionauth", "fusionauth-app");
+  private static final Version VERSION = VersionUtil.parseVersion("1.59.0", "io.fusionauth", "fusionauth-app");
 
   public FusionAuthJacksonModule() {
     super(VERSION);
