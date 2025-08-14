@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,14 +37,23 @@ public class UserRegistrationCreateCompleteEvent extends BaseUserEvent implement
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationCreateCompleteEvent() {
-  }
-
+  /**
+   * Construct a new event, indicating that registration creation is complete
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param registration  registration that was completed
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationCreateCompleteEvent(EventInfo info, UUID applicationId, UserRegistration registration, User user) {
     super(info, user);
+    this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationCreateCompleteEvent() {
   }
 
   @Override

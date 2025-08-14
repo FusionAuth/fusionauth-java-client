@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,9 +38,10 @@ import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
 import static io.fusionauth.domain.util.Normalizer.toLowerCase;
 import static io.fusionauth.domain.util.Normalizer.trim;
+import static io.fusionauth.domain.util.Normalizer.trimToNull;
 
 /**
- * The global view of a User. This object contains all global information about the user including birthdate, registration information
+ * The public, global view of a User. This object contains all global information about the user including birthdate, registration information
  * preferred languages, global attributes, etc.
  *
  * @author Seth Musselman
@@ -81,6 +83,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public String parentEmail;
 
+  public String phoneNumber;
+
   public UUID tenantId;
 
   public ZoneId timezone;
@@ -110,7 +114,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.lastLoginInstant = other.lastLoginInstant;
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.lastName = other.lastName;
-    this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toList()));
+    this.identities.addAll(other.identities.stream().map(UserIdentity::new).collect(Collectors.toCollection(ArrayList::new)));
+    this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toCollection(ArrayList::new)));
     this.middleName = other.middleName;
     this.mobilePhone = other.mobilePhone;
     this.parentEmail = other.parentEmail;
@@ -118,8 +123,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.passwordChangeReason = other.passwordChangeReason;
     this.passwordChangeRequired = other.passwordChangeRequired;
     this.passwordLastUpdateInstant = other.passwordLastUpdateInstant;
+    this.phoneNumber = other.phoneNumber;
     this.preferredLanguages.addAll(other.preferredLanguages);
-    this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toList()));
+    this.registrations.addAll(other.registrations.stream().map(UserRegistration::new).collect(Collectors.toCollection(ArrayList::new)));
     this.salt = other.salt;
     this.tenantId = other.tenantId;
     this.timezone = other.timezone;
@@ -177,6 +183,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
            Objects.equals(middleName, user.middleName) &&
            Objects.equals(mobilePhone, user.mobilePhone) &&
            Objects.equals(parentEmail, user.parentEmail) &&
+           Objects.equals(phoneNumber, user.phoneNumber) &&
            Objects.equals(twoFactor, user.twoFactor) &&
            Objects.equals(tenantId, user.tenantId) &&
            Objects.equals(timezone, user.timezone);
@@ -191,19 +198,18 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     return (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);
   }
 
-  public GroupMember getGroupMemberForGroup(UUID id) {
-    return getMemberships().stream()
-                           .filter(m -> m.id.equals(id))
-                           .findFirst()
-                           .orElse(null);
-  }
-
   /**
-   * @return return a single identity value preferring email over username.
+   * @return return a single identity value preferring email to username.
    */
   @JsonIgnore
   public String getLogin() {
-    return email == null ? uniqueUsername : email;
+    if (email != null) {
+      return email;
+    }
+    if (uniqueUsername != null) {
+      return uniqueUsername;
+    }
+    return phoneNumber;
   }
 
   public List<GroupMember> getMemberships() {
@@ -244,6 +250,17 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   /**
+   * Whether the user contains an identity of the type
+   *
+   * @param identityType type to check
+   * @return true if exists, false if not
+   */
+  public boolean hasIdentityType(IdentityType identityType) {
+    return identities.stream()
+                     .anyMatch(ui -> ui.type.is(identityType));
+  }
+
+  /**
    * Return true if user data is provided for this user or any registrations.
    *
    * @return true if user data exists.
@@ -264,7 +281,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data, email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, tenantId, timezone, twoFactor);
+    return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data,
+                        email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, phoneNumber, tenantId, timezone, twoFactor);
   }
 
   /**
@@ -302,7 +320,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
    */
   public void normalize() {
     Normalizer.removeEmpty(data);
-    email = toLowerCase(trim(email));
+    email = toLowerCase(trimToNull(email));
+    identities.forEach(UserIdentity::normalize);
     encryptionScheme = trim(encryptionScheme);
     firstName = trim(firstName);
     fullName = trim(fullName);
@@ -310,13 +329,11 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));
+    phoneNumber = trimToNull(phoneNumber);
     Normalizer.removeEmpty(preferredLanguages);
     Normalizer.deDuplicate(preferredLanguages);
     preferredLanguages.removeIf(l -> l.toString().equals(""));
-    username = trim(username);
-    if (username != null && username.length() == 0) {
-      username = null;
-    }
+    username = trimToNull(username);
 
     // Clear out groups that don't have groupId
     memberships.removeIf(m -> m.groupId == null);
@@ -325,8 +342,89 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     getRegistrations().forEach(UserRegistration::normalize);
   }
 
+  /**
+   * Removes identities of the specified type
+   *
+   * @param identityType identity type to remove
+   */
+  public void removeIdentitiesOfType(IdentityType identityType) {
+    identities.removeIf(i -> i.type.is(identityType));
+  }
+
   public void removeMembershipById(UUID groupId) {
     memberships.removeIf(m -> m.groupId.equals(groupId));
+  }
+
+  /**
+   * Replaces identities in the identities collection, by type, with the supplied identities.
+   * Any existing identities on the User that are not of the same type will be left alone
+   *
+   * @param replacementIdentities identities that should overwrite what is currently on the user
+   */
+  public void replaceIdentities(List<UserIdentity> replacementIdentities) {
+    Set<IdentityType> replaceTypes = replacementIdentities.stream()
+                                                          .map(i -> i.type)
+                                                          .collect(Collectors.toSet());
+
+    // first, remove the existing identities that our replacements will cover. we want to do this
+    // first since we may have multiple replacements of the same type and we don't want to step on each other
+    identities.removeIf(existing -> replaceTypes.contains(existing.type));
+
+    // now we can add our replacements
+    identities.addAll(replacementIdentities);
+  }
+
+  /**
+   * @return email identity if it exists, if not, username if it exists, otherwise the first identity in the collection
+   */
+  public UserIdentity resolveFirstIdentity() {
+    return Optional.ofNullable(resolveLegacyIdentity())
+                   .orElse(identities.stream()
+                                     .findFirst()
+                                     .orElse(null));
+  }
+
+  /**
+   * Return all identities that match the supplied type
+   *
+   * @param identityType type to check
+   * @return list of matching identities
+   */
+  public List<UserIdentity> resolveIdentitiesOfType(IdentityType identityType) {
+    return identities.stream().filter(i -> i.type.is(identityType))
+                     .collect(Collectors.toList());
+  }
+
+  /**
+   * @return email identity if it exists, if not, username if it exists, otherwise null
+   */
+  public UserIdentity resolveLegacyIdentity() {
+    return resolvePrimaryIdentity(IdentityType.email, IdentityType.username);
+  }
+
+  /**
+   * Resolves the first (of the types provided) matching primary identity
+   *
+   * @param loginIdTypes types to match
+   * @return First matching or null if none match
+   */
+  public UserIdentity resolvePrimaryIdentity(IdentityType... loginIdTypes) {
+    for (IdentityType loginIdType : loginIdTypes) {
+      UserIdentity result = resolvePrimaryIdentity(loginIdType);
+      if (result != null) {
+        return result;
+      }
+    }
+    return null;
+  }
+
+  @JsonIgnore
+  public UserIdentity resolvePrimaryIdentity(IdentityType loginIdType) {
+    return identities.stream()
+                     .filter(i -> i.primary)
+                     .filter(i -> i.type.is(loginIdType))
+                     .findFirst()
+                     .orElse(null);
   }
 
   /**
@@ -344,6 +442,9 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   }
 
   public User sort() {
+    this.identities.sort(Comparator.<UserIdentity, ZonedDateTime>comparing(i -> i.insertInstant, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.type, Comparator.nullsLast(Comparator.naturalOrder()))
+                                   .thenComparing(i -> i.value, Comparator.nullsLast(Comparator.naturalOrder())));
     this.registrations.sort(Comparator.comparing(ur -> ur.applicationId));
     return this;
   }

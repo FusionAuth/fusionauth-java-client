@@ -150,6 +150,20 @@ public final class Normalizer {
   }
 
   /**
+   * Uppercases the String in a null-safe manner.
+   *
+   * @param str The String to uppercase.
+   * @return The String or null.
+   */
+  public static String toUpperCase(String str) {
+    if (str == null) {
+      return null;
+    }
+
+    return str.toUpperCase();
+  }
+
+  /**
    * Trims the String in a null safe manner.
    *
    * @param str The String to trim.

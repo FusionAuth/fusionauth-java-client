@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,6 +104,8 @@ public class Tenant implements Buildable<Tenant> {
 
   public PasswordValidationRules passwordValidationRules = new PasswordValidationRules();
 
+  public TenantPhoneConfiguration phoneConfiguration = new TenantPhoneConfiguration();
+
   public TenantRateLimitConfiguration rateLimitConfiguration = new TenantRateLimitConfiguration();
 
   public TenantRegistrationConfiguration registrationConfiguration = new TenantRegistrationConfiguration();
@@ -154,6 +156,7 @@ public class Tenant implements Buildable<Tenant> {
     this.oauthConfiguration = new TenantOAuth2Configuration(other.oauthConfiguration);
     this.passwordEncryptionConfiguration = new PasswordEncryptionConfiguration(other.passwordEncryptionConfiguration);
     this.passwordValidationRules = new PasswordValidationRules(other.passwordValidationRules);
+    this.phoneConfiguration = new TenantPhoneConfiguration(other.phoneConfiguration);
     this.rateLimitConfiguration = new TenantRateLimitConfiguration(other.rateLimitConfiguration);
     this.registrationConfiguration = new TenantRegistrationConfiguration(other.registrationConfiguration);
     this.scimServerConfiguration = new TenantSCIMServerConfiguration(other.scimServerConfiguration);
@@ -200,6 +203,7 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(name, tenant.name) &&
            Objects.equals(passwordEncryptionConfiguration, tenant.passwordEncryptionConfiguration) &&
            Objects.equals(passwordValidationRules, tenant.passwordValidationRules) &&
+           Objects.equals(phoneConfiguration, tenant.phoneConfiguration) &&
            Objects.equals(rateLimitConfiguration, tenant.rateLimitConfiguration) &&
            Objects.equals(registrationConfiguration, tenant.registrationConfiguration) &&
            Objects.equals(scimServerConfiguration, tenant.scimServerConfiguration) &&
@@ -243,6 +247,7 @@ public class Tenant implements Buildable<Tenant> {
                         name,
                         passwordEncryptionConfiguration,
                         passwordValidationRules,
+                        phoneConfiguration,
                         rateLimitConfiguration,
                         registrationConfiguration,
                         scimServerConfiguration,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,15 +36,25 @@ public class UserRegistrationUpdateEvent extends BaseUserEvent implements Builda
 
   public UserRegistration registration;
 
-  @JacksonConstructor
-  public UserRegistrationUpdateEvent() {
-  }
-
+  /**
+   * Construct a new event, with only the original/current registration being updated
+   *
+   * @param info          event info
+   * @param applicationId application the registration is for
+   * @param original      original registration before updates
+   * @param registration  updated registration
+   * @param user          user affected. This user will be copied and all of its registrations will be removed
+   */
   public UserRegistrationUpdateEvent(EventInfo info, UUID applicationId, UserRegistration original, UserRegistration registration, User user) {
     super(info, user);
+    this.user.getRegistrations().clear();
     this.applicationId = applicationId;
     this.original = original;
     this.registration = registration;
+  }
+
+  @JacksonConstructor
+  private UserRegistrationUpdateEvent() {
   }
 
   @Override

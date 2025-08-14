@@ -15,16 +15,11 @@
  */
 package io.fusionauth.domain;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
@@ -34,21 +29,6 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  * @author Brian Pontarelli
  */
 public class EmailConfiguration implements Buildable<EmailConfiguration> {
-  @JsonIgnore
-  @SuppressWarnings("unused")
-  public static List<String> EmailTemplateIdFieldNames = Arrays.stream(EmailConfiguration.class.getDeclaredFields())
-                                                               .map(Field::getName)
-                                                               .filter(name -> name.endsWith("EmailTemplateId"))
-                                                               .sorted()
-                                                               .collect(Collectors.toList());
-
-  @JsonIgnore
-  @SuppressWarnings("unused")
-  public static List<Field> EmailTemplateIdFields = Arrays.stream(EmailConfiguration.class.getDeclaredFields())
-                                                          .filter(f -> f.getName().endsWith("EmailTemplateId"))
-                                                          .sorted(Comparator.comparing(Field::getName))
-                                                          .collect(Collectors.toList());
-
   public List<EmailHeader> additionalHeaders = new ArrayList<>();
 
   public boolean debug;
@@ -104,7 +84,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public UUID verificationEmailTemplateId;
 
-  public VerificationStrategy verificationStrategy;
+  public VerificationStrategy verificationStrategy = VerificationStrategy.ClickableLink;
 
   public boolean verifyEmail;
 

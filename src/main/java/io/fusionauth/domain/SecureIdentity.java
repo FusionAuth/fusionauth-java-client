@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,10 +27,13 @@ import io.fusionauth.domain.connector.BaseConnectorConfiguration;
  * @author Daniel DeGroff
  */
 public class SecureIdentity {
+  public final List<UserIdentity> identities = new ArrayList<>();
+
   public ZonedDateTime breachedPasswordLastCheckedInstant;
 
   public BreachedPasswordStatus breachedPasswordStatus;
 
+  // Legacy field, this will represent the connector from the first identity, most likely email.
   public UUID connectorId = BaseConnectorConfiguration.FUSIONAUTH_CONNECTOR_ID;
 
   public String encryptionScheme;
@@ -57,8 +62,16 @@ public class SecureIdentity {
 
   public ContentStatus usernameStatus = ContentStatus.ACTIVE;
 
+  /**
+   * @deprecated This value is still here for compatibility reasons but starting in FusionAuth 1.59.0, use the verified
+   * boolean value on the identities collection entry of type `email`. See {@link UserIdentity#verified}
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.59.0")
   public boolean verified;
 
+  /**
+   * The instant when one of a user's identities was first verified. Once this value is set, it will not change.
+   */
   public ZonedDateTime verifiedInstant;
 
   @Override
@@ -78,6 +91,7 @@ public class SecureIdentity {
            Objects.equals(encryptionScheme, that.encryptionScheme) &&
            Objects.equals(factor, that.factor) &&
            Objects.equals(id, that.id) &&
+           Objects.equals(identities, that.identities) &&
            Objects.equals(lastLoginInstant, that.lastLoginInstant) &&
            Objects.equals(password, that.password) &&
            passwordChangeReason == that.passwordChangeReason &&
@@ -97,6 +111,7 @@ public class SecureIdentity {
                         encryptionScheme,
                         factor,
                         id,
+                        identities,
                         lastLoginInstant,
                         password,
                         passwordChangeReason,

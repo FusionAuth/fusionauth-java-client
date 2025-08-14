@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,38 @@ public class PasswordlessSendRequest implements Buildable<PasswordlessSendReques
   public PasswordlessSendRequest() {
   }
 
+  /**
+   * Construct a passwordless send request using a code from the Start API
+   *
+   * @param code code from the start API
+   */
+  public PasswordlessSendRequest(String code) {
+    this.code = code;
+  }
+
+  /**
+   * Construct a passwordless send request
+   *
+   * @param applicationId application id
+   * @param loginId       login id of user
+   * @param code          passwordless code
+   * @deprecated Passwordless send is done either with a loginId or code, but not both. See {@link #PasswordlessSendRequest(String)}
+   * or {@link #PasswordlessSendRequest(UUID, String, Map)}.
+   */
+  @Deprecated
   public PasswordlessSendRequest(UUID applicationId, String loginId, String code) {
     this.applicationId = applicationId;
     this.loginId = loginId;
     this.code = code;
   }
 
+  /**
+   * Construct a passwordless send request without a code from the Start API
+   *
+   * @param applicationId application id
+   * @param loginId       login id of user (either username or email address)
+   * @param state         Optional state that will be returned when completing the login request.
+   */
   @SuppressWarnings("unused")
   public PasswordlessSendRequest(UUID applicationId, String loginId, Map<String, Object> state) {
     this.applicationId = applicationId;

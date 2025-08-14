@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,15 +28,16 @@ import io.fusionauth.domain.User;
  * @author Daniel DeGroff
  */
 public class UserUpdateCompleteEvent extends BaseUserEvent implements Buildable<UserUpdateCompleteEvent>, NonTransactionalEvent {
-  public User original;
-
-  @JacksonConstructor
-  public UserUpdateCompleteEvent() {
-  }
+  public final User original;
 
   public UserUpdateCompleteEvent(EventInfo info, User original, User user) {
     super(info, user);
-    this.original = original;
+    this.original = new User(original).secure().sort();
+  }
+
+  @JacksonConstructor
+  private UserUpdateCompleteEvent() {
+    this.original = null;
   }
 
   @Override

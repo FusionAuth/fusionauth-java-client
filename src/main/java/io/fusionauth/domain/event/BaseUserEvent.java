@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.fusionauth.domain.event;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
@@ -27,14 +28,16 @@ import io.fusionauth.domain.User;
  * @author Spencer Witt
  */
 public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifiable {
-  public User user;
+  public final User user;
 
+  @JacksonConstructor
   public BaseUserEvent() {
+    user = null;
   }
 
   public BaseUserEvent(EventInfo info, User user) {
     super(info);
-    this.user = user;
+    this.user = user != null ? new User(user).secure().sort() : null;
   }
 
   @Override
@@ -59,5 +62,40 @@ public abstract class BaseUserEvent extends BaseEvent implements ObjectIdentifia
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), user);
+  }
+
+  public static class IdentityInfo {
+    public final String type;
+
+    public final String value;
+
+    @JacksonConstructor
+    public IdentityInfo() {
+      // Jackson will set values for these, but final fields are still good
+      this.type = null;
+      this.value = null;
+    }
+
+    public IdentityInfo(String type, String value) {
+      this.type = type;
+      this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof IdentityInfo)) {
+        return false;
+      }
+      IdentityInfo that = (IdentityInfo) o;
+      return Objects.equals(type, that.type) && Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(type, value);
+    }
   }
 }
