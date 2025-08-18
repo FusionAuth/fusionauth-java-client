@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,33 +35,34 @@ import io.fusionauth.domain.jwt.RefreshToken;
  * @author Brian Pontarelli
  */
 public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<JWTRefreshTokenRevokeEvent>, ObjectIdentifiable {
+  public final User user;
+
   public UUID applicationId;
 
   public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>();
 
   public RefreshToken refreshToken;
 
-  public User user;
-
   public UUID userId;
-
-  @JacksonConstructor
-  public JWTRefreshTokenRevokeEvent() {
-  }
 
   public JWTRefreshTokenRevokeEvent(EventInfo info, User user, UUID applicationId, int timeToLiveInSeconds) {
     super(info);
     this.applicationId = applicationId;
     this.applicationTimeToLiveInSeconds.put(applicationId, timeToLiveInSeconds);
-    this.user = user;
+    this.user = user != null ? new User(user).secure().sort() : null;
     this.userId = user == null ? null : user.id;
   }
 
   public JWTRefreshTokenRevokeEvent(EventInfo info, User user, Map<UUID, Integer> applicationTimeToLiveInSeconds) {
     super(info);
     this.applicationTimeToLiveInSeconds.putAll(applicationTimeToLiveInSeconds);
-    this.user = user;
+    this.user = user != null ? new User(user).secure().sort() : null;
     this.userId = user == null ? null : user.id;
+  }
+
+  @JacksonConstructor
+  public JWTRefreshTokenRevokeEvent() {
+    user = null;
   }
 
   public List<UUID> applicationIds() {

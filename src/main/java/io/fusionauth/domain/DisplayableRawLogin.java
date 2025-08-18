@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@ package io.fusionauth.domain;
 
 import java.util.Objects;
 
-import com.inversoft.json.ToString;
-
 /**
  * A displayable raw login that includes application name and user loginId.
  *
@@ -31,31 +29,25 @@ public class DisplayableRawLogin extends RawLogin implements Buildable<Displayab
 
   public String loginId;
 
+  public IdentityType loginIdType;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof DisplayableRawLogin)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DisplayableRawLogin rawLogin = (DisplayableRawLogin) o;
-    return Objects.equals(applicationId, rawLogin.applicationId) &&
-           Objects.equals(applicationName, rawLogin.applicationName) &&
-           Objects.equals(instant, rawLogin.instant) &&
-           Objects.equals(ipAddress, rawLogin.ipAddress) &&
-           Objects.equals(location, rawLogin.location) &&
-           Objects.equals(loginId, rawLogin.loginId) &&
-           Objects.equals(userId, rawLogin.userId);
+    if (!super.equals(o)) {
+      return false;
+    }
+    DisplayableRawLogin that = (DisplayableRawLogin) o;
+    return Objects.equals(applicationName, that.applicationName) && Objects.equals(location, that.location) && Objects.equals(loginId, that.loginId) && Objects.equals(loginIdType, that.loginIdType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, applicationName, instant, ipAddress, location, loginId, userId);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(super.hashCode(), applicationName, location, loginId, loginIdType);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,5 +20,17 @@ package io.fusionauth.domain;
  */
 public enum VerificationStrategy {
   ClickableLink,
-  FormField
+  FormField;
+
+  public static VerificationStrategy safeValueOf(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    try {
+      return VerificationStrategy.valueOf(value);
+    } catch (Exception e) {
+      return null;
+    }
+  }
 }

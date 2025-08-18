@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(5, 60);
 
+  public RateLimitedRequestConfiguration sendPasswordlessPhone = new RateLimitedRequestConfiguration(5, 60);
+
+  public RateLimitedRequestConfiguration sendPhoneVerification = new RateLimitedRequestConfiguration(5, 60);
+
   public RateLimitedRequestConfiguration sendRegistrationVerification = new RateLimitedRequestConfiguration(5, 60);
 
   public RateLimitedRequestConfiguration sendTwoFactor = new RateLimitedRequestConfiguration(5, 60);
@@ -47,6 +51,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
     this.sendEmailVerification = new RateLimitedRequestConfiguration(other.sendEmailVerification);
     this.sendPasswordless = new RateLimitedRequestConfiguration(other.sendPasswordless);
     this.sendRegistrationVerification = new RateLimitedRequestConfiguration(other.sendRegistrationVerification);
+    this.sendPhoneVerification = new RateLimitedRequestConfiguration(other.sendPhoneVerification);
     this.sendTwoFactor = new RateLimitedRequestConfiguration(other.sendTwoFactor);
   }
 
@@ -63,10 +68,19 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
            Objects.equals(forgotPassword, that.forgotPassword) &&
            Objects.equals(sendEmailVerification, that.sendEmailVerification) &&
            Objects.equals(sendPasswordless, that.sendPasswordless) &&
+           Objects.equals(sendPhoneVerification, that.sendPhoneVerification) &&
            Objects.equals(sendRegistrationVerification, that.sendRegistrationVerification) &&
            Objects.equals(sendTwoFactor, that.sendTwoFactor);
   }
 
+  /**
+   * Retrieve the RateLimitedRequestConfiguration for the specified type.
+   *
+   * @param type type to retrieve the configuration for.
+   * @return the config
+   * @deprecated just access the configuration, on this object directly, e.g. `tenantRateLimitConfiguration.failedLogin`.
+   */
+  @Deprecated // JDK 8 compatible/client library (since = "1.59.0")
   @JsonIgnore
   public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
     switch (type) {
@@ -78,6 +92,10 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
         return sendEmailVerification;
       case SendPasswordless:
         return sendPasswordless;
+      case SendPhonePasswordless:
+        return sendPasswordlessPhone;
+      case SendPhoneVerification:
+        return sendPhoneVerification;
       case SendRegistrationVerification:
         return sendRegistrationVerification;
       case SendTwoFactor:
@@ -89,7 +107,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(failedLogin, forgotPassword, sendEmailVerification, sendPasswordless, sendRegistrationVerification, sendTwoFactor);
+    return Objects.hash(failedLogin, forgotPassword, sendEmailVerification, sendPasswordless, sendPhoneVerification,
+                        sendRegistrationVerification, sendTwoFactor);
   }
 
   @Override

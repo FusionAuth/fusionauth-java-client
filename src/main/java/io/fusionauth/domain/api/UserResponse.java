@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,13 @@
 package io.fusionauth.domain.api;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
+import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.IdentityType;
 import io.fusionauth.domain.User;
 
 /**
@@ -42,11 +45,23 @@ public class UserResponse {
 
   public User user;
 
+  public List<VerificationId> verificationIds;
+
   @JacksonConstructor
   public UserResponse() {
   }
 
   public UserResponse(User user) {
     this.user = user;
+  }
+
+  public static class VerificationId implements Buildable<VerificationId> {
+    public String id;
+
+    public String oneTimeCode;
+
+    public IdentityType type;
+
+    public String value;
   }
 }

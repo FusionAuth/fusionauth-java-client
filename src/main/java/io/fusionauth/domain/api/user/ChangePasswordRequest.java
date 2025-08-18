@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -34,6 +35,8 @@ public class ChangePasswordRequest extends BaseEventRequest implements Buildable
   public String currentPassword;
 
   public String loginId;
+
+  public List<String> loginIdTypes;
 
   public String password;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
@@ -28,6 +30,8 @@ import io.fusionauth.domain.EventInfo;
  */
 public class LoginRequest extends BaseLoginRequest implements Buildable<LoginRequest> {
   public String loginId;
+
+  public List<String> loginIdTypes = new ArrayList<>();
 
   public String oneTimePassword;
 
@@ -61,6 +65,14 @@ public class LoginRequest extends BaseLoginRequest implements Buildable<LoginReq
     super(eventInfo);
     this.applicationId = applicationId;
     this.loginId = loginId;
+    this.password = password;
+  }
+
+  public LoginRequest(EventInfo eventInfo, UUID applicationId, String loginId, List<String> loginIdTypes, String password) {
+    super(eventInfo);
+    this.applicationId = applicationId;
+    this.loginId = loginId;
+    this.loginIdTypes = loginIdTypes;
     this.password = password;
   }
 }

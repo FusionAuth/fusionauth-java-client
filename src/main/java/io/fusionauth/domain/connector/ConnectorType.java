@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public enum ConnectorType {
   LDAP;
 
   /**
-   * Return the connector type from a a string name returning null if the value is unknown.
+   * Return the connector type from a string name returning null if the value is unknown.
    *
    * @param value the string name of the connector type
    * @return the connector type or null if it is not one of the possible values.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,18 @@ import io.fusionauth.domain.Buildable;
 public class PasswordlessStartResponse implements Buildable<PasswordlessStartResponse> {
   public String code;
 
+  public String oneTimeCode;
+
   @JacksonConstructor
   public PasswordlessStartResponse() {
   }
 
   public PasswordlessStartResponse(String code) {
     this.code = code;
+  }
+
+  public PasswordlessStartResponse(String code, String oneTimeCode) {
+    this.code = code;
+    this.oneTimeCode = oneTimeCode;
   }
 }

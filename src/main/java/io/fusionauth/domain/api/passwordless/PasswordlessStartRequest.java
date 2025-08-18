@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  */
 package io.fusionauth.domain.api.passwordless;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
+import io.fusionauth.domain.PasswordlessStrategy;
 
 /**
  * @author Daniel DeGroff
@@ -29,16 +32,20 @@ public class PasswordlessStartRequest implements Buildable<PasswordlessStartRequ
 
   public String loginId;
 
+  public List<String> loginIdTypes = new ArrayList<>();
+
+  public PasswordlessStrategy loginStrategy;
+
   public Map<String, Object> state;
 
   @JacksonConstructor
   public PasswordlessStartRequest() {
   }
 
-  @SuppressWarnings("unused")
-  public PasswordlessStartRequest(UUID applicationId, String loginId, Map<String, Object> state) {
+  public PasswordlessStartRequest(UUID applicationId, String loginId, List<String> loginIdTypes, Map<String, Object> state) {
     this.applicationId = applicationId;
     this.loginId = loginId;
+    this.loginIdTypes = loginIdTypes;
     this.state = state;
   }
 }

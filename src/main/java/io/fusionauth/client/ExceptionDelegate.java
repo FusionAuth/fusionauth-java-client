@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public class ExceptionDelegate {
    * @param <U>      The error response type.
    * @return The success response type if the API call was successful.
    * @throws FusionAuthClientException If the status code was anything exception 2xx or 404 or there was a problem calling
-   *                                 the API (network or something similar).
+   *                                   the API (network or something similar).
    */
   @SuppressWarnings("unchecked")
   public <T, U> T execute(Supplier<ClientResponse<T, U>> supplier) {

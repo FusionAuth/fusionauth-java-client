@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
@@ -23,26 +24,35 @@ import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.User;
 
 /**
- * Models an event where a user is being created with an "in-use" login Id (email or username).
+ * Models an event where a user is being created with an "in-use" login Id (email, username, or other identities).
  *
  * @author Daniel DeGroff
  */
 public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements Buildable<UserLoginIdDuplicateOnCreateEvent>, NonTransactionalEvent {
+  public final User existing;
+
   public String duplicateEmail;
+
+  public List<IdentityInfo> duplicateIdentities;
+
+  public String duplicatePhoneNumber;
 
   public String duplicateUsername;
 
-  public User existing;
-
   @JacksonConstructor
   public UserLoginIdDuplicateOnCreateEvent() {
+    this.existing = null;
   }
 
-  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, User existing, User user) {
+  public UserLoginIdDuplicateOnCreateEvent(EventInfo info, String duplicateEmail, String duplicateUsername, String duplicatePhoneNumber,
+                                           List<IdentityInfo> duplicateIdentities,
+                                           User existing, User user) {
     super(info, user);
     this.duplicateEmail = duplicateEmail;
     this.duplicateUsername = duplicateUsername;
-    this.existing = existing;
+    this.duplicatePhoneNumber = duplicatePhoneNumber;
+    this.duplicateIdentities = duplicateIdentities;
+    this.existing = new User(existing).secure().sort();
   }
 
   @Override
@@ -52,6 +62,8 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
     }
     UserLoginIdDuplicateOnCreateEvent that = (UserLoginIdDuplicateOnCreateEvent) o;
     return Objects.equals(duplicateEmail, that.duplicateEmail) &&
+           Objects.equals(duplicateIdentities, that.duplicateIdentities) &&
+           Objects.equals(duplicatePhoneNumber, that.duplicatePhoneNumber) &&
            Objects.equals(duplicateUsername, that.duplicateUsername) &&
            Objects.equals(existing, that.existing);
   }
@@ -63,6 +75,6 @@ public class UserLoginIdDuplicateOnCreateEvent extends BaseUserEvent implements 
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), duplicateEmail, duplicateUsername, existing);
+    return Objects.hash(super.hashCode(), duplicateEmail, duplicateIdentities, duplicatePhoneNumber, duplicateUsername, existing);
   }
 }
