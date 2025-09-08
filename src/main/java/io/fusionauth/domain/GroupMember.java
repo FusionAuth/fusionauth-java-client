@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,12 +38,6 @@ public class GroupMember implements Buildable<GroupMember> {
 
   public ZonedDateTime insertInstant;
 
-  /**
-   * Deprecated since 1.52.0 (Aug 2024). Planned removal by end of 2024
-   */
-  @Deprecated
-  public User user;
-
   public UUID userId;
 
   @JacksonConstructor
@@ -56,7 +50,6 @@ public class GroupMember implements Buildable<GroupMember> {
     this.id = member.id;
     this.insertInstant = member.insertInstant;
     this.userId = member.userId;
-    this.user = member.user == null ? null : new User(member.user);
   }
 
   @Override
@@ -72,13 +65,12 @@ public class GroupMember implements Buildable<GroupMember> {
            Objects.equals(groupId, that.groupId) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
-           Objects.equals(userId, that.userId) &&
-           Objects.equals(user, that.user);
+           Objects.equals(userId, that.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, groupId, id, insertInstant, userId, user);
+    return Objects.hash(data, groupId, id, insertInstant, userId);
   }
 
   @Override
