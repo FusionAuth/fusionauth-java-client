@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -223,7 +224,9 @@ public enum EventType {
 
   public boolean isInstanceEvent() {
     try {
-      return Class.forName(getClass().getPackage().getName() + "." + name() + "Event").getConstructor().newInstance() instanceof InstanceEvent;
+      Constructor<?> ctor = Class.forName(getClass().getPackage().getName() + "." + name() + "Event").getDeclaredConstructor();
+      ctor.setAccessible(true);
+      return ctor.newInstance() instanceof InstanceEvent;
     } catch (Exception ignore) {
     }
 
@@ -232,7 +235,9 @@ public enum EventType {
 
   public boolean isTransactionalEvent() {
     try {
-      return !(Class.forName(getClass().getPackage().getName() + "." + name() + "Event").getConstructor().newInstance() instanceof NonTransactionalEvent);
+      Constructor<?> ctor = Class.forName(getClass().getPackage().getName() + "." + name() + "Event").getDeclaredConstructor();
+      ctor.setAccessible(true);
+      return !(ctor.newInstance() instanceof NonTransactionalEvent);
     } catch (Exception ignore) {
     }
 
