@@ -77,7 +77,10 @@ public class OAuthError implements OAuthResponse {
     access_token_required,
 
     refresh_token_not_found,
-    refresh_token_type_not_supported,
+    refresh_token_type_not_supported, // Deprecated
+    id_token_invalid,
+    unsupported_token_type,
+    token_type_hint_mismatch,
 
     // Invalid request parameters
     invalid_client_id,
