@@ -557,7 +557,7 @@ public class FusionAuthClient {
    * An HTTP status code of 400 with a general error code of [TrustTokenRequired] indicates that a Trust Token is required to make a POST request to this API.
    *
    * @param loginId The loginId of the User that you intend to change the password for.
-   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @param loginIdTypes The identity types that FusionAuth will compare the loginId to.
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Errors> checkChangePasswordUsingLoginIdAndLoginIdTypes(String loginId, List<String> loginIdTypes) {
@@ -4226,7 +4226,7 @@ public class FusionAuthClient {
    * Retrieves the user for the loginId, using specific loginIdTypes.
    *
    * @param loginId The email or username of the user.
-   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @param loginIdTypes The identity types that FusionAuth will compare the loginId to.
    * @return The ClientResponse object.
    */
   public ClientResponse<UserResponse, Errors> retrieveUserByLoginIdWithLoginIdTypes(String loginId, List<String> loginIdTypes) {
@@ -4449,7 +4449,7 @@ public class FusionAuthClient {
    * @param loginId The userId id.
    * @param start The start instant as UTC milliseconds since Epoch.
    * @param end The end instant as UTC milliseconds since Epoch.
-   * @param loginIdTypes the identity types that FusionAuth will compare the loginId to.
+   * @param loginIdTypes The identity types that FusionAuth will compare the loginId to.
    * @return The ClientResponse object.
    */
   public ClientResponse<LoginReportResponse, Errors> retrieveUserLoginReportByLoginIdAndLoginIdTypes(UUID applicationId, String loginId, long start, long end, List<String> loginIdTypes) {
