@@ -388,14 +388,16 @@ public class FusionAuthClient {
    * @param client_secret (Optional) The client secret. This value will be required if client authentication is enabled.
    * @param token The access token used to identify the user.
    * @param user_code The end-user verification code.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<DeviceApprovalResponse, Errors> approveDevice(String client_id, String client_secret, String token, String user_code) {
+  public ClientResponse<DeviceApprovalResponse, Errors> approveDevice(String client_id, String client_secret, String token, String user_code, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("client_id", Arrays.asList(client_id));
     parameters.put("client_secret", Arrays.asList(client_secret));
     parameters.put("token", Arrays.asList(token));
     parameters.put("user_code", Arrays.asList(user_code));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return start(DeviceApprovalResponse.class, Errors.class)
         .uri("/oauth2/device/approve")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -557,14 +559,16 @@ public class FusionAuthClient {
    * @param client_secret (Optional) The client secret used to authenticate this request.
    *     This parameter is optional when Basic Authorization is used to authenticate this request.
    * @param scope (Optional) This parameter is used to indicate which target entity you are requesting access. To request access to an entity, use the format target-entity:&lt;target-entity-id&gt;:&lt;roles&gt;. Roles are an optional comma separated list.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AccessToken, OAuthError> clientCredentialsGrant(String client_id, String client_secret, String scope) {
+  public ClientResponse<AccessToken, OAuthError> clientCredentialsGrant(String client_id, String client_secret, String scope, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("client_id", Arrays.asList(client_id));
     parameters.put("client_secret", Arrays.asList(client_secret));
     parameters.put("grant_type", Arrays.asList("client_credentials"));
     parameters.put("scope", Arrays.asList(scope));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1826,15 +1830,17 @@ public class FusionAuthClient {
    *     This parameter is optional when Basic Authorization is used to authenticate this request.
    * @param client_secret (Optional) The client secret. This value will be required if client authentication is enabled.
    * @param redirect_uri The URI to redirect to upon a successful request.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret, String redirect_uri) {
+  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessToken(String code, String client_id, String client_secret, String redirect_uri, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("code", Arrays.asList(code));
     parameters.put("client_id", Arrays.asList(client_id));
     parameters.put("client_secret", Arrays.asList(client_secret));
     parameters.put("grant_type", Arrays.asList("authorization_code"));
     parameters.put("redirect_uri", Arrays.asList(redirect_uri));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1852,9 +1858,10 @@ public class FusionAuthClient {
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param redirect_uri The URI to redirect to upon a successful request.
    * @param code_verifier The random string generated previously. Will be compared with the code_challenge sent previously, which allows the OAuth provider to authenticate your app.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenUsingPKCE(String code, String client_id, String client_secret, String redirect_uri, String code_verifier) {
+  public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenUsingPKCE(String code, String client_id, String client_secret, String redirect_uri, String code_verifier, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("code", Arrays.asList(code));
     parameters.put("client_id", Arrays.asList(client_id));
@@ -1862,6 +1869,7 @@ public class FusionAuthClient {
     parameters.put("grant_type", Arrays.asList("authorization_code"));
     parameters.put("redirect_uri", Arrays.asList(redirect_uri));
     parameters.put("code_verifier", Arrays.asList(code_verifier));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1879,9 +1887,10 @@ public class FusionAuthClient {
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
    * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.
+   * @param tenantId (Optional) The Id of the tenant to use for this request. Required if the request is for a universal application.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AccessToken, OAuthError> exchangeRefreshTokenForAccessToken(String refresh_token, String client_id, String client_secret, String scope, String user_code) {
+  public ClientResponse<AccessToken, OAuthError> exchangeRefreshTokenForAccessToken(String refresh_token, String client_id, String client_secret, String scope, String user_code, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("refresh_token", Arrays.asList(refresh_token));
     parameters.put("client_id", Arrays.asList(client_id));
@@ -1889,6 +1898,7 @@ public class FusionAuthClient {
     parameters.put("grant_type", Arrays.asList("refresh_token"));
     parameters.put("scope", Arrays.asList(scope));
     parameters.put("user_code", Arrays.asList(user_code));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -1921,9 +1931,10 @@ public class FusionAuthClient {
    * @param client_secret (Optional) The client secret. This value may optionally be provided in the request body instead of the Authorization header.
    * @param scope (Optional) This parameter is optional and if omitted, the same scope requested during the authorization request will be used. If provided the scopes must match those requested during the initial authorization request.
    * @param user_code (Optional) The end-user verification code. This code is required if using this endpoint to approve the Device Authorization.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<AccessToken, OAuthError> exchangeUserCredentialsForAccessToken(String username, String password, String client_id, String client_secret, String scope, String user_code) {
+  public ClientResponse<AccessToken, OAuthError> exchangeUserCredentialsForAccessToken(String username, String password, String client_id, String client_secret, String scope, String user_code, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("username", Arrays.asList(username));
     parameters.put("password", Arrays.asList(password));
@@ -1932,6 +1943,7 @@ public class FusionAuthClient {
     parameters.put("grant_type", Arrays.asList("password"));
     parameters.put("scope", Arrays.asList(scope));
     parameters.put("user_code", Arrays.asList(user_code));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -2140,12 +2152,14 @@ public class FusionAuthClient {
    *
    * @param client_id The unique client identifier. The client Id is the Id of the FusionAuth Application for which this token was generated.
    * @param token The access token returned by this OAuth provider as the result of a successful client credentials grant.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<IntrospectResponse, OAuthError> introspectAccessToken(String client_id, String token) {
+  public ClientResponse<IntrospectResponse, OAuthError> introspectAccessToken(String client_id, String token, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("client_id", Arrays.asList(client_id));
     parameters.put("token", Arrays.asList(token));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -2157,11 +2171,13 @@ public class FusionAuthClient {
    * Inspect an access token issued as the result of the Client Credentials Grant.
    *
    * @param token The access token returned by this OAuth provider as the result of a successful client credentials grant.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<IntrospectResponse, OAuthError> introspectClientCredentialsAccessToken(String token) {
+  public ClientResponse<IntrospectResponse, OAuthError> introspectClientCredentialsAccessToken(String token, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("token", Arrays.asList(token));
+    parameters.put("tenantId", Arrays.asList("" + tenantId));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -4255,15 +4271,17 @@ public class FusionAuthClient {
    * @param client_id The client Id.
    * @param client_secret The client Id.
    * @param user_code The end-user verification code.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> retrieveUserCode(String client_id, String client_secret, String user_code) {
+  public ClientResponse<Void, Void> retrieveUserCode(String client_id, String client_secret, String user_code, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("client_id", Arrays.asList(client_id));
     parameters.put("client_secret", Arrays.asList(client_secret));
     parameters.put("user_code", Arrays.asList(user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/user-code")
+        .urlParameter("tenantId", tenantId)
         .bodyHandler(new FormDataBodyHandler(parameters))
         .get()
         .go();
@@ -4277,13 +4295,15 @@ public class FusionAuthClient {
    * This request will require an API key.
    *
    * @param user_code The end-user verification code.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> retrieveUserCodeUsingAPIKey(String user_code) {
+  public ClientResponse<Void, Void> retrieveUserCodeUsingAPIKey(String user_code, UUID tenantId) {
     Map<String, List<String>> parameters = new HashMap<>();
     parameters.put("user_code", Arrays.asList(user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/user-code")
+        .urlParameter("tenantId", tenantId)
         .bodyHandler(new FormDataBodyHandler(parameters))
         .get()
         .go();
@@ -4335,12 +4355,14 @@ public class FusionAuthClient {
    * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
    *
    * @param encodedJWT The encoded JWT (access token).
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserinfoResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT) {
+  public ClientResponse<UserinfoResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT, UUID tenantId) {
     return startAnonymous(UserinfoResponse.class, OAuthError.class)
         .uri("/oauth2/userinfo")
         .authorization("Bearer " + encodedJWT)
+        .urlParameter("tenantId", tenantId)
         .get()
         .go();
   }
@@ -5817,13 +5839,15 @@ public class FusionAuthClient {
    *
    * @param user_code The end-user verification code.
    * @param client_id The client Id.
+   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Void> validateDevice(String user_code, String client_id) {
+  public ClientResponse<Void, Void> validateDevice(String user_code, String client_id, UUID tenantId) {
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/validate")
         .urlParameter("user_code", user_code)
         .urlParameter("client_id", client_id)
+        .urlParameter("tenantId", tenantId)
         .get()
         .go();
   }
