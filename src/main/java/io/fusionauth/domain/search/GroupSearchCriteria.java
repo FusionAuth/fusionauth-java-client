@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2023, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,6 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
 public class GroupSearchCriteria extends BaseSearchCriteria {
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
-  /**
-   * Specify exactly matching the name. Defaults to false, which enables partial matching.
-   */
-  public boolean exact;
-
   public String name;
 
   public UUID tenantId;
@@ -47,7 +42,7 @@ public class GroupSearchCriteria extends BaseSearchCriteria {
     }
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
-    name = toSearchString(name, exact);
+    name = toSearchString(name);
     return this;
   }
 
