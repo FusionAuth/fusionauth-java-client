@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,8 +93,16 @@ public class SQLTools {
   }
 
   public static String toSearchString(String s) {
+    return toSearchString(s, false);
+  }
+
+  public static String toSearchString(String s, boolean exactMatch) {
     if (s == null) {
       return null;
+    }
+
+    if (exactMatch) {
+      return s.toLowerCase();
     }
 
     // Escape '%' and '_' as these are reserved characters in a LIKE statement.
