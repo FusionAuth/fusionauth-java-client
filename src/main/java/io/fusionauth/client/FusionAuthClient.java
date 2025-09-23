@@ -242,6 +242,8 @@ import io.fusionauth.domain.oauth2.ClientCredentialsAccessTokenIntrospectRequest
 import io.fusionauth.domain.oauth2.ClientCredentialsGrantRequest;
 import io.fusionauth.domain.oauth2.DeviceApprovalRequest;
 import io.fusionauth.domain.oauth2.DeviceApprovalResponse;
+import io.fusionauth.domain.oauth2.DeviceAuthorizationRequest;
+import io.fusionauth.domain.oauth2.DeviceResponse;
 import io.fusionauth.domain.oauth2.IntrospectResponse;
 import io.fusionauth.domain.oauth2.JWKSResponse;
 import io.fusionauth.domain.oauth2.OAuthCodeAccessTokenRequest;
@@ -4530,14 +4532,12 @@ public class FusionAuthClient {
    * Call the UserInfo endpoint to retrieve User Claims from the access token issued by FusionAuth.
    *
    * @param encodedJWT The encoded JWT (access token).
-   * @param tenantId (Optional) The Id of the tenant to use for this request.
    * @return The ClientResponse object.
    */
-  public ClientResponse<UserinfoResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT, UUID tenantId) {
+  public ClientResponse<UserinfoResponse, OAuthError> retrieveUserInfoFromAccessToken(String encodedJWT) {
     return startAnonymous(UserinfoResponse.class, OAuthError.class)
         .uri("/oauth2/userinfo")
         .authorization("Bearer " + encodedJWT)
-        .urlParameter("tenantId", tenantId)
         .get()
         .go();
   }
