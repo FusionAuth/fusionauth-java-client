@@ -15,6 +15,9 @@
  */
 package io.fusionauth.domain.api.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.EventInfo;
 import io.fusionauth.domain.SendSetPasswordIdentityType;
@@ -47,6 +50,8 @@ public class RegistrationRequest extends BaseEventRequest {
   public boolean skipVerification;
 
   public User user;
+
+  public List<String> verificationIds = new ArrayList<>();
 
   @JacksonConstructor
   public RegistrationRequest() {
