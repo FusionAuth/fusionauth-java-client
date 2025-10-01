@@ -31,6 +31,12 @@ public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
 
   public String loginIdType;
 
+  /**
+   * When false (default), loginId/loginIdType must correspond to a user in the tenant. When this is true, verification can begin
+   * without a user, in order to perform verification before user creation.
+   */
+  public boolean skipUserRequirement;
+
   public Map<String, Object> state;
 
   public VerificationStrategy verificationStrategy;
