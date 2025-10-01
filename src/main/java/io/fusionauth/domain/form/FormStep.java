@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,14 @@ import io.fusionauth.domain.Buildable;
 public class FormStep implements Buildable<FormStep> {
   public List<UUID> fields = new ArrayList<>();
 
+  public FormStepType formStepType = FormStepType.collectData;
+
   @JacksonConstructor
   public FormStep() {
   }
 
   public FormStep(FormStep other) {
+    formStepType = other.formStepType;
     fields.addAll(other.fields);
   }
 
@@ -52,12 +55,12 @@ public class FormStep implements Buildable<FormStep> {
       return false;
     }
     FormStep formStep = (FormStep) o;
-    return Objects.equals(fields, formStep.fields);
+    return Objects.equals(fields, formStep.fields) && Objects.equals(formStepType, formStep.formStepType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fields);
+    return Objects.hash(fields, formStepType);
   }
 
   @Override
