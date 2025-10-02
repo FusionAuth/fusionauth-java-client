@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,9 +85,9 @@ public class Form implements Buildable<Form> {
 
   public void normalize() {
     Normalizer.removeEmpty(data);
-    // Remove any null steps, steps w/out fields, and any null fields in steps
+    // Remove any null steps, collectData steps w/out fields, and any null fields in steps
     Normalizer.removeEmpty(steps);
-    steps.removeIf(step -> step.fields.isEmpty());
+    steps.removeIf(step -> step.type == FormStepType.collectData && step.fields.isEmpty());
     steps.stream().map(step -> step.fields).forEach(Normalizer::removeEmpty);
   }
 

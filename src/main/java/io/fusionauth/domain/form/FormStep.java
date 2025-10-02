@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
@@ -29,16 +30,20 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class FormStep implements Buildable<FormStep> {
+  // TODO: Come back to this
+  @JsonIgnore
+  public List<FormField> fieldObjects = new ArrayList<>();
+
   public List<UUID> fields = new ArrayList<>();
 
-  public FormStepType formStepType = FormStepType.collectData;
+  public FormStepType type = FormStepType.collectData;
 
   @JacksonConstructor
   public FormStep() {
   }
 
   public FormStep(FormStep other) {
-    formStepType = other.formStepType;
+    type = other.type;
     fields.addAll(other.fields);
   }
 
@@ -55,12 +60,12 @@ public class FormStep implements Buildable<FormStep> {
       return false;
     }
     FormStep formStep = (FormStep) o;
-    return Objects.equals(fields, formStep.fields) && Objects.equals(formStepType, formStep.formStepType);
+    return Objects.equals(fields, formStep.fields) && Objects.equals(type, formStep.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fields, formStepType);
+    return Objects.hash(fields, type);
   }
 
   @Override
