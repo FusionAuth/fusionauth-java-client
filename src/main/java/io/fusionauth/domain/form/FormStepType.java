@@ -22,5 +22,5 @@ public enum FormStepType {
   // NOTE: These are ordinal, always add to the end
   collectData,
   verifyEmail,
-  verifyPhone
+  verifyPhoneNumber
 }
