@@ -56,7 +56,7 @@ public class FormStep implements Buildable<FormStep> {
       return false;
     }
     FormStep formStep = (FormStep) o;
-    return Objects.equals(fields, formStep.fields) && Objects.equals(type, formStep.type);
+    return Objects.equals(fields, formStep.fields) && type == formStep.type;
   }
 
   @Override
