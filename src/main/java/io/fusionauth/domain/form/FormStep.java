@@ -30,7 +30,6 @@ import io.fusionauth.domain.Buildable;
  * @author Daniel DeGroff
  */
 public class FormStep implements Buildable<FormStep> {
-
   public List<UUID> fields = new ArrayList<>();
 
   public FormStepType type = FormStepType.collectData;
