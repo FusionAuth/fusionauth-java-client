@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 package io.fusionauth.domain.api.user;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.User;
 import io.fusionauth.domain.UserRegistration;
+import io.fusionauth.domain.api.UserResponse.VerificationId;
 
 /**
  * Registration API request object.
@@ -43,6 +45,8 @@ public class RegistrationResponse {
   public ZonedDateTime tokenExpirationInstant;
 
   public User user;
+
+  public List<VerificationId> verificationIds;
 
   @JacksonConstructor
   public RegistrationResponse() {
