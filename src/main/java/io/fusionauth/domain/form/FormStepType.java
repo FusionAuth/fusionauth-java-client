@@ -16,11 +16,20 @@
 package io.fusionauth.domain.form;
 
 /**
- * Which type of step is in use?
+ * Denotes the type of form step. This is used to configure different behavior on form steps in the registration flow.
  */
 public enum FormStepType {
   // NOTE: These are ordinal, always add to the end
+  /**
+   * Collects data from the user.
+   */
   collectData,
+  /**
+   * Verifies the user's email address before creating the user.
+   */
   verifyEmail,
+  /**
+   * Verifies the user's phone number before creating the user.
+   */
   verifyPhoneNumber
 }
