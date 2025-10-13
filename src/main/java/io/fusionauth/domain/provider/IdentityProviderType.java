@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,6 +53,12 @@ public enum IdentityProviderType {
 
   Xbox(UUID.fromString("af53ab21-34c3-468a-8ba2-ecb3905f67f2"));
 
+  /**
+   * The legacy fixed Id for types that were limited to a single configuration per instance prior to version {@code 1.61.0}
+   *
+   * @deprecated prefer allowing for any Id instead of expecting a fixed value
+   */
+  @Deprecated
   public final UUID id;
 
   IdentityProviderType(UUID id) {
