@@ -27,15 +27,15 @@ import io.fusionauth.domain.VerificationStrategy;
 public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
   public UUID applicationId;
 
+  /**
+   * When MustExist (default), loginId/loginIdType must correspond to a user in the tenant. When this is MustNotExist, verification can begin
+   * without a user, in order to perform verification before user creation.
+   */
+  public ExistingUserStrategy existingUserStrategy = ExistingUserStrategy.MustExist;
+
   public String loginId;
 
   public String loginIdType;
-
-  /**
-   * When false (default), loginId/loginIdType must correspond to a user in the tenant. When this is true, verification can begin
-   * without a user, in order to perform verification before user creation.
-   */
-  public boolean skipUserRequirement;
 
   public Map<String, Object> state;
 
