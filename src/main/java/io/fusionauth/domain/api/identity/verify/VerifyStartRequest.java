@@ -31,7 +31,7 @@ public class VerifyStartRequest implements Buildable<VerifyStartRequest> {
    * When MustExist (default), loginId/loginIdType must correspond to a user in the tenant. When this is MustNotExist, verification can begin
    * without a user, in order to perform verification before user creation.
    */
-  public ExistingUserStrategy existingUserStrategy = ExistingUserStrategy.MustExist;
+  public ExistingUserStrategy existingUserStrategy = ExistingUserStrategy.mustExist;
 
   public String loginId;
 
