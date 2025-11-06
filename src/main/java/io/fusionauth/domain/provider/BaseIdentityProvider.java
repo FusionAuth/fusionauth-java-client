@@ -81,6 +81,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            linkingStrategy == that.linkingStrategy &&
            Objects.equals(name, that.name) &&
+           Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(tenantConfiguration, that.tenantConfiguration);
   }
 
@@ -88,7 +89,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantConfiguration);
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantId, tenantConfiguration);
   }
 
   @JsonIgnore
