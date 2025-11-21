@@ -505,7 +505,7 @@ public enum LambdaType {
       "  // this will override FusionAuth's answer if FusionAuth had set required to false on the way in\n" +
       "  if (context?.eventInfo?.location?.country !== \"USA\") {\n" +
       "    result.required = true;\n"+
-      "  }" +
+      "  }\n" +
       "}\n");
   // @formatter:on
 
