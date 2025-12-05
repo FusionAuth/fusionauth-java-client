@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ public class LookupResponse {
   public LookupResponse(BaseIdentityProvider<?> identityProvider) {
     this.identityProvider = new IdentityProviderDetails();
     this.identityProvider.id = identityProvider.id;
+    this.identityProvider.tenantId = identityProvider.tenantId;
     this.identityProvider.name = identityProvider.name;
     this.identityProvider.type = identityProvider.getType();
     // Add all enabled application Ids
@@ -80,6 +81,8 @@ public class LookupResponse {
     public String name;
 
     public IdentityProviderOauth2Configuration oauth2;
+
+    public UUID tenantId;
 
     public IdentityProviderType type;
   }
