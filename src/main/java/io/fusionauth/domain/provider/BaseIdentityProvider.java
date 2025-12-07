@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public Map<UUID, IdentityProviderTenantConfiguration> tenantConfiguration = new HashMap<>();
 
+  public UUID tenantId;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -79,6 +81,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            linkingStrategy == that.linkingStrategy &&
            Objects.equals(name, that.name) &&
+           Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(tenantConfiguration, that.tenantConfiguration);
   }
 
@@ -86,7 +89,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantConfiguration);
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantId, tenantConfiguration);
   }
 
   @JsonIgnore
