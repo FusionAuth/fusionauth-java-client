@@ -15,15 +15,13 @@
  */
 package io.fusionauth.domain.lambda.parameters;
 
-import io.fusionauth.api.service.mfa.MFAService.RequiredResult;
-
 /**
  * Represents the inbound lambda parameter 'result' for MFA Required lambdas.
  */
 public class MFARequiredLambdaResult {
   public boolean required;
 
-  public MFARequiredLambdaResult(RequiredResult fusionAuthResult) {
-    this.required = fusionAuthResult.required();
+  public MFARequiredLambdaResult(boolean required) {
+    this.required = required;
   }
 }
