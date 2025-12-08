@@ -20,6 +20,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Represents the inbound lambda parameter 'mfaTrust' inside the 'context' parameter for MFA Required lambdas.
+ */
 public class MFATrust {
   public final UUID applicationId;
 
