@@ -500,7 +500,7 @@ public enum LambdaType {
        "}\n"),
   MFARequirement("validate", "" +
       //language=JavaScript
-      "function validate(user, result, application, policies, context) {\n" +
+      "function validate(action, user, result, application, policies, context) {\n" +
       "  // simple example, if the user is not in the US, require MFA\n" +
       "  // this will override FusionAuth's answer if FusionAuth had set required to false on the way in\n" +
       "  if (context?.eventInfo?.location?.country !== \"USA\") {\n" +

@@ -13,13 +13,15 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+package io.fusionauth.domain.lambda.parameters;
 
 /**
- * Communicate various contexts in which multi-factor authentication can be used.
+ * Represents the inbound lambda parameter 'result' for MFA Required lambdas.
  */
-public enum MultiFactorContext {
-  changePassword,
-  login,
-  stepUp
+public class MFARequiredLambdaResult {
+  public boolean required;
+
+  public MFARequiredLambdaResult(boolean required) {
+    this.required = required;
+  }
 }
