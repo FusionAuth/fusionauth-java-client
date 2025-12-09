@@ -21,6 +21,8 @@ package io.fusionauth.domain.lambda.parameters;
 public class MFARequiredLambdaResult {
   public boolean required;
 
+  public boolean sendSuspiciousLoginEvent;
+
   public MFARequiredLambdaResult(boolean required) {
     this.required = required;
   }
