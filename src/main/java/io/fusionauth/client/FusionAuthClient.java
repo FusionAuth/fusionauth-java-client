@@ -218,6 +218,7 @@ import io.fusionauth.domain.api.twoFactor.TwoFactorSendRequest;
 import io.fusionauth.domain.api.twoFactor.TwoFactorStartRequest;
 import io.fusionauth.domain.api.twoFactor.TwoFactorStartResponse;
 import io.fusionauth.domain.api.twoFactor.TwoFactorStatusResponse;
+import io.fusionauth.domain.api.twoFactor.TwoFactorStatusRequest;
 import io.fusionauth.domain.api.user.ActionRequest;
 import io.fusionauth.domain.api.user.ActionResponse;
 import io.fusionauth.domain.api.user.ChangePasswordRequest;
@@ -4108,6 +4109,24 @@ public class FusionAuthClient {
         .urlParameter("applicationId", applicationId)
         .urlSegment(twoFactorTrustId)
         .get()
+        .go();
+  }
+
+  /**
+   * Retrieve a user's two-factor status.
+   * <p>
+   * This can be used to see if a user will need to complete a two-factor challenge to complete a login,
+   * and optionally identify the state of the two-factor trust across various applications. This operation
+   * provides more payload options than retrieveTwoFactorStatus.
+   *
+   * @param request The request object that contains all the information used to check the status.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TwoFactorStatusResponse, Errors> retrieveTwoFactorStatusUsing(TwoFactorStatusRequest request) {
+    return start(TwoFactorStatusResponse.class, Errors.class)
+        .uri("/api/two-factor/status")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
         .go();
   }
 
