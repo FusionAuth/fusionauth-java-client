@@ -563,7 +563,7 @@ public class FusionAuthClient {
    * @param ipAddress (Optional) IP address of the user changing their password. This is used for MFA risk assessment.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> checkChangePasswordUsingJWT(String encodedJWT, String ipAddress) {
+  public ClientResponse<Void, Errors> checkChangePasswordUsingJWTAndIPAddress(String encodedJWT, String ipAddress) {
     return startAnonymous(Void.TYPE, Errors.class)
         .uri("/api/user/change-password")
         .authorization("Bearer " + encodedJWT)
@@ -601,7 +601,7 @@ public class FusionAuthClient {
    * @param ipAddress (Optional) IP address of the user changing their password. This is used for MFA risk assessment.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> checkChangePasswordUsingLoginId(String loginId, String ipAddress) {
+  public ClientResponse<Void, Errors> checkChangePasswordUsingLoginIdAndIPAddress(String loginId, String ipAddress) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/change-password")
         .urlParameter("loginId", loginId)
@@ -642,7 +642,7 @@ public class FusionAuthClient {
    * @param ipAddress (Optional) IP address of the user changing their password. This is used for MFA risk assessment.
    * @return The ClientResponse object.
    */
-  public ClientResponse<Void, Errors> checkChangePasswordUsingLoginIdAndLoginIdTypes(String loginId, List<String> loginIdTypes, String ipAddress) {
+  public ClientResponse<Void, Errors> checkChangePasswordUsingLoginIdAndLoginIdTypesAndIPAddress(String loginId, List<String> loginIdTypes, String ipAddress) {
     return start(Void.TYPE, Errors.class)
         .uri("/api/user/change-password")
         .urlParameter("loginId", loginId)
