@@ -4218,7 +4218,7 @@ public class FusionAuthClient {
    * @param request The request object that contains all the information used to check the status.
    * @return The ClientResponse object.
    */
-  public ClientResponse<TwoFactorStatusResponse, Errors> retrieveTwoFactorStatusUsing(TwoFactorStatusRequest request) {
+  public ClientResponse<TwoFactorStatusResponse, Errors> retrieveTwoFactorStatusWithRequest(TwoFactorStatusRequest request) {
     return start(TwoFactorStatusResponse.class, Errors.class)
         .uri("/api/two-factor/status")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
