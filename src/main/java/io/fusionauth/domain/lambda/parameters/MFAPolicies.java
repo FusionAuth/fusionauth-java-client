@@ -29,8 +29,8 @@ public class MFAPolicies {
   public final MultiFactorLoginPolicy tenantLoginPolicy;
 
   public MFAPolicies(MultiFactorLoginPolicy applicationLoginPolicy,
-                     MultiFactorLoginPolicy tenantLoginPolicy,
-                     ApplicationMultiFactorTrustPolicy applicationMultiFactorTrustPolicy) {
+                     ApplicationMultiFactorTrustPolicy applicationMultiFactorTrustPolicy,
+                     MultiFactorLoginPolicy tenantLoginPolicy) {
     this.applicationLoginPolicy = applicationLoginPolicy;
     this.tenantLoginPolicy = tenantLoginPolicy;
     this.applicationMultiFactorTrustPolicy = applicationMultiFactorTrustPolicy;
