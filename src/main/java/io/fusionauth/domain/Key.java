@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -214,7 +214,8 @@ public class Key implements Buildable<Key> {
     HS512("HmacSHA512"),
     RS256("SHA256withRSA"),
     RS384("SHA384withRSA"),
-    RS512("SHA512withRSA");
+    RS512("SHA512withRSA"),
+    Ed25519("Ed25519");
 
     public String algorithm;
 
@@ -230,7 +231,8 @@ public class Key implements Buildable<Key> {
   public enum KeyType {
     EC,
     RSA,
-    HMAC
+    HMAC,
+    OKP
   }
 
   public static class CertificateInformation {
