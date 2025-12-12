@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ package io.fusionauth.domain;
  */
 @SuppressWarnings("ALL")
 public enum LambdaType {
+  // This is an ordinal enum, so make sure new values are added to the end
   // @formatter:off
   JWTPopulate("populate", "" +
       //language=JavaScript
@@ -496,7 +497,16 @@ public enum LambdaType {
        "\n" +
        "  console.info('Hello World!');" +
        "\n" +
-       "}\n");
+       "}\n"),
+  MFARequirement("validate", "" +
+      //language=JavaScript
+      "function validate(action, user, result, application, policies, context) {\n" +
+      "  // simple example, if the user is not in the US, require MFA\n" +
+      "  // this will override FusionAuth's answer if FusionAuth had set required to false on the way in\n" +
+      "  if (context?.eventInfo?.location?.country !== \"USA\") {\n" +
+      "    result.required = true;\n"+
+      "  }\n" +
+      "}\n");
   // @formatter:on
 
   private final String example;
