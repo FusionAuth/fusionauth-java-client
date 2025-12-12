@@ -28,7 +28,7 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
 
   public int maxLength = 256;
 
-  public int minLength = 8;
+  public int minLength;
 
   public RememberPreviousPasswords rememberPreviousPasswords = new RememberPreviousPasswords();
 
@@ -45,6 +45,7 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
 
   @JacksonConstructor
   public PasswordValidationRules() {
+    this.minLength = FIPS.minimumPasswordLength();
   }
 
   public PasswordValidationRules(PasswordValidationRules other) {
