@@ -4077,6 +4077,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the totals report. This allows excluding applicationTotals from the report. An empty list will include the applicationTotals.
+   *
+   * @param excludes List of fields to exclude in the response. Currently only allows applicationTotals.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TotalsReportResponse, Void> retrieveTotalReportWithExcludes(List<String> excludes) {
+    return start(TotalsReportResponse.class, Void.TYPE)
+        .uri("/api/report/totals")
+        .urlParameter("excludes", excludes)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieve two-factor recovery codes for a user.
    *
    * @param userId The Id of the user to retrieve Two Factor recovery codes.
