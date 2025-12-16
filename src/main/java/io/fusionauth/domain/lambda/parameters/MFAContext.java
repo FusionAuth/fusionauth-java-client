@@ -34,15 +34,18 @@ public class MFAContext {
 
   public final MFATrust mfaTrust;
 
+  public final MFAPolicies policies;
+
   public final UserRegistration registration;
 
-  public MFAContext(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats, UserRegistration registration,
-                    MFATrust mfaTrust,
-                    Map<String, Object> jwt) {
+  public MFAContext(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
+                    UserRegistration registration, MFATrust mfaTrust, Map<String, Object> jwt,
+                    MFAPolicies policies) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.registration = registration;
     this.mfaTrust = mfaTrust;
     this.jwt = jwt;
+    this.policies = policies;
   }
 }
