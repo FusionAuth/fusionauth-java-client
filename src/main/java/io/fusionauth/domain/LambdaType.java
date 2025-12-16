@@ -498,14 +498,22 @@ public enum LambdaType {
        "  console.info('Hello World!');" +
        "\n" +
        "}\n"),
-  MFARequirement("validate", "" +
+  MFARequirement("checkRequired", "" +
       //language=JavaScript
-      "function validate(action, user, result, application, policies, context) {\n" +
-      "  // simple example, if the user is not in the US, require MFA\n" +
-      "  // this will override FusionAuth's answer if FusionAuth had set required to false on the way in\n" +
-      "  if (context?.eventInfo?.location?.country !== \"USA\") {\n" +
-      "    result.required = true;\n"+
-      "  }\n" +
+      "// Check whether MFA is required, for a particular action, user, and application, in a given context.\n" +
+      "function checkRequired(result, action, user, application, context) {\n" +
+       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+       "  //  \n" +
+       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+       "  //  console.info(JSON.stringify(user)); \n" +
+       "\n" +
+       "  // Happy coding! Populate your JWT here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
       "}\n");
   // @formatter:on
 
