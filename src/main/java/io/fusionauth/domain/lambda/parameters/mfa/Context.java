@@ -32,19 +32,19 @@ public class Context {
 
   public final Map<String, Object> jwt;
 
+  public final Trust mfaTrust;
+
   public final Policies policies;
 
   public final UserRegistration registration;
 
-  public final Trust trust;
-
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
-                 UserRegistration registration, Trust trust, Map<String, Object> jwt,
+                 UserRegistration registration, Trust mfaTrust, Map<String, Object> jwt,
                  Policies policies) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.registration = registration;
-    this.trust = trust;
+    this.mfaTrust = mfaTrust;
     this.jwt = jwt;
     this.policies = policies;
   }
