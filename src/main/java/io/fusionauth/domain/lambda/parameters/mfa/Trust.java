@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.lambda.parameters;
+package io.fusionauth.domain.lambda.parameters.mfa;
 
 import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
@@ -23,7 +23,7 @@ import java.util.UUID;
 /**
  * Represents the inbound lambda parameter 'mfaTrust' inside the 'context' parameter for MFA Required lambdas.
  */
-public class MFATrust {
+public class Trust {
   public final UUID applicationId;
 
   public final Map<String, String> attributes = new LinkedHashMap<>();
@@ -42,8 +42,8 @@ public class MFATrust {
 
   public final UUID userId;
 
-  public MFATrust(UUID applicationId, ZonedDateTime expirationInstant, String id, ZonedDateTime insertInstant,
-                  StartInstant startInstants, Map<String, Object> state, UUID tenantId, UUID userId) {
+  public Trust(UUID applicationId, ZonedDateTime expirationInstant, String id, ZonedDateTime insertInstant,
+               StartInstant startInstants, Map<String, Object> state, UUID tenantId, UUID userId) {
     this.applicationId = applicationId;
     this.expirationInstant = expirationInstant;
     this.id = id;

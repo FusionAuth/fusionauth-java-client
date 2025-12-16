@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.lambda.parameters;
+package io.fusionauth.domain.lambda.parameters.mfa;
 
 import io.fusionauth.domain.ApplicationMultiFactorTrustPolicy;
 import io.fusionauth.domain.MultiFactorLoginPolicy;
@@ -21,16 +21,16 @@ import io.fusionauth.domain.MultiFactorLoginPolicy;
 /**
  * Represents the inbound lambda parameter 'policies' for MFA Required lambdas.
  */
-public class MFAPolicies {
+public class Policies {
   public final MultiFactorLoginPolicy applicationLoginPolicy;
 
   public final ApplicationMultiFactorTrustPolicy applicationMultiFactorTrustPolicy;
 
   public final MultiFactorLoginPolicy tenantLoginPolicy;
 
-  public MFAPolicies(MultiFactorLoginPolicy applicationLoginPolicy,
-                     ApplicationMultiFactorTrustPolicy applicationMultiFactorTrustPolicy,
-                     MultiFactorLoginPolicy tenantLoginPolicy) {
+  public Policies(MultiFactorLoginPolicy applicationLoginPolicy,
+                  ApplicationMultiFactorTrustPolicy applicationMultiFactorTrustPolicy,
+                  MultiFactorLoginPolicy tenantLoginPolicy) {
     this.applicationLoginPolicy = applicationLoginPolicy;
     this.tenantLoginPolicy = tenantLoginPolicy;
     this.applicationMultiFactorTrustPolicy = applicationMultiFactorTrustPolicy;

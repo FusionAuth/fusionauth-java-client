@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.lambda.parameters;
+package io.fusionauth.domain.lambda.parameters.mfa;
 
 import java.util.Map;
 import java.util.Set;
@@ -25,26 +25,26 @@ import io.fusionauth.domain.UserRegistration;
 /**
  * Represents the inbound lambda parameter 'context' for MFA Required lambdas.
  */
-public class MFAContext {
+public class Context {
   public final Set<AuthenticationThreats> authenticationThreats;
 
   public final EventInfo eventInfo;
 
   public final Map<String, Object> jwt;
 
-  public final MFATrust mfaTrust;
-
-  public final MFAPolicies policies;
+  public final Policies policies;
 
   public final UserRegistration registration;
 
-  public MFAContext(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
-                    UserRegistration registration, MFATrust mfaTrust, Map<String, Object> jwt,
-                    MFAPolicies policies) {
+  public final Trust trust;
+
+  public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
+                 UserRegistration registration, Trust trust, Map<String, Object> jwt,
+                 Policies policies) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.registration = registration;
-    this.mfaTrust = mfaTrust;
+    this.trust = trust;
     this.jwt = jwt;
     this.policies = policies;
   }

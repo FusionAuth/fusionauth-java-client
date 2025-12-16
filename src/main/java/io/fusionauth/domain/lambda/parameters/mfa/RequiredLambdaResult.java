@@ -13,17 +13,17 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.lambda.parameters;
+package io.fusionauth.domain.lambda.parameters.mfa;
 
 /**
  * Represents the inbound lambda parameter 'result' for MFA Required lambdas.
  */
-public class MFARequiredLambdaResult {
+public class RequiredLambdaResult {
   public boolean required;
 
   public boolean sendSuspiciousLoginEvent;
 
-  public MFARequiredLambdaResult(boolean required) {
+  public RequiredLambdaResult(boolean required) {
     this.required = required;
   }
 }
