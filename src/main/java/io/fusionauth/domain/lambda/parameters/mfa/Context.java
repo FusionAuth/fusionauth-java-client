@@ -15,7 +15,6 @@
  */
 package io.fusionauth.domain.lambda.parameters.mfa;
 
-import java.util.Map;
 import java.util.Set;
 
 import io.fusionauth.domain.AuthenticationThreats;
@@ -28,9 +27,9 @@ import io.fusionauth.domain.UserRegistration;
 public class Context {
   public final Set<AuthenticationThreats> authenticationThreats;
 
-  public final EventInfo eventInfo;
+  public final String encodedJWT;
 
-  public final Map<String, Object> jwt;
+  public final EventInfo eventInfo;
 
   public final Trust mfaTrust;
 
@@ -39,13 +38,13 @@ public class Context {
   public final UserRegistration registration;
 
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
-                 UserRegistration registration, Trust mfaTrust, Map<String, Object> jwt,
+                 UserRegistration registration, Trust mfaTrust, String encodedJWT,
                  Policies policies) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.registration = registration;
     this.mfaTrust = mfaTrust;
-    this.jwt = jwt;
+    this.encodedJWT = encodedJWT;
     this.policies = policies;
   }
 }
