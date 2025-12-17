@@ -57,6 +57,8 @@ public class ReactorStatus {
 
   public boolean licensed;
 
+  public ReactorFeatureStatus multiFactorLambdas = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus scimServer = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus tenantManagerApplication = ReactorFeatureStatus.UNKNOWN;
@@ -79,6 +81,7 @@ public class ReactorStatus {
     advancedIdentityProviders = other.advancedIdentityProviders;
     advancedLambdas = other.advancedLambdas;
     advancedMultiFactorAuthentication = other.advancedMultiFactorAuthentication;
+    multiFactorLambdas = other.multiFactorLambdas;
     advancedRegistration = other.advancedRegistration;
     applicationMultiFactorAuthentication = other.applicationMultiFactorAuthentication;
     applicationThemes = other.applicationThemes;
@@ -112,6 +115,7 @@ public class ReactorStatus {
     return advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedLambdas == that.advancedLambdas &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
+           multiFactorLambdas == that.multiFactorLambdas &&
            advancedRegistration == that.advancedRegistration &&
            applicationMultiFactorAuthentication == that.applicationMultiFactorAuthentication &&
            applicationThemes == that.applicationThemes &&
@@ -138,6 +142,7 @@ public class ReactorStatus {
     return Objects.hash(advancedIdentityProviders,
                         advancedLambdas,
                         advancedMultiFactorAuthentication,
+                        multiFactorLambdas,
                         advancedRegistration,
                         applicationMultiFactorAuthentication,
                         applicationThemes,

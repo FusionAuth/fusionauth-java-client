@@ -267,6 +267,12 @@ public class Tenant implements Buildable<Tenant> {
     return jwtConfiguration;
   }
 
+  /**
+   * Lookup the login MFA policy
+   *
+   * @param application application to examine
+   * @return policy in effect
+   */
   @JsonIgnore
   public MultiFactorLoginPolicy lookupMultiFactorLoginPolicy(Application application) {
     if (application != null && application.multiFactorConfiguration.loginPolicy != null) {
