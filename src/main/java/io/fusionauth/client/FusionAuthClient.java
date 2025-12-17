@@ -423,9 +423,17 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<DeviceApprovalResponse, Errors> approveDeviceWithRequest(DeviceApprovalRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
+    parameters.put("token", Arrays.asList(request.token));
+    parameters.put("user_code", Arrays.asList(request.user_code));
     return start(DeviceApprovalResponse.class, Errors.class)
         .uri("/oauth2/device/approve")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -626,9 +634,15 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> clientCredentialsGrantWithRequest(ClientCredentialsGrantRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("grant_type", Arrays.asList(request.grant_type));
+    parameters.put("scope", Arrays.asList(request.scope));
+    parameters.put("tenantId", Arrays.asList(request.tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -1855,9 +1869,16 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<DeviceResponse, OAuthError> deviceAuthorizeWithRequest(DeviceAuthorizationRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("scope", Arrays.asList(request.scope));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
     return startAnonymous(DeviceResponse.class, OAuthError.class)
         .uri("/oauth2/device_authorize")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -1972,9 +1993,19 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenUsingPKCEWithRequest(OAuthCodePKCEAccessTokenRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("code", Arrays.asList(request.code));
+    parameters.put("code_verifier", Arrays.asList(request.code_verifier));
+    parameters.put("grant_type", Arrays.asList(request.grant_type));
+    parameters.put("redirect_uri", Arrays.asList(request.redirect_uri));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -1987,9 +2018,16 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeOAuthCodeForAccessTokenWithRequest(OAuthCodeAccessTokenRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("code", Arrays.asList(request.code));
+    parameters.put("grant_type", Arrays.asList(request.grant_type));
+    parameters.put("redirect_uri", Arrays.asList(request.redirect_uri));
+    parameters.put("tenantId", Arrays.asList(request.tenantId));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -2029,9 +2067,19 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeRefreshTokenForAccessTokenWithRequest(RefreshTokenAccessTokenRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("grant_type", Arrays.asList(request.grant_type));
+    parameters.put("refresh_token", Arrays.asList(request.refresh_token));
+    parameters.put("scope", Arrays.asList(request.scope));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
+    parameters.put("user_code", Arrays.asList(request.user_code));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -2087,9 +2135,18 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<AccessToken, OAuthError> exchangeUserCredentialsForAccessTokenWithRequest(UserCredentialsAccessTokenRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    parameters.put("grant_type", Arrays.asList(request.grant_type));
+    parameters.put("password", Arrays.asList(request.password));
+    parameters.put("scope", Arrays.asList(request.scope));
+    parameters.put("tenantId", Arrays.asList(request.tenantId));
+    parameters.put("user_code", Arrays.asList(request.user_code));
+    parameters.put("username", Arrays.asList(request.username));
     return startAnonymous(AccessToken.class, OAuthError.class)
         .uri("/oauth2/token")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -2315,9 +2372,13 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IntrospectResponse, OAuthError> introspectAccessTokenWithRequest(AccessTokenIntrospectRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("tenantId", Arrays.asList(request.tenantId));
+    parameters.put("token", Arrays.asList(request.token));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -2345,9 +2406,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<IntrospectResponse, OAuthError> introspectClientCredentialsAccessTokenWithRequest(ClientCredentialsAccessTokenIntrospectRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("tenantId", Arrays.asList(request.tenantId));
+    parameters.put("token", Arrays.asList(request.token));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -4497,9 +4561,14 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> retrieveUserCodeUsingAPIKeyWithRequest(RetrieveUserCodeUsingAPIKeyRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
+    parameters.put("user_code", Arrays.asList(request.user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/user-code")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -4513,9 +4582,16 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> retrieveUserCodeWithRequest(RetrieveUserCodeRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    parameters.put("client_secret", Arrays.asList(request.client_secret));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
+    parameters.put("user_code", Arrays.asList(request.user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/user-code")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
@@ -6067,9 +6143,15 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> validateDeviceWithRequest(ValidateDeviceRequest request) {
+    Map<String, List<String>> parameters = new HashMap<>();
+    parameters.put("client_id", Arrays.asList(request.client_id));
+    if (request.tenantId != null) {
+      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
+    }
+    parameters.put("user_code", Arrays.asList(request.user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/validate")
-        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .bodyHandler(new FormDataBodyHandler(parameters))
         .post()
         .go();
   }
