@@ -17,14 +17,19 @@ package io.fusionauth.domain.lambda.parameters.mfa;
 
 import java.util.Set;
 
+import io.fusionauth.domain.Application;
 import io.fusionauth.domain.AuthenticationThreats;
 import io.fusionauth.domain.EventInfo;
-import io.fusionauth.domain.UserRegistration;
+import io.fusionauth.domain.MultiFactorAction;
 
 /**
  * Represents the inbound lambda parameter 'context' for MFA Required lambdas.
  */
 public class Context {
+  public final MultiFactorAction action;
+
+  public final Application application;
+
   public final Set<AuthenticationThreats> authenticationThreats;
 
   public final String encodedJWT;
@@ -35,16 +40,15 @@ public class Context {
 
   public final Policies policies;
 
-  public final UserRegistration registration;
-
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
-                 UserRegistration registration, Trust mfaTrust, String encodedJWT,
-                 Policies policies) {
+                 Trust mfaTrust, String encodedJWT,
+                 Policies policies, MultiFactorAction action, Application application) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
-    this.registration = registration;
     this.mfaTrust = mfaTrust;
     this.encodedJWT = encodedJWT;
     this.policies = policies;
+    this.action = action;
+    this.application = application;
   }
 }

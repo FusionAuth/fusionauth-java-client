@@ -501,7 +501,7 @@ public enum LambdaType {
   MFARequirement("checkRequired", "" +
       //language=JavaScript
       "// Check whether MFA is required, for a particular action, user, and application, in a given context.\n" +
-      "function checkRequired(result, action, user, application, context) {\n" +
+      "function checkRequired(result, user, registration, context) {\n" +
        "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
        "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
        "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
@@ -510,7 +510,7 @@ public enum LambdaType {
        "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
        "  //  console.info(JSON.stringify(user)); \n" +
        "\n" +
-       "  // Happy coding! Populate your JWT here.\n" +
+       "  // Happy coding! Perform your MFA requirement check here.\n" +
        "\n" +
        "  console.info('Hello World!');" +
        "\n" +
