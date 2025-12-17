@@ -28,11 +28,11 @@ public class TwoFactorStatusRequest extends BaseEventRequest {
   // required
   public final UUID userId;
 
+  public String accessToken;
+
   public MultiFactorAction action = MultiFactorAction.login;
 
   public UUID applicationId;
-
-  public String token;
 
   public String twoFactorTrustId;
 
