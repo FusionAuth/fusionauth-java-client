@@ -26,13 +26,13 @@ import io.fusionauth.domain.MultiFactorAction;
  * Represents the inbound lambda parameter 'context' for MFA Required lambdas.
  */
 public class Context {
+  public final String accessToken;
+
   public final MultiFactorAction action;
 
   public final Application application;
 
   public final Set<AuthenticationThreats> authenticationThreats;
-
-  public final String encodedJWT;
 
   public final EventInfo eventInfo;
 
@@ -41,12 +41,12 @@ public class Context {
   public final Policies policies;
 
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
-                 Trust mfaTrust, String encodedJWT,
+                 Trust mfaTrust, String accessToken,
                  Policies policies, MultiFactorAction action, Application application) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.mfaTrust = mfaTrust;
-    this.encodedJWT = encodedJWT;
+    this.accessToken = accessToken;
     this.policies = policies;
     this.action = action;
     this.application = application;
