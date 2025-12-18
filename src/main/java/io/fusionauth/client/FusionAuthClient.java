@@ -6244,16 +6244,12 @@ public class FusionAuthClient {
    * @return The ClientResponse object.
    */
   public ClientResponse<Void, Void> validateDeviceWithRequest(ValidateDeviceRequest request) {
-    Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put("client_id", Arrays.asList(request.client_id));
-    if (request.tenantId != null) {
-      parameters.put("tenantId", Arrays.asList(request.tenantId.toString()));
-    }
-    parameters.put("user_code", Arrays.asList(request.user_code));
     return startAnonymous(Void.TYPE, Void.TYPE)
         .uri("/oauth2/device/validate")
-        .bodyHandler(new FormDataBodyHandler(parameters))
-        .post()
+        .urlParameter("client_id", request.client_id)
+        .urlParameter("tenantId", request.tenantId != null ? request.tenantId.toString() : null)
+        .urlParameter("user_code", request.user_code)
+        .get()
         .go();
   }
 
