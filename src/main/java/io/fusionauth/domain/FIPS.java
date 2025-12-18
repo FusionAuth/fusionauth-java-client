@@ -23,7 +23,7 @@ package io.fusionauth.domain;
  * <p>
  * This also provides some helpers for FIPS things such as password length requirements.
  *
- * @author Brian Pontarelli & Daniel DeGroff
+ * @author Brian Pontarelli and Daniel DeGroff
  */
 public class FIPS {
   public static final int FIPS_MIN_PASSWORD_LENGTH = 14;
