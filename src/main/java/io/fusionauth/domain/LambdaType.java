@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ package io.fusionauth.domain;
  */
 @SuppressWarnings("ALL")
 public enum LambdaType {
+  // This is an ordinal enum, so make sure new values are added to the end
   // @formatter:off
   JWTPopulate("populate", "" +
       //language=JavaScript
@@ -496,7 +497,24 @@ public enum LambdaType {
        "\n" +
        "  console.info('Hello World!');" +
        "\n" +
-       "}\n");
+       "}\n"),
+  MFARequirement("checkRequired", "" +
+      //language=JavaScript
+      "// Check whether MFA is required, for a particular action, user, and application, in a given context.\n" +
+      "function checkRequired(result, user, registration, context) {\n" +
+       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+       "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+       "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+       "  //  \n" +
+       "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+       "  //  console.info(JSON.stringify(user)); \n" +
+       "\n" +
+       "  // Happy coding! Perform your MFA requirement check here.\n" +
+       "\n" +
+       "  console.info('Hello World!');" +
+       "\n" +
+      "}\n");
   // @formatter:on
 
   private final String example;

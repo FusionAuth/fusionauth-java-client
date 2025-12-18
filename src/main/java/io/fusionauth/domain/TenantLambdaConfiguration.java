@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2022-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import com.inversoft.json.ToString;
 public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfiguration> {
   public UUID loginValidationId;
 
+  public UUID multiFactorRequirementId;
+
   public UUID scimEnterpriseUserRequestConverterId;
 
   public UUID scimEnterpriseUserResponseConverterId;
@@ -45,6 +47,7 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
 
   public TenantLambdaConfiguration(TenantLambdaConfiguration other) {
     this.loginValidationId = other.loginValidationId;
+    this.multiFactorRequirementId = other.multiFactorRequirementId;
     this.scimEnterpriseUserRequestConverterId = other.scimEnterpriseUserRequestConverterId;
     this.scimEnterpriseUserResponseConverterId = other.scimEnterpriseUserResponseConverterId;
     this.scimGroupRequestConverterId = other.scimGroupRequestConverterId;
@@ -63,6 +66,7 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
     }
     TenantLambdaConfiguration that = (TenantLambdaConfiguration) o;
     return Objects.equals(loginValidationId, that.loginValidationId) &&
+           Objects.equals(multiFactorRequirementId, that.multiFactorRequirementId) &&
            Objects.equals(scimEnterpriseUserRequestConverterId, that.scimEnterpriseUserRequestConverterId) &&
            Objects.equals(scimEnterpriseUserResponseConverterId, that.scimEnterpriseUserResponseConverterId) &&
            Objects.equals(scimGroupRequestConverterId, that.scimGroupRequestConverterId) &&
@@ -74,6 +78,7 @@ public class TenantLambdaConfiguration implements Buildable<TenantLambdaConfigur
   @Override
   public int hashCode() {
     return Objects.hash(loginValidationId,
+                        multiFactorRequirementId,
                         scimEnterpriseUserRequestConverterId,
                         scimEnterpriseUserResponseConverterId,
                         scimGroupRequestConverterId,

@@ -454,6 +454,8 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public UUID idTokenPopulateId;
 
+    public UUID multiFactorRequirementId;
+
     public UUID samlv2PopulateId;
 
     public UUID selfServiceRegistrationValidationId;
@@ -467,6 +469,7 @@ public class Application implements Buildable<Application>, Tenantable {
     public LambdaConfiguration(LambdaConfiguration other) {
       this.accessTokenPopulateId = other.accessTokenPopulateId;
       this.idTokenPopulateId = other.idTokenPopulateId;
+      this.multiFactorRequirementId = other.multiFactorRequirementId;
       this.samlv2PopulateId = other.samlv2PopulateId;
       this.selfServiceRegistrationValidationId = other.selfServiceRegistrationValidationId;
       this.userinfoPopulateId = other.userinfoPopulateId;
@@ -483,6 +486,7 @@ public class Application implements Buildable<Application>, Tenantable {
       LambdaConfiguration that = (LambdaConfiguration) o;
       return Objects.equals(accessTokenPopulateId, that.accessTokenPopulateId) &&
              Objects.equals(idTokenPopulateId, that.idTokenPopulateId) &&
+             Objects.equals(multiFactorRequirementId, that.multiFactorRequirementId) &&
              Objects.equals(samlv2PopulateId, that.samlv2PopulateId) &&
              Objects.equals(selfServiceRegistrationValidationId, that.selfServiceRegistrationValidationId) &&
              Objects.equals(userinfoPopulateId, that.userinfoPopulateId);
@@ -490,7 +494,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, samlv2PopulateId, selfServiceRegistrationValidationId, userinfoPopulateId);
+      return Objects.hash(accessTokenPopulateId, idTokenPopulateId, multiFactorRequirementId, samlv2PopulateId, selfServiceRegistrationValidationId, userinfoPopulateId);
     }
 
     @Override
