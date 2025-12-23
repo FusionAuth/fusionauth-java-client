@@ -195,6 +195,10 @@ public class OAuthError implements OAuthResponse {
     // Used in Introspect validation. See section 2.1 of RFC 7662 https://tools.ietf.org/html/rfc7662
     // - Values for 'token_type_hint' are defined by RFC 7009 "OAuth Token Type Hints". https://tools.ietf.org/html/rfc7009
     // - Validation for this field is described in section 4.1.1 of RFC 7009.
-    unsupported_token_type
+    unsupported_token_type,
+
+    // RFC 9449 DPoP Proof of Possession. Section 12.2
+    // https://datatracker.ietf.org/doc/html/rfc9449
+    invalid_dpop_proof
   }
 }
