@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,11 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public String device_authorization_endpoint = "%s/oauth2/device_authorize";
 
+  /**
+   * RFC9449 5.1 add dpop_signing_alg_values_supported. Symmetric algorithms cannot be used
+   */
+  public List<String> dpop_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512"));
+
   public String end_session_endpoint = "%s/oauth2/logout";
 
   @SuppressWarnings("SpellCheckingInspection")
@@ -73,7 +78,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof OpenIdConfiguration)) {
+        if (!(o instanceof OpenIdConfiguration)) {
       return false;
     }
     OpenIdConfiguration that = (OpenIdConfiguration) o;
@@ -82,6 +87,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
            Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
            Objects.equals(claims_supported, that.claims_supported) &&
            Objects.equals(device_authorization_endpoint, that.device_authorization_endpoint) &&
+           Objects.equals(dpop_signing_alg_values_supported, that.dpop_signing_alg_values_supported) &&
            Objects.equals(end_session_endpoint, that.end_session_endpoint) &&
            Objects.equals(grant_types_supported, that.grant_types_supported) &&
            Objects.equals(id_token_signing_alg_values_supported, that.id_token_signing_alg_values_supported) &&
@@ -99,7 +105,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
+    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
   }
 
   @Override
