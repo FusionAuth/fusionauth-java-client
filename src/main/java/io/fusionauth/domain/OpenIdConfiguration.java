@@ -78,7 +78,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
     if (this == o) {
       return true;
     }
-        if (!(o instanceof OpenIdConfiguration)) {
+    if (!(o instanceof OpenIdConfiguration)) {
       return false;
     }
     OpenIdConfiguration that = (OpenIdConfiguration) o;
