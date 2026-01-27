@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.ToString;
 import io.fusionauth.domain.util.Normalizer;
@@ -45,6 +46,8 @@ public class AuditLog implements Buildable<AuditLog> {
 
   public String reason;
 
+  public UUID tenantId;
+
   public AuditLog() {
   }
 
@@ -69,12 +72,13 @@ public class AuditLog implements Buildable<AuditLog> {
            Objects.equals(message, auditLog.message) &&
            Objects.equals(newValue, auditLog.newValue) &&
            Objects.equals(oldValue, auditLog.oldValue) &&
-           Objects.equals(reason, auditLog.reason);
+           Objects.equals(reason, auditLog.reason) &&
+           Objects.equals(tenantId, auditLog.tenantId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, id, insertInstant, insertUser, message, newValue, oldValue, reason);
+    return Objects.hash(data, id, insertInstant, insertUser, message, newValue, oldValue, reason, tenantId);
   }
 
   public void normalize() {
