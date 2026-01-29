@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
@@ -43,16 +44,19 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
 
   public ZonedDateTime start;
 
+  public UUID tenantId;
+
   public String user;
 
   @JacksonConstructor
   public AuditLogSearchCriteria() {
   }
 
-  public AuditLogSearchCriteria(String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
+  public AuditLogSearchCriteria(UUID tenantId, String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
     this.end = end;
     this.message = message;
     this.start = start;
+    this.tenantId = tenantId;
     this.user = user;
     this.orderBy = orderBy;
   }
