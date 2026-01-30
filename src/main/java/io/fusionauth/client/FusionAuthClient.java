@@ -4871,20 +4871,6 @@ public class FusionAuthClient {
   }
 
   /**
-   * Retrieves the user for the given Id. This method does not use an API key, instead it uses a JSON Web Token (JWT) for authentication.
-   *
-   * @param encodedJWT The encoded JWT (access token).
-   * @return The ClientResponse object.
-   */
-  public ClientResponse<UserResponse, Errors> retrieveUserUsingJWT(String encodedJWT) {
-    return startAnonymous(UserResponse.class, Errors.class)
-        .uri("/api/user")
-        .authorization("Bearer " + encodedJWT)
-        .get()
-        .go();
-  }
-
-  /**
    * Retrieves the FusionAuth version string.
    *
    * @return The ClientResponse object.
