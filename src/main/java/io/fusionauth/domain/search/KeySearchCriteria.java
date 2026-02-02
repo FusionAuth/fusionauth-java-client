@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Set;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Key.KeyAlgorithm;
+import io.fusionauth.domain.Key.KeySource;
 import io.fusionauth.domain.Key.KeyType;
 import static io.fusionauth.domain.util.SQLTools.normalizeOrderBy;
 import static io.fusionauth.domain.util.SQLTools.toSearchString;
@@ -39,6 +40,8 @@ public class KeySearchCriteria extends BaseSearchCriteria {
   public KeyAlgorithm algorithm;
 
   public String name;
+
+  public KeySource source;
 
   public KeyType type;
 
