@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,20 @@ import com.inversoft.json.JacksonConstructor;
  * @author Lyle Schemmerling
  */
 public class UniversalApplicationConfiguration {
+  public boolean allowTenantManagerIdentityProviders;
+
   public boolean universal;
 
   @JacksonConstructor
-  public UniversalApplicationConfiguration() {}
+  public UniversalApplicationConfiguration() {
+  }
 
   public UniversalApplicationConfiguration(boolean universal) {
     this.universal = universal;
   }
 
   public UniversalApplicationConfiguration(UniversalApplicationConfiguration other) {
+    this.allowTenantManagerIdentityProviders = other.allowTenantManagerIdentityProviders;
     this.universal = other.universal;
   }
 
@@ -42,11 +46,12 @@ public class UniversalApplicationConfiguration {
       return false;
     }
     UniversalApplicationConfiguration that = (UniversalApplicationConfiguration) o;
-    return universal == that.universal;
+    return allowTenantManagerIdentityProviders == that.allowTenantManagerIdentityProviders &&
+           universal == that.universal;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(universal);
+    return Objects.hash(allowTenantManagerIdentityProviders, universal);
   }
 }
