@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ public class Key implements Buildable<Key> {
   public String publicKey;
 
   public String secret;
+
+  public KeySource source = KeySource.System;
 
   public KeyType type;
 
@@ -226,6 +228,20 @@ public class Key implements Buildable<Key> {
     public String getName() {
       return algorithm;
     }
+  }
+
+  /**
+   * The source of a key.
+   */
+  public enum KeySource {
+    /**
+     * The key originated from the FusionAuth admin console or API
+     */
+    System,
+    /**
+     * The key originated from the Tenant Manager application
+     */
+    TenantManager
   }
 
   public enum KeyType {
