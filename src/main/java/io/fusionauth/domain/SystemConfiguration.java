@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -29,6 +30,8 @@ import com.inversoft.json.ToString;
  */
 public class SystemConfiguration implements Buildable<SystemConfiguration> {
   public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
+
+  public String brandName;
 
   /**
    * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
@@ -50,6 +53,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public ZoneId reportTimezone;
 
+  public UUID tenantManagerAttributeFormId;
+
   public SystemTrustedProxyConfiguration trustedProxyConfiguration = new SystemTrustedProxyConfiguration();
 
   public UIConfiguration uiConfiguration = new UIConfiguration();
@@ -64,6 +69,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public SystemConfiguration(SystemConfiguration other) {
     this.auditLogConfiguration = new AuditLogConfiguration(other.auditLogConfiguration);
+    this.brandName = other.brandName;
     this.cookieEncryptionKey = other.cookieEncryptionKey;
     this.corsConfiguration = new CORSConfiguration(other.corsConfiguration);
     if (other.data != null) {
@@ -74,6 +80,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginRecordConfiguration = new LoginRecordConfiguration(other.loginRecordConfiguration);
     this.reportTimezone = other.reportTimezone;
+    this.tenantManagerAttributeFormId = other.tenantManagerAttributeFormId;
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
     this.usageDataConfiguration = new UsageDataConfiguration(other.usageDataConfiguration);
@@ -90,6 +97,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     }
     SystemConfiguration that = (SystemConfiguration) o;
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
+           Objects.equals(brandName, that.brandName) &&
            Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
            Objects.equals(corsConfiguration, that.corsConfiguration) &&
            Objects.equals(data, that.data) &&
@@ -97,6 +105,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
+           Objects.equals(tenantManagerAttributeFormId, that.tenantManagerAttributeFormId) &&
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration) &&
@@ -106,7 +115,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, brandName, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, tenantManagerAttributeFormId, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {
