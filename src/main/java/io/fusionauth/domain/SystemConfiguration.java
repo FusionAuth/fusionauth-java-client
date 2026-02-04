@@ -31,8 +31,6 @@ import com.inversoft.json.ToString;
 public class SystemConfiguration implements Buildable<SystemConfiguration> {
   public AuditLogConfiguration auditLogConfiguration = new AuditLogConfiguration();
 
-  public String brandName;
-
   /**
    * Base64 encoded Encryption Key for prime-mvc. This is currently only used to encrypt and de-crypt saved request
    * cookies.
@@ -53,7 +51,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public ZoneId reportTimezone;
 
-  public UUID tenantManagerAttributeFormId;
+  public TenantManagerConfiguration tenantManagerConfiguration = new TenantManagerConfiguration();
 
   public SystemTrustedProxyConfiguration trustedProxyConfiguration = new SystemTrustedProxyConfiguration();
 
@@ -69,7 +67,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public SystemConfiguration(SystemConfiguration other) {
     this.auditLogConfiguration = new AuditLogConfiguration(other.auditLogConfiguration);
-    this.brandName = other.brandName;
     this.cookieEncryptionKey = other.cookieEncryptionKey;
     this.corsConfiguration = new CORSConfiguration(other.corsConfiguration);
     if (other.data != null) {
@@ -80,7 +77,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginRecordConfiguration = new LoginRecordConfiguration(other.loginRecordConfiguration);
     this.reportTimezone = other.reportTimezone;
-    this.tenantManagerAttributeFormId = other.tenantManagerAttributeFormId;
+    this.tenantManagerConfiguration = new TenantManagerConfiguration(other.tenantManagerConfiguration);
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
     this.usageDataConfiguration = new UsageDataConfiguration(other.usageDataConfiguration);
@@ -97,7 +94,6 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     }
     SystemConfiguration that = (SystemConfiguration) o;
     return Objects.equals(auditLogConfiguration, that.auditLogConfiguration) &&
-           Objects.equals(brandName, that.brandName) &&
            Objects.equals(cookieEncryptionKey, that.cookieEncryptionKey) &&
            Objects.equals(corsConfiguration, that.corsConfiguration) &&
            Objects.equals(data, that.data) &&
@@ -105,7 +101,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
-           Objects.equals(tenantManagerAttributeFormId, that.tenantManagerAttributeFormId) &&
+           Objects.equals(tenantManagerConfiguration, that.tenantManagerConfiguration) &&
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration) &&
@@ -115,7 +111,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, brandName, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, tenantManagerAttributeFormId, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, tenantManagerConfiguration, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {
@@ -282,6 +278,45 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     @Override
     public int hashCode() {
       return Objects.hash(delete);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class TenantManagerConfiguration implements Buildable<TenantManagerConfiguration> {
+
+      public UUID attributeFormId;
+
+    public String brandName;
+
+    @JacksonConstructor
+    public TenantManagerConfiguration() {
+    }
+
+    public TenantManagerConfiguration(TenantManagerConfiguration other) {
+      this.brandName = other.brandName;
+      this.attributeFormId = other.attributeFormId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof TenantManagerConfiguration)) {
+        return false;
+      }
+      TenantManagerConfiguration that = (TenantManagerConfiguration) o;
+      return Objects.equals(brandName, that.brandName) &&
+             Objects.equals(attributeFormId, that.attributeFormId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(brandName, attributeFormId);
     }
 
     @Override
