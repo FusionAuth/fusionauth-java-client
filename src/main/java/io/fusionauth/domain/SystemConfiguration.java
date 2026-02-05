@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -50,6 +51,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public ZoneId reportTimezone;
 
+  public TenantManagerConfiguration tenantManagerConfiguration = new TenantManagerConfiguration();
+
   public SystemTrustedProxyConfiguration trustedProxyConfiguration = new SystemTrustedProxyConfiguration();
 
   public UIConfiguration uiConfiguration = new UIConfiguration();
@@ -74,6 +77,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginRecordConfiguration = new LoginRecordConfiguration(other.loginRecordConfiguration);
     this.reportTimezone = other.reportTimezone;
+    this.tenantManagerConfiguration = new TenantManagerConfiguration(other.tenantManagerConfiguration);
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
     this.usageDataConfiguration = new UsageDataConfiguration(other.usageDataConfiguration);
@@ -97,6 +101,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
+           Objects.equals(tenantManagerConfiguration, that.tenantManagerConfiguration) &&
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration) &&
@@ -106,7 +111,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, tenantManagerConfiguration, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {
@@ -273,6 +278,45 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     @Override
     public int hashCode() {
       return Objects.hash(delete);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class TenantManagerConfiguration implements Buildable<TenantManagerConfiguration> {
+
+      public UUID attributeFormId;
+
+    public String brandName;
+
+    @JacksonConstructor
+    public TenantManagerConfiguration() {
+    }
+
+    public TenantManagerConfiguration(TenantManagerConfiguration other) {
+      this.brandName = other.brandName;
+      this.attributeFormId = other.attributeFormId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof TenantManagerConfiguration)) {
+        return false;
+      }
+      TenantManagerConfiguration that = (TenantManagerConfiguration) o;
+      return Objects.equals(brandName, that.brandName) &&
+             Objects.equals(attributeFormId, that.attributeFormId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(brandName, attributeFormId);
     }
 
     @Override
