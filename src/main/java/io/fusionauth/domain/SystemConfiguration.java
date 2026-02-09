@@ -24,6 +24,8 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.provider.IdentityProviderType;
+import io.fusionauth.domain.tenantManager.TenantManagerIdentityProviderTypeConfiguration;
 
 /**
  * @author Brian Pontarelli
@@ -292,13 +294,16 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
     public String brandName;
 
+      public Map<IdentityProviderType, TenantManagerIdentityProviderTypeConfiguration> identityProviderTypeConfigurations = new HashMap<>();
+
     @JacksonConstructor
     public TenantManagerConfiguration() {
     }
 
     public TenantManagerConfiguration(TenantManagerConfiguration other) {
-      this.brandName = other.brandName;
       this.attributeFormId = other.attributeFormId;
+      this.brandName = other.brandName;
+      this.identityProviderTypeConfigurations.putAll(other.identityProviderTypeConfigurations);
     }
 
     @Override
@@ -310,13 +315,14 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
         return false;
       }
       TenantManagerConfiguration that = (TenantManagerConfiguration) o;
-      return Objects.equals(brandName, that.brandName) &&
-             Objects.equals(attributeFormId, that.attributeFormId);
+      return Objects.equals(attributeFormId, that.attributeFormId) &&
+             Objects.equals(brandName, that.brandName) &&
+             Objects.equals(identityProviderTypeConfigurations, that.identityProviderTypeConfigurations);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(brandName, attributeFormId);
+      return Objects.hash(attributeFormId, brandName, identityProviderTypeConfigurations);
     }
 
     @Override
