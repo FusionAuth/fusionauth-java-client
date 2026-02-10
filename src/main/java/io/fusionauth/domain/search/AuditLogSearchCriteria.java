@@ -101,5 +101,6 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
     SortableFields.put("insertInstant", "insert_instant");
     SortableFields.put("insertUser", "insert_user");
     SortableFields.put("message", "message");
+    SortableFields.put("tenantId", "tenants_id");
   }
 }

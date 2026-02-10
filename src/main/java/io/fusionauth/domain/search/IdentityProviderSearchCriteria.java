@@ -74,6 +74,7 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
     SortableFields.put("insertInstant", "insert_instant");
     SortableFields.put("name", "name");
     SortableFields.put("enabled", "enabled");
+    SortableFields.put("source", "source");
     SortableFields.put("tenantId", "tenants_id");
     SortableFields.put("type", "type");
   }
