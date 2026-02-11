@@ -17,9 +17,11 @@ package io.fusionauth.domain.tenantManager;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.Enableable;
@@ -30,6 +32,9 @@ import io.fusionauth.domain.provider.IdentityProviderType;
  * Configuration object for identity provider types allowed in Tenant Manager
  */
 public class TenantManagerIdentityProviderTypeConfiguration extends Enableable implements Buildable<TenantManagerIdentityProviderTypeConfiguration> {
+  @JsonIgnore
+  public Map<String, Object> data = new LinkedHashMap<>();
+
   public Map<String, String> defaultAttributeMappings = new HashMap<>();
 
   public ZonedDateTime insertInstant;
