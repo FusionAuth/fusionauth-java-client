@@ -80,5 +80,6 @@ public class KeySearchCriteria extends BaseSearchCriteria {
     SortableFields.put("algorithm", "k.algorithm");
     SortableFields.put("expiration", "k.expiration_instant");
     SortableFields.put("insertInstant", "k.insert_instant");
+    SortableFields.put("source", "k.source");
   }
 }
