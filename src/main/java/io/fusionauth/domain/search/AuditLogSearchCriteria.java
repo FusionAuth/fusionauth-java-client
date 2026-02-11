@@ -16,6 +16,7 @@
 package io.fusionauth.domain.search;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,8 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
  * @author Brian Pontarelli
  */
 public class AuditLogSearchCriteria extends BaseSearchCriteria implements Buildable<AuditLogSearchCriteria> {
+  public static final Set<String> NullableFields = new HashSet<>();
+
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
   public ZonedDateTime end;
@@ -78,7 +81,7 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
       orderBy = defaultOrderBy();
     }
 
-    orderBy = SQLTools.normalizeOrderBy(orderBy, SortableFields);
+    orderBy = SQLTools.normalizeOrderBy(orderBy, SortableFields, NullableFields);
     user = toSearchString(user);
     message = toSearchString(message);
     newValue = toSearchString(newValue);
@@ -98,9 +101,11 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
   }
 
   static {
-    SortableFields.put("insertInstant", "insert_instant");
-    SortableFields.put("insertUser", "insert_user");
-    SortableFields.put("message", "message");
-    SortableFields.put("tenantId", "tenants_id");
+    NullableFields.add("tenant");
+
+    SortableFields.put("insertInstant", "al.insert_instant");
+    SortableFields.put("insertUser", "al.insert_user");
+    SortableFields.put("message", "al.message");
+    SortableFields.put("tenant", "t.name");
   }
 }
