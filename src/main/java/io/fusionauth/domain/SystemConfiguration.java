@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
-import io.fusionauth.domain.provider.IdentityProviderType;
 import io.fusionauth.domain.tenantManager.TenantManagerIdentityProviderTypeConfiguration;
 
 /**
@@ -294,7 +293,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
     public String brandName;
 
-      public Map<IdentityProviderType, TenantManagerIdentityProviderTypeConfiguration> identityProviderTypeConfigurations = new HashMap<>();
+      public Map<String, TenantManagerIdentityProviderTypeConfiguration> identityProviderTypeConfigurations = new HashMap<>();
 
     @JacksonConstructor
     public TenantManagerConfiguration() {
