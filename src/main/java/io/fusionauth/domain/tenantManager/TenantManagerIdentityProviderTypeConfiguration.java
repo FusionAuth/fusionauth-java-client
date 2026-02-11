@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inversoft.json.JacksonConstructor;
+import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.Enableable;
 import io.fusionauth.domain.provider.IdentityProviderLinkingStrategy;
@@ -49,6 +50,15 @@ public class TenantManagerIdentityProviderTypeConfiguration extends Enableable i
   public TenantManagerIdentityProviderTypeConfiguration() {
   }
 
+  public TenantManagerIdentityProviderTypeConfiguration(TenantManagerIdentityProviderTypeConfiguration other) {
+    this.data.putAll(other.data);
+    this.defaultAttributeMappings.putAll(other.defaultAttributeMappings);
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.linkingStrategy = other.linkingStrategy;
+    this.type = other.type;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -71,5 +81,10 @@ public class TenantManagerIdentityProviderTypeConfiguration extends Enableable i
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), defaultAttributeMappings, insertInstant, lastUpdateInstant, linkingStrategy, type);
+  }
+
+  @Override
+  public String toString() {
+    return ToString.toString(this);
   }
 }

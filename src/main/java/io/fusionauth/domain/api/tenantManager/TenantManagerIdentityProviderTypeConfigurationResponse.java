@@ -19,7 +19,7 @@ import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.tenantManager.TenantManagerIdentityProviderTypeConfiguration;
 
 /**
- * The Tenant Manager IdP type configuration request object
+ * The Tenant Manager IdP type configuration response object
  */
 public class TenantManagerIdentityProviderTypeConfigurationResponse {
   public TenantManagerIdentityProviderTypeConfiguration typeConfiguration;
