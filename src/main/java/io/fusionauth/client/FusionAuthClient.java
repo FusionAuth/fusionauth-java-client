@@ -3049,6 +3049,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Patches the tenant manager identity provider type configuration for the given identity provider type.
+   *
+   * @param type The type of the identity provider.
+   * @param request The request object that contains the new tenant manager identity provider type configuration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerIdentityProviderTypeConfigurationResponse, Errors> patchTenantManagerIdentityProviderTypeConfiguration(IdentityProviderType type, Map<String, Object> request) {
+    return start(TenantManagerIdentityProviderTypeConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager/identity-provider")
+        .urlSegment(type)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the theme with the given Id.
    *
    * @param themeId The Id of the theme to update.
