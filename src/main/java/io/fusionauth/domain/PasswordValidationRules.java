@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,9 @@ import com.inversoft.json.ToString;
 public class PasswordValidationRules implements Buildable<PasswordValidationRules> {
   public PasswordBreachDetection breachDetection = new PasswordBreachDetection();
 
+  // Reject passwords that include the user's email, username, or phone number
+  public boolean disallowUserLoginId;
+
   public int maxLength = 256;
 
   public int minLength;
@@ -49,6 +52,7 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
   }
 
   public PasswordValidationRules(PasswordValidationRules other) {
+    this.disallowUserLoginId = other.disallowUserLoginId;
     this.breachDetection = new PasswordBreachDetection(other.breachDetection);
     this.maxLength = other.maxLength;
     this.minLength = other.minLength;
@@ -68,7 +72,8 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
       return false;
     }
     PasswordValidationRules that = (PasswordValidationRules) o;
-    return maxLength == that.maxLength &&
+    return disallowUserLoginId == that.disallowUserLoginId &&
+           maxLength == that.maxLength &&
            minLength == that.minLength &&
            requireMixedCase == that.requireMixedCase &&
            requireNonAlpha == that.requireNonAlpha &&
@@ -79,7 +84,7 @@ public class PasswordValidationRules implements Buildable<PasswordValidationRule
 
   @Override
   public int hashCode() {
-    return Objects.hash(breachDetection, maxLength, minLength, rememberPreviousPasswords, requireMixedCase, requireNonAlpha, requireNumber, validateOnLogin);
+    return Objects.hash(disallowUserLoginId, breachDetection, maxLength, minLength, rememberPreviousPasswords, requireMixedCase, requireNonAlpha, requireNumber, validateOnLogin);
   }
 
   @Override
