@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,15 @@ package io.fusionauth.domain.oauth2;
  * <a href="https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05">
  * Draft RFC on OAuth 2.0 Message Authentication Code (MAC) Tokens</a>
  * </li>
+ * <li>DPoP Token type as defined by <a href="https://datatracker.ietf.org/doc/html/rfc9449">RFC 9449</a></li>
  * </ul>
  *
  * @author Daniel DeGroff
  */
 public enum TokenType {
   Bearer,
-  MAC;
-
+  MAC,
+  DPoP;
 
   public static TokenType fromName(String s) {
     if (Bearer.name().equalsIgnoreCase(s)) {
@@ -38,6 +39,10 @@ public enum TokenType {
 
     if (MAC.name().equalsIgnoreCase(s)) {
       return MAC;
+    }
+
+    if (DPoP.name().equalsIgnoreCase(s)) {
+      return DPoP;
     }
 
     return null;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus connectors = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus dPoP = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
   public LocalDate expiration;
@@ -90,6 +92,7 @@ public class ReactorStatus {
     advancedOAuthScopes = other.advancedOAuthScopes;
     advancedOAuthScopesCustomScopes = other.advancedOAuthScopesCustomScopes;
     advancedOAuthScopesThirdPartyApplications = other.advancedOAuthScopesThirdPartyApplications;
+    dPoP = other.dPoP;
     entityManagement = other.entityManagement;
     expiration = other.expiration;
     licenseAttributes.putAll(other.licenseAttributes);
@@ -124,6 +127,7 @@ public class ReactorStatus {
            advancedOAuthScopes == that.advancedOAuthScopes &&
            advancedOAuthScopesCustomScopes == that.advancedOAuthScopesCustomScopes &&
            advancedOAuthScopesThirdPartyApplications == that.advancedOAuthScopesThirdPartyApplications &&
+           dPoP == that.dPoP &&
            entityManagement == that.entityManagement &&
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
@@ -148,6 +152,7 @@ public class ReactorStatus {
                         applicationThemes,
                         breachedPasswordDetection,
                         connectors,
+                        dPoP,
                         advancedOAuthScopes,
                         advancedOAuthScopesCustomScopes,
                         advancedOAuthScopesThirdPartyApplications,
