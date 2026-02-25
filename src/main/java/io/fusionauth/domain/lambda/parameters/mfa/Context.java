@@ -34,6 +34,8 @@ public class Context {
 
   public final Set<AuthenticationThreats> authenticationThreats;
 
+  public final String authenticationType;
+
   public final EventInfo eventInfo;
 
   public final Trust mfaTrust;
@@ -42,7 +44,8 @@ public class Context {
 
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
                  Trust mfaTrust, String accessToken,
-                 Policies policies, MultiFactorAction action, Application application) {
+                 Policies policies, MultiFactorAction action, Application application,
+                 String authenticationType) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.mfaTrust = mfaTrust;
@@ -50,5 +53,6 @@ public class Context {
     this.policies = policies;
     this.action = action;
     this.application = application;
+    this.authenticationType = authenticationType;
   }
 }
