@@ -73,6 +73,8 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> userinfo_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
 
+  public List<String> code_challenge_methods_supported = new ArrayList<>(Collections.singletonList("S256"));
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -100,12 +102,13 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
            Objects.equals(token_endpoint, that.token_endpoint) &&
            Objects.equals(token_endpoint_auth_methods_supported, that.token_endpoint_auth_methods_supported) &&
            Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
-           Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported);
+           Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported) &&
+           Objects.equals(code_challenge_methods_supported, that.code_challenge_methods_supported);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
+    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported, code_challenge_methods_supported);
   }
 
   @Override
