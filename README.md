@@ -66,6 +66,10 @@ $ sb int
 
 For more information, checkout [savantbuild.org](http://savantbuild.org/).
 
+## Upgrade policy
+
+Versions of this library track the FusionAuth API, except for patch versions, which include client-only updates like bugfixes and dependency upgrades. For more information, see the [FusionAuth Upgrade Guide](https://fusionauth.io/docs/operate/deploy/upgrade#upgrade-a-client-library).
+
 ## Questions and support
 
 If you have a question or support issue regarding this client library, we'd love to hear from you.
@@ -81,4 +85,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Fusion
 ## License
 
 This code is available as open source under the terms of the [Apache v2.0 License](https://opensource.org/licenses/Apache-2.0).
-
