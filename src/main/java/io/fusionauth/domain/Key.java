@@ -127,7 +127,7 @@ public class Key implements Buildable<Key> {
 
   @JsonIgnore
   public String getDisplayName() {
-    if (algorithm == null) {
+    if (type == KeyType.Secret || algorithm == null) {
       return name + " (" + type.name() + ")";
     }
 
@@ -195,6 +195,10 @@ public class Key implements Buildable<Key> {
   }
 
   public KeyUse use() {
+    // Secret keys are not used for signing or verification
+    if (type == KeyType.Secret) {
+      return KeyUse.VerifyOnly;
+    }
     // If we have an algorithm and it is either HMAC or a key pair, then we can sign and verify.
     if (algorithm != null && (isPair() || type == KeyType.HMAC)) {
       return KeyUse.SignAndVerify;
@@ -215,7 +219,8 @@ public class Key implements Buildable<Key> {
     RS256("SHA256withRSA"),
     RS384("SHA384withRSA"),
     RS512("SHA512withRSA"),
-    Ed25519("Ed25519");
+    Ed25519("Ed25519"),
+    None("None");
 
     public String algorithm;
 
@@ -232,7 +237,8 @@ public class Key implements Buildable<Key> {
     EC,
     RSA,
     HMAC,
-    OKP
+    OKP,
+    Secret
   }
 
   public static class CertificateInformation {
