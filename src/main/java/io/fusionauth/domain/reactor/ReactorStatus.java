@@ -55,6 +55,8 @@ public class ReactorStatus {
 
   public LocalDate expiration;
 
+  public ReactorFeatureStatus ipGeoLocation = ReactorFeatureStatus.UNKNOWN;
+
   public Map<String, String> licenseAttributes = new HashMap<>();
 
   public boolean licensed;
@@ -95,6 +97,7 @@ public class ReactorStatus {
     dPoP = other.dPoP;
     entityManagement = other.entityManagement;
     expiration = other.expiration;
+    ipGeoLocation = other.ipGeoLocation;
     licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
     tenantManagerApplication = other.tenantManagerApplication;
@@ -129,6 +132,7 @@ public class ReactorStatus {
            advancedOAuthScopesThirdPartyApplications == that.advancedOAuthScopesThirdPartyApplications &&
            dPoP == that.dPoP &&
            entityManagement == that.entityManagement &&
+           ipGeoLocation == that.ipGeoLocation &&
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
@@ -158,6 +162,7 @@ public class ReactorStatus {
                         advancedOAuthScopesThirdPartyApplications,
                         entityManagement,
                         expiration,
+                        ipGeoLocation,
                         licensed,
                         licenseAttributes,
                         tenantManagerApplication,
