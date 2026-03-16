@@ -15,7 +15,8 @@
  */
 
 fusionauthJWTVersion = "5.2.4"
-jacksonVersion = "2.15.4"
+jacksonVersion = "2.21.1"
+jacksonAnnotationsVersion = "2.21"  // No 2.21.1 version available, annotations dropped patch versioning in 2.20+
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
 restifyVersion = "4.3.0"
@@ -39,11 +40,13 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.64.0
 
   dependencies {
     group(name: "compile") {
-      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+      dependency(id: "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationsVersion}")
       dependency(id: "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
       dependency(id: "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
       dependency(id: "com.inversoft:jackson5:${jackson5Version}")
-      dependency(id: "com.inversoft:java-error:${javaErrorVersion}")
+      dependency(id: "com.inversoft:java-error:${javaErrorVersion}") {
+        exclusion(id: "com.inversoft:jackson5")
+      }
       dependency(id: "com.inversoft:restify:${restifyVersion}")
       dependency(id: "io.fusionauth:fusionauth-jwt:${fusionauthJWTVersion}")
     }

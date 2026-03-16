@@ -76,7 +76,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.15.4</version>
+      <version>2.21.0</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -84,7 +84,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.15.4</version>
+      <version>2.21.1</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -92,7 +92,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.15.4</version>
+      <version>2.21.1</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
@@ -112,6 +112,12 @@
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>com.inversoft</groupId>
+          <artifactId>jackson5</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.inversoft</groupId>
