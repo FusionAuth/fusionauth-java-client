@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -546,12 +546,18 @@ public class Application implements Buildable<Application>, Tenantable {
   }
 
   public static class PasswordlessConfiguration extends Enableable {
+    public PasswordlessStrategy emailLoginStrategy = PasswordlessStrategy.ClickableLink;
+
+    public PasswordlessStrategy phoneLoginStrategy = PasswordlessStrategy.FormField;
+
     @JacksonConstructor
     public PasswordlessConfiguration() {
     }
 
     public PasswordlessConfiguration(PasswordlessConfiguration other) {
       this.enabled = other.enabled;
+      this.emailLoginStrategy = other.emailLoginStrategy;
+      this.phoneLoginStrategy = other.phoneLoginStrategy;
     }
 
     @Override
@@ -562,12 +568,16 @@ public class Application implements Buildable<Application>, Tenantable {
       if (o == null || getClass() != o.getClass()) {
         return false;
       }
-      return super.equals(o);
+      if (!super.equals(o)) {
+        return false;
+      }
+      PasswordlessConfiguration that = (PasswordlessConfiguration) o;
+      return emailLoginStrategy == that.emailLoginStrategy && phoneLoginStrategy == that.phoneLoginStrategy;
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode());
+      return Objects.hash(super.hashCode(), emailLoginStrategy, phoneLoginStrategy);
     }
 
     @Override
