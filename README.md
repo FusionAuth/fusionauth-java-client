@@ -3,6 +3,7 @@ If you're integrating FusionAuth with a Java application, this library will spee
 
 For additional information and documentation on FusionAuth refer to [https://fusionauth.io](https://fusionauth.io).
 
+
 ## Example Usage
 
 ### Build the Client
