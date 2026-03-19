@@ -124,9 +124,11 @@ target(name: "pom", description: "Updates the pom.xml file") {
   pom.update()
 
   // Hack. I think we need to update the pom plugin to optionally remove -{integration} from versions.
+  // Hack-2. Because jacksonAnnotationsVersion = "2.21", need to overwrite what the pom plugin writes
   file.copy(to: ".") {
     fileSet(dir: ".", includePatterns: [~/pom.xml/])
     filter(token: "-\\{integration\\}", value: "")
+    filter(token: "2.21.0", value: "2.21")
   }
   ensureFileNotChanged("pom.xml", "pom")
 }
