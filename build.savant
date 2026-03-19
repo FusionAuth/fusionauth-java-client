@@ -16,7 +16,9 @@
 
 fusionauthJWTVersion = "5.2.4"
 jacksonVersion = "2.21.1"
-jacksonAnnotationsVersion = "2.21"  // No 2.21.1 version available, annotations dropped patch versioning in 2.20+
+// No 2.21.0 version available, annotations dropped patch versioning in 2.20+
+// pom target has hack to maintain this "patchless" version
+jacksonAnnotationsVersion = "2.21"  
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
 restifyVersion = "4.3.0"
@@ -124,9 +126,11 @@ target(name: "pom", description: "Updates the pom.xml file") {
   pom.update()
 
   // Hack. I think we need to update the pom plugin to optionally remove -{integration} from versions.
+  // Hack-2. Because jacksonAnnotationsVersion = "2.21", need to overwrite what the pom plugin writes
   file.copy(to: ".") {
     fileSet(dir: ".", includePatterns: [~/pom.xml/])
     filter(token: "-\\{integration\\}", value: "")
+    filter(token: "2.21.0", value: "2.21")
   }
   ensureFileNotChanged("pom.xml", "pom")
 }
