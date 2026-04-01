@@ -1,6 +1,7 @@
 stuff stuff
 www
 xxx
+yyy
 
 ## FusionAuth Java Client ![semver 2.0.0 compliant](http://img.shields.io/badge/semver-2.0.0-brightgreen.svg?style=flat-square)
 If you're integrating FusionAuth with a Java application, this library will speed up your development time.
