@@ -17,7 +17,7 @@
 
   <groupId>io.fusionauth</groupId>
   <artifactId>fusionauth-java-client</artifactId>
-  <version>1.64.0</version>
+  <version>1.65.0</version>
   <packaging>jar</packaging>
 
   <name>FusionAuth Java Client Library</name>
@@ -122,7 +122,7 @@
     <dependency>
       <groupId>com.inversoft</groupId>
       <artifactId>restify</artifactId>
-      <version>4.3.0</version>
+      <version>4.4.0</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>false</optional>

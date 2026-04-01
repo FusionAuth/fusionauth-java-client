@@ -18,13 +18,13 @@ fusionauthJWTVersion = "5.2.4"
 jacksonVersion = "2.21.1"
 // No 2.21.0 version available, annotations dropped patch versioning in 2.20+
 // pom target has hack to maintain this "patchless" version
-jacksonAnnotationsVersion = "2.21"  
+jacksonAnnotationsVersion = "2.21"
 jackson5Version = "3.0.1"
 javaErrorVersion = "2.2.3"
-restifyVersion = "4.3.0"
+restifyVersion = "4.4.0"
 testngVersion = "7.5.1"
 
-project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.64.0", licenses: ["ApacheV2_0"]) {
+project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.65.0", licenses: ["ApacheV2_0"]) {
   workflow {
     fetch {
       cache()
