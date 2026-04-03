@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,4 +36,13 @@ public class AccessTokenIntrospectRequest {
    * The access token returned by this OAuth provider as the result of a successful client credentials grant.
    */
   public String token;
+
+  /**
+   * An optional hint to identify the token type.
+   * <p>
+   * When this value is omitted, the token can be an access_token or id_token. When this value is specified, it must match the token type.
+   * <p>
+   * In order to use a refresh token, this value must be set to refresh_token.
+   */
+  public String token_type_hint;
 }

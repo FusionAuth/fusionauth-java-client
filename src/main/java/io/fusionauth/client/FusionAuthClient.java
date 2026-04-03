@@ -34,6 +34,7 @@ import com.inversoft.rest.FormDataBodyHandler;
 import com.inversoft.rest.JSONBodyHandler;
 import com.inversoft.rest.JSONResponseHandler;
 import com.inversoft.rest.RESTClient;
+import com.inversoft.rest.RetryConfiguration;
 import io.fusionauth.domain.LambdaType;
 import io.fusionauth.domain.OpenIdConfiguration;
 import io.fusionauth.domain.api.APIKeyRequest;
@@ -284,6 +285,18 @@ public class FusionAuthClient {
                                                                     .registerModule(new JacksonModule())
                                                                     .registerModule(new FusionAuthJacksonModule());
 
+  /**
+   * Suggested RetryConfiguration to use that retries on 409s when the general error code is [retryableConflict]
+   */
+  public static RetryConfiguration BASIC_RETRY_CONFIGURATION = new RetryConfiguration().with(rc -> rc.retryFunction = clientResponse -> {
+                                                                                               if (clientResponse.status == 409 && clientResponse.errorResponse instanceof Errors) {
+                                                                                                 Errors errors = (Errors) clientResponse.errorResponse;
+                                                                                                 return errors.generalErrors.stream().anyMatch(e -> e.code.equals("[retryableConflict]"));
+                                                                                               }
+                                                                                               return false;
+                                                                                             }
+  );
+
   private final String apiKey;
 
   private final String baseURL;
@@ -295,6 +308,8 @@ public class FusionAuthClient {
   public int connectTimeout;
 
   public int readTimeout;
+
+  public RetryConfiguration retryConfiguration;
 
   public FusionAuthClient(String apiKey, String baseURL) {
     this(apiKey, baseURL, null);
@@ -335,7 +350,9 @@ public class FusionAuthClient {
       return this;
     }
 
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString());
+    FusionAuthClient client = new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId.toString());
+    client.retryConfiguration = this.retryConfiguration;
+    return client;
   }
 
   /**
@@ -346,7 +363,9 @@ public class FusionAuthClient {
   * @return the new FusionAuthClient
   */
   public FusionAuthClient setObjectMapper(ObjectMapper objectMapper) {
-    return new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper);
+    FusionAuthClient client = new FusionAuthClient(apiKey, baseURL, connectTimeout, readTimeout, tenantId, objectMapper);
+    client.retryConfiguration = this.retryConfiguration;
+    return client;
   }
 
   /**
@@ -2473,6 +2492,7 @@ public class FusionAuthClient {
     parameters.put("client_id", Arrays.asList(request.client_id));
     parameters.put("tenantId", Arrays.asList(request.tenantId));
     parameters.put("token", Arrays.asList(request.token));
+    parameters.put("token_type_hint", Arrays.asList(request.token_type_hint));
     return startAnonymous(IntrospectResponse.class, OAuthError.class)
         .uri("/oauth2/introspect")
         .bodyHandler(new FormDataBodyHandler(parameters))
@@ -6425,6 +6445,10 @@ public class FusionAuthClient {
 
     if (tenantId != null) {
       client.header(TENANT_ID_HEADER, tenantId);
+    }
+
+    if (retryConfiguration != null) {
+      client.retry(retryConfiguration);
     }
 
     return client;
