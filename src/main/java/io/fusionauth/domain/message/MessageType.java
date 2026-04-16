@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package io.fusionauth.domain.message;
  * @author Mikey Sleevi
  */
 public enum MessageType {
-  SMS;
+  SMS,
+  Voice;
 
   public static MessageType safeValueOf(String value) {
     if (value == null) {

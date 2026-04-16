@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ public class KafkaMessengerConfiguration extends BaseMessengerConfiguration impl
 
   @Override
   public void normalize() {
+    super.normalize();
     if (!producer.containsKey("bootstrap.servers")) {
       producer.put("bootstrap.servers", "localhost:9092");
       producer.put("max.block.ms", "5000");

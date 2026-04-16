@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,24 @@
  */
 package io.fusionauth.domain.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.error.Errors;
+import io.fusionauth.client.json.PreviewMessageTemplateResponseDeserializer;
+import io.fusionauth.domain.message.Message;
 import io.fusionauth.domain.message.sms.SMSMessage;
 
 /**
  * @author Michael Sleevi
  */
+@JsonDeserialize(using = PreviewMessageTemplateResponseDeserializer.class)
 public class PreviewMessageTemplateResponse {
   public Errors errors;
 
+  /**
+   * @deprecated value will be null if the requested template is of type {@code VoiceMessageTemplate}. Use {@code previewMessage} instead
+   */
+  @Deprecated
   public SMSMessage message;
+
+  public Message previewMessage;
 }

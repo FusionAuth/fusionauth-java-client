@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.message.sms;
+package io.fusionauth.domain.message.voice;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,9 +29,9 @@ import io.fusionauth.domain.message.MessageType;
 import io.fusionauth.domain.util.Normalizer;
 
 /**
- * @author Michael Sleevi
+ * @author Daniel King
  */
-public class SMSMessageTemplate extends MessageTemplate implements Buildable<SMSMessageTemplate> {
+public class VoiceMessageTemplate extends MessageTemplate implements Buildable<VoiceMessageTemplate> {
   public String defaultTemplate;
 
   public LocalizedStrings localizedTemplates = new LocalizedStrings();
@@ -47,7 +47,7 @@ public class SMSMessageTemplate extends MessageTemplate implements Buildable<SMS
     if (!super.equals(o)) {
       return false;
     }
-    SMSMessageTemplate that = (SMSMessageTemplate) o;
+    VoiceMessageTemplate that = (VoiceMessageTemplate) o;
     return Objects.equals(defaultTemplate, that.defaultTemplate) && Objects.equals(localizedTemplates, that.localizedTemplates);
   }
 
@@ -58,7 +58,7 @@ public class SMSMessageTemplate extends MessageTemplate implements Buildable<SMS
 
   @Override
   public MessageType getType() {
-    return MessageType.SMS;
+    return MessageType.Voice;
   }
 
   @Override

@@ -1,5 +1,17 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package io.fusionauth.domain;
 
@@ -23,6 +35,8 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
 
   public MultiFactorSMSMethod sms = new MultiFactorSMSMethod();
 
+  public MultiFactorVoiceMethod voice = new MultiFactorVoiceMethod();
+
   @JacksonConstructor
   public TenantMultiFactorConfiguration() {
   }
@@ -32,16 +46,15 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
     this.email = new MultiFactorEmailMethod(other.email);
     this.loginPolicy = other.loginPolicy;
     this.sms = new MultiFactorSMSMethod(other.sms);
+    this.voice = new MultiFactorVoiceMethod(other.voice);
   }
 
   /**
-   * Returns true if at least one Multi-Factor method is enabled.
-   *
    * @return true if at least one Multi-Factor method is enabled
    */
   @JsonIgnore
   public boolean anyEnabled() {
-    return authenticator.enabled || sms.enabled || email.enabled;
+    return authenticator.enabled || sms.enabled || email.enabled || voice.enabled;
   }
 
   @Override
@@ -56,12 +69,13 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
     return Objects.equals(authenticator, that.authenticator) &&
            Objects.equals(email, that.email) &&
            loginPolicy == that.loginPolicy &&
-           Objects.equals(sms, that.sms);
+           Objects.equals(sms, that.sms) &&
+           Objects.equals(voice, that.voice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticator, email, loginPolicy, sms);
+    return Objects.hash(authenticator, email, loginPolicy, sms, voice);
   }
 
   @Override
@@ -178,6 +192,47 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
         return false;
       }
       MultiFactorSMSMethod that = (MultiFactorSMSMethod) o;
+      return Objects.equals(messengerId, that.messengerId) && Objects.equals(templateId, that.templateId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), messengerId, templateId);
+    }
+
+    @Override
+    public String toString() {
+      return ToString.toString(this);
+    }
+  }
+
+  public static class MultiFactorVoiceMethod extends Enableable implements Buildable<MultiFactorVoiceMethod> {
+    public UUID messengerId;
+
+    public UUID templateId;
+
+    @JacksonConstructor
+    public MultiFactorVoiceMethod() {
+    }
+
+    public MultiFactorVoiceMethod(MultiFactorVoiceMethod other) {
+      this.enabled = other.enabled;
+      this.messengerId = other.messengerId;
+      this.templateId = other.templateId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      MultiFactorVoiceMethod that = (MultiFactorVoiceMethod) o;
       return Objects.equals(messengerId, that.messengerId) && Objects.equals(templateId, that.templateId);
     }
 

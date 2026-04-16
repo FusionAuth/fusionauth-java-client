@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,19 @@
 package io.fusionauth.domain.messenger;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.message.MessageType;
 
 /**
  * @author Brett Guy
@@ -40,8 +46,15 @@ public abstract class BaseMessengerConfiguration  {
 
   public ZonedDateTime lastUpdateInstant;
 
+  @JsonMerge(OptBoolean.FALSE)
+  public Set<MessageType> messageTypes = new LinkedHashSet<>(Collections.singletonList(MessageType.SMS));
+
   public String name;
 
+  /**
+   * @deprecated since 1.65.0, see {@link BaseMessengerConfiguration#messageTypes}
+   */
+  @Deprecated
   public String transport = MessengerTransport.SMS;
 
   @Override
@@ -58,6 +71,7 @@ public abstract class BaseMessengerConfiguration  {
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
+           Objects.equals(messageTypes, that.messageTypes) &&
            Objects.equals(name, that.name) &&
            Objects.equals(transport, that.transport);
   }
@@ -66,7 +80,7 @@ public abstract class BaseMessengerConfiguration  {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, debug, id, insertInstant, lastUpdateInstant, name, transport);
+    return Objects.hash(data, debug, id, insertInstant, lastUpdateInstant, messageTypes, name, transport);
   }
 
   public void normalize() {

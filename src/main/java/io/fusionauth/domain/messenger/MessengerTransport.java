@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@ package io.fusionauth.domain.messenger;
 
 /**
  * @author Daniel DeGroff
+ * @deprecated since 1.65.0,  use {@code MessageType} instead
  */
+@Deprecated
 public class MessengerTransport {
   public static String SMS = "sms";
 }

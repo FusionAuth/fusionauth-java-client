@@ -24,10 +24,20 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
+
+  /**
+   * Method which authenticates using a code generated client-side using TOTP.
+   */
   public static final String Authenticator = "authenticator";
 
+  /**
+   * Method which authenticates using a code sent via email.
+   */
   public static final String Email = "email";
 
+  /**
+   * Method which authenticates using a code sent to a phone via SMS or voice.
+   */
   public static final String SMS = "sms";
 
   public AuthenticatorConfiguration authenticator;

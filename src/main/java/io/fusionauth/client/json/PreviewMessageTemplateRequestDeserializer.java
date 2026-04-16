@@ -52,7 +52,7 @@ public class PreviewMessageTemplateRequestDeserializer extends StdDeserializer<P
       req.messageTemplate = MessageTemplateJacksonHelper.newMessageTemplate(mType);
     }
 
-    if (req.locale == null) {
+    if (req.locale == null && !lNode.isMissingNode() && !lNode.isNull()) {
       req.locale = new Locale(lNode.asText());
     }
 

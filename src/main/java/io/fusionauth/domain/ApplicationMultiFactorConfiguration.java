@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -21,6 +21,8 @@ public class ApplicationMultiFactorConfiguration {
 
   public ApplicationMultiFactorTrustPolicy trustPolicy;
 
+  public MultiFactorVoiceTemplate voice = new MultiFactorVoiceTemplate();
+
   @JacksonConstructor
   public ApplicationMultiFactorConfiguration() {
   }
@@ -30,6 +32,7 @@ public class ApplicationMultiFactorConfiguration {
     this.loginPolicy = other.loginPolicy;
     this.sms = new MultiFactorSMSTemplate(other.sms);
     this.trustPolicy = other.trustPolicy;
+    this.voice = new MultiFactorVoiceTemplate(other.voice);
   }
 
   @Override
@@ -44,12 +47,13 @@ public class ApplicationMultiFactorConfiguration {
     return Objects.equals(email, that.email) &&
            loginPolicy == that.loginPolicy &&
            Objects.equals(sms, that.sms) &&
-           trustPolicy == that.trustPolicy;
+           trustPolicy == that.trustPolicy &&
+           Objects.equals(voice, that.voice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, loginPolicy, sms, trustPolicy);
+    return Objects.hash(email, loginPolicy, sms, trustPolicy, voice);
   }
 
   @Override
@@ -106,6 +110,35 @@ public class ApplicationMultiFactorConfiguration {
         return false;
       }
       MultiFactorSMSTemplate that = (MultiFactorSMSTemplate) o;
+      return Objects.equals(templateId, that.templateId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(templateId);
+    }
+  }
+
+  public static class MultiFactorVoiceTemplate {
+    public UUID templateId;
+
+    @JacksonConstructor
+    public MultiFactorVoiceTemplate() {
+    }
+
+    public MultiFactorVoiceTemplate(MultiFactorVoiceTemplate other) {
+      this.templateId = other.templateId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      MultiFactorVoiceTemplate that = (MultiFactorVoiceTemplate) o;
       return Objects.equals(templateId, that.templateId);
     }
 

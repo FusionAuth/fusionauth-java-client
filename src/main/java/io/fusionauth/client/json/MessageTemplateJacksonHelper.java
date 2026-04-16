@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2020-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import io.fusionauth.domain.connector.BaseConnectorConfiguration;
 import io.fusionauth.domain.message.MessageTemplate;
 import io.fusionauth.domain.message.MessageType;
 import io.fusionauth.domain.message.sms.SMSMessageTemplate;
+import io.fusionauth.domain.message.voice.VoiceMessageTemplate;
 
 /**
  * @author Mikey Sleevi
@@ -49,10 +50,11 @@ public class MessageTemplateJacksonHelper {
   }
 
   public static MessageTemplate newMessageTemplate(MessageType type) {
-    //noinspection SwitchStatementWithTooFewBranches
     switch (type) {
       case SMS:
         return new SMSMessageTemplate();
+      case Voice:
+        return new VoiceMessageTemplate();
       default:
         throw new IllegalStateException("Unexpected type [" + type + "]. This is a FusionAuth bug, someone forgot to add a case statement for a new type.");
     }

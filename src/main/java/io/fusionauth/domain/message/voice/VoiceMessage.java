@@ -13,8 +13,9 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.message.sms;
+package io.fusionauth.domain.message.voice;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import com.inversoft.json.JacksonConstructor;
@@ -23,15 +24,17 @@ import io.fusionauth.domain.message.Message;
 import io.fusionauth.domain.message.MessageType;
 
 /**
- * @author Michael Sleevi
+ * @author Daniel King
  */
-public class SMSMessage implements Message {
+public class VoiceMessage implements Message {
+  public Locale locale;
+
+  public String message;
+
   public String phoneNumber;
 
-  public String textMessage;
-
   @JacksonConstructor
-  public SMSMessage() {
+  public VoiceMessage() {
   }
 
   @Override
@@ -42,19 +45,20 @@ public class SMSMessage implements Message {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SMSMessage that = (SMSMessage) o;
-    return textMessage.equals(that.textMessage) &&
+    VoiceMessage that = (VoiceMessage) o;
+    return Objects.equals(locale, that.locale) &&
+           message.equals(that.message) &&
            phoneNumber.equals(that.phoneNumber);
   }
 
   @Override
   public MessageType getType() {
-    return MessageType.SMS;
+    return MessageType.Voice;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(textMessage, phoneNumber);
+    return Objects.hash(locale, message, phoneNumber);
   }
 
   @Override
