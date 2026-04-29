@@ -42,6 +42,8 @@ public class ApplicationSearchCriteria extends BaseSearchCriteria implements Bui
 
   public UUID tenantId;
 
+  public Boolean universal;
+
   @Override
   public ApplicationSearchCriteria prepare() {
     if (orderBy == null) {

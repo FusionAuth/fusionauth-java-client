@@ -18,21 +18,21 @@ package io.fusionauth.domain.api;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.inversoft.error.Errors;
 import io.fusionauth.client.json.PreviewMessageTemplateResponseDeserializer;
-import io.fusionauth.domain.message.Message;
+import io.fusionauth.domain.Buildable;
 import io.fusionauth.domain.message.sms.SMSMessage;
 
 /**
  * @author Michael Sleevi
  */
 @JsonDeserialize(using = PreviewMessageTemplateResponseDeserializer.class)
-public class PreviewMessageTemplateResponse {
+public class PreviewMessageTemplateResponse implements Buildable<PreviewMessageTemplateResponse> {
   public Errors errors;
 
   /**
-   * @deprecated value will be null if the requested template is of type {@code VoiceMessageTemplate}. Use {@code previewMessage} instead
+   * @deprecated value will be null if the requested template is of type {@code VoiceMessageTemplate}. Use {@code preview} instead
    */
   @Deprecated
   public SMSMessage message;
 
-  public Message previewMessage;
+  public String previewMessage;
 }

@@ -30,6 +30,8 @@ import io.fusionauth.domain.api.BaseLoginRequest;
  * @author Brian Pontarelli
  */
 public class IdentityProviderLoginRequest extends BaseLoginRequest implements Buildable<IdentityProviderLoginRequest> {
+  public String connectionTestId;
+
   public Map<String, String> data = new HashMap<>(1);
 
   public UUID identityProviderId;

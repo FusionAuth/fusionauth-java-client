@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,14 @@ import io.fusionauth.domain.Enableable;
  */
 public class SAMLv2AssertionDecryptionConfiguration extends Enableable {
   public UUID keyTransportDecryptionKeyId;
+
+  public SAMLv2AssertionDecryptionConfiguration() {
+  }
+
+  public SAMLv2AssertionDecryptionConfiguration(SAMLv2AssertionDecryptionConfiguration other) {
+    this.enabled = other.enabled;
+    this.keyTransportDecryptionKeyId = other.keyTransportDecryptionKeyId;
+  }
 
   @Override
   public boolean equals(Object o) {

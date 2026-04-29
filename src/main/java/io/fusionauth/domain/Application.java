@@ -589,6 +589,8 @@ public class Application implements Buildable<Application>, Tenantable {
   public static class RegistrationConfiguration extends Enableable implements Buildable<RegistrationConfiguration> {
     public Requirable birthDate = new Requirable();
 
+    public boolean completeRegistration;
+
     public boolean confirmPassword;
 
     public Requirable firstName = new Requirable();
@@ -615,6 +617,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     public RegistrationConfiguration(RegistrationConfiguration other) {
       this.birthDate = new Requirable(other.birthDate);
+      this.completeRegistration = other.completeRegistration;
       this.confirmPassword = other.confirmPassword;
       this.enabled = other.enabled;
       this.firstName = new Requirable(other.firstName);
@@ -640,7 +643,8 @@ public class Application implements Buildable<Application>, Tenantable {
         return false;
       }
       RegistrationConfiguration that = (RegistrationConfiguration) o;
-      return confirmPassword == that.confirmPassword &&
+      return completeRegistration == that.completeRegistration &&
+             confirmPassword == that.confirmPassword &&
              Objects.equals(birthDate, that.birthDate) &&
              Objects.equals(firstName, that.firstName) &&
              Objects.equals(formId, that.formId) &&
@@ -655,7 +659,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), birthDate, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, preferredLanguages, type);
+      return Objects.hash(super.hashCode(), birthDate, completeRegistration, confirmPassword, firstName, formId, fullName, lastName, loginIdType, middleName, mobilePhone, preferredLanguages, type);
     }
 
     public String toString() {

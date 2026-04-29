@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   public Map<UUID, D> applicationConfiguration = new HashMap<>();
 
+  public Map<String, String> attributeMappings = new HashMap<>();
+
   public boolean debug;
 
   public UUID id;
@@ -55,6 +57,8 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
   public IdentityProviderLinkingStrategy linkingStrategy = IdentityProviderLinkingStrategy.LinkByEmail;
 
   public String name;
+
+  public String source = "System";
 
   public Map<UUID, IdentityProviderTenantConfiguration> tenantConfiguration = new HashMap<>();
 
@@ -75,12 +79,14 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
     return debug == that.debug &&
            Objects.equals(data, that.data) &&
            Objects.equals(applicationConfiguration, that.applicationConfiguration) &&
+           Objects.equals(attributeMappings, that.attributeMappings) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lambdaConfiguration, that.lambdaConfiguration) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            linkingStrategy == that.linkingStrategy &&
            Objects.equals(name, that.name) &&
+           Objects.equals(source, that.source) &&
            Objects.equals(tenantId, that.tenantId) &&
            Objects.equals(tenantConfiguration, that.tenantConfiguration);
   }
@@ -89,7 +95,7 @@ public abstract class BaseIdentityProvider<D extends BaseIdentityProviderApplica
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), data, applicationConfiguration, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, tenantId, tenantConfiguration);
+    return Objects.hash(super.hashCode(), data, applicationConfiguration, attributeMappings, debug, id, insertInstant, lambdaConfiguration, lastUpdateInstant, linkingStrategy, name, source, tenantId, tenantConfiguration);
   }
 
   @JsonIgnore

@@ -189,6 +189,8 @@ import io.fusionauth.domain.api.identity.verify.VerifyRequest;
 import io.fusionauth.domain.api.identity.verify.VerifyStartRequest;
 import io.fusionauth.domain.api.identity.verify.VerifyStartResponse;
 import io.fusionauth.domain.api.identity.verify.VerifySendRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderConnectionTestRequest;
+import io.fusionauth.domain.api.identityProvider.IdentityProviderConnectionTestResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkRequest;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLinkResponse;
 import io.fusionauth.domain.api.identityProvider.IdentityProviderLoginRequest;
@@ -213,6 +215,10 @@ import io.fusionauth.domain.api.report.LoginReportResponse;
 import io.fusionauth.domain.api.report.MonthlyActiveUserReportResponse;
 import io.fusionauth.domain.api.report.RegistrationReportResponse;
 import io.fusionauth.domain.api.report.TotalsReportResponse;
+import io.fusionauth.domain.api.tenantManager.TenantManagerConfigurationRequest;
+import io.fusionauth.domain.api.tenantManager.TenantManagerConfigurationResponse;
+import io.fusionauth.domain.api.tenantManager.TenantManagerIdentityProviderTypeConfigurationRequest;
+import io.fusionauth.domain.api.tenantManager.TenantManagerIdentityProviderTypeConfigurationResponse;
 import io.fusionauth.domain.api.twoFactor.SecretResponse;
 import io.fusionauth.domain.api.twoFactor.TwoFactorLoginRequest;
 import io.fusionauth.domain.api.twoFactor.TwoFactorSendRequest;
@@ -1187,6 +1193,22 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates a tenant manager identity provider type configuration for the given identity provider type.
+   *
+   * @param type The type of the identity provider.
+   * @param request The request object that contains all the information used to create the tenant manager identity provider type configuration.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerIdentityProviderTypeConfigurationResponse, Errors> createTenantManagerIdentityProviderTypeConfiguration(IdentityProviderType type, TenantManagerIdentityProviderTypeConfigurationRequest request) {
+    return start(TenantManagerIdentityProviderTypeConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager/identity-provider")
+        .urlSegment(type)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a Theme. You can optionally specify an Id for the theme, if not provided one will be generated.
    *
    * @param themeId (Optional) The Id for the theme. If not provided a secure random UUID will be generated.
@@ -1762,6 +1784,20 @@ public class FusionAuthClient {
         .uri("/api/tenant")
         .urlSegment(tenantId)
         .urlParameter("async", true)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the tenant manager identity provider type configuration for the given identity provider type.
+   *
+   * @param type The type of the identity provider.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteTenantManagerIdentityProviderTypeConfiguration(IdentityProviderType type) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/tenant-manager/identity-provider")
+        .urlSegment(type)
         .delete()
         .go();
   }
@@ -3069,6 +3105,36 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates, via PATCH, the Tenant Manager configuration.
+   *
+   * @param request The request that contains just the new Tenant Manager configuration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerConfigurationResponse, Errors> patchTenantManagerConfiguration(Map<String, Object> request) {
+    return start(TenantManagerConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Patches the tenant manager identity provider type configuration for the given identity provider type.
+   *
+   * @param type The type of the identity provider.
+   * @param request The request object that contains the new tenant manager identity provider type configuration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerIdentityProviderTypeConfigurationResponse, Errors> patchTenantManagerIdentityProviderTypeConfiguration(IdentityProviderType type, Map<String, Object> request) {
+    return start(TenantManagerIdentityProviderTypeConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager/identity-provider")
+        .urlSegment(type)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the theme with the given Id.
    *
    * @param themeId The Id of the theme to update.
@@ -3817,6 +3883,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Retrieves the results for an identity provider connection test.
+   *
+   * @param connectionTestId The connection test id to retrieve results for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderConnectionTestResponse, Errors> retrieveIdentityProviderConnectionTestResults(String connectionTestId) {
+    return start(IdentityProviderConnectionTestResponse.class, Errors.class)
+        .uri("/api/identity-provider/test")
+        .urlParameter("connectionTestId", connectionTestId)
+        .get()
+        .go();
+  }
+
+  /**
    * Retrieves all the identity providers.
    *
    * @return The ClientResponse object.
@@ -4383,6 +4463,18 @@ public class FusionAuthClient {
     return start(TenantResponse.class, Errors.class)
         .uri("/api/tenant")
         .urlSegment(tenantId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the Tenant Manager configuration.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerConfigurationResponse, Void> retrieveTenantManagerConfiguration() {
+    return start(TenantManagerConfigurationResponse.class, Void.TYPE)
+        .uri("/api/tenant-manager")
         .get()
         .go();
   }
@@ -5636,6 +5728,20 @@ public class FusionAuthClient {
   }
 
   /**
+   * Begins an identity provider connection test.
+   *
+   * @param request The request that contains information on the connection test.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderConnectionTestResponse, Errors> startIdentityProviderConnectionTest(IdentityProviderConnectionTestRequest request) {
+    return start(IdentityProviderConnectionTestResponse.class, Errors.class)
+        .uri("/api/identity-provider/test")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Begins a login request for a 3rd party login that requires user interaction such as HYPR.
    *
    * @param request The third-party login request that contains information from the third-party login
@@ -6139,6 +6245,36 @@ public class FusionAuthClient {
     return start(TenantResponse.class, Errors.class)
         .uri("/api/tenant")
         .urlSegment(tenantId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the Tenant Manager configuration.
+   *
+   * @param request The request that contains all the new Tenant Manager configuration information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerConfigurationResponse, Errors> updateTenantManagerConfiguration(TenantManagerConfigurationRequest request) {
+    return start(TenantManagerConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the tenant manager identity provider type configuration for the given identity provider type.
+   *
+   * @param type The type of the identity provider.
+   * @param request The request object that contains the updated tenant manager identity provider type configuration.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<TenantManagerIdentityProviderTypeConfigurationResponse, Errors> updateTenantManagerIdentityProviderTypeConfiguration(IdentityProviderType type, TenantManagerIdentityProviderTypeConfigurationRequest request) {
+    return start(TenantManagerIdentityProviderTypeConfigurationResponse.class, Errors.class)
+        .uri("/api/tenant-manager/identity-provider")
+        .urlSegment(type)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .put()
         .go();

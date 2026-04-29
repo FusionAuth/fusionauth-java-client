@@ -16,7 +16,11 @@
 package io.fusionauth.domain;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import io.fusionauth.domain.html.Favicon;
 
 /**
  * Theme object for values used in the css variables for simple themes.
@@ -45,6 +49,8 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
   public String errorFontColor;
 
   public String errorIconColor;
+
+  public List<Favicon> favicons;
 
   public String fontColor;
 
@@ -103,6 +109,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
     this.deleteButtonTextFocusColor = other.deleteButtonTextFocusColor;
     this.errorFontColor = other.errorFontColor;
     this.errorIconColor = other.errorIconColor;
+    this.favicons = other.favicons == null ? null : other.favicons.stream().map(Favicon::new).collect(Collectors.toList());
     this.fontColor = other.fontColor;
     this.fontFamily = other.fontFamily;
     this.footerDisplay = other.footerDisplay;
@@ -146,6 +153,7 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
            Objects.equals(deleteButtonFocusColor, that.deleteButtonFocusColor) &&
            Objects.equals(errorFontColor, that.errorFontColor) &&
            Objects.equals(errorIconColor, that.errorIconColor) &&
+           Objects.equals(favicons, that.favicons) &&
            Objects.equals(fontColor, that.fontColor) &&
            Objects.equals(fontFamily, that.fontFamily) &&
            Objects.equals(footerDisplay, that.footerDisplay) &&
@@ -172,7 +180,8 @@ public class SimpleThemeVariables implements Buildable<SimpleThemeVariables> {
   @Override
   public int hashCode() {
     return Objects.hash(alertBackgroundColor, alertFontColor, backgroundImageURL, backgroundSize, borderRadius, deleteButtonColor,
-                        deleteButtonTextColor, deleteButtonTextFocusColor, deleteButtonFocusColor, errorFontColor, errorIconColor, fontColor, fontFamily,
+                        deleteButtonTextColor, deleteButtonTextFocusColor, deleteButtonFocusColor, errorFontColor, errorIconColor, favicons, fontColor,
+                        fontFamily,
                         footerDisplay, iconBackgroundColor, iconColor, infoIconColor, inputBackgroundColor, inputIconColor, inputTextColor, linkTextColor,
                         linkTextFocusColor, logoImageSize, logoImageURL, monoFontColor, monoFontFamily, pageBackgroundColor,
                         panelBackgroundColor, primaryButtonColor, primaryButtonFocusColor, primaryButtonTextColor, primaryButtonTextFocusColor);

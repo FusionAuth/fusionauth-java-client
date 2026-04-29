@@ -42,6 +42,8 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
 
   public int externalAuthenticationIdTimeToLiveInSeconds = 300;
 
+  public int identityProviderConnectionTestTimeToLiveInSeconds = 1800;
+
   public int loginIntentTimeToLiveInSeconds = 1800;
 
   public int oneTimePasswordTimeToLiveInSeconds = 60;
@@ -102,6 +104,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
     this.emailVerificationIdTimeToLiveInSeconds = other.emailVerificationIdTimeToLiveInSeconds;
     this.emailVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(other.emailVerificationOneTimeCodeGenerator);
     this.externalAuthenticationIdTimeToLiveInSeconds = other.externalAuthenticationIdTimeToLiveInSeconds;
+    this.identityProviderConnectionTestTimeToLiveInSeconds = other.identityProviderConnectionTestTimeToLiveInSeconds;
     this.phoneVerificationIdGenerator = new SecureGeneratorConfiguration(other.phoneVerificationIdGenerator);
     this.phoneVerificationIdTimeToLiveInSeconds = other.phoneVerificationIdTimeToLiveInSeconds;
     this.phoneVerificationOneTimeCodeGenerator = new SecureGeneratorConfiguration(other.phoneVerificationOneTimeCodeGenerator);
@@ -141,6 +144,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
            deviceCodeTimeToLiveInSeconds == that.deviceCodeTimeToLiveInSeconds &&
            emailVerificationIdTimeToLiveInSeconds == that.emailVerificationIdTimeToLiveInSeconds &&
            externalAuthenticationIdTimeToLiveInSeconds == that.externalAuthenticationIdTimeToLiveInSeconds &&
+           identityProviderConnectionTestTimeToLiveInSeconds == that.identityProviderConnectionTestTimeToLiveInSeconds &&
            phoneVerificationIdTimeToLiveInSeconds == that.phoneVerificationIdTimeToLiveInSeconds &&
            loginIntentTimeToLiveInSeconds == that.loginIntentTimeToLiveInSeconds &&
            oneTimePasswordTimeToLiveInSeconds == that.oneTimePasswordTimeToLiveInSeconds &&
@@ -181,6 +185,7 @@ public class ExternalIdentifierConfiguration implements Buildable<ExternalIdenti
                         emailVerificationIdTimeToLiveInSeconds,
                         emailVerificationOneTimeCodeGenerator,
                         externalAuthenticationIdTimeToLiveInSeconds,
+                        identityProviderConnectionTestTimeToLiveInSeconds,
                         phoneVerificationIdGenerator,
                         phoneVerificationIdTimeToLiveInSeconds,
                         phoneVerificationOneTimeCodeGenerator,

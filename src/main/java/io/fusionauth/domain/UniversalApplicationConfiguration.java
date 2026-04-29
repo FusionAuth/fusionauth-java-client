@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@ public class UniversalApplicationConfiguration {
   public boolean universal;
 
   @JacksonConstructor
-  public UniversalApplicationConfiguration() {}
+  public UniversalApplicationConfiguration() {
+  }
 
   public UniversalApplicationConfiguration(boolean universal) {
     this.universal = universal;
@@ -47,6 +48,6 @@ public class UniversalApplicationConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(universal);
+    return Objects.hash(universal);
   }
 }

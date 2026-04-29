@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 package io.fusionauth.domain.search;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.Buildable;
@@ -29,6 +31,8 @@ import static io.fusionauth.domain.util.SQLTools.toSearchString;
  * @author Brian Pontarelli
  */
 public class AuditLogSearchCriteria extends BaseSearchCriteria implements Buildable<AuditLogSearchCriteria> {
+  public static final Set<String> NullableFields = new HashSet<>();
+
   public static final Map<String, String> SortableFields = new LinkedHashMap<>();
 
   public ZonedDateTime end;
@@ -43,16 +47,19 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
 
   public ZonedDateTime start;
 
+  public UUID tenantId;
+
   public String user;
 
   @JacksonConstructor
   public AuditLogSearchCriteria() {
   }
 
-  public AuditLogSearchCriteria(String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
+  public AuditLogSearchCriteria(UUID tenantId, String message, String user, ZonedDateTime start, ZonedDateTime end, String orderBy) {
     this.end = end;
     this.message = message;
     this.start = start;
+    this.tenantId = tenantId;
     this.user = user;
     this.orderBy = orderBy;
   }
@@ -74,7 +81,7 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
       orderBy = defaultOrderBy();
     }
 
-    orderBy = SQLTools.normalizeOrderBy(orderBy, SortableFields);
+    orderBy = SQLTools.normalizeOrderBy(orderBy, SortableFields, NullableFields);
     user = toSearchString(user);
     message = toSearchString(message);
     newValue = toSearchString(newValue);
@@ -94,8 +101,11 @@ public class AuditLogSearchCriteria extends BaseSearchCriteria implements Builda
   }
 
   static {
-    SortableFields.put("insertInstant", "insert_instant");
-    SortableFields.put("insertUser", "insert_user");
-    SortableFields.put("message", "message");
+    NullableFields.add("tenant");
+
+    SortableFields.put("insertInstant", "al.insert_instant");
+    SortableFields.put("insertUser", "al.insert_user");
+    SortableFields.put("message", "al.message");
+    SortableFields.put("tenant", "t.name");
   }
 }

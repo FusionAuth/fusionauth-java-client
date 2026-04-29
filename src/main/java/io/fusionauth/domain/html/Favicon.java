@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026, FusionAuth, All Rights Reserved
+ * Copyright (c) 2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,35 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain.provider;
 
+package io.fusionauth.domain.html;
+
+import java.net.URI;
 import java.util.Objects;
 
-import com.inversoft.json.ToString;
 import io.fusionauth.domain.Buildable;
 
 /**
- * @author Lyle Schemmerling
+ * Components of a Favicon in an HTML {@code <head>} element.
  */
-public class SAMLv2AssertionConfiguration implements Buildable<SAMLv2AssertionConfiguration> {
-  public SAMLv2DestinationAssertionConfiguration destination = new SAMLv2DestinationAssertionConfiguration();
+public class Favicon implements Buildable<Favicon> {
 
-  public SAMLv2AssertionConfiguration() {
+  public URI href;
+
+  public String rel = "icon";
+
+  public String sizes;
+
+  public String type = "image/x-icon";
+
+  public Favicon() {
   }
 
-  public SAMLv2AssertionConfiguration(SAMLv2AssertionConfiguration other) {
-    this.destination = new SAMLv2DestinationAssertionConfiguration(other.destination);
+  public Favicon(Favicon other) {
+    this.href = other.href;
+    this.rel = other.rel;
+    this.sizes = other.sizes;
+    this.type = other.type;
   }
 
   @Override
@@ -41,17 +52,15 @@ public class SAMLv2AssertionConfiguration implements Buildable<SAMLv2AssertionCo
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SAMLv2AssertionConfiguration that = (SAMLv2AssertionConfiguration) o;
-    return Objects.equals(destination, that.destination);
+    Favicon favicon = (Favicon) o;
+    return Objects.equals(href, favicon.href) &&
+           Objects.equals(rel, favicon.rel) &&
+           Objects.equals(sizes, favicon.sizes) &&
+           Objects.equals(type, favicon.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(destination);
-  }
-
-  @Override
-  public String toString() {
-    return ToString.toString(this);
+    return Objects.hash(href, rel, sizes, type);
   }
 }

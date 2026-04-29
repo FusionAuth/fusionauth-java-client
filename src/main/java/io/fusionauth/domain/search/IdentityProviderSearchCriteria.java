@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
   public String name;
 
+  public String source;
+
   public UUID tenantId;
 
   public IdentityProviderType type;
@@ -53,6 +55,7 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
 
     orderBy = normalizeOrderBy(orderBy, SortableFields);
     name = toSearchString(name);
+    source = toSearchString(source);
     return this;
   }
 
@@ -71,6 +74,7 @@ public class IdentityProviderSearchCriteria extends BaseSearchCriteria {
     SortableFields.put("insertInstant", "insert_instant");
     SortableFields.put("name", "name");
     SortableFields.put("enabled", "enabled");
+    SortableFields.put("source", "source");
     SortableFields.put("tenantId", "tenants_id");
     SortableFields.put("type", "type");
   }
