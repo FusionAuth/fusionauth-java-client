@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package io.fusionauth.domain;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.UncheckedIOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -158,6 +162,29 @@ public class Theme implements Buildable<Theme> {
    */
   public String message(String key, Object... arguments) {
     return "";
+  }
+
+  /**
+   * Checks whether this theme is missing any required message keys.
+   *
+   * @param expectedKeys The set of expected message keys
+   * @return true if this theme is missing one or more message keys
+   */
+  public boolean missingMessages(Set<String> expectedKeys) {
+    if (type != ThemeType.advanced || FUSIONAUTH_THEME_ID.equals(id) || expectedKeys == null || expectedKeys.isEmpty()) {
+      return false;
+    }
+
+    Properties defined = new Properties();
+    if (defaultMessages != null) {
+      try {
+        defined.load(new StringReader(defaultMessages));
+      } catch (IOException e) {
+        throw new UncheckedIOException(e);
+      }
+    }
+
+    return expectedKeys.stream().anyMatch(key -> !defined.containsKey(key));
   }
 
   @JsonIgnore
