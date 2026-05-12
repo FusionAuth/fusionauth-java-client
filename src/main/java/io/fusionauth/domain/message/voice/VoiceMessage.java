@@ -17,6 +17,7 @@ package io.fusionauth.domain.message.voice;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -27,11 +28,15 @@ import io.fusionauth.domain.message.MessageType;
  * @author Daniel King
  */
 public class VoiceMessage implements Message {
+  public String code;
+
   public Locale locale;
 
   public String message;
 
   public String phoneNumber;
+
+  public UUID userId;
 
   @JacksonConstructor
   public VoiceMessage() {
@@ -46,9 +51,11 @@ public class VoiceMessage implements Message {
       return false;
     }
     VoiceMessage that = (VoiceMessage) o;
-    return Objects.equals(locale, that.locale) &&
-           message.equals(that.message) &&
-           phoneNumber.equals(that.phoneNumber);
+    return Objects.equals(code, that.code) &&
+           Objects.equals(locale, that.locale) &&
+           Objects.equals(message, that.message) &&
+           Objects.equals(phoneNumber, that.phoneNumber) &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override
@@ -58,7 +65,7 @@ public class VoiceMessage implements Message {
 
   @Override
   public int hashCode() {
-    return Objects.hash(locale, message, phoneNumber);
+    return Objects.hash(code, locale, message, phoneNumber, userId);
   }
 
   @Override

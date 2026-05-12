@@ -16,6 +16,7 @@
 package io.fusionauth.domain.message.sms;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import com.inversoft.json.JacksonConstructor;
 import com.inversoft.json.ToString;
@@ -26,9 +27,13 @@ import io.fusionauth.domain.message.MessageType;
  * @author Michael Sleevi
  */
 public class SMSMessage implements Message {
+  public String code;
+
   public String phoneNumber;
 
   public String textMessage;
+
+  public UUID userId;
 
   @JacksonConstructor
   public SMSMessage() {
@@ -43,8 +48,10 @@ public class SMSMessage implements Message {
       return false;
     }
     SMSMessage that = (SMSMessage) o;
-    return textMessage.equals(that.textMessage) &&
-           phoneNumber.equals(that.phoneNumber);
+    return Objects.equals(code, that.code) &&
+           Objects.equals(textMessage, that.textMessage) &&
+           Objects.equals(phoneNumber, that.phoneNumber) &&
+           Objects.equals(userId, that.userId);
   }
 
   @Override
@@ -54,7 +61,7 @@ public class SMSMessage implements Message {
 
   @Override
   public int hashCode() {
-    return Objects.hash(textMessage, phoneNumber);
+    return Objects.hash(code, textMessage, phoneNumber, userId);
   }
 
   @Override
