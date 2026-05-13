@@ -75,6 +75,8 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
 
   public String lastName;
 
+  public String legacyIdentifier;
+
   public ZonedDateTime lastUpdateInstant;
 
   public String middleName;
@@ -114,6 +116,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     this.lastLoginInstant = other.lastLoginInstant;
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.lastName = other.lastName;
+    this.legacyIdentifier = other.legacyIdentifier;
     this.identities.addAll(other.identities.stream().map(UserIdentity::new).collect(Collectors.toCollection(ArrayList::new)));
     this.memberships.addAll(other.memberships.stream().map(GroupMember::new).collect(Collectors.toCollection(ArrayList::new)));
     this.middleName = other.middleName;
@@ -179,6 +182,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
            Objects.equals(imageUrl, user.imageUrl) &&
            Objects.equals(insertInstant, user.insertInstant) &&
            Objects.equals(lastName, user.lastName) &&
+           Objects.equals(legacyIdentifier, user.legacyIdentifier) &&
            Objects.equals(lastUpdateInstant, user.lastUpdateInstant) &&
            Objects.equals(middleName, user.middleName) &&
            Objects.equals(mobilePhone, user.mobilePhone) &&
@@ -282,7 +286,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), preferredLanguages, memberships, registrations, active, birthDate, cleanSpeakId, data,
-                        email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, lastUpdateInstant, middleName, mobilePhone, parentEmail, phoneNumber, tenantId, timezone, twoFactor);
+                        email, expiry, firstName, fullName, imageUrl, insertInstant, lastName, legacyIdentifier, lastUpdateInstant, middleName, mobilePhone, parentEmail, phoneNumber, tenantId, timezone, twoFactor);
   }
 
   /**
@@ -326,6 +330,7 @@ public class User extends SecureIdentity implements Buildable<User>, Tenantable 
     firstName = trim(firstName);
     fullName = trim(fullName);
     lastName = trim(lastName);
+    legacyIdentifier = trimToNull(legacyIdentifier);
     middleName = trim(middleName);
     mobilePhone = trim(mobilePhone);
     parentEmail = toLowerCase(trim(parentEmail));

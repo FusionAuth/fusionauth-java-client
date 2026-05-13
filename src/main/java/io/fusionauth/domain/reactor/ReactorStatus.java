@@ -53,6 +53,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus legacyAdapter = ReactorFeatureStatus.UNKNOWN;
+
   public LocalDate expiration;
 
   public ReactorFeatureStatus ipGeoLocation = ReactorFeatureStatus.UNKNOWN;
@@ -98,6 +100,7 @@ public class ReactorStatus {
     entityManagement = other.entityManagement;
     expiration = other.expiration;
     ipGeoLocation = other.ipGeoLocation;
+    legacyAdapter = other.legacyAdapter;
     licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
     tenantManagerApplication = other.tenantManagerApplication;
@@ -133,6 +136,7 @@ public class ReactorStatus {
            dPoP == that.dPoP &&
            entityManagement == that.entityManagement &&
            ipGeoLocation == that.ipGeoLocation &&
+           legacyAdapter == that.legacyAdapter &&
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
@@ -163,6 +167,7 @@ public class ReactorStatus {
                         entityManagement,
                         expiration,
                         ipGeoLocation,
+                        legacyAdapter,
                         licensed,
                         licenseAttributes,
                         tenantManagerApplication,
