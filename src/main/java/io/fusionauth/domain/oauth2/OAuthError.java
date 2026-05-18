@@ -105,7 +105,6 @@ public class OAuthError implements OAuthResponse {
     invalid_entity_permission_scope,
     invalid_user_id,
     invalid_tenant_id,
-
     // Grant disabled
     grant_type_disabled,
 
@@ -199,6 +198,10 @@ public class OAuthError implements OAuthResponse {
 
     // RFC 9449 DPoP Proof of Possession. Section 12.2
     // https://datatracker.ietf.org/doc/html/rfc9449
-    invalid_dpop_proof
+    invalid_dpop_proof,
+
+    // RFC 8707 Resource Indicators
+    // https://datatracker.ietf.org/doc/html/rfc8707
+    invalid_target
   }
 }

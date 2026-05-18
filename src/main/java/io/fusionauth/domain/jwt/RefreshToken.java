@@ -15,10 +15,13 @@
  */
 package io.fusionauth.domain.jwt;
 
+import java.net.URI;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -151,6 +154,8 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
     public DeviceInfo device = new DeviceInfo();
 
+    public List<URI> resources;
+
     @JsonDeserialize(as = LinkedHashSet.class)
     public Set<String> scopes;
 
@@ -163,6 +168,9 @@ public class RefreshToken implements Buildable<RefreshToken> {
         this.data = new LinkedHashMap<>(other.data);
       }
       this.device = new DeviceInfo(other.device);
+      if (other.resources != null) {
+        this.resources = new ArrayList<>(other.resources);
+      }
       if (other.scopes != null) {
         this.scopes = new LinkedHashSet<>(other.scopes);
       }
@@ -179,12 +187,13 @@ public class RefreshToken implements Buildable<RefreshToken> {
       MetaData metaData = (MetaData) o;
       return Objects.equals(data, metaData.data) &&
              Objects.equals(device, metaData.device) &&
+             Objects.equals(resources, metaData.resources) &&
              Objects.equals(scopes, metaData.scopes);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(data, device, scopes);
+      return Objects.hash(data, device, resources, scopes);
     }
 
     @Override

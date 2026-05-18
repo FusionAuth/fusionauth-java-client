@@ -42,6 +42,9 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   @JsonMerge(OptBoolean.FALSE)
   public List<URI> authorizedRedirectURLs = new ArrayList<>();
 
+  @JsonMerge(OptBoolean.FALSE)
+  public List<URI> authorizedResourceUris = new ArrayList<>();
+
   public Oauth2AuthorizedURLValidationPolicy authorizedURLValidationPolicy = Oauth2AuthorizedURLValidationPolicy.ExactMatch;
 
   public ClientAuthenticationPolicy clientAuthenticationPolicy;
@@ -94,6 +97,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
   public OAuth2Configuration(OAuth2Configuration other) {
     this.authorizedOriginURLs.addAll(other.authorizedOriginURLs);
     this.authorizedRedirectURLs.addAll(other.authorizedRedirectURLs);
+    this.authorizedResourceUris.addAll(other.authorizedResourceUris);
     this.authorizedURLValidationPolicy = other.authorizedURLValidationPolicy;
     this.clientAuthenticationPolicy = other.clientAuthenticationPolicy;
     this.clientId = other.clientId;
@@ -134,6 +138,7 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
            requireRegistration == that.requireRegistration &&
            Objects.equals(authorizedOriginURLs, that.authorizedOriginURLs) &&
            Objects.equals(authorizedRedirectURLs, that.authorizedRedirectURLs) &&
+           Objects.equals(authorizedResourceUris, that.authorizedResourceUris) &&
            Objects.equals(authorizedURLValidationPolicy, that.authorizedURLValidationPolicy) &&
            Objects.equals(clientAuthenticationPolicy, that.clientAuthenticationPolicy) &&
            Objects.equals(clientId, that.clientId) &&
@@ -163,12 +168,13 @@ public class OAuth2Configuration implements Buildable<OAuth2Configuration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, authorizedURLValidationPolicy, clientAuthenticationPolicy, clientId, clientSecret, consentMode, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, providedScopePolicy, proofKeyForCodeExchangePolicy, relationship, requireClientAuthentication, requireRegistration, scopeHandlingPolicy, unknownScopePolicy);
+    return Objects.hash(authorizedOriginURLs, authorizedRedirectURLs, authorizedResourceUris, authorizedURLValidationPolicy, clientAuthenticationPolicy, clientId, clientSecret, consentMode, debug, deviceVerificationURL, enabledGrants, generateRefreshTokens, logoutBehavior, logoutURL, providedScopePolicy, proofKeyForCodeExchangePolicy, relationship, requireClientAuthentication, requireRegistration, scopeHandlingPolicy, unknownScopePolicy);
   }
 
   public void normalize() {
     removeEmpty(authorizedOriginURLs);
     removeEmpty(authorizedRedirectURLs);
+    removeEmpty(authorizedResourceUris);
     clientId = trim(clientId);
     clientSecret = trim(clientSecret);
   }
