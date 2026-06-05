@@ -144,6 +144,7 @@ import io.fusionauth.domain.api.ThemeResponse;
 import io.fusionauth.domain.api.ThemeSearchRequest;
 import io.fusionauth.domain.api.ThemeSearchResponse;
 import io.fusionauth.domain.api.TwoFactorDisableRequest;
+import io.fusionauth.domain.api.TwoFactorUpdateRequest;
 import io.fusionauth.domain.api.TwoFactorRecoveryCodeResponse;
 import io.fusionauth.domain.api.TwoFactorRequest;
 import io.fusionauth.domain.api.TwoFactorResponse;
@@ -6291,6 +6292,22 @@ public class FusionAuthClient {
     return start(ThemeResponse.class, Errors.class)
         .uri("/api/theme")
         .urlSegment(themeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the two-factor method for the given user using a JSON body.
+   *
+   * @param userId The Id of the user to update.
+   * @param request The request information that contains the name and methodId along with any event information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> updateTwoFactor(UUID userId, TwoFactorUpdateRequest request) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/user/two-factor")
+        .urlSegment(userId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .put()
         .go();

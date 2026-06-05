@@ -198,6 +198,7 @@ public class Theme implements Buildable<Theme> {
     return Stream.of(templates.accountEdit,
                      templates.accountIndex,
                      templates.accountTwoFactorDisable,
+                     templates.accountTwoFactorEdit,
                      templates.accountTwoFactorEnable,
                      templates.accountTwoFactorIndex,
                      templates.accountWebAuthnAdd,
@@ -298,6 +299,7 @@ public class Theme implements Buildable<Theme> {
         "accountEdit",
         "accountIndex",
         "accountTwoFactorDisable",
+        "accountTwoFactorEdit",
         "accountTwoFactorEnable",
         "accountTwoFactorIndex",
         "accountWebAuthnAdd",
@@ -352,6 +354,8 @@ public class Theme implements Buildable<Theme> {
     public String accountIndex;
 
     public String accountTwoFactorDisable;
+
+    public String accountTwoFactorEdit;
 
     public String accountTwoFactorEnable;
 
@@ -454,6 +458,7 @@ public class Theme implements Buildable<Theme> {
       this.accountEdit = other.accountEdit;
       this.accountIndex = other.accountIndex;
       this.accountTwoFactorDisable = other.accountTwoFactorDisable;
+      this.accountTwoFactorEdit = other.accountTwoFactorEdit;
       this.accountTwoFactorEnable = other.accountTwoFactorEnable;
       this.accountTwoFactorIndex = other.accountTwoFactorIndex;
       this.accountWebAuthnAdd = other.accountWebAuthnAdd;
@@ -515,6 +520,7 @@ public class Theme implements Buildable<Theme> {
       return Objects.equals(accountEdit, that.accountEdit) &&
              Objects.equals(accountIndex, that.accountIndex) &&
              Objects.equals(accountTwoFactorDisable, that.accountTwoFactorDisable) &&
+             Objects.equals(accountTwoFactorEdit, that.accountTwoFactorEdit) &&
              Objects.equals(accountTwoFactorEnable, that.accountTwoFactorEnable) &&
              Objects.equals(accountTwoFactorIndex, that.accountTwoFactorIndex) &&
              Objects.equals(accountWebAuthnAdd, that.accountWebAuthnAdd) &&
@@ -590,6 +596,7 @@ public class Theme implements Buildable<Theme> {
           accountEdit,
           accountIndex,
           accountTwoFactorDisable,
+          accountTwoFactorEdit,
           accountTwoFactorEnable,
           accountTwoFactorIndex,
           accountWebAuthnAdd,
@@ -644,6 +651,7 @@ public class Theme implements Buildable<Theme> {
       accountEdit = lineReturns(trimToNull(accountEdit));
       accountIndex = lineReturns(trimToNull(accountIndex));
       accountTwoFactorDisable = lineReturns(trimToNull(accountTwoFactorDisable));
+      accountTwoFactorEdit = lineReturns(trimToNull(accountTwoFactorEdit));
       accountTwoFactorEnable = lineReturns(trimToNull(accountTwoFactorEnable));
       accountTwoFactorIndex = lineReturns(trimToNull(accountTwoFactorIndex));
       accountWebAuthnAdd = lineReturns(trimToNull(accountWebAuthnAdd));

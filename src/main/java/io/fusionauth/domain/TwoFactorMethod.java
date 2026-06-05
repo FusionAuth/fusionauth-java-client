@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,8 @@ public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
    */
   public static final String Email = "email";
 
+  public static final int MaximumNameLength = 256;
+
   /**
    * Method which authenticates using a code sent to a phone via SMS or voice.
    */
@@ -53,6 +55,8 @@ public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
   public String method;
 
   public String mobilePhone;
+
+  public String name;
 
   public String secret;
 
@@ -73,6 +77,7 @@ public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
     this.lastUsed = other.lastUsed;
     this.method = other.method;
     this.mobilePhone = other.mobilePhone;
+    this.name = other.name;
     this.secret = other.secret;
   }
 
@@ -85,12 +90,12 @@ public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
       return false;
     }
     TwoFactorMethod that = (TwoFactorMethod) o;
-    return Objects.equals(authenticator, that.authenticator) && Objects.equals(email, that.email) && Objects.equals(id, that.id) && Objects.equals(lastUsed, that.lastUsed) && Objects.equals(method, that.method) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(secret, that.secret);
+    return Objects.equals(authenticator, that.authenticator) && Objects.equals(email, that.email) && Objects.equals(id, that.id) && Objects.equals(lastUsed, that.lastUsed) && Objects.equals(method, that.method) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(name, that.name) && Objects.equals(secret, that.secret);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticator, email, id, lastUsed, method, mobilePhone, secret);
+    return Objects.hash(authenticator, email, id, lastUsed, method, mobilePhone, name, secret);
   }
 
   public void normalize() {

@@ -37,6 +37,8 @@ public class TwoFactorRequest extends BaseEventRequest implements Buildable<TwoF
 
   public String mobilePhone;
 
+  public String name;
+
   public String secret;
 
   public String secretBase32Encoded;
