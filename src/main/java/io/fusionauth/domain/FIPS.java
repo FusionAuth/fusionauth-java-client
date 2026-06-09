@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,11 @@ package io.fusionauth.domain;
 public class FIPS {
   public static final int FIPS_MIN_PASSWORD_LENGTH = 14;
 
+  public static final int FIPS_RECOVERY_CODE_LENGTH = 14;
+
   public static final int STANDARD_MIN_PASSWORD_LENGTH = 8;
+
+  public static final int STANDARD_RECOVERY_CODE_LENGTH = 10;
 
   private static volatile Boolean Enabled;
 
@@ -57,5 +61,9 @@ public class FIPS {
    */
   public static int minimumPasswordLength() {
     return isEnabled() ? FIPS_MIN_PASSWORD_LENGTH : STANDARD_MIN_PASSWORD_LENGTH;
+  }
+
+  public static int minimumRecoveryCodeLength() {
+    return isEnabled() ? FIPS_RECOVERY_CODE_LENGTH : STANDARD_RECOVERY_CODE_LENGTH;
   }
 }

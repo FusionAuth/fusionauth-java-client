@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ public class UserTwoFactorConfiguration implements Buildable<UserTwoFactorConfig
 
   public final List<String> recoveryCodes = new ArrayList<>();
 
+ public String recoveryCodeEncryptionScheme;
+
+ public Integer recoveryCodeWorkFactor;
+
   @JacksonConstructor
   public UserTwoFactorConfiguration() {
   }
@@ -40,6 +44,8 @@ public class UserTwoFactorConfiguration implements Buildable<UserTwoFactorConfig
   public UserTwoFactorConfiguration(UserTwoFactorConfiguration other) {
     other.methods.forEach(m -> methods.add(new TwoFactorMethod(m)));
     this.recoveryCodes.addAll(other.recoveryCodes);
+    this.recoveryCodeEncryptionScheme = other.recoveryCodeEncryptionScheme;
+    this.recoveryCodeWorkFactor = other.recoveryCodeWorkFactor;
   }
 
   @Override
@@ -51,7 +57,10 @@ public class UserTwoFactorConfiguration implements Buildable<UserTwoFactorConfig
       return false;
     }
     UserTwoFactorConfiguration that = (UserTwoFactorConfiguration) o;
-    return Objects.equals(methods, that.methods) && Objects.equals(recoveryCodes, that.recoveryCodes);
+    return Objects.equals(methods, that.methods) &&
+           Objects.equals(recoveryCodes, that.recoveryCodes) &&
+           Objects.equals(recoveryCodeEncryptionScheme, that.recoveryCodeEncryptionScheme) &&
+           Objects.equals(recoveryCodeWorkFactor, that.recoveryCodeWorkFactor);
   }
 
   @JsonIgnore
@@ -74,11 +83,14 @@ public class UserTwoFactorConfiguration implements Buildable<UserTwoFactorConfig
 
   @Override
   public int hashCode() {
-    return Objects.hash(methods, recoveryCodes);
+    return Objects.hash(methods, recoveryCodes, recoveryCodeEncryptionScheme, recoveryCodeWorkFactor);
   }
 
   public UserTwoFactorConfiguration secure() {
     recoveryCodes.clear();
+    recoveryCodeWorkFactor = null;
+    recoveryCodeEncryptionScheme = null;
+
     methods.forEach(TwoFactorMethod::secure);
     return this;
   }
