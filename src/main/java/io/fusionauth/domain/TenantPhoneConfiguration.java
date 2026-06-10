@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2024-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ import com.inversoft.json.JacksonConstructor;
  * @author Brady Wied
  */
 public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfiguration> {
+
+  public UUID adminTwoFactorMethodRemoveTemplateId;
 
   public UUID forgotPasswordTemplateId;
 
@@ -70,6 +72,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
   }
 
   public TenantPhoneConfiguration(TenantPhoneConfiguration other) {
+    this.adminTwoFactorMethodRemoveTemplateId = other.adminTwoFactorMethodRemoveTemplateId;
     this.forgotPasswordTemplateId = other.forgotPasswordTemplateId;
     this.identityUpdateTemplateId = other.identityUpdateTemplateId;
     this.implicitPhoneVerificationAllowed = other.implicitPhoneVerificationAllowed;
@@ -102,6 +105,7 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
     TenantPhoneConfiguration that = (TenantPhoneConfiguration) o;
     return implicitPhoneVerificationAllowed == that.implicitPhoneVerificationAllowed &&
            verifyPhoneNumber == that.verifyPhoneNumber &&
+           Objects.equals(adminTwoFactorMethodRemoveTemplateId, that.adminTwoFactorMethodRemoveTemplateId) &&
            Objects.equals(forgotPasswordTemplateId, that.forgotPasswordTemplateId) &&
            Objects.equals(identityUpdateTemplateId, that.identityUpdateTemplateId) &&
            Objects.equals(loginIdInUseOnCreateTemplateId, that.loginIdInUseOnCreateTemplateId) &&
@@ -124,6 +128,6 @@ public class TenantPhoneConfiguration implements Buildable<TenantPhoneConfigurat
 
   @Override
   public int hashCode() {
-    return Objects.hash(forgotPasswordTemplateId, identityUpdateTemplateId, implicitPhoneVerificationAllowed, loginIdInUseOnCreateTemplateId, loginIdInUseOnUpdateTemplateId, loginNewDeviceTemplateId, loginSuspiciousTemplateId, messengerId, passwordResetSuccessTemplateId, passwordUpdateTemplateId, passwordlessTemplateId, setPasswordTemplateId, twoFactorMethodAddTemplateId, twoFactorMethodRemoveTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
+    return Objects.hash(adminTwoFactorMethodRemoveTemplateId, forgotPasswordTemplateId, identityUpdateTemplateId, implicitPhoneVerificationAllowed, loginIdInUseOnCreateTemplateId, loginIdInUseOnUpdateTemplateId, loginNewDeviceTemplateId, loginSuspiciousTemplateId, messengerId, passwordResetSuccessTemplateId, passwordUpdateTemplateId, passwordlessTemplateId, setPasswordTemplateId, twoFactorMethodAddTemplateId, twoFactorMethodRemoveTemplateId, unverified, verificationCompleteTemplateId, verificationStrategy, verificationTemplateId, verifyPhoneNumber);
   }
 }

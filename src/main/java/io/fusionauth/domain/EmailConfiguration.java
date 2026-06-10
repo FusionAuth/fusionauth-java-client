@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ import static io.fusionauth.domain.util.Normalizer.trim;
  */
 public class EmailConfiguration implements Buildable<EmailConfiguration> {
   public List<EmailHeader> additionalHeaders = new ArrayList<>();
+
+  public UUID adminTwoFactorMethodRemoveEmailTemplateId;
 
   public boolean debug;
 
@@ -96,6 +98,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   public EmailConfiguration(EmailConfiguration other) {
     this.additionalHeaders.addAll(other.additionalHeaders);
+    this.adminTwoFactorMethodRemoveEmailTemplateId = other.adminTwoFactorMethodRemoveEmailTemplateId;
     this.debug = other.debug;
     this.defaultFromEmail = other.defaultFromEmail;
     this.defaultFromName = other.defaultFromName;
@@ -139,6 +142,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
            verifyEmail == that.verifyEmail &&
            verifyEmailWhenChanged == that.verifyEmailWhenChanged &&
            Objects.equals(additionalHeaders, that.additionalHeaders) &&
+           Objects.equals(adminTwoFactorMethodRemoveEmailTemplateId, that.adminTwoFactorMethodRemoveEmailTemplateId) &&
            Objects.equals(debug, that.debug) &&
            Objects.equals(defaultFromEmail, that.defaultFromEmail) &&
            Objects.equals(defaultFromName, that.defaultFromName) &&
@@ -168,7 +172,7 @@ public class EmailConfiguration implements Buildable<EmailConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalHeaders, debug, defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, implicitEmailVerificationAllowed, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
+    return Objects.hash(additionalHeaders, adminTwoFactorMethodRemoveEmailTemplateId, debug, defaultFromEmail, defaultFromName, emailUpdateEmailTemplateId, emailVerifiedEmailTemplateId, forgotPasswordEmailTemplateId, host, implicitEmailVerificationAllowed, loginIdInUseOnCreateEmailTemplateId, loginIdInUseOnUpdateEmailTemplateId, loginNewDeviceEmailTemplateId, loginSuspiciousEmailTemplateId, password, passwordResetSuccessEmailTemplateId, passwordUpdateEmailTemplateId, passwordlessEmailTemplateId, port, properties, security, setPasswordEmailTemplateId, twoFactorMethodAddEmailTemplateId, twoFactorMethodRemoveEmailTemplateId, unverified, username, verificationEmailTemplateId, verificationStrategy, verifyEmail, verifyEmailWhenChanged);
   }
 
   public void normalize() {
