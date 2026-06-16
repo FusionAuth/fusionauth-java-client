@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ public class Tenant implements Buildable<Tenant> {
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public TenantAccessControlConfiguration accessControlConfiguration = new TenantAccessControlConfiguration();
+
+  public URI baseURL;
 
   public TenantCaptchaConfiguration captchaConfiguration = new TenantCaptchaConfiguration();
 
@@ -129,6 +131,7 @@ public class Tenant implements Buildable<Tenant> {
   }
 
   public Tenant(Tenant other) {
+    this.baseURL = other.baseURL;
     this.captchaConfiguration = new TenantCaptchaConfiguration(other.captchaConfiguration);
     this.configured = other.configured;
     this.connectorPolicies.addAll(other.connectorPolicies.stream().map(ConnectorPolicy::new).collect(Collectors.toList()));
@@ -179,6 +182,7 @@ public class Tenant implements Buildable<Tenant> {
     Tenant tenant = (Tenant) o;
     return configured == tenant.configured &&
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
+           Objects.equals(baseURL, tenant.baseURL) &&
            Objects.equals(captchaConfiguration, tenant.captchaConfiguration) &&
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(data, tenant.data) &&
@@ -222,7 +226,8 @@ public class Tenant implements Buildable<Tenant> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(captchaConfiguration,
+    return Objects.hash(baseURL,
+                        captchaConfiguration,
                         configured,
                         connectorPolicies,
                         data,
