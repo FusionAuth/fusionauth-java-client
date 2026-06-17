@@ -42,7 +42,7 @@ public class ConnectorPolicy implements Buildable<ConnectorPolicy> {
     this.migrate = other.migrate;
     this.connectorId = other.connectorId;
     this.data.putAll(other.data);
-    this.domains.addAll(other.domains);
+    this.domains = new HashSet<>(other.domains);
   }
 
   @Override
