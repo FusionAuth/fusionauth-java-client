@@ -47,17 +47,25 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus clientRiskConfiguration = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus connectors = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus dPoP = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus entityManagement = ReactorFeatureStatus.UNKNOWN;
 
-  public ReactorFeatureStatus legacyAdapter = ReactorFeatureStatus.UNKNOWN;
-
   public LocalDate expiration;
 
+  public ReactorFeatureStatus imfaWebhooks = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus intelligentMFA = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus ipGeoLocation = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus ipReputation = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus legacyAdapter = ReactorFeatureStatus.UNKNOWN;
 
   public Map<String, String> licenseAttributes = new HashMap<>();
 
@@ -72,6 +80,8 @@ public class ReactorStatus {
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus universalApplication = ReactorFeatureStatus.UNKNOWN;
+
+  public ReactorFeatureStatus userAgentReputation = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus webAuthn = ReactorFeatureStatus.UNKNOWN;
 
@@ -96,10 +106,14 @@ public class ReactorStatus {
     advancedOAuthScopes = other.advancedOAuthScopes;
     advancedOAuthScopesCustomScopes = other.advancedOAuthScopesCustomScopes;
     advancedOAuthScopesThirdPartyApplications = other.advancedOAuthScopesThirdPartyApplications;
+    clientRiskConfiguration = other.clientRiskConfiguration;
     dPoP = other.dPoP;
     entityManagement = other.entityManagement;
     expiration = other.expiration;
+    imfaWebhooks = other.imfaWebhooks;
+    intelligentMFA = other.intelligentMFA;
     ipGeoLocation = other.ipGeoLocation;
+    ipReputation = other.ipReputation;
     legacyAdapter = other.legacyAdapter;
     licenseAttributes.putAll(other.licenseAttributes);
     licensed = other.licensed;
@@ -107,6 +121,7 @@ public class ReactorStatus {
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
     universalApplication = other.universalApplication;
+    userAgentReputation = other.userAgentReputation;
     webAuthn = other.webAuthn;
     webAuthnPlatformAuthenticators = other.webAuthnPlatformAuthenticators;
     webAuthnRoamingAuthenticators = other.webAuthnRoamingAuthenticators;
@@ -124,26 +139,31 @@ public class ReactorStatus {
     return advancedIdentityProviders == that.advancedIdentityProviders &&
            advancedLambdas == that.advancedLambdas &&
            advancedMultiFactorAuthentication == that.advancedMultiFactorAuthentication &&
-           multiFactorLambdas == that.multiFactorLambdas &&
+           advancedOAuthScopes == that.advancedOAuthScopes &&
+           advancedOAuthScopesCustomScopes == that.advancedOAuthScopesCustomScopes &&
+           advancedOAuthScopesThirdPartyApplications == that.advancedOAuthScopesThirdPartyApplications &&
            advancedRegistration == that.advancedRegistration &&
            applicationMultiFactorAuthentication == that.applicationMultiFactorAuthentication &&
            applicationThemes == that.applicationThemes &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
            connectors == that.connectors &&
-           advancedOAuthScopes == that.advancedOAuthScopes &&
-           advancedOAuthScopesCustomScopes == that.advancedOAuthScopesCustomScopes &&
-           advancedOAuthScopesThirdPartyApplications == that.advancedOAuthScopesThirdPartyApplications &&
+           clientRiskConfiguration == that.clientRiskConfiguration &&
            dPoP == that.dPoP &&
            entityManagement == that.entityManagement &&
+           imfaWebhooks == that.imfaWebhooks &&
+           intelligentMFA == that.intelligentMFA &&
            ipGeoLocation == that.ipGeoLocation &&
+           ipReputation == that.ipReputation &&
            legacyAdapter == that.legacyAdapter &&
            Objects.equals(expiration, that.expiration) &&
            licensed == that.licensed &&
            Objects.equals(licenseAttributes, that.licenseAttributes) &&
+           multiFactorLambdas == that.multiFactorLambdas &&
            tenantManagerApplication == that.tenantManagerApplication &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection &&
            universalApplication == that.universalApplication &&
+           userAgentReputation == that.userAgentReputation &&
            webAuthn == that.webAuthn &&
            webAuthnPlatformAuthenticators == that.webAuthnPlatformAuthenticators &&
            webAuthnRoamingAuthenticators == that.webAuthnRoamingAuthenticators;
@@ -154,26 +174,31 @@ public class ReactorStatus {
     return Objects.hash(advancedIdentityProviders,
                         advancedLambdas,
                         advancedMultiFactorAuthentication,
-                        multiFactorLambdas,
+                        advancedOAuthScopes,
+                        advancedOAuthScopesCustomScopes,
+                        advancedOAuthScopesThirdPartyApplications,
                         advancedRegistration,
                         applicationMultiFactorAuthentication,
                         applicationThemes,
                         breachedPasswordDetection,
+                        clientRiskConfiguration,
                         connectors,
                         dPoP,
-                        advancedOAuthScopes,
-                        advancedOAuthScopesCustomScopes,
-                        advancedOAuthScopesThirdPartyApplications,
                         entityManagement,
                         expiration,
+                        imfaWebhooks,
+                        intelligentMFA,
                         ipGeoLocation,
+                        ipReputation,
                         legacyAdapter,
                         licensed,
                         licenseAttributes,
+                        multiFactorLambdas,
                         tenantManagerApplication,
                         scimServer,
                         threatDetection,
                         universalApplication,
+                        userAgentReputation,
                         webAuthn,
                         webAuthnPlatformAuthenticators,
                         webAuthnRoamingAuthenticators);

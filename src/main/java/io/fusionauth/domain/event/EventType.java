@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,6 +103,8 @@ public enum EventType {
 
   UserLoginSuspicious("user.login.suspicious"),
 
+  UserTwoFactorChallenge("user.two-factor.challenge"),
+
   UserPasswordBreach("user.password.breach"),
 
   UserPasswordResetSend("user.password.reset.send"),
@@ -141,7 +143,11 @@ public enum EventType {
 
   UserIdentityVerified("user.identity.verified"),
 
-  UserIdentityUpdate("user.identity.update");
+  UserIdentityUpdate("user.identity.update"),
+
+  UserTwoFactorFailedAttempt("user.two-factor.failed-attempt"),
+
+  UserTwoFactorSuccess("user.two-factor.success");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -205,8 +211,11 @@ public enum EventType {
                          EventType.UserRegistrationUpdate,
                          EventType.UserRegistrationUpdateComplete,
                          EventType.UserRegistrationVerified,
+                         EventType.UserTwoFactorChallenge,
+                         EventType.UserTwoFactorFailedAttempt,
                          EventType.UserTwoFactorMethodAdd,
                          EventType.UserTwoFactorMethodRemove,
+                         EventType.UserTwoFactorSuccess,
                          EventType.UserUpdate,
                          EventType.UserUpdateComplete
     );

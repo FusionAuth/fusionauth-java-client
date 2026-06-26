@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2025-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ public class Context {
 
   public final String authenticationType;
 
+  public final ClientRisk clientRisk;
+
   public final EventInfo eventInfo;
 
   public final Trust mfaTrust;
@@ -45,7 +47,7 @@ public class Context {
   public Context(EventInfo eventInfo, Set<AuthenticationThreats> authenticationThreats,
                  Trust mfaTrust, String accessToken,
                  Policies policies, MultiFactorAction action, Application application,
-                 String authenticationType) {
+                 String authenticationType, ClientRisk clientRisk) {
     this.eventInfo = eventInfo;
     this.authenticationThreats = authenticationThreats;
     this.mfaTrust = mfaTrust;
@@ -54,5 +56,6 @@ public class Context {
     this.action = action;
     this.application = application;
     this.authenticationType = authenticationType;
+    this.clientRisk = clientRisk;
   }
 }

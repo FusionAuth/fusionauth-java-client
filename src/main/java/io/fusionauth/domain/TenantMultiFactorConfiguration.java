@@ -29,6 +29,8 @@ import io.fusionauth.domain.AuthenticatorConfiguration.TOTPAlgorithm;
 public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFactorConfiguration> {
   public MultiFactorAuthenticatorMethod authenticator = new MultiFactorAuthenticatorMethod().with(mfa -> mfa.enabled = true);
 
+  public boolean debug;
+
   public MultiFactorEmailMethod email = new MultiFactorEmailMethod();
 
   public MultiFactorLoginPolicy loginPolicy = MultiFactorLoginPolicy.Enabled;
@@ -43,6 +45,7 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
 
   public TenantMultiFactorConfiguration(TenantMultiFactorConfiguration other) {
     this.authenticator = new MultiFactorAuthenticatorMethod(other.authenticator);
+    this.debug = other.debug;
     this.email = new MultiFactorEmailMethod(other.email);
     this.loginPolicy = other.loginPolicy;
     this.sms = new MultiFactorSMSMethod(other.sms);
@@ -67,6 +70,7 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
     }
     TenantMultiFactorConfiguration that = (TenantMultiFactorConfiguration) o;
     return Objects.equals(authenticator, that.authenticator) &&
+           debug == that.debug &&
            Objects.equals(email, that.email) &&
            loginPolicy == that.loginPolicy &&
            Objects.equals(sms, that.sms) &&
@@ -75,7 +79,7 @@ public class TenantMultiFactorConfiguration implements Buildable<TenantMultiFact
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticator, email, loginPolicy, sms, voice);
+    return Objects.hash(authenticator, debug, email, loginPolicy, sms, voice);
   }
 
   @Override

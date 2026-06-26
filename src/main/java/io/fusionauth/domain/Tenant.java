@@ -47,6 +47,8 @@ public class Tenant implements Buildable<Tenant> {
 
   public TenantCaptchaConfiguration captchaConfiguration = new TenantCaptchaConfiguration();
 
+  public ClientRiskConfiguration clientRiskConfiguration = new ClientRiskConfiguration();
+
   public boolean configured;
 
   public List<ConnectorPolicy> connectorPolicies = new ArrayList<>();
@@ -133,6 +135,7 @@ public class Tenant implements Buildable<Tenant> {
   public Tenant(Tenant other) {
     this.baseURL = other.baseURL;
     this.captchaConfiguration = new TenantCaptchaConfiguration(other.captchaConfiguration);
+    this.clientRiskConfiguration = new ClientRiskConfiguration(other.clientRiskConfiguration);
     this.configured = other.configured;
     this.connectorPolicies.addAll(other.connectorPolicies.stream().map(ConnectorPolicy::new).collect(Collectors.toList()));
     this.data.putAll(other.data);
@@ -184,6 +187,7 @@ public class Tenant implements Buildable<Tenant> {
            httpSessionMaxInactiveInterval == tenant.httpSessionMaxInactiveInterval &&
            Objects.equals(baseURL, tenant.baseURL) &&
            Objects.equals(captchaConfiguration, tenant.captchaConfiguration) &&
+           Objects.equals(clientRiskConfiguration, tenant.clientRiskConfiguration) &&
            Objects.equals(connectorPolicies, tenant.connectorPolicies) &&
            Objects.equals(data, tenant.data) &&
            Objects.equals(emailConfiguration, tenant.emailConfiguration) &&
@@ -228,6 +232,7 @@ public class Tenant implements Buildable<Tenant> {
   public int hashCode() {
     return Objects.hash(baseURL,
                         captchaConfiguration,
+                        clientRiskConfiguration,
                         configured,
                         connectorPolicies,
                         data,

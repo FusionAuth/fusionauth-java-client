@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,43 +15,47 @@
  */
 package io.fusionauth.domain.reactor;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import com.inversoft.json.ToString;
+import io.fusionauth.domain.Buildable;
 
 /**
- * @author Daniel DeGroff
+ * Reactor metric with counts of MFA challenges, successes, and failures for a tenant.
  */
-public class ReactorMetrics {
-  /**
-   * Breached password metrics, keyed by tenant Id
-   */
-  public Map<UUID, BreachedPasswordTenantMetric> breachedPasswordMetrics = new HashMap<>();
+public class MFATenantMetric implements Buildable<MFATenantMetric> {
+  public long challengeCount;
 
-  /**
-   * MFA metrics, keyed by tenant Id
-   */
-  public Map<UUID, MFATenantMetric> mfaMetrics = new HashMap<>();
+  public long failedAttemptCount;
+
+  public long successCount;
+
+  public MFATenantMetric() {
+  }
+
+  public MFATenantMetric(MFATenantMetric other) {
+    this.challengeCount = other.challengeCount;
+    this.failedAttemptCount = other.failedAttemptCount;
+    this.successCount = other.successCount;
+  }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof MFATenantMetric)) {
       return false;
     }
-    ReactorMetrics that = (ReactorMetrics) o;
-    return Objects.equals(breachedPasswordMetrics, that.breachedPasswordMetrics) &&
-           Objects.equals(mfaMetrics, that.mfaMetrics);
+    MFATenantMetric that = (MFATenantMetric) o;
+    return challengeCount == that.challengeCount &&
+           failedAttemptCount == that.failedAttemptCount &&
+           successCount == that.successCount;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(breachedPasswordMetrics, mfaMetrics);
+    return Objects.hash(challengeCount, failedAttemptCount, successCount);
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2026, FusionAuth, All Rights Reserved
+ * Copyright (c) 2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,17 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package io.fusionauth.domain;
+
+package io.fusionauth.domain.lambda.parameters.mfa;
 
 /**
- * @author Daniel DeGroff
+ * Represents the inbound lambda parameter 'clientRisk' inside the 'context' parameter for MFA Required lambdas.
  */
-public enum MultiFactorLoginPolicy {
-  ChallengeOnHighRisk,
-  ChallengeOnMediumRisk,
-  Disabled,
-  Enabled,
-  Required
+public class ClientRisk {
+
+  public final String status;
+
+  public ClientRisk(String status) {
+    this.status = status;
+  }
 }

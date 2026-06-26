@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,12 @@
  */
 package io.fusionauth.domain.event;
 
-import java.util.HashSet;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.inversoft.json.JacksonConstructor;
 import io.fusionauth.domain.AuthenticationThreats;
@@ -32,7 +34,7 @@ import io.fusionauth.domain.provider.BaseIdentityProvider;
  * @author Daniel DeGroff
  */
 public class UserLoginSuspiciousEvent extends UserLoginSuccessEvent {
-  public Set<AuthenticationThreats> threatsDetected = new HashSet<>();
+  public Set<AuthenticationThreats> threatsDetected = new LinkedHashSet<>();
 
   @JacksonConstructor
   public UserLoginSuspiciousEvent() {
@@ -41,14 +43,17 @@ public class UserLoginSuspiciousEvent extends UserLoginSuccessEvent {
   public UserLoginSuspiciousEvent(EventInfo info, UUID applicationId, String authenticationType, BaseIdentityProvider<?> identityProvider,
                                   User user, Set<AuthenticationThreats> threatsDetected) {
     super(info, applicationId, authenticationType, identityProvider, user);
-    this.threatsDetected = threatsDetected;
-
+    this.threatsDetected = threatsDetected.stream()
+                                          .sorted(Comparator.comparing(Enum::name))
+                                          .collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   public UserLoginSuspiciousEvent(EventInfo info, UUID applicationId, UUID connectorId, String authenticationType, User user,
                                   Set<AuthenticationThreats> threatsDetected) {
     super(info, applicationId, connectorId, authenticationType, user);
-    this.threatsDetected = threatsDetected;
+    this.threatsDetected = threatsDetected.stream()
+                                          .sorted(Comparator.comparing(Enum::name))
+                                          .collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   @Override

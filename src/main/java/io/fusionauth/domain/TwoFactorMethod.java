@@ -38,6 +38,11 @@ public class TwoFactorMethod implements Buildable<TwoFactorMethod> {
   public static final int MaximumNameLength = 256;
 
   /**
+   * Method which authenticates using a recovery code that was saved during registration.
+   */
+  public static final String RecoveryCode = "recoveryCode";
+
+  /**
    * Method which authenticates using a code sent to a phone via SMS or voice.
    */
   public static final String SMS = "sms";

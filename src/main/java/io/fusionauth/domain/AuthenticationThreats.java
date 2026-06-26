@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,5 +19,14 @@ package io.fusionauth.domain;
  * @author Brett Pontarelli
  */
 public enum AuthenticationThreats {
-  ImpossibleTravel
+  BotDetected,
+  BlocklistedIp,
+  DormantAccount,
+  DormantPassword,
+  ImpossibleTravel,
+  RecentIdentityChange,
+  RecentPasswordChange,
+  SuspiciousUserAgent,
+  UnrecognizedDevice,
+  UntrustedDevice
 }
