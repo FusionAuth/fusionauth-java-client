@@ -4758,48 +4758,6 @@ public class FusionAuthClient {
    * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
    * <p>
    * This API is useful if you want to build your own login workflow to complete a device grant.
-   *
-   * @param client_id The client Id.
-   * @param client_secret The client Id.
-   * @param user_code The end-user verification code.
-   * @return The ClientResponse object.
-   */
-  public ClientResponse<Void, Void> retrieveUserCode(String client_id, String client_secret, String user_code) {
-    Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put("client_id", Arrays.asList(client_id));
-    parameters.put("client_secret", Arrays.asList(client_secret));
-    parameters.put("user_code", Arrays.asList(user_code));
-    return startAnonymous(Void.TYPE, Void.TYPE)
-        .uri("/oauth2/device/user-code")
-        .bodyHandler(new FormDataBodyHandler(parameters))
-        .get()
-        .go();
-  }
-
-  /**
-   * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
-   * <p>
-   * This API is useful if you want to build your own login workflow to complete a device grant.
-   * <p>
-   * This request will require an API key.
-   *
-   * @param user_code The end-user verification code.
-   * @return The ClientResponse object.
-   */
-  public ClientResponse<Void, Void> retrieveUserCodeUsingAPIKey(String user_code) {
-    Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put("user_code", Arrays.asList(user_code));
-    return startAnonymous(Void.TYPE, Void.TYPE)
-        .uri("/oauth2/device/user-code")
-        .bodyHandler(new FormDataBodyHandler(parameters))
-        .get()
-        .go();
-  }
-
-  /**
-   * Retrieve a user_code that is part of an in-progress Device Authorization Grant.
-   * <p>
-   * This API is useful if you want to build your own login workflow to complete a device grant.
    * <p>
    * This request will require an API key.
    *
@@ -5294,6 +5252,26 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches consents with the specified criteria and pagination.
+   *
+   * @param name (Optional) The name of the consent to search for. Supports wildcard search using *.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: id, insertInstant, name.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<ConsentSearchResponse, Errors> searchConsentsByParameters(String name, Integer numberOfResults, String orderBy, Integer startRow) {
+    return start(ConsentSearchResponse.class, Errors.class)
+        .uri("/api/consent/search")
+        .urlParameter("name", name)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .get()
+        .go();
+  }
+
+  /**
    * Searches email templates with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -5350,6 +5328,30 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches entity grants with the specified criteria and pagination.
+   *
+   * @param entityId (Optional) The entity Id to search for grants on.
+   * @param name (Optional) The name of the entity grant to search for. Supports wildcard search using *.
+   * @param userId (Optional) The user Id to search for grants on.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityGrantSearchResponse, Errors> searchEntityGrantsByParameters(UUID entityId, String name, UUID userId, Integer numberOfResults, String orderBy, Integer startRow) {
+    return start(EntityGrantSearchResponse.class, Errors.class)
+        .uri("/api/entity/grant/search")
+        .urlParameter("entityId", entityId)
+        .urlParameter("name", name)
+        .urlParameter("userId", userId)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .get()
+        .go();
+  }
+
+  /**
    * Searches the entity types with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -5360,6 +5362,26 @@ public class FusionAuthClient {
         .uri("/api/entity/type/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
+        .go();
+  }
+
+  /**
+   * Searches entity types with the specified criteria and pagination.
+   *
+   * @param name The name of the entity type to search for. Use * to return all entity types.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: insertInstant, lastUpdateInstant, name.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<EntityTypeSearchResponse, Errors> searchEntityTypesByParameters(String name, Integer numberOfResults, String orderBy, Integer startRow) {
+    return start(EntityTypeSearchResponse.class, Errors.class)
+        .uri("/api/entity/type/search")
+        .urlParameter("name", name)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .get()
         .go();
   }
 
@@ -5420,6 +5442,26 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches IP access control lists with the specified criteria and pagination.
+   *
+   * @param name (Optional) The name of the IP access control list to search for. Supports wildcard search using *.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: id, insertInstant, lastUpdateInstant, name.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IPAccessControlListSearchResponse, Errors> searchIPAccessControlListsByParameters(String name, Integer numberOfResults, String orderBy, Integer startRow) {
+    return start(IPAccessControlListSearchResponse.class, Errors.class)
+        .uri("/api/ip-acl/search")
+        .urlParameter("name", name)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .get()
+        .go();
+  }
+
+  /**
    * Searches identity providers with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -5434,6 +5476,32 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches identity providers with the specified criteria and pagination.
+   *
+   * @param applicationId (Optional) The application Id to search for identity providers.
+   * @param name (Optional) The name of the identity provider to search for. Supports wildcard search using *.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: enabled, id, insertInstant, name, type.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @param tenantId (Optional) The tenant Id to restrict the results to.
+   * @param type (Optional) The type of identity provider to search for.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<IdentityProviderSearchResponse, Errors> searchIdentityProvidersByParameters(UUID applicationId, String name, Integer numberOfResults, String orderBy, Integer startRow, UUID tenantId, String type) {
+    return start(IdentityProviderSearchResponse.class, Errors.class)
+        .uri("/api/identity-provider/search")
+        .urlParameter("applicationId", applicationId)
+        .urlParameter("name", name)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .urlParameter("tenantId", tenantId)
+        .urlParameter("type", type)
+        .get()
+        .go();
+  }
+
+  /**
    * Searches keys with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -5444,6 +5512,30 @@ public class FusionAuthClient {
         .uri("/api/key/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
+        .go();
+  }
+
+  /**
+   * Searches keys with the specified criteria and pagination.
+   *
+   * @param algorithm (Optional) The algorithm of the key to search for.
+   * @param name (Optional) The name of the key to search for. Supports wildcard search using *.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: algorithm, expiration, id, insertInstant, name, type.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @param type (Optional) The type of key to search for. Supported values: EC, HMAC, OKP, RSA.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<KeySearchResponse, Errors> searchKeysByParameters(String algorithm, String name, Integer numberOfResults, String orderBy, Integer startRow, String type) {
+    return start(KeySearchResponse.class, Errors.class)
+        .uri("/api/key/search")
+        .urlParameter("algorithm", algorithm)
+        .urlParameter("name", name)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .urlParameter("type", type)
+        .get()
         .go();
   }
 
@@ -5604,6 +5696,30 @@ public class FusionAuthClient {
         .uri("/api/webhook/search")
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .post()
+        .go();
+  }
+
+  /**
+   * Searches webhooks with the specified criteria and pagination.
+   *
+   * @param description (Optional) The description of the webhook to search for. Supports wildcard search using *.
+   * @param numberOfResults (Optional) The number of results to return. Defaults to 25.
+   * @param orderBy (Optional) The field to order the results by. Supported values: description, id, insertInstant, url.
+   * @param startRow (Optional) The offset into the total results. Defaults to 0.
+   * @param tenantId (Optional) The tenant Id to restrict the results to.
+   * @param url (Optional) The URL of the webhook to search for. Supports wildcard search using *.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<WebhookSearchResponse, Errors> searchWebhooksByParameters(String description, Integer numberOfResults, String orderBy, Integer startRow, UUID tenantId, String url) {
+    return start(WebhookSearchResponse.class, Errors.class)
+        .uri("/api/webhook/search")
+        .urlParameter("description", description)
+        .urlParameter("numberOfResults", numberOfResults)
+        .urlParameter("orderBy", orderBy)
+        .urlParameter("startRow", startRow)
+        .urlParameter("tenantId", tenantId)
+        .urlParameter("url", url)
+        .get()
         .go();
   }
 
