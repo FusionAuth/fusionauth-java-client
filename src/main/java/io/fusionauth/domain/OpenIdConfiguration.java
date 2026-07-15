@@ -32,10 +32,14 @@ import com.inversoft.json.ToString;
 public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   public String authorization_endpoint = "%s/oauth2/authorize";
 
+  public boolean authorization_response_iss_parameter_supported = true;
+
   @SuppressWarnings("SpellCheckingInspection")
   public boolean backchannel_logout_supported = false;
 
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "phone_number_verified", "picture", "preferred_username", "roles", "sub"));
+
+  public List<String> code_challenge_methods_supported = new ArrayList<>(Collections.singletonList("S256"));
 
   public String device_authorization_endpoint = "%s/oauth2/device_authorize";
 
@@ -73,8 +77,6 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> userinfo_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "RS256", "RS384", "RS512", "HS256", "HS384", "HS512"));
 
-  public List<String> code_challenge_methods_supported = new ArrayList<>(Collections.singletonList("S256"));
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -84,10 +86,12 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
       return false;
     }
     OpenIdConfiguration that = (OpenIdConfiguration) o;
-    return backchannel_logout_supported == that.backchannel_logout_supported &&
+    return authorization_response_iss_parameter_supported == that.authorization_response_iss_parameter_supported &&
+           backchannel_logout_supported == that.backchannel_logout_supported &&
            frontchannel_logout_supported == that.frontchannel_logout_supported &&
            Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
            Objects.equals(claims_supported, that.claims_supported) &&
+           Objects.equals(code_challenge_methods_supported, that.code_challenge_methods_supported) &&
            Objects.equals(device_authorization_endpoint, that.device_authorization_endpoint) &&
            Objects.equals(dpop_signing_alg_values_supported, that.dpop_signing_alg_values_supported) &&
            Objects.equals(end_session_endpoint, that.end_session_endpoint) &&
@@ -102,13 +106,12 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
            Objects.equals(token_endpoint, that.token_endpoint) &&
            Objects.equals(token_endpoint_auth_methods_supported, that.token_endpoint_auth_methods_supported) &&
            Objects.equals(userinfo_endpoint, that.userinfo_endpoint) &&
-           Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported) &&
-           Objects.equals(code_challenge_methods_supported, that.code_challenge_methods_supported);
+           Objects.equals(userinfo_signing_alg_values_supported, that.userinfo_signing_alg_values_supported);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, backchannel_logout_supported, claims_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported, code_challenge_methods_supported);
+    return Objects.hash(authorization_endpoint, authorization_response_iss_parameter_supported, backchannel_logout_supported, claims_supported, code_challenge_methods_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
   }
 
   @Override
