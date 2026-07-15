@@ -16,6 +16,7 @@
 package io.fusionauth.domain;
 
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -52,6 +53,19 @@ public class Entity implements Buildable<Entity>, Tenantable {
 
   @JacksonConstructor
   public Entity() {
+  }
+
+  public Entity(Entity other) {
+    this.data.putAll(other.data);
+    this.clientId = other.clientId;
+    this.clientSecret = other.clientSecret;
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.name = other.name;
+    this.parentId = other.parentId;
+    this.tenantId = other.tenantId;
+    this.type = other.type == null ? null : new EntityType(other.type);
   }
 
   public Entity(String name) {
@@ -91,6 +105,18 @@ public class Entity implements Buildable<Entity>, Tenantable {
   @Override
   public int hashCode() {
     return Objects.hash(clientSecret, data, id, name, parentId, tenantId, type, insertInstant, lastUpdateInstant);
+  }
+
+  public Entity secure() {
+    clientSecret = null;
+    return this;
+  }
+
+  public Entity sort() {
+    if (type != null && type.permissions != null) {
+      type.permissions.sort(Comparator.comparing(p -> p.name));
+    }
+    return this;
   }
 
   @Override

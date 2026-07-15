@@ -147,7 +147,19 @@ public enum EventType {
 
   UserTwoFactorFailedAttempt("user.two-factor.failed-attempt"),
 
-  UserTwoFactorSuccess("user.two-factor.success");
+  UserTwoFactorSuccess("user.two-factor.success"),
+
+  EntityCreate("entity.create"),
+
+  EntityCreateComplete("entity.create.complete"),
+
+  EntityDelete("entity.delete"),
+
+  EntityDeleteComplete("entity.delete.complete"),
+
+  EntityUpdate("entity.update"),
+
+  EntityUpdateComplete("entity.update.complete");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -162,6 +174,12 @@ public enum EventType {
    */
   public static List<EventType> allTypes() {
     return Arrays.asList(EventType.AuditLogCreate,
+                         EventType.EntityCreate,
+                         EventType.EntityCreateComplete,
+                         EventType.EntityDelete,
+                         EventType.EntityDeleteComplete,
+                         EventType.EntityUpdate,
+                         EventType.EntityUpdateComplete,
                          EventType.EventLogCreate,
                          EventType.JWTPublicKeyUpdate,
                          EventType.JWTRefreshTokenRevoke,

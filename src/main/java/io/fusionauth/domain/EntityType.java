@@ -38,6 +38,16 @@ public class EntityType implements Buildable<EntityType> {
   public EntityType() {
   }
 
+  public EntityType(EntityType other) {
+    this.data.putAll(other.data);
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.jwtConfiguration = new EntityJWTConfiguration(other.jwtConfiguration);
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.name = other.name;
+    other.permissions.forEach(p -> this.permissions.add(new EntityTypePermission(p)));
+  }
+
   public EntityType(String name) {
     this.name = name;
   }
@@ -97,5 +107,15 @@ public class EntityType implements Buildable<EntityType> {
      * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
      */
     public int timeToLiveInSeconds;
+
+    @JacksonConstructor
+    public EntityJWTConfiguration() {
+    }
+
+    public EntityJWTConfiguration(EntityJWTConfiguration other) {
+      this.enabled = other.enabled;
+      this.accessTokenKeyId = other.accessTokenKeyId;
+      this.timeToLiveInSeconds = other.timeToLiveInSeconds;
+    }
   }
 }

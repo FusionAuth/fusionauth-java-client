@@ -53,6 +53,17 @@ public class EntityTypePermission implements Buildable<EntityTypePermission> {
   public EntityTypePermission() {
   }
 
+  public EntityTypePermission(EntityTypePermission other) {
+    this.data.putAll(other.data);
+    this.description = other.description;
+    this.entityTypeId = other.entityTypeId;
+    this.id = other.id;
+    this.insertInstant = other.insertInstant;
+    this.isDefault = other.isDefault;
+    this.lastUpdateInstant = other.lastUpdateInstant;
+    this.name = other.name;
+  }
+
   public EntityTypePermission(String name) {
     this.name = name;
   }
