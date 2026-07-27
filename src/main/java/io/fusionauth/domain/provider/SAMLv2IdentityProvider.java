@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,10 +49,9 @@ public class SAMLv2IdentityProvider extends BaseSAMLv2IdentityProvider<SAMLv2App
   public SAMLv2IdpInitiatedConfiguration idpInitiatedConfiguration = new SAMLv2IdpInitiatedConfiguration(false);
 
   /**
-   * @deprecated The 'issuer' is auto generated to be unique per configuration. Do not use this value any longer.  The 'issuer' will be equal to
+   * When not set, the 'issuer' will default to the unique generated value 
    * ${public_url}/samlv2/sp/${identityProviderId}.
    */
-  @Deprecated
   public String issuer;
 
   // Note: Once we de-couple fusionauth-java-client this should be either copied or moved to io.fusionauth.domain since it is used in multiple places.
