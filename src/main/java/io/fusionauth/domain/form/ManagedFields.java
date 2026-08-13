@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class contains the managed fields that are also put into the database during FusionAuth setup.
+ * Contains the "managed"{@link FormField} keys. For these keys, FusionAuth controls the
+ * field's control and data type.
+ * <p>
+ * The data type is always enforced, on both create and update.  The control is only defaulted
+ * when omitted on create, and is otherwise left as submitted - it is not validated against
+ * the managed definition. Once created, a mismatched control can only be fixed by deleting
+ * and recreating the field, since updates always keep the field's existing control.
  * <p>
  * Internal Note: These fields are also declared in SQL in order to bootstrap the system. These need to stay in sync.
  * Any changes to these fields needs to also be reflected in mysql.sql and postgresql.sql
