@@ -15,9 +15,11 @@
  */
 package io.fusionauth.domain.provider;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -37,7 +39,20 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
 
   public final Set<String> domains = new LinkedHashSet<>();
 
+  /**
+   * The default key used for External JWT verification.
+   *
+   * @deprecated Use {@link #verificationKeyIds} instead. Populated on read for backward compatibility from the first
+   * entry in {@link #verificationKeyIds}.
+   */
+  @Deprecated
   public UUID defaultKeyId;
+
+  /**
+   * All configured verification key IDs. Sorted with the default key first ({@code is_default=true}).
+   * The first entry also populates the deprecated {@link #defaultKeyId} field on read for backward compatibility.
+   */
+  public List<UUID> verificationKeyIds = new ArrayList<>();
 
   public String headerKeyParameter = "kid";
 
@@ -68,7 +83,8 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
            Objects.equals(headerKeyParameter, that.headerKeyParameter) &&
            Objects.equals(oauth2, that.oauth2) &&
            Objects.equals(uniqueIdentityClaim, that.uniqueIdentityClaim) &&
-           Objects.equals(domains, that.domains);
+           Objects.equals(domains, that.domains) &&
+           Objects.equals(verificationKeyIds, that.verificationKeyIds);
   }
 
   @Override
@@ -83,7 +99,7 @@ public class ExternalJWTIdentityProvider extends BaseIdentityProvider<ExternalJW
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), claimMap, defaultKeyId, headerKeyParameter, oauth2, uniqueIdentityClaim, domains);
+    return Objects.hash(super.hashCode(), claimMap, defaultKeyId, headerKeyParameter, oauth2, uniqueIdentityClaim, domains, verificationKeyIds);
   }
 
   @Override

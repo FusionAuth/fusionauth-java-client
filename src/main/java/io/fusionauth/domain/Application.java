@@ -695,6 +695,7 @@ public class Application implements Buildable<Application>, Tenantable {
     public boolean debug;
 
     // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
+    @Deprecated
       public UUID defaultVerificationKeyId;
 
     public SAMLv2IdPInitiatedLoginConfiguration initiatedLogin = new SAMLv2IdPInitiatedLoginConfiguration();
@@ -711,6 +712,12 @@ public class Application implements Buildable<Application>, Tenantable {
     public URI logoutURL;
 
     public boolean requireSignedRequests;
+
+    /**
+     * All configured verification key IDs for SAML POST bindings. Sorted with the default key first ({@code is_default=true}).
+     * The first entry also populates the deprecated {@link #defaultVerificationKeyId} field on read for backward compatibility.
+     */
+      public List<UUID> verificationKeyIds = new ArrayList<>();
 
     public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
 
@@ -734,6 +741,7 @@ public class Application implements Buildable<Application>, Tenantable {
       this.logoutURL = other.logoutURL;
       this.logout = new SAMLv2Logout(other.logout);
       this.requireSignedRequests = other.requireSignedRequests;
+      this.verificationKeyIds.addAll(other.verificationKeyIds);
       this.xmlSignatureLocation = other.xmlSignatureLocation;
       this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
     }
@@ -761,6 +769,7 @@ public class Application implements Buildable<Application>, Tenantable {
              Objects.equals(loginHintConfiguration, that.loginHintConfiguration) &&
              Objects.equals(logoutURL, that.logoutURL) &&
              Objects.equals(requireSignedRequests, that.requireSignedRequests) &&
+             Objects.equals(verificationKeyIds, that.verificationKeyIds) &&
              Objects.equals(xmlSignatureLocation, that.xmlSignatureLocation) &&
              Objects.equals(xmlSignatureC14nMethod, that.xmlSignatureC14nMethod);
     }
@@ -791,7 +800,7 @@ public class Application implements Buildable<Application>, Tenantable {
 
     @Override
     public int hashCode() {
-      return Objects.hash(super.hashCode(), assertionEncryptionConfiguration, audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, loginHintConfiguration, logoutURL, requireSignedRequests, xmlSignatureLocation, xmlSignatureC14nMethod);
+      return Objects.hash(super.hashCode(), assertionEncryptionConfiguration, audience, authorizedRedirectURLs, debug, defaultVerificationKeyId, initiatedLogin, issuer, keyId, loginHintConfiguration, logoutURL, requireSignedRequests, verificationKeyIds, xmlSignatureLocation, xmlSignatureC14nMethod);
     }
 
     public enum SAMLLogoutBehavior {
@@ -847,6 +856,7 @@ public class Application implements Buildable<Application>, Tenantable {
       public SAMLLogoutBehavior behavior = SAMLLogoutBehavior.AllParticipants;
 
       // Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
+      @Deprecated
           public UUID defaultVerificationKeyId;
 
           public UUID keyId;
@@ -854,6 +864,12 @@ public class Application implements Buildable<Application>, Tenantable {
       public boolean requireSignedRequests;
 
       public SAMLv2SingleLogout singleLogout = new SAMLv2SingleLogout();
+
+      /**
+       * All configured verification key IDs for SAML logout POST bindings. Sorted with the default key first ({@code is_default=true}).
+       * The first entry also populates the deprecated {@link #defaultVerificationKeyId} field on read for backward compatibility.
+       */
+          public List<UUID> verificationKeyIds = new ArrayList<>();
 
       public CanonicalizationMethod xmlSignatureC14nMethod = CanonicalizationMethod.exclusive_with_comments;
 
@@ -863,6 +879,7 @@ public class Application implements Buildable<Application>, Tenantable {
         this.behavior = other.behavior;
         this.requireSignedRequests = other.requireSignedRequests;
         this.singleLogout = new SAMLv2SingleLogout(other.singleLogout);
+        this.verificationKeyIds.addAll(other.verificationKeyIds);
         this.xmlSignatureC14nMethod = other.xmlSignatureC14nMethod;
       }
 
@@ -879,12 +896,12 @@ public class Application implements Buildable<Application>, Tenantable {
           return false;
         }
         SAMLv2Logout that = (SAMLv2Logout) o;
-        return requireSignedRequests == that.requireSignedRequests && Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) && Objects.equals(keyId, that.keyId) && behavior == that.behavior && Objects.equals(singleLogout, that.singleLogout) && xmlSignatureC14nMethod == that.xmlSignatureC14nMethod;
+        return requireSignedRequests == that.requireSignedRequests && Objects.equals(defaultVerificationKeyId, that.defaultVerificationKeyId) && Objects.equals(keyId, that.keyId) && behavior == that.behavior && Objects.equals(singleLogout, that.singleLogout) && Objects.equals(verificationKeyIds, that.verificationKeyIds) && xmlSignatureC14nMethod == that.xmlSignatureC14nMethod;
       }
 
       @Override
       public int hashCode() {
-        return Objects.hash(defaultVerificationKeyId, keyId, behavior, requireSignedRequests, singleLogout, xmlSignatureC14nMethod);
+        return Objects.hash(defaultVerificationKeyId, keyId, behavior, requireSignedRequests, singleLogout, verificationKeyIds, xmlSignatureC14nMethod);
       }
 
       @Override

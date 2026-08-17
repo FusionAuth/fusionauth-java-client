@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,9 +36,21 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   public UUID accessTokenKeyId;
 
   /**
+   * Alternate verification key IDs for access tokens. The signing key ({@link #accessTokenKeyId}) is implicitly
+   * available for verification and does not need to be listed here.
+   */
+  public List<UUID> accessTokenVerificationKeyIds = new ArrayList<>();
+
+  /**
    * The signing key used to sign the Id token
    */
   public UUID idTokenKeyId;
+
+  /**
+   * Alternate verification key IDs for id tokens. The signing key ({@link #idTokenKeyId}) is implicitly
+   * available for verification and does not need to be listed here.
+   */
+  public List<UUID> idTokenVerificationKeyIds = new ArrayList<>();
 
   public RefreshTokenExpirationPolicy refreshTokenExpirationPolicy = RefreshTokenExpirationPolicy.Fixed;
 
@@ -69,8 +83,10 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
 
   public JWTConfiguration(JWTConfiguration other) {
     this.accessTokenKeyId = other.accessTokenKeyId;
+    this.accessTokenVerificationKeyIds.addAll(other.accessTokenVerificationKeyIds);
     this.enabled = other.enabled;
     this.idTokenKeyId = other.idTokenKeyId;
+    this.idTokenVerificationKeyIds.addAll(other.idTokenVerificationKeyIds);
     this.refreshTokenExpirationPolicy = other.refreshTokenExpirationPolicy;
     this.refreshTokenRevocationPolicy = new RefreshTokenRevocationPolicy(other.refreshTokenRevocationPolicy);
     this.refreshTokenOneTimeUseConfiguration = new RefreshTokenOneTimeUseConfiguration(other.refreshTokenOneTimeUseConfiguration);
@@ -93,7 +109,9 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
     }
     JWTConfiguration that = (JWTConfiguration) o;
     return Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
+           Objects.equals(accessTokenVerificationKeyIds, that.accessTokenVerificationKeyIds) &&
            Objects.equals(idTokenKeyId, that.idTokenKeyId) &&
+           Objects.equals(idTokenVerificationKeyIds, that.idTokenVerificationKeyIds) &&
            refreshTokenExpirationPolicy == that.refreshTokenExpirationPolicy &&
            Objects.equals(refreshTokenRevocationPolicy, that.refreshTokenRevocationPolicy) &&
            Objects.equals(refreshTokenOneTimeUseConfiguration, that.refreshTokenOneTimeUseConfiguration) &&
@@ -107,7 +125,9 @@ public class JWTConfiguration extends Enableable implements Buildable<JWTConfigu
   public int hashCode() {
     return Objects.hash(super.hashCode(),
                         accessTokenKeyId,
+                        accessTokenVerificationKeyIds,
                         idTokenKeyId,
+                        idTokenVerificationKeyIds,
                         refreshTokenExpirationPolicy,
                         refreshTokenRevocationPolicy,
                         refreshTokenOneTimeUseConfiguration,

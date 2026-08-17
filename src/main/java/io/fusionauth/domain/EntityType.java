@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  */
 package io.fusionauth.domain;
 
@@ -69,6 +69,7 @@ public class EntityType implements Buildable<EntityType> {
     return Objects.equals(data, group.data) &&
            Objects.equals(id, group.id) &&
            Objects.equals(insertInstant, group.insertInstant) &&
+           Objects.equals(jwtConfiguration, group.jwtConfiguration) &&
            Objects.equals(lastUpdateInstant, group.lastUpdateInstant) &&
            Objects.equals(name, group.name) &&
            Objects.equals(permissions, group.permissions);
@@ -86,7 +87,7 @@ public class EntityType implements Buildable<EntityType> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, id, insertInstant, lastUpdateInstant, name, permissions);
+    return Objects.hash(data, id, insertInstant, jwtConfiguration, lastUpdateInstant, name, permissions);
   }
 
   @Override
@@ -103,6 +104,8 @@ public class EntityType implements Buildable<EntityType> {
      */
       public UUID accessTokenKeyId;
 
+      public List<UUID> accessTokenVerificationKeyIds = new ArrayList<>();
+
     /**
      * The length of time in seconds this JWT is valid from the time it was issued. This should be a non-zero value.
      */
@@ -115,7 +118,28 @@ public class EntityType implements Buildable<EntityType> {
     public EntityJWTConfiguration(EntityJWTConfiguration other) {
       this.enabled = other.enabled;
       this.accessTokenKeyId = other.accessTokenKeyId;
+      this.accessTokenVerificationKeyIds.addAll(other.accessTokenVerificationKeyIds);
       this.timeToLiveInSeconds = other.timeToLiveInSeconds;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof EntityJWTConfiguration)) {
+        return false;
+      }
+      EntityJWTConfiguration that = (EntityJWTConfiguration) o;
+      return enabled == that.enabled &&
+             timeToLiveInSeconds == that.timeToLiveInSeconds &&
+             Objects.equals(accessTokenKeyId, that.accessTokenKeyId) &&
+             Objects.equals(accessTokenVerificationKeyIds, that.accessTokenVerificationKeyIds);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(enabled, accessTokenKeyId, accessTokenVerificationKeyIds, timeToLiveInSeconds);
     }
   }
 }

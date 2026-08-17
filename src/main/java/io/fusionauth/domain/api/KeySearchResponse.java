@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2023, FusionAuth, All Rights Reserved
+ * Copyright (c) 2023-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.inversoft.json.JacksonConstructor;
@@ -27,7 +28,7 @@ import io.fusionauth.domain.search.SearchResults;
  * @author Spencer Witt
  */
 public class KeySearchResponse {
-  public List<Key> keys;
+  public List<Key> keys = new ArrayList<>();
 
   public long total;
 

@@ -90,12 +90,12 @@ public class Key implements Buildable<Key> {
 
   @JsonIgnore
   public boolean canSign() {
-    return use() != KeyUse.VerifyOnly;
+    return use().canSign();
   }
 
   @JsonIgnore
   public boolean canVerify() {
-    return use() != KeyUse.SignOnly;
+    return use().canVerify();
   }
 
   @Override
@@ -197,7 +197,7 @@ public class Key implements Buildable<Key> {
   public KeyUse use() {
     // Secret keys are not used for signing or verification
     if (type == KeyType.Secret) {
-      return KeyUse.VerifyOnly;
+      return KeyUse.None;
     }
     // If we have an algorithm and it is either HMAC or a key pair, then we can sign and verify.
     if (algorithm != null && (isPair() || type == KeyType.HMAC)) {

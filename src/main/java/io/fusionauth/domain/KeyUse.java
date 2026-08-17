@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,5 +23,15 @@ package io.fusionauth.domain;
 public enum KeyUse {
   SignOnly,
   SignAndVerify,
-  VerifyOnly
+  VerifyOnly,
+  // for things that are not keys
+  None;
+
+  boolean canSign() {
+    return this == SignAndVerify || this == SignOnly;
+  }
+
+  boolean canVerify() {
+    return this == SignAndVerify || this == VerifyOnly;
+  }
 }

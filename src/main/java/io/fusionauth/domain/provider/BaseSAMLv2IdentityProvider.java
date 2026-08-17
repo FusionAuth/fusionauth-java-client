@@ -15,6 +15,8 @@
  */
 package io.fusionauth.domain.provider;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,9 +30,19 @@ public abstract class BaseSAMLv2IdentityProvider<D extends BaseIdentityProviderA
   public String emailClaim;
 
   /**
-   * The default key used for SAML Request Signature Verification if one cannot be found in the <code>KeyInfo</code> XML element in the SAML response.
+   * The default key used for SAML response signature verification if one cannot be found in the {@code KeyInfo} XML element.
+   *
+   * @deprecated Use {@link #verificationKeyIds} instead. Populated on read for backward compatibility from the first
+   * entry in {@link #verificationKeyIds}.
    */
+  @Deprecated
   public UUID keyId;
+
+  /**
+   * All configured SAML response verification key IDs. Sorted with the default key first ({@code is_default=true}).
+   * The first entry also populates the deprecated {@link #keyId} field on read for backward compatibility.
+   */
+  public List<UUID> verificationKeyIds = new ArrayList<>();
 
   public String uniqueIdClaim;
 
@@ -55,11 +67,12 @@ public abstract class BaseSAMLv2IdentityProvider<D extends BaseIdentityProviderA
            && Objects.equals(keyId, that.keyId)
            && Objects.equals(uniqueIdClaim, that.uniqueIdClaim)
            && useNameIdForEmail == that.useNameIdForEmail
-           && Objects.equals(usernameClaim, that.usernameClaim);
+           && Objects.equals(usernameClaim, that.usernameClaim)
+           && Objects.equals(verificationKeyIds, that.verificationKeyIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), assertionDecryptionConfiguration, emailClaim, keyId, uniqueIdClaim, useNameIdForEmail, usernameClaim);
+    return Objects.hash(super.hashCode(), assertionDecryptionConfiguration, emailClaim, keyId, uniqueIdClaim, useNameIdForEmail, usernameClaim, verificationKeyIds);
   }
 }
