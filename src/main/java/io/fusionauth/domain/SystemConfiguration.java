@@ -133,7 +133,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
   }
 
   public static class AuditLogConfiguration {
-    public DeleteConfiguration delete = new DeleteConfiguration(365);
+    public DeleteConfiguration delete = new DeleteConfiguration(365, true);
 
     @JacksonConstructor
     public AuditLogConfiguration() {
@@ -248,7 +248,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
   }
 
   public static class LoginRecordConfiguration {
-    public DeleteConfiguration delete = new DeleteConfiguration(365);
+    public DeleteConfiguration delete = new DeleteConfiguration(365, true);
 
     @JacksonConstructor
     public LoginRecordConfiguration() {
