@@ -43,6 +43,9 @@ public enum GrantType {
   // Client Credentials Grant
   client_credentials("client_credentials"),
 
+  // Token Exchange Grant
+  token_exchange("urn:ietf:params:oauth:grant-type:token-exchange"),
+
   // Refresh Token Grant
   refresh_token("refresh_token"),
 
@@ -81,4 +84,3 @@ public enum GrantType {
     }
   }
 }
-

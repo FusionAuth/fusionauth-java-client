@@ -122,6 +122,8 @@ public class Tenant implements Buildable<Tenant> {
 
   public UUID themeId;
 
+  public TenantTokenExchangeConfiguration tokenExchangeConfiguration = new TenantTokenExchangeConfiguration();
+
   public TenantUserDeletePolicy userDeletePolicy = new TenantUserDeletePolicy();
 
   public TenantUsernameConfiguration usernameConfiguration = new TenantUsernameConfiguration();
@@ -169,6 +171,7 @@ public class Tenant implements Buildable<Tenant> {
     this.ssoConfiguration = new TenantSSOConfiguration(other.ssoConfiguration);
     this.state = other.state;
     this.themeId = other.themeId;
+    this.tokenExchangeConfiguration = new TenantTokenExchangeConfiguration(other.tokenExchangeConfiguration);
     this.userDeletePolicy = new TenantUserDeletePolicy(other.userDeletePolicy);
     this.usernameConfiguration = new TenantUsernameConfiguration(other.usernameConfiguration);
     this.webAuthnConfiguration = new TenantWebAuthnConfiguration(other.webAuthnConfiguration);
@@ -218,6 +221,7 @@ public class Tenant implements Buildable<Tenant> {
            Objects.equals(ssoConfiguration, tenant.ssoConfiguration) &&
            Objects.equals(state, tenant.state) &&
            Objects.equals(themeId, tenant.themeId) &&
+           Objects.equals(tokenExchangeConfiguration, tenant.tokenExchangeConfiguration) &&
            Objects.equals(userDeletePolicy, tenant.userDeletePolicy) &&
            Objects.equals(usernameConfiguration, tenant.usernameConfiguration) &&
            Objects.equals(webAuthnConfiguration, tenant.webAuthnConfiguration);
@@ -263,6 +267,7 @@ public class Tenant implements Buildable<Tenant> {
                         scimServerConfiguration,
                         state,
                         themeId,
+                        tokenExchangeConfiguration,
                         userDeletePolicy,
                         usernameConfiguration,
                         webAuthnConfiguration);
@@ -303,6 +308,7 @@ public class Tenant implements Buildable<Tenant> {
     name = trim(name);
     emailConfiguration.normalize();
     eventConfiguration.normalize();
+    tokenExchangeConfiguration.normalize();
 
     // Lower case any domain entries
     connectorPolicies.forEach(policy -> Normalizer.toLowerCase(policy.domains, HashSet::new));

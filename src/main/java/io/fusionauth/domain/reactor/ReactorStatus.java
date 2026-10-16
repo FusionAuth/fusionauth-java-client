@@ -79,6 +79,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus threatDetection = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus tokenExchange = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus universalApplication = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus userAgentReputation = ReactorFeatureStatus.UNKNOWN;
@@ -120,6 +122,7 @@ public class ReactorStatus {
     tenantManagerApplication = other.tenantManagerApplication;
     scimServer = other.scimServer;
     threatDetection = other.threatDetection;
+    tokenExchange = other.tokenExchange;
     universalApplication = other.universalApplication;
     userAgentReputation = other.userAgentReputation;
     webAuthn = other.webAuthn;
@@ -162,6 +165,7 @@ public class ReactorStatus {
            tenantManagerApplication == that.tenantManagerApplication &&
            scimServer == that.scimServer &&
            threatDetection == that.threatDetection &&
+           tokenExchange == that.tokenExchange &&
            universalApplication == that.universalApplication &&
            userAgentReputation == that.userAgentReputation &&
            webAuthn == that.webAuthn &&
@@ -197,6 +201,7 @@ public class ReactorStatus {
                         tenantManagerApplication,
                         scimServer,
                         threatDetection,
+                        tokenExchange,
                         universalApplication,
                         userAgentReputation,
                         webAuthn,

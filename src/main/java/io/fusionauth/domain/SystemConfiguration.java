@@ -50,6 +50,8 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   public ZoneId reportTimezone;
 
+  public TokenExchangeAuditLogConfiguration tokenExchangeAuditLogConfiguration = new TokenExchangeAuditLogConfiguration();
+
   public SystemTrustedProxyConfiguration trustedProxyConfiguration = new SystemTrustedProxyConfiguration();
 
   public UIConfiguration uiConfiguration = new UIConfiguration();
@@ -74,6 +76,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
     this.lastUpdateInstant = other.lastUpdateInstant;
     this.loginRecordConfiguration = new LoginRecordConfiguration(other.loginRecordConfiguration);
     this.reportTimezone = other.reportTimezone;
+    this.tokenExchangeAuditLogConfiguration = new TokenExchangeAuditLogConfiguration(other.tokenExchangeAuditLogConfiguration);
     this.trustedProxyConfiguration = new SystemTrustedProxyConfiguration(other.trustedProxyConfiguration);
     this.uiConfiguration = new UIConfiguration(other.uiConfiguration);
     this.usageDataConfiguration = new UsageDataConfiguration(other.usageDataConfiguration);
@@ -97,6 +100,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
            Objects.equals(insertInstant, that.insertInstant) &&
            Objects.equals(lastUpdateInstant, that.lastUpdateInstant) &&
            Objects.equals(loginRecordConfiguration, that.loginRecordConfiguration) &&
+           Objects.equals(tokenExchangeAuditLogConfiguration, that.tokenExchangeAuditLogConfiguration) &&
            Objects.equals(trustedProxyConfiguration, that.trustedProxyConfiguration) &&
            Objects.equals(reportTimezone, that.reportTimezone) &&
            Objects.equals(uiConfiguration, that.uiConfiguration) &&
@@ -106,7 +110,7 @@ public class SystemConfiguration implements Buildable<SystemConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
+    return Objects.hash(auditLogConfiguration, cookieEncryptionKey, corsConfiguration, data, eventLogConfiguration, insertInstant, lastUpdateInstant, loginRecordConfiguration, reportTimezone, tokenExchangeAuditLogConfiguration, trustedProxyConfiguration, uiConfiguration, usageDataConfiguration, webhookEventLogConfiguration);
   }
 
   public void normalize() {

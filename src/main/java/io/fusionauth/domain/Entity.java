@@ -31,6 +31,11 @@ import com.inversoft.json.ToString;
  * @author Brian Pontarelli
  */
 public class Entity implements Buildable<Entity>, Tenantable {
+  /**
+   * Enables this Entity to authenticate as a token-exchange client.
+   */
+  public boolean actAsTokenExchangeClient;
+
   public final Map<String, Object> data = new LinkedHashMap<>();
 
   public String clientId;
@@ -56,6 +61,7 @@ public class Entity implements Buildable<Entity>, Tenantable {
   }
 
   public Entity(Entity other) {
+    this.actAsTokenExchangeClient = other.actAsTokenExchangeClient;
     this.data.putAll(other.data);
     this.clientId = other.clientId;
     this.clientSecret = other.clientSecret;
@@ -86,7 +92,8 @@ public class Entity implements Buildable<Entity>, Tenantable {
       return false;
     }
     Entity group = (Entity) o;
-    return Objects.equals(clientSecret, group.clientSecret) &&
+    return actAsTokenExchangeClient == group.actAsTokenExchangeClient &&
+           Objects.equals(clientSecret, group.clientSecret) &&
            Objects.equals(data, group.data) &&
            Objects.equals(id, group.id) &&
            Objects.equals(name, group.name) &&
@@ -104,7 +111,7 @@ public class Entity implements Buildable<Entity>, Tenantable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientSecret, data, id, name, parentId, tenantId, type, insertInstant, lastUpdateInstant);
+    return Objects.hash(actAsTokenExchangeClient, clientSecret, data, id, name, parentId, tenantId, type, insertInstant, lastUpdateInstant);
   }
 
   public Entity secure() {

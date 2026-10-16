@@ -159,7 +159,11 @@ public enum EventType {
 
   EntityUpdate("entity.update"),
 
-  EntityUpdateComplete("entity.update.complete");
+  EntityUpdateComplete("entity.update.complete"),
+
+  TokenExchange("token.exchange"),
+
+  TokenExchangeComplete("token.exchange.complete");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -235,7 +239,9 @@ public enum EventType {
                          EventType.UserTwoFactorMethodRemove,
                          EventType.UserTwoFactorSuccess,
                          EventType.UserUpdate,
-                         EventType.UserUpdateComplete
+                         EventType.UserUpdateComplete,
+                         EventType.TokenExchange,
+                         EventType.TokenExchangeComplete
     );
   }
 

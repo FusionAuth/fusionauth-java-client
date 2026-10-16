@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -754,6 +754,91 @@ public enum LambdaType {
        "\n" +
        "  console.info('Hello World!');" +
        "\n" +
+      "}\n"),
+
+  TokenExchangePolicy("policy", "" +
+      //language=JavaScript
+      "// Decide whether an RFC 8693 token exchange request is allowed.\n" +
+      "// https://fusionauth.io/docs/extend/code/lambdas/token-exchange-policy\n" +
+      "//\n" +
+      "// Parameters:\n" +
+      "//  - result: (mutable) Set result.decision to 'ALLOW' or 'DENY' and populate result.granted or result.denial\n" +
+      "//  - exchange: (immutable) Contains clientId, requestedAudience, requestedScopes, intent, state, subjectTokenClaims\n" +
+      "//  - context: (immutable) Contains tenantId and services.secrets for secret retrieval\n" +
+      "//\n" +
+      "// IMPORTANT: This function receives exactly three parameters. Do not omit any parameter from the signature.\n" +
+      "//\n" +
+      "function policy(result, exchange, context) {\n" +
+      "  const allowedExchanger = 'example-exchanger';\n" +
+      "  const allowedAudience = 'internal-api-a';\n" +
+      "  const allowedScopes = ['read', 'report:read'];\n" +
+      "\n" +
+      "  // Trust only the exchanger explicitly authorized by this policy.\n" +
+      "  if (exchange.clientId !== allowedExchanger) {\n" +
+      "    result.decision = 'DENY';\n" +
+      "    result.denial = {\n" +
+      "      error_code: 'unauthorized_client',\n" +
+      "      error_description: 'The exchanger is not permitted to exchange tokens.'\n" +
+      "    };\n" +
+      "    return;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Limit delegation to the one downstream API covered by this policy.\n" +
+      "  if (!exchange.requestedAudience || exchange.requestedAudience.length !== 1 || exchange.requestedAudience[0] !== allowedAudience) {\n" +
+      "    result.decision = 'DENY';\n" +
+      "    result.denial = {\n" +
+      "      error_code: 'invalid_target',\n" +
+      "      error_description: 'The requested audience is not permitted.'\n" +
+      "    };\n" +
+      "    return;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Grant only requested scopes that this delegation path permits.\n" +
+      "  const grantedScopes = (exchange.requestedScopes || []).filter(scope => allowedScopes.includes(scope));\n" +
+      "  if (grantedScopes.length === 0) {\n" +
+      "    result.decision = 'DENY';\n" +
+      "    result.denial = {\n" +
+      "      error_code: 'invalid_request',\n" +
+      "      error_description: 'None of the requested scopes are permitted.'\n" +
+      "    };\n" +
+      "    return;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Keep the allow response bounded to the approved audience, scope intersection, and lifetime.\n" +
+      "  result.decision = 'ALLOW';\n" +
+      "  result.granted = {\n" +
+      "    audience: [allowedAudience],\n" +
+      "    scope: grantedScopes,\n" +
+      "    expires_in: 300\n" +
+      "  };\n" +
+      "}\n"),
+
+  TokenExchangePopulate("populate", "" +
+      //language=JavaScript
+      "// Using the policy engine decision and the validated subject token, add or edit claims on the token being issued\n" +
+      "// via RFC 8693 token exchange. Restricted claims (act, auth_time, authenticationType, client_id, cnf, gty, iat, iss, jti, may_act, sub, tid, tty) cannot be\n" +
+      "// modified. The scope and exp claims may only be reduced, never expanded, beyond what the policy engine granted.\n" +
+      "//\n" +
+      "// The exchange object always contains 'subjectToken' and 'entity'. The 'audiences', 'intent', 'scopes', and 'state'\n" +
+      "// properties may be undefined.\n" +
+      "//\n" +
+      "// https://fusionauth.io/docs/apis/tenants -- Token exchange settings\n" +
+      "function populate(jwt, exchange, context) {\n" +
+      "  //  Set the audience to a specific downstream API URL if one was granted by the policy engine.\n" +
+      "  //  const audiences = exchange.audiences || [];\n" +
+      "  //  const targetApi = audiences.find(function(a) { return a === 'https://api.example.com'; });\n" +
+      "  //  if (targetApi) {\n" +
+      "  //    jwt.aud = [targetApi];\n" +
+      "  //  }\n" +
+      "  //\n" +
+      "  //  Reduce the scope to a single value if it was granted. The scope claim may only be reduced, never expanded.\n" +
+      "  //  if (exchange.scopes && exchange.scopes.indexOf('read') !== -1) {\n" +
+      "  //    jwt.scope = 'read';\n" +
+      "  //  }\n" +
+      "\n" +
+      "  // Happy coding! Populate your exchanged JWT here.\n" +
+      "\n" +
+      "  console.info('Hello World!');\n" +
       "}\n");
   // @formatter:on
 

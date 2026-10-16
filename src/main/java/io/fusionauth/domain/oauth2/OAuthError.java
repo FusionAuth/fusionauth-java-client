@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,6 +105,7 @@ public class OAuthError implements OAuthResponse {
     invalid_entity_permission_scope,
     invalid_user_id,
     invalid_tenant_id,
+    resource_parameter_not_supported,
     // Grant disabled
     grant_type_disabled,
 
@@ -159,7 +160,17 @@ public class OAuthError implements OAuthResponse {
     registration_verification_required,
 
     // reasons for consent_required
-    consent_required
+    consent_required,
+
+    // reasons for token exchange errors
+    audience_required,
+    invalid_audience,
+    invalid_intent,
+    invalid_jwt,
+    invalid_scope,
+    invalid_state,
+    invalid_resource,
+    lambda_denied
   }
 
   public enum OAuthErrorType {

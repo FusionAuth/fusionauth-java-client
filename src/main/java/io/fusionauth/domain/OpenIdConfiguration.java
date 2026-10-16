@@ -37,7 +37,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   @SuppressWarnings("SpellCheckingInspection")
   public boolean backchannel_logout_supported = false;
 
-  public List<String> claims_supported = new ArrayList<>(Arrays.asList("applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "phone_number_verified", "picture", "preferred_username", "roles", "sub"));
+  public List<String> claims_supported = new ArrayList<>(Arrays.asList("act", "applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "client_id", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "phone_number_verified", "picture", "preferred_username", "roles", "scope", "sub"));
 
   public List<String> code_challenge_methods_supported = new ArrayList<>(Collections.singletonList("S256"));
 
@@ -53,7 +53,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
   @SuppressWarnings("SpellCheckingInspection")
   public boolean frontchannel_logout_supported = true;
 
-  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "password", "implicit", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code", "client_credentials"));
+  public List<String> grant_types_supported = new ArrayList<>(Arrays.asList("authorization_code", "client_credentials", "implicit", "password", "refresh_token", "urn:ietf:params:oauth:grant-type:device_code", "urn:ietf:params:oauth:grant-type:token-exchange"));
 
   public List<String> id_token_signing_alg_values_supported = new ArrayList<>(Arrays.asList("ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"));
 
