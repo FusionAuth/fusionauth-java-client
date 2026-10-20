@@ -766,6 +766,11 @@ public enum LambdaType {
       "//  - exchange: (immutable) Contains clientId, requestedAudience, requestedScopes, intent, state, subjectTokenClaims\n" +
       "//  - context: (immutable) Contains tenantId and services.secrets for secret retrieval\n" +
       "//\n" +
+      "// result.granted types (matching JWT claim flexibility):\n" +
+      "//  - audience: string or array of strings\n" +
+      "//  - scope: space-delimited string or array of strings\n" +
+      "//  - expires_in: number (seconds)\n" +
+      "//\n" +
       "// IMPORTANT: This function receives exactly three parameters. Do not omit any parameter from the signature.\n" +
       "//\n" +
       "function policy(result, exchange, context) {\n" +
@@ -807,8 +812,8 @@ public enum LambdaType {
       "  // Keep the allow response bounded to the approved audience, scope intersection, and lifetime.\n" +
       "  result.decision = 'ALLOW';\n" +
       "  result.granted = {\n" +
-      "    audience: [allowedAudience],\n" +
-      "    scope: grantedScopes,\n" +
+      "    audience: [allowedAudience],        // Array: ['internal-api-a'] or string: 'internal-api-a'\n" +
+      "    scope: grantedScopes,               // Array: ['read'] or string: 'read write'\n" +
       "    expires_in: 300\n" +
       "  };\n" +
       "}\n"),
