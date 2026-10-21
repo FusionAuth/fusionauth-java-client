@@ -763,7 +763,7 @@ public enum LambdaType {
       "//\n" +
       "// Parameters:\n" +
       "//  - result: (mutable) Set result.decision to 'ALLOW' or 'DENY' and populate result.granted or result.denial\n" +
-      "//  - exchange: (immutable) Contains clientId, requestedAudience, requestedScopes, intent, state, subjectTokenClaims\n" +
+      "//  - exchange: (immutable) Contains clientId, requestedAudience, requestedScopes, subjectTokenClaims\n" +
       "//  - context: (immutable) Contains tenantId and services.secrets for secret retrieval\n" +
       "//\n" +
       "// result.granted types (matching JWT claim flexibility):\n" +
