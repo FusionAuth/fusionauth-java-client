@@ -763,11 +763,11 @@ public enum LambdaType {
       "//\n" +
       "// Parameters:\n" +
       "//  - result: (mutable) Set result.decision to 'ALLOW' or 'DENY' and populate result.granted or result.denial\n" +
-      "//  - exchange: (immutable) Contains clientId, requestedAudience, requestedScopes, subjectTokenClaims\n" +
+      "//  - exchange: (immutable) Contains clientId, requestedAudiencesAndResources, requestedScopes, subjectTokenClaims\n" +
       "//  - context: (immutable) Contains tenantId and services.secrets for secret retrieval\n" +
       "//\n" +
       "// result.granted types (matching JWT claim flexibility):\n" +
-      "//  - audience: string or array of strings\n" +
+      "//  - aud: string or array of strings\n" +
       "//  - scope: space-delimited string or array of strings\n" +
       "//  - expires_in: number (seconds)\n" +
       "//\n" +
@@ -789,11 +789,11 @@ public enum LambdaType {
       "  }\n" +
       "\n" +
       "  // Limit delegation to the one downstream API covered by this policy.\n" +
-      "  if (!exchange.requestedAudience || exchange.requestedAudience.length !== 1 || exchange.requestedAudience[0] !== allowedAudience) {\n" +
+      "  if (!exchange.requestedAudiencesAndResources || exchange.requestedAudiencesAndResources.length !== 1 || exchange.requestedAudiencesAndResources[0] !== allowedAudience) {\n" +
       "    result.decision = 'DENY';\n" +
       "    result.denial = {\n" +
       "      error_code: 'invalid_target',\n" +
-      "      error_description: 'The requested audience is not permitted.'\n" +
+      "      error_description: 'The requested audience or resource is not permitted.'\n" +
       "    };\n" +
       "    return;\n" +
       "  }\n" +
@@ -812,7 +812,7 @@ public enum LambdaType {
       "  // Keep the allow response bounded to the approved audience, scope intersection, and lifetime.\n" +
       "  result.decision = 'ALLOW';\n" +
       "  result.granted = {\n" +
-      "    audience: [allowedAudience],        // Array: ['internal-api-a'] or string: 'internal-api-a'\n" +
+      "    aud: [allowedAudience],        // Array: ['internal-api-a'] or string: 'internal-api-a'\n" +
       "    scope: grantedScopes,               // Array: ['read'] or string: 'read write'\n" +
       "    expires_in: 300\n" +
       "  };\n" +
