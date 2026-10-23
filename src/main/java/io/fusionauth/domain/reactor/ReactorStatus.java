@@ -47,6 +47,8 @@ public class ReactorStatus {
 
   public ReactorFeatureStatus breachedPasswordDetection = ReactorFeatureStatus.UNKNOWN;
 
+  public ReactorFeatureStatus cimd = ReactorFeatureStatus.UNKNOWN;
+
   public ReactorFeatureStatus clientRiskConfiguration = ReactorFeatureStatus.UNKNOWN;
 
   public ReactorFeatureStatus connectors = ReactorFeatureStatus.UNKNOWN;
@@ -104,6 +106,7 @@ public class ReactorStatus {
     applicationMultiFactorAuthentication = other.applicationMultiFactorAuthentication;
     applicationThemes = other.applicationThemes;
     breachedPasswordDetection = other.breachedPasswordDetection;
+    cimd = other.cimd;
     connectors = other.connectors;
     advancedOAuthScopes = other.advancedOAuthScopes;
     advancedOAuthScopesCustomScopes = other.advancedOAuthScopesCustomScopes;
@@ -149,6 +152,7 @@ public class ReactorStatus {
            applicationMultiFactorAuthentication == that.applicationMultiFactorAuthentication &&
            applicationThemes == that.applicationThemes &&
            breachedPasswordDetection == that.breachedPasswordDetection &&
+           cimd == that.cimd &&
            connectors == that.connectors &&
            clientRiskConfiguration == that.clientRiskConfiguration &&
            dPoP == that.dPoP &&
@@ -185,6 +189,7 @@ public class ReactorStatus {
                         applicationMultiFactorAuthentication,
                         applicationThemes,
                         breachedPasswordDetection,
+                        cimd,
                         clientRiskConfiguration,
                         connectors,
                         dPoP,
