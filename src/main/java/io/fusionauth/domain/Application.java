@@ -57,6 +57,9 @@ public class Application implements Buildable<Application>, Tenantable {
 
   public URI baseURL;
 
+ @JsonIgnore
+  public boolean cimd;
+
   public CleanSpeakConfiguration cleanSpeakConfiguration;
 
   public Map<String, Object> data = new LinkedHashMap<>();
@@ -132,6 +135,7 @@ public class Application implements Buildable<Application>, Tenantable {
     if (other.cleanSpeakConfiguration != null) {
       this.cleanSpeakConfiguration = new CleanSpeakConfiguration(other.cleanSpeakConfiguration);
     }
+    this.cimd = other.cimd;
     this.data.putAll(other.data);
     this.emailConfiguration = new ApplicationEmailConfiguration(other.emailConfiguration);
     this.externalIdentifierConfiguration = new ApplicationExternalIdentifierConfiguration(other.externalIdentifierConfiguration);
@@ -201,6 +205,7 @@ public class Application implements Buildable<Application>, Tenantable {
            Objects.equals(authenticationTokenConfiguration, that.authenticationTokenConfiguration) &&
            Objects.equals(baseURL, that.baseURL) &&
            Objects.equals(cleanSpeakConfiguration, that.cleanSpeakConfiguration) &&
+           cimd == that.cimd &&
            Objects.equals(data, that.data) &&
            Objects.equals(emailConfiguration, that.emailConfiguration) &&
            Objects.equals(externalIdentifierConfiguration, that.externalIdentifierConfiguration) &&
@@ -268,7 +273,7 @@ public class Application implements Buildable<Application>, Tenantable {
   @Override
   public int hashCode() {
     // active is omitted
-    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, baseURL, cleanSpeakConfiguration, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, phoneConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, universalConfiguration, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
+    return Objects.hash(accessControlConfiguration, authenticationTokenConfiguration, baseURL, cleanSpeakConfiguration, cimd, data, emailConfiguration, externalIdentifierConfiguration, formConfiguration, id, insertInstant, jwtConfiguration, lambdaConfiguration, lastUpdateInstant, loginConfiguration, multiFactorConfiguration, name, oauthConfiguration, passwordlessConfiguration, phoneConfiguration, registrationConfiguration, registrationDeletePolicy, roles, samlv2Configuration, scopes, state, tenantId, themeId, universalConfiguration, unverified, verificationEmailTemplateId, verificationStrategy, verifyRegistration, webAuthnConfiguration);
   }
 
   public void normalize() {

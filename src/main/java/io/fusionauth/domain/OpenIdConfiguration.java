@@ -39,6 +39,8 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   public List<String> claims_supported = new ArrayList<>(Arrays.asList("act", "applicationId", "at_hash", "aud", "authenticationType", "birthdate", "c_hash", "client_id", "email", "email_verified", "exp", "family_name", "given_name", "iat", "iss", "jti", "middle_name", "name", "nbf", "nonce", "phone_number", "phone_number_verified", "picture", "preferred_username", "roles", "scope", "sub"));
 
+  public boolean client_id_metadata_document_supported = false;
+
   public List<String> code_challenge_methods_supported = new ArrayList<>(Collections.singletonList("S256"));
 
   public String device_authorization_endpoint = "%s/oauth2/device_authorize";
@@ -88,6 +90,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
     OpenIdConfiguration that = (OpenIdConfiguration) o;
     return authorization_response_iss_parameter_supported == that.authorization_response_iss_parameter_supported &&
            backchannel_logout_supported == that.backchannel_logout_supported &&
+           client_id_metadata_document_supported == that.client_id_metadata_document_supported &&
            frontchannel_logout_supported == that.frontchannel_logout_supported &&
            Objects.equals(authorization_endpoint, that.authorization_endpoint) &&
            Objects.equals(claims_supported, that.claims_supported) &&
@@ -111,7 +114,7 @@ public class OpenIdConfiguration implements Buildable<OpenIdConfiguration> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authorization_endpoint, authorization_response_iss_parameter_supported, backchannel_logout_supported, claims_supported, code_challenge_methods_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
+    return Objects.hash(authorization_endpoint, authorization_response_iss_parameter_supported, backchannel_logout_supported, claims_supported, client_id_metadata_document_supported, code_challenge_methods_supported, device_authorization_endpoint, dpop_signing_alg_values_supported, end_session_endpoint, frontchannel_logout_supported, grant_types_supported, id_token_signing_alg_values_supported, issuer, jwks_uri, response_modes_supported, response_types_supported, scopes_supported, subject_types_supported, token_endpoint, token_endpoint_auth_methods_supported, userinfo_endpoint, userinfo_signing_alg_values_supported);
   }
 
   @Override

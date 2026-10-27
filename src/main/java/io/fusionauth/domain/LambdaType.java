@@ -844,6 +844,31 @@ public enum LambdaType {
       "  // Happy coding! Populate your exchanged JWT here.\n" +
       "\n" +
       "  console.info('Hello World!');\n" +
+      "}\n"),
+
+  CimdClientRegistration("evaluate", "" +
+      //language=JavaScript
+      "// Allow, reject, override, or revoke a CIMD client registration using the fetched client metadata and request context.\n" +
+      "// https://fusionauth.io/docs/extend/code/lambdas/cimd-client-registration\n" +
+      "function evaluate(result, clientMetadata, context) {\n" +
+      "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
+      "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
+      "  //  console.error('Not good.');          # This will create an EventLog of type Error\n" +
+      "  //  console.debug('Step 42 completed.'); # This will create an EventLog of type Debug\n" +
+      "  //  \n" +
+      "  //  const secretValue = context.services.secrets.get('secret-name');\n" +
+      "  //\n" +
+      "  //  To dump an entire object to the EventLog you can use JSON.stringify, for example: \n" +
+      "  //  console.info(JSON.stringify(clientMetadata)); \n" +
+      "\n" +
+      "  // result.decision defaults to 'ALLOW'. Set it to 'DENY', or 'REVOKE' (deletes this registration). Any other\n" +
+      "  // value fails the lambda and is treated as 'DENY'. Use result.scopes, result.providedScopePolicy, result.ttlInSeconds, and\n" +
+      "  // result.jwtPopulateLambdaId to override the resource for this client registration.\n" +
+      "\n" +
+      "  // Happy coding! Evaluate the CIMD client registration here.\n" +
+      "\n" +
+      "  console.info('Hello World!');" +
+      "\n" +
       "}\n");
   // @formatter:on
 

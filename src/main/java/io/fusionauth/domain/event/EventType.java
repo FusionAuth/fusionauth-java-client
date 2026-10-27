@@ -163,7 +163,11 @@ public enum EventType {
 
   TokenExchange("token.exchange"),
 
-  TokenExchangeComplete("token.exchange.complete");
+  TokenExchangeComplete("token.exchange.complete"),
+
+  CimdRegistrationSuccess("cimd.registration.success"),
+
+  CimdRegistrationFailed("cimd.registration.failed");
 
   private static final Map<String, EventType> nameMap = new HashMap<>(EventType.values().length);
 
@@ -178,6 +182,8 @@ public enum EventType {
    */
   public static List<EventType> allTypes() {
     return Arrays.asList(EventType.AuditLogCreate,
+                         EventType.CimdRegistrationFailed,
+                         EventType.CimdRegistrationSuccess,
                          EventType.EntityCreate,
                          EventType.EntityCreateComplete,
                          EventType.EntityDelete,

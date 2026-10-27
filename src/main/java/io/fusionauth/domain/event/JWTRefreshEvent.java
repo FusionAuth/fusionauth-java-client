@@ -15,6 +15,7 @@
  */
 package io.fusionauth.domain.event;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,9 +31,13 @@ import io.fusionauth.domain.EventInfo;
 public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEvent>, ObjectIdentifiable {
   public UUID applicationId;
 
+  public UUID cimdDomainId;
+
   public String original;
 
   public String refreshToken;
+
+  public List<String> resources;
 
   public String token;
 
@@ -58,8 +63,10 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
     }
     JWTRefreshEvent that = (JWTRefreshEvent) o;
     return Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(cimdDomainId, that.cimdDomainId) &&
            Objects.equals(original, that.original) &&
            Objects.equals(refreshToken, that.refreshToken) &&
+           Objects.equals(resources, that.resources) &&
            Objects.equals(token, that.token) &&
            Objects.equals(userId, that.userId);
   }
@@ -81,6 +88,6 @@ public class JWTRefreshEvent extends BaseEvent implements Buildable<JWTRefreshEv
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, original, refreshToken, token, userId);
+    return Objects.hash(super.hashCode(), applicationId, cimdDomainId, original, refreshToken, resources, token, userId);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<Use
   public UUID applicationId;
 
   public String authenticationType;
+
+  public UUID cimdDomainId;
 
   @Deprecated
   public String ipAddress;
@@ -77,6 +79,7 @@ public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<Use
     UserLoginFailedEvent that = (UserLoginFailedEvent) o;
     return Objects.equals(applicationId, that.applicationId) &&
            Objects.equals(authenticationType, that.authenticationType) &&
+           Objects.equals(cimdDomainId, that.cimdDomainId) &&
            Objects.equals(ipAddress, that.ipAddress) &&
            Objects.equals(reason, that.reason);
   }
@@ -88,6 +91,6 @@ public class UserLoginFailedEvent extends BaseUserEvent implements Buildable<Use
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, ipAddress, reason);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, cimdDomainId, ipAddress, reason);
   }
 }

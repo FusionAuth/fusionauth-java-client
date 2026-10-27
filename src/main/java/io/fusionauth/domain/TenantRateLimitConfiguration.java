@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2021-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import com.inversoft.json.ToString;
  * @author Daniel DeGroff
  */
 public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitConfiguration> {
+  public RateLimitedRequestConfiguration cimdClientRegistration = new RateLimitedRequestConfiguration(5, 60);
+
   public RateLimitedRequestConfiguration failedLogin = new RateLimitedRequestConfiguration(5, 60);
 
   public RateLimitedRequestConfiguration forgotPassword = new RateLimitedRequestConfiguration(5, 60);
@@ -46,10 +48,12 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
   }
 
   public TenantRateLimitConfiguration(TenantRateLimitConfiguration other) {
+    this.cimdClientRegistration = new RateLimitedRequestConfiguration(other.cimdClientRegistration);
     this.failedLogin = new RateLimitedRequestConfiguration(other.failedLogin);
     this.forgotPassword = new RateLimitedRequestConfiguration(other.forgotPassword);
     this.sendEmailVerification = new RateLimitedRequestConfiguration(other.sendEmailVerification);
     this.sendPasswordless = new RateLimitedRequestConfiguration(other.sendPasswordless);
+    this.sendPasswordlessPhone = new RateLimitedRequestConfiguration(other.sendPasswordlessPhone);
     this.sendRegistrationVerification = new RateLimitedRequestConfiguration(other.sendRegistrationVerification);
     this.sendPhoneVerification = new RateLimitedRequestConfiguration(other.sendPhoneVerification);
     this.sendTwoFactor = new RateLimitedRequestConfiguration(other.sendTwoFactor);
@@ -64,10 +68,12 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
       return false;
     }
     TenantRateLimitConfiguration that = (TenantRateLimitConfiguration) o;
-    return Objects.equals(failedLogin, that.failedLogin) &&
+    return Objects.equals(cimdClientRegistration, that.cimdClientRegistration) &&
+           Objects.equals(failedLogin, that.failedLogin) &&
            Objects.equals(forgotPassword, that.forgotPassword) &&
            Objects.equals(sendEmailVerification, that.sendEmailVerification) &&
            Objects.equals(sendPasswordless, that.sendPasswordless) &&
+           Objects.equals(sendPasswordlessPhone, that.sendPasswordlessPhone) &&
            Objects.equals(sendPhoneVerification, that.sendPhoneVerification) &&
            Objects.equals(sendRegistrationVerification, that.sendRegistrationVerification) &&
            Objects.equals(sendTwoFactor, that.sendTwoFactor);
@@ -84,6 +90,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
   @JsonIgnore
   public RateLimitedRequestConfiguration getConfiguration(RateLimitedRequestType type) {
     switch (type) {
+      case CimdClientRegistration:
+        return cimdClientRegistration;
       case FailedLogin:
         return failedLogin;
       case ForgotPassword:
@@ -107,7 +115,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(failedLogin, forgotPassword, sendEmailVerification, sendPasswordless, sendPhoneVerification,
+    return Objects.hash(cimdClientRegistration, failedLogin, forgotPassword, sendEmailVerification, sendPasswordless, sendPasswordlessPhone, sendPhoneVerification,
                         sendRegistrationVerification, sendTwoFactor);
   }
 

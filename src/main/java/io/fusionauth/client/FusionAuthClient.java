@@ -50,6 +50,15 @@ import io.fusionauth.domain.api.AuditLogRequest;
 import io.fusionauth.domain.api.AuditLogResponse;
 import io.fusionauth.domain.api.AuditLogSearchRequest;
 import io.fusionauth.domain.api.AuditLogSearchResponse;
+import io.fusionauth.domain.api.CimdClientRegistrationResponse;
+import io.fusionauth.domain.api.CimdClientRegistrationSearchRequest;
+import io.fusionauth.domain.api.CimdClientRegistrationSearchResponse;
+import io.fusionauth.domain.api.CimdDomainOAuthScopeRequest;
+import io.fusionauth.domain.api.CimdDomainOAuthScopeResponse;
+import io.fusionauth.domain.api.CimdDomainRequest;
+import io.fusionauth.domain.api.CimdDomainResponse;
+import io.fusionauth.domain.api.CimdDomainSearchRequest;
+import io.fusionauth.domain.api.CimdDomainSearchResponse;
 import io.fusionauth.domain.api.ConnectorRequest;
 import io.fusionauth.domain.api.ConnectorResponse;
 import io.fusionauth.domain.api.ConsentRequest;
@@ -899,6 +908,42 @@ public class FusionAuthClient {
   }
 
   /**
+   * Creates a CIMD domain. You can optionally provide an Id for the CIMD domain, if not provided one will be generated.
+   *
+   * @param domainId (Optional) The Id to use for the CIMD domain. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all the information used to create the CIMD domain.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainResponse, Errors> createCimdDomain(UUID domainId, CimdDomainRequest request) {
+    return start(CimdDomainResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Creates a new custom OAuth scope for a CIMD Domain. You must specify the Id of the CIMD domain you are creating the scope for.
+   * You can optionally specify an Id for the OAuth scope on the URL, if not provided one will be generated.
+   *
+   * @param domainId The Id of the CIMD domain to create the OAuth scope on.
+   * @param scopeId (Optional) The Id of the OAuth scope. If not provided a secure random UUID will be generated.
+   * @param request The request object that contains all the information used to create the OAuth scope.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainOAuthScopeResponse, Errors> createCimdDomainOAuthScope(UUID domainId, UUID scopeId, CimdDomainOAuthScopeRequest request) {
+    return start(CimdDomainOAuthScopeResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .urlSegment("scope")
+        .urlSegment(scopeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Creates a connector.  You can optionally specify an Id for the connector, if not provided one will be generated.
    *
    * @param connectorId (Optional) The Id for the connector. If not provided a secure random UUID will be generated.
@@ -1163,7 +1208,7 @@ public class FusionAuthClient {
    *
    * @param applicationId The Id of the application to create the OAuth scope on.
    * @param scopeId (Optional) The Id of the OAuth scope. If not provided a secure random UUID will be generated.
-   * @param request The request object that contains all the information used to create the OAuth OAuth scope.
+   * @param request The request object that contains all the information used to create the OAuth scope.
    * @return The ClientResponse object.
    */
   public ClientResponse<ApplicationOAuthScopeResponse, Errors> createOAuthScope(UUID applicationId, UUID scopeId, ApplicationOAuthScopeRequest request) {
@@ -1455,6 +1500,52 @@ public class FusionAuthClient {
         .urlSegment(applicationId)
         .urlSegment("role")
         .urlSegment(roleId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the CIMD client registration for the given Id, along with its refresh tokens.
+   *
+   * @param registrationId The Id of the CIMD client registration to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteCimdClientRegistration(UUID registrationId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/cimd/registration")
+        .urlSegment(registrationId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Deletes the CIMD domain for the given Id.
+   *
+   * @param domainId The Id of the CIMD domain to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteCimdDomain(UUID domainId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .delete()
+        .go();
+  }
+
+  /**
+   * Hard deletes a custom OAuth scope for a CIMD Domain.
+   * OAuth workflows that are still requesting the deleted OAuth scope may fail depending on the CIMD domain's unknown scope policy.
+   *
+   * @param domainId The Id of the CIMD domain that the OAuth scope belongs to.
+   * @param scopeId The Id of the OAuth scope to delete.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<Void, Errors> deleteCimdDomainOAuthScope(UUID domainId, UUID scopeId) {
+    return start(Void.TYPE, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .urlSegment("scope")
+        .urlSegment(scopeId)
         .delete()
         .go();
   }
@@ -2800,6 +2891,41 @@ public class FusionAuthClient {
   }
 
   /**
+   * Updates, via PATCH, the CIMD domain with the given Id.
+   *
+   * @param domainId The Id of the CIMD domain to update.
+   * @param request The request that contains just the new CIMD domain information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainResponse, Errors> patchCimdDomain(UUID domainId, Map<String, Object> request) {
+    return start(CimdDomainResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
+   * Updates, via PATCH, the custom OAuth scope with the given Id for the CIMD domain.
+   *
+   * @param domainId The Id of the CIMD domain that the OAuth scope belongs to.
+   * @param scopeId The Id of the OAuth scope to update.
+   * @param request The request that contains just the new OAuth scope information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainOAuthScopeResponse, Errors> patchCimdDomainOAuthScope(UUID domainId, UUID scopeId, Map<String, Object> request) {
+    return start(CimdDomainOAuthScopeResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .urlSegment("scope")
+        .urlSegment(scopeId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .patch()
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the connector with the given Id.
    *
    * @param connectorId The Id of the connector to update.
@@ -3543,6 +3669,63 @@ public class FusionAuthClient {
     return start(AuditLogResponse.class, Errors.class)
         .uri("/api/system/audit-log")
         .urlSegment(auditLogId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the CIMD client registration for the given Id.
+   *
+   * @param registrationId The Id of the CIMD client registration.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdClientRegistrationResponse, Errors> retrieveCimdClientRegistration(UUID registrationId) {
+    return start(CimdClientRegistrationResponse.class, Errors.class)
+        .uri("/api/cimd/registration")
+        .urlSegment(registrationId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves the CIMD domain for the given Id.
+   *
+   * @param domainId The Id of the CIMD domain.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainResponse, Errors> retrieveCimdDomain(UUID domainId) {
+    return start(CimdDomainResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves a custom OAuth scope for a CIMD Domain.
+   *
+   * @param domainId The Id of the CIMD domain that the OAuth scope belongs to.
+   * @param scopeId The Id of the OAuth scope to retrieve.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainOAuthScopeResponse, Errors> retrieveCimdDomainOAuthScope(UUID domainId, UUID scopeId) {
+    return start(CimdDomainOAuthScopeResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .urlSegment("scope")
+        .urlSegment(scopeId)
+        .get()
+        .go();
+  }
+
+  /**
+   * Retrieves all the CIMD domains for the tenant in context.
+   *
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainResponse, Errors> retrieveCimdDomains() {
+    return start(CimdDomainResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
         .get()
         .go();
   }
@@ -5238,6 +5421,34 @@ public class FusionAuthClient {
   }
 
   /**
+   * Searches the CIMD client registrations with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdClientRegistrationSearchResponse, Errors> searchCimdClientRegistrations(CimdClientRegistrationSearchRequest request) {
+    return start(CimdClientRegistrationSearchResponse.class, Errors.class)
+        .uri("/api/cimd/registration/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
+   * Searches the CIMD domains with the specified criteria and pagination.
+   *
+   * @param request The search criteria and pagination information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainSearchResponse, Errors> searchCimdDomains(CimdDomainSearchRequest request) {
+    return start(CimdDomainSearchResponse.class, Errors.class)
+        .uri("/api/cimd/domain/search")
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .post()
+        .go();
+  }
+
+  /**
    * Searches consents with the specified criteria and pagination.
    *
    * @param request The search criteria and pagination information.
@@ -6010,6 +6221,41 @@ public class FusionAuthClient {
         .urlSegment(applicationId)
         .urlSegment("role")
         .urlSegment(roleId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the CIMD domain with the given Id.
+   *
+   * @param domainId The Id of the CIMD domain to update.
+   * @param request The request that contains all the new CIMD domain information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainResponse, Errors> updateCimdDomain(UUID domainId, CimdDomainRequest request) {
+    return start(CimdDomainResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .bodyHandler(new JSONBodyHandler(request, objectMapper()))
+        .put()
+        .go();
+  }
+
+  /**
+   * Updates the OAuth scope with the given Id for the CIMD domain.
+   *
+   * @param domainId The Id of the CIMD domain that the OAuth scope belongs to.
+   * @param scopeId The Id of the OAuth scope to update.
+   * @param request The request that contains all the new OAuth scope information.
+   * @return The ClientResponse object.
+   */
+  public ClientResponse<CimdDomainOAuthScopeResponse, Errors> updateCimdDomainOAuthScope(UUID domainId, UUID scopeId, CimdDomainOAuthScopeRequest request) {
+    return start(CimdDomainOAuthScopeResponse.class, Errors.class)
+        .uri("/api/cimd/domain")
+        .urlSegment(domainId)
+        .urlSegment("scope")
+        .urlSegment(scopeId)
         .bodyHandler(new JSONBodyHandler(request, objectMapper()))
         .put()
         .go();

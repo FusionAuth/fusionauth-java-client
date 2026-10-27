@@ -41,7 +41,11 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
 
   public Map<UUID, Integer> applicationTimeToLiveInSeconds = new TreeMap<>();
 
+  public UUID cimdDomainId;
+
   public RefreshToken refreshToken;
+
+  public List<String> resources;
 
   public UUID userId;
 
@@ -77,6 +81,8 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
     JWTRefreshTokenRevokeEvent that = (JWTRefreshTokenRevokeEvent) o;
     return Objects.equals(applicationId, that.applicationId) &&
            Objects.equals(applicationTimeToLiveInSeconds, that.applicationTimeToLiveInSeconds) &&
+           Objects.equals(cimdDomainId, that.cimdDomainId) &&
+           Objects.equals(resources, that.resources) &&
            Objects.equals(user, that.user) &&
            Objects.equals(userId, that.userId);
   }
@@ -98,6 +104,6 @@ public class JWTRefreshTokenRevokeEvent extends BaseEvent implements Buildable<J
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, applicationTimeToLiveInSeconds, user, userId);
+    return Objects.hash(super.hashCode(), applicationId, applicationTimeToLiveInSeconds, cimdDomainId, resources, user, userId);
   }
 }

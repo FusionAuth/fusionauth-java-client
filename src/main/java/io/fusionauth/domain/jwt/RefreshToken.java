@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2025, FusionAuth, All Rights Reserved
+ * Copyright (c) 2018-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +45,8 @@ import io.fusionauth.domain.Tenant;
 public class RefreshToken implements Buildable<RefreshToken> {
   public UUID applicationId;
 
+  public UUID cimdClientRegistrationId;
+
   public Map<String, Object> data = new LinkedHashMap<>();
 
   public UUID id;
@@ -78,6 +80,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
   public RefreshToken(RefreshToken other) {
     this.applicationId = other.applicationId;
+    this.cimdClientRegistrationId = other.cimdClientRegistrationId;
     if (other.data != null) {
       this.data.putAll(other.data);
     }
@@ -100,6 +103,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
     }
     RefreshToken that = (RefreshToken) o;
     return Objects.equals(applicationId, that.applicationId) &&
+           Objects.equals(cimdClientRegistrationId, that.cimdClientRegistrationId) &&
            Objects.equals(data, that.data) &&
            Objects.equals(id, that.id) &&
            Objects.equals(insertInstant, that.insertInstant) &&
@@ -112,7 +116,7 @@ public class RefreshToken implements Buildable<RefreshToken> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationId, data, id, insertInstant, metaData, startInstant, tenantId, token, userId);
+    return Objects.hash(applicationId, cimdClientRegistrationId, data, id, insertInstant, metaData, startInstant, tenantId, token, userId);
   }
 
   @JsonIgnore

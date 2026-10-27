@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2024, FusionAuth, All Rights Reserved
+ * Copyright (c) 2019-2026, FusionAuth, All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ public class UserLoginSuccessEvent extends BaseUserEvent implements Buildable<Us
   public UUID applicationId;
 
   public String authenticationType;
+
+  public UUID cimdDomainId;
 
   // Generally this will be equal to user.connectorId, except during a login where the action is set to migrate.
   public UUID connectorId;
@@ -84,6 +86,7 @@ public class UserLoginSuccessEvent extends BaseUserEvent implements Buildable<Us
     UserLoginSuccessEvent that = (UserLoginSuccessEvent) o;
     return Objects.equals(applicationId, that.applicationId) &&
            Objects.equals(authenticationType, that.authenticationType) &&
+           Objects.equals(cimdDomainId, that.cimdDomainId) &&
            Objects.equals(connectorId, that.connectorId) &&
            Objects.equals(identityProviderId, that.identityProviderId) &&
            Objects.equals(identityProviderName, that.identityProviderName) &&
@@ -97,6 +100,6 @@ public class UserLoginSuccessEvent extends BaseUserEvent implements Buildable<Us
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), applicationId, authenticationType, connectorId, identityProviderId, identityProviderName, ipAddress);
+    return Objects.hash(super.hashCode(), applicationId, authenticationType, cimdDomainId, connectorId, identityProviderId, identityProviderName, ipAddress);
   }
 }
