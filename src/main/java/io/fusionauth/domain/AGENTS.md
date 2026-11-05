@@ -2,6 +2,9 @@
 
 Rules for domain model classes under `io.fusionauth.domain`. These are the classes shared with client libraries and must maintain Java 8 compatibility.
 
+## Skills
+- Use `developing-fusionauth` for domain-model conventions and client-builder propagation.
+
 ## Java 8 Compatibility (critical)
 - All code in `io.fusionauth.domain.*` **must be Java 8 compatible**.
 - Do not use Java 9+ language features (e.g., pattern variables with `instanceof`, `var`, records, sealed classes).
