@@ -28,5 +28,6 @@ public enum RateLimitedRequestType {
   SendTwoFactor,
   SendPhoneVerification,
   SendPhonePasswordless,
-  CimdClientRegistration
+  CimdClientRegistration,
+  ScimGroups
 }
