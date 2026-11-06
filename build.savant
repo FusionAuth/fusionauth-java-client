@@ -29,7 +29,22 @@ project(group: "io.fusionauth", name: "fusionauth-java-client", version: "1.71.0
     fetch {
       cache()
       url(url: "https://repository.savantbuild.org")
-      maven()
+      // allows overriding the Maven central URL
+      def mavenCentralUrl = System.getenv('MAVEN_CENTRAL_URL')
+      if (mavenCentralUrl) {
+        def mavenCentralUsername = System.getenv('MAVEN_CENTRAL_USERNAME')
+        if (mavenCentralUsername) {
+          maven(url: mavenCentralUrl,
+                username: mavenCentralUsername,
+                password: System.getenv('MAVEN_CENTRAL_PASSWORD'))
+        }
+        else {
+          maven(url: mavenCentralUrl)
+        }
+      }
+      else {
+        maven()
+      }
     }
     publish {
       cache()
