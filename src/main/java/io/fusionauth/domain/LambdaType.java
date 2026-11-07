@@ -30,6 +30,7 @@ public enum LambdaType {
       "// https://fusionauth.io/docs/extend/code/lambdas/jwt-populate\n" +
       "// Optionally accept a fourth parameter named 'context' which provides additional request context.\n" +
       "// - If provided, FusionAuth will graft context.services.secrets for secret retrieval.\n" +
+      "// - context.application contains a secure copy of the application for the issued JWT when available.\n" +
       "function populate(jwt, user, registration, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
