@@ -31,6 +31,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration forgotPassword = new RateLimitedRequestConfiguration(5, 60);
 
+  public RateLimitedRequestConfiguration passwordlessLogin = new RateLimitedRequestConfiguration(5, 60);
+
   public RateLimitedRequestConfiguration sendEmailVerification = new RateLimitedRequestConfiguration(5, 60);
 
   public RateLimitedRequestConfiguration sendPasswordless = new RateLimitedRequestConfiguration(5, 60);
@@ -51,6 +53,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
     this.cimdClientRegistration = new RateLimitedRequestConfiguration(other.cimdClientRegistration);
     this.failedLogin = new RateLimitedRequestConfiguration(other.failedLogin);
     this.forgotPassword = new RateLimitedRequestConfiguration(other.forgotPassword);
+    this.passwordlessLogin = new RateLimitedRequestConfiguration(other.passwordlessLogin);
     this.sendEmailVerification = new RateLimitedRequestConfiguration(other.sendEmailVerification);
     this.sendPasswordless = new RateLimitedRequestConfiguration(other.sendPasswordless);
     this.sendPasswordlessPhone = new RateLimitedRequestConfiguration(other.sendPasswordlessPhone);
@@ -71,6 +74,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
     return Objects.equals(cimdClientRegistration, that.cimdClientRegistration) &&
            Objects.equals(failedLogin, that.failedLogin) &&
            Objects.equals(forgotPassword, that.forgotPassword) &&
+           Objects.equals(passwordlessLogin, that.passwordlessLogin) &&
            Objects.equals(sendEmailVerification, that.sendEmailVerification) &&
            Objects.equals(sendPasswordless, that.sendPasswordless) &&
            Objects.equals(sendPasswordlessPhone, that.sendPasswordlessPhone) &&
@@ -96,6 +100,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
         return failedLogin;
       case ForgotPassword:
         return forgotPassword;
+      case PasswordlessLogin:
+        return passwordlessLogin;
       case SendEmailVerification:
         return sendEmailVerification;
       case SendPasswordless:
@@ -115,8 +121,8 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   @Override
   public int hashCode() {
-    return Objects.hash(cimdClientRegistration, failedLogin, forgotPassword, sendEmailVerification, sendPasswordless, sendPasswordlessPhone, sendPhoneVerification,
-                        sendRegistrationVerification, sendTwoFactor);
+    return Objects.hash(cimdClientRegistration, failedLogin, forgotPassword, passwordlessLogin, sendEmailVerification, sendPasswordless, sendPasswordlessPhone,
+                        sendPhoneVerification, sendRegistrationVerification, sendTwoFactor);
   }
 
   @Override
