@@ -309,6 +309,7 @@ public class Tenant implements Buildable<Tenant> {
     emailConfiguration.normalize();
     eventConfiguration.normalize();
     tokenExchangeConfiguration.normalize();
+    webAuthnConfiguration.normalize();
 
     // Lower case any domain entries
     connectorPolicies.forEach(policy -> Normalizer.toLowerCase(policy.domains, HashSet::new));
