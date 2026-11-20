@@ -27,7 +27,7 @@ public enum LambdaType {
   JWTPopulate("populate", "" +
       //language=JavaScript
       "// Using the user and registration parameters add additional values to the jwt object.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/jwt-populate\n" +
+      "// https://fusionauth.io/docs/lambdas/tokens/jwt-populate\n" +
       "// Optionally accept a fourth parameter named 'context' which provides additional request context.\n" +
       "// - If provided, FusionAuth will graft context.services.secrets for secret retrieval.\n" +
       "// - context.application contains a secure copy of the application for the issued JWT when available.\n" +
@@ -52,7 +52,7 @@ public enum LambdaType {
   OpenIDReconcile("reconcile", "" +
        //language=JavaScript
       "// This is based on the default OpenID Connect reconcile using the response from the UserInfo API, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/openid-connect-response-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/openid-connect-response-reconcile\n" +
       "function reconcile(user, registration, jwt, id_token, tokens, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -105,7 +105,7 @@ public enum LambdaType {
   SAMLv2Reconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default SAML v2 reconcile using the AuthN response, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/samlv2-response-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/samlv2-response-reconcile\n" +
       "function reconcile(user, registration, samlResponse, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -155,7 +155,7 @@ public enum LambdaType {
   SAMLv2Populate("populate", "" +
       //language=JavaScript
       "// Using the user and registration parameters add additional values to the SAML response.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/samlv2-response-populate\n" +
+      "// https://fusionauth.io/docs/lambdas/tokens/samlv2-response-populate\n" +
       "function populate(samlResponse, user, registration, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -176,7 +176,7 @@ public enum LambdaType {
   AppleReconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default Apple reconcile using the id_token, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/apple-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/apple-reconcile\n" +
       "function reconcile(user, registration, idToken, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -206,7 +206,7 @@ public enum LambdaType {
   ExternalJWTReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the JWT provided by an external IdP, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/external-jwt-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/external-jwt-reconcile\n" +
       "function reconcile(user, registration, jwt, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -227,7 +227,7 @@ public enum LambdaType {
   FacebookReconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default Facebook reconcile using the response from Facebook Me API, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/facebook-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/facebook-reconcile\n" +
       "function reconcile(user, registration, facebookUser, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -266,7 +266,7 @@ public enum LambdaType {
   GoogleReconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default Google reconcile using the response from the Google Token Info API, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/google-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/google-reconcile\n" +
       "function reconcile(user, registration, idToken, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -297,7 +297,7 @@ public enum LambdaType {
   HYPRReconcile("reconcile", "" +
       //language=JavaScript
       "// Reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/hypr-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/hypr-reconcile\n" +
       "function reconcile(user, registration, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -318,7 +318,7 @@ public enum LambdaType {
   TwitterReconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default Twitter reconcile using the response from the Twitter Verify Credentials API, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/twitter-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/twitter-reconcile\n" +
        "function reconcile(user, registration, twitterUser, context) {\n" +
        "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
        "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -358,7 +358,7 @@ public enum LambdaType {
   LDAPConnectorReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from an LDAP connector, reconcile the User.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/ldap-connector-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/ldap-connector-reconcile\n" +
       "function reconcile(user, userAttributes, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -379,7 +379,7 @@ public enum LambdaType {
   LinkedInReconcile("reconcile", "" +
       //language=JavaScript
       "// This is based on the default LinkedIn reconcile using the response from LinkedIn, modify this to your liking.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/linkedin-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/linkedin-reconcile\n" +
       "function reconcile(user, registration, linkedInUser, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -440,7 +440,7 @@ public enum LambdaType {
   EpicGamesReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the Epic API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/epic-games-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/epic-games-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -461,7 +461,7 @@ public enum LambdaType {
   NintendoReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the Nintendo API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/nintendo-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/nintendo-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -482,7 +482,7 @@ public enum LambdaType {
   SonyPSNReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the SonyPSN API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/sony-playstation-network-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/sony-playstation-network-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -503,7 +503,7 @@ public enum LambdaType {
   SteamReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the Steam API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/steam-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/steam-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -524,7 +524,7 @@ public enum LambdaType {
   TwitchReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the Twitch API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/twitch-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/twitch-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -545,7 +545,7 @@ public enum LambdaType {
   XboxReconcile("reconcile", "" +
       //language=JavaScript
       "// Using the response from the Xbox Token info API, reconcile the User and User Registration.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/xbox-reconcile\n" +
+      "// https://fusionauth.io/docs/lambdas/reconcile/xbox-reconcile\n" +
       "function reconcile(user, registration, userInfo, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -566,7 +566,7 @@ public enum LambdaType {
   ClientCredentialsJWTPopulate("populate", "" +
       //language=JavaScript
       "// Using the two Entity and permission parameters you can populate a client credentials grant JWT.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/client-credentials-jwt-populate\n" +
+      "// https://fusionauth.io/docs/lambdas/tokens/client-credentials-jwt-populate\n" +
       "function populate(jwt, recipientEntity, targetEntities, permissions, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -587,7 +587,7 @@ public enum LambdaType {
   SCIMServerGroupRequestConverter("convert", "" +
       //language=JavaScript
       "// Using the incoming SCIM group, build a FusionAuth group by mapping incoming fields to the correct FusionAuth group fields.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/scim-group-request-converter\n" +
+      "// https://fusionauth.io/docs/lambdas/scim/scim-group-request-converter\n" +
       "function convert(group, members, options, scimGroup, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -608,7 +608,7 @@ public enum LambdaType {
   SCIMServerGroupResponseConverter("convert", "" +
       //language=JavaScript
       "// Using the FusionAuth group, build a SCIM group by mapping group fields the correct SCIM group fields.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/scim-group-response-converter\n" +
+      "// https://fusionauth.io/docs/lambdas/scim/scim-group-response-converter\n" +
       "function convert(scimGroup, group, members, context) {\n" +
        "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
        "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -629,7 +629,7 @@ public enum LambdaType {
   SCIMServerUserRequestConverter("convert", "" +
       //language=JavaScript
       "// Using the incoming SCIM user, build a FusionAuth user by mapping incoming fields to the correct FusionAuth user fields.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/scim-user-request-converter\n" +
+      "// https://fusionauth.io/docs/lambdas/scim/scim-user-request-converter\n" +
       "function convert(user, options, scimUser, context) {\n" +
        "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
        "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -650,7 +650,7 @@ public enum LambdaType {
   SCIMServerUserResponseConverter("convert", "" +
       //language=JavaScript
       "// Using the FusionAuth user, build a SCIM user by mapping user fields to the correct SCIM user fields.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/scim-user-response-converter\n" +
+      "// https://fusionauth.io/docs/lambdas/scim/scim-user-response-converter\n" +
       "function convert(scimUser, user, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -671,7 +671,7 @@ public enum LambdaType {
   SelfServiceRegistrationValidation("validate",
       //language=JavaScript
        "// Validate the self-service registration form here\n" +
-       "// https://fusionauth.io/docs/extend/code/lambdas/self-service-registration\n" +
+       "// https://fusionauth.io/docs/lambdas/login/self-service-registration\n" +
       "function validate(result, user, registration, context) {\n" +
       "    //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "    //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -690,7 +690,7 @@ public enum LambdaType {
   UserInfoPopulate("populate", "" +
       //language=JavaScript
       "// Using the user and registration parameters along with the JWT provided on the request add additional values to the userInfo response.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/userinfo-populate\n" +
+      "// https://fusionauth.io/docs/lambdas/tokens/userinfo-populate\n" +
       "function populate(userInfo, user, registration, jwt, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -711,7 +711,7 @@ public enum LambdaType {
   LoginValidation("validate", "" +
        //language=JavaScript
        "// Validate the login request by optionally setting errors in the result.\n" +
-       "// https://fusionauth.io/docs/extend/code/lambdas/login-validation\n" +
+       "// https://fusionauth.io/docs/lambdas/login/login-validation\n" +
        "function validate(result, user, registration, context) {\n" +
        "  // Use the provided user, registration and context arguments to perform additional validation.\n" +
        "  // - To fail a login request, add one or more field or general errors to the result.\n" +
@@ -739,7 +739,7 @@ public enum LambdaType {
   MFARequirement("checkRequired", "" +
       //language=JavaScript
       "// Check whether MFA is required, for a particular action, user, and application, in a given context.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/mfa-requirement\n" +
+      "// https://fusionauth.io/docs/lambdas/login/mfa-requirement\n" +
       "function checkRequired(result, user, registration, context) {\n" +
        "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
        "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
@@ -760,7 +760,7 @@ public enum LambdaType {
   TokenExchangePolicy("policy", "" +
       //language=JavaScript
       "// Decide whether an RFC 8693 token exchange request is allowed.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/token-exchange-policy\n" +
+      "// https://fusionauth.io/docs/lambdas/token-exchange/token-exchange-policy\n" +
       "//\n" +
       "// Parameters:\n" +
       "//  - result: (mutable) Set result.decision to 'ALLOW' or 'DENY' and populate result.granted or result.denial\n" +
@@ -828,7 +828,7 @@ public enum LambdaType {
       "// The exchange object always contains 'subjectToken' and 'entity'. The 'audiences', 'intent', 'scopes', and 'state'\n" +
       "// properties may be undefined.\n" +
       "//\n" +
-      "// https://fusionauth.io/docs/apis/tenants -- Token exchange settings\n" +
+      "// https://fusionauth.io/docs/apis/tenants/ -- Token exchange settings\n" +
       "function populate(jwt, exchange, context) {\n" +
       "  //  Set the audience to a specific downstream API URL if one was granted by the policy engine.\n" +
       "  //  const audiences = exchange.audiences || [];\n" +
@@ -850,7 +850,7 @@ public enum LambdaType {
   CimdClientRegistration("evaluate", "" +
       //language=JavaScript
       "// Allow, reject, override, or revoke a CIMD client registration using the fetched client metadata and request context.\n" +
-      "// https://fusionauth.io/docs/extend/code/lambdas/cimd-client-registration\n" +
+      "// https://fusionauth.io/docs/lambdas/login/cimd-client-registration\n" +
       "function evaluate(result, clientMetadata, context) {\n" +
       "  //  When writing a lambda we've added a few helpers to make life easier.\n" +
       "  //  console.info('Hello World');         # This will create an EventLog of type Information\n" +
