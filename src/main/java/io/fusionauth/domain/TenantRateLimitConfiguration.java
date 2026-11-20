@@ -31,7 +31,7 @@ public class TenantRateLimitConfiguration implements Buildable<TenantRateLimitCo
 
   public RateLimitedRequestConfiguration forgotPassword = new RateLimitedRequestConfiguration(5, 60);
 
-  public RateLimitedRequestConfiguration passwordlessLogin = new RateLimitedRequestConfiguration(5, 60);
+  public RateLimitedRequestConfiguration passwordlessLogin = new RateLimitedRequestConfiguration(5, 180);
 
   public RateLimitedRequestConfiguration sendEmailVerification = new RateLimitedRequestConfiguration(5, 60);
 
